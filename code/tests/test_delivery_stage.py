@@ -72,9 +72,10 @@ class DeliveryStageTests(unittest.TestCase):
     def test_restored_verified_draft_takes_precedence_over_failed_revised_receipt(self):
         script = full_script()
         redraft = {**script[2][1], "summary": "A later draft."}
-        model = ScriptedModel([*script[:-1], script[1], ("researcher", redraft),
-                               ("critic", OutputContractError("invalid receipt", "invalid_critic_json"))])
+        bad_receipt = ("critic", OutputContractError("invalid receipt", "invalid_critic_json"))
+        model = ScriptedModel([*script[:-1], script[1], ("researcher", redraft), bad_receipt, bad_receipt])
         report = ResearchEngine(self.store, model, FixtureTools()).ask(self.sid, "Revenue?")["report"]
+        self.assertEqual([role for role, ctx in model.calls][-2:], ["critic", "critic"])
         self.assertTrue(report["verification_available"])
         self.assertEqual(report["delivery_stage"], "reviewed")
         self.assertEqual(report["summary"], script[2][1]["summary"])

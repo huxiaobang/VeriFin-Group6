@@ -65,14 +65,28 @@ def plain_amount_metric(text):
     return None
 
 
-def direct_amount_anchors(prefix, constraints, records):
+def direct_amount_anchors(prefix, constraints, records, *, parenthetical=False):
     """Bind a plain, named amount, declining qualifiers with unknown scope or multiple possible facts."""
     # The prefix starts immediately after the previous display quantity. Keep
     # the local clause, so an unrelated measure elsewhere cannot qualify it.
     local = re.split(r"[，；;。!?！？]|,(?!\d)|\.\s+(?=[A-Za-z])",prefix)[-1].strip()
+    if parenthetical:
+        # A labelled parenthesis can follow another labelled amount, e.g.
+        # "the revenue ($X) and operating-income ($Y)". Do not strip
+        # predicates: "operating loss was ($Y)" is accounting notation.
+        local = re.sub(r"^\)\s*", "", local)
     local = re.sub(r"^(?:and\b|而|及)\s*", "", local, flags=re.I)
+    if parenthetical:
+        local = re.sub(r"^the\s+", "", local, flags=re.I)
+        local = re.sub(r"(?<=[A-Za-z])-(?=[A-Za-z])", " ", local)
+        if not local.endswith("("):
+            return []
+        local = local[:-1].rstrip()
     names = list(NAME.finditer(local))
-    if len(names) != 1 or not LINK.fullmatch(local[names[0].end():]):
+    if len(names) != 1:
+        return []
+    connector = local[names[0].end():]
+    if (parenthetical and connector.strip()) or not LINK.fullmatch(connector):
         return []
     metric = NAMES[names[0].group().casefold()]
     qualifier = local[:names[0].start()].strip().casefold()

@@ -30,6 +30,35 @@ def categories(context):
 
 
 class RuleTests(unittest.TestCase):
+    def test_parenthesized_joint_amounts_bind_to_each_named_metric_and_scope(self):
+        ctx = fixture()
+        revenue = ctx["evidence"][0]
+        revenue.update(entity="XYZ", value=90_000_000, accession="filing-a", form="10-Q")
+        profit = {**revenue, "id":"e2", "metric":"operating_income", "value":20_000_000}
+        ctx["evidence"].append(profit)
+        text = "The revenue ($90 million) and operating-income ($20 million) facts share one SEC accession."
+        claim = ctx["claims"][0]
+        claim.pop("asserted_value")
+        claim.pop("asserted_unit")
+        claim.update(text=text, evidence_ids=["e1", "e2"])
+        claim["constraints"].update(entity="XYZ", metric="revenue_and_operating_income", accession="filing-a",
+                                    form="10-Q")
+        self.assertEqual(check_rules(ctx), [])
+        for wrong in (text.replace("$90", "$91"), text.replace("$90", "$20").replace("($20 million) facts",
+                      "($90 million) facts"), text.replace("$90", "-$90")):
+            with self.subTest(wrong=wrong):
+                claim["text"] = wrong
+                self.assertIn("numerical_inconsistency", categories(ctx))
+        claim["text"] = text
+        for field, wrong in (("period_end", "2024-09-30"), ("accession","another-filing"), ("form","10-K")):
+            with self.subTest(field=field):
+                original = profit[field]
+                profit[field] = wrong
+                self.assertIn("context_mismatch", categories(ctx))
+                profit[field] = original
+        claim["constraints"]["period_end"] = "2024-09-30"
+        self.assertIn("context_mismatch", categories(ctx))
+
     def test_exact_assertion_in_saved_constraints_is_checked_including_conflicts(self):
         ctx = fixture()
         claim = ctx["claims"][0]

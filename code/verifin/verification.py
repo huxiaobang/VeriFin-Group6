@@ -63,6 +63,28 @@ def _definition_comparison(claim, dimensions, results, claims):
     return True
 
 
+def _joint_metric_scope(claim, dimensions, display, citations, records):
+    """A conjunction of metrics describes several cited facts, not a new scalar."""
+    if (display.get("method") != "matched_records" or "asserted_value" in claim
+            or "asserted_unit" in claim or not dimensions.get("period_end") or not dimensions.get("entity")):
+        return False
+    rows = display.get("matched", [])
+    if not rows or not all(row.get("metric") for row in rows):
+        return False
+    ordered = list(dict.fromkeys(row["metric"] for row in rows))
+    if len(ordered) < 2 or dimensions.get("metric") != "_and_".join(ordered):
+        return False
+    common = {k:v for k,v in dimensions.items() if k != "metric"}
+    filing = {k: claim["constraints"][k] for k in ("accession", "form") if claim["constraints"].get(k)}
+    for match in rows:
+        sources = [records[ref] for ref in match["record_ids"]
+                   if all(records[ref].get(k) == value for k, value in filing.items())]
+        if not any(not missing for _, missing in
+                   compatible_records(sources, common, records, citations=citations)):
+            return False
+    return True
+
+
 def _timestamp(value: Any, *, end_of_day: bool = False) -> datetime | None:
     if not isinstance(value, str):
         return None
@@ -437,7 +459,8 @@ def check_rules(context: dict, *, display_notes=None, context_notes=None) -> lis
                 context_notes.append({"claim_id": target, "comparison_inputs": {
                     row["id"]: row["metric"] for row in candidates},
                     "check_against_source": "Review whether the prose correctly explains both formulas."})
-        elif dimensions and candidates and not aligned:
+        elif (dimensions and candidates and not aligned
+              and not _joint_metric_scope(claim, dimensions, display, citations, records)):
             add(target, "context_mismatch", [a["id"] for a in candidates],
                 "Every cited result conflicts with at least one stated source dimension.",
                 "Check the company, metric, dates, unit and reporting basis against the source.")

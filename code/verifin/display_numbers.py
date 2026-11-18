@@ -215,9 +215,10 @@ def _check_amounts(claim, records, text, amounts, record_index):
     # prints prior-period amounts from the same citations.
     if asserted["value"] is not None and (not isinstance(asserted["unit"], str) or _display_unit(asserted["unit"])[0] not in DISPLAY_UNITS):
         return {"method":"source_review"}
-    if asserted["value"] is not None and not any(_matches(unit, value, tol, asserted) for _, unit, value, tol in amounts):
-        return {"method":"mismatch", "unmatched":[literal for literal, *_ in amounts], "matched":[]}
     if not has_numeric_source or (not typed and cited_document):
+        if asserted["value"] is not None and not any(
+                _matches(unit, value, tol, asserted) for _, unit, value, tol in amounts):
+            return {"method":"mismatch", "unmatched":[literal for literal, *_ in amounts], "matched":[]}
         if len(amounts) == len(records) == 1 and records[0].get("kind") == "document":
             literal, unit, value, tolerance = amounts[0]
             cell = comparison_cell(claim, records[0], literal) if unit in {"USD","$"} else None
@@ -237,6 +238,7 @@ def _check_amounts(claim, records, text, amounts, record_index):
     bound_count = 0
     contradictions = []
     qualified_context = False
+    assertion_displayed = asserted["value"] is None
     for literal, unit, value, tolerance in amounts:
         position = text.find(literal,cursor)
         anchors = []
@@ -247,7 +249,18 @@ def _check_amounts(claim, records, text, amounts, record_index):
             qualified_context = qualified_context or bool(QUALIFIED_BASIS.search(prefix))
             if not qualified_context:
                 anchors = direct_amount_anchors(prefix, claim.get("constraints",{}), typed)
+                if (not anchors and prefix.rstrip().endswith("(")
+                        and text[position+len(literal):].lstrip().startswith(")")):
+                    anchors = direct_amount_anchors(prefix, claim.get("constraints",{}), typed, parenthetical=True)
+                    if (anchors and value < 0 and not any(sign in literal for sign in "-−负+")
+                            and any(_matches(unit, -value, tolerance, r) for r in anchors)):
+                        # The label binds this parenthetical aside to one
+                        # source metric. Unlabelled accounting losses retain
+                        # their sign and exact assertions still require checks.
+                        value = -value
             cursor = position + len(literal)
+        if not assertion_displayed:
+            assertion_displayed = _matches(unit, value, tolerance, asserted)
         if anchors:
             bound_count += 1
         hits = [r["id"] for r in (anchors or typed) if _matches(unit, value, tolerance, r)]
@@ -263,6 +276,8 @@ def _check_amounts(claim, records, text, amounts, record_index):
                 source = anchors[0]
                 contradictions.append({"display":literal, "record_ids":[r["id"] for r in anchors],
                                        **{k:source.get(k) for k in ("entity","metric","period_end","value","unit")}})
+    if not assertion_displayed:
+        return {"method":"mismatch", "unmatched":[literal for literal, *_ in amounts], "matched":[]}
     if contradictions:
         return {"method":"mismatch", "unmatched":[c["display"] for c in contradictions],
                 "expected":contradictions,"matched":matched}

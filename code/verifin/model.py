@@ -10,6 +10,7 @@ import re
 from collections import Counter
 from collections.abc import Callable, Mapping
 from datetime import date, datetime
+from fractions import Fraction
 from typing import Any
 from urllib.error import HTTPError, URLError
 from urllib.parse import urlsplit
@@ -374,6 +375,12 @@ calculations, not merely previous summaries or selected favorable passages.
 When present, context.draft_instruction records the Planner's direction to the
 Researcher for this draft. Check it against the user's request and verify any
 proposed facts, periods or conclusions independently against original evidence.
+Judge omissions against this turn's request. When the user explicitly narrows
+the comparison, retain the narrower scope even if an earlier turn asked for more.
+Assess a filing-linked structured amount and any claim to have read the filing
+body separately. Check the concept, period, unit, form and accession. If the
+amount is supported but a requested passage is unavailable, name that source gap
+and preserve the supported amount in your verdict and question coverage.
 For context.income_bridge distinguish reported amounts, signed changes and
 management explanations. Check the direction and year for material effects
 against source rows. Missing components do not invalidate independent amounts.
@@ -545,6 +552,36 @@ def _validate_dates(record: dict, label: str) -> None:
             raise ModelError(f"{label}.cutoff must be an ISO date or timezone-aware timestamp") from None
 
 
+def _base_unit_assertion(claim, evidence):
+    """Accept a printed monetary scale only when the cited table cell proves the conversion."""
+    dims = claim.get("constraints")
+    unit = claim.get("asserted_unit")
+    value = claim.get("asserted_value")
+    if not isinstance(dims, dict) or not isinstance(unit, str) or not _finite_number(value):
+        return claim
+    scaled = re.fullmatch(r"([A-Z]{3})[ _](thousand|million|billion)s?", unit)
+    if not scaled or dims.get("unit") != scaled[1]:
+        return claim
+    if not all(dims.get(k) for k in ("entity", "metric", "period_end")):
+        return claim
+    refs = claim.get("evidence_ids")
+    if not isinstance(refs, list) or not all(isinstance(ref, str) for ref in refs):
+        return claim
+    power = {"thousand": 3, "million": 6, "billion": 9}[scaled[2]]
+    scale = 10**power
+    fields = ("entity", "metric", "period_start", "period_end", "basis", "currency", "business_scope", "concept")
+    cells = [evidence[ref] for ref in refs if ref in evidence
+             and evidence[ref].get("cell_type") == "statement_amount_cell"
+             and all(evidence[ref].get(k) == dims[k] for k in fields if dims.get(k) is not None)]
+    expected = Fraction(str(value)) * scale
+    if not cells or any(cell.get("stale") or cell.get("currency") != scaled[1]
+                        or cell.get("unit") != scaled[1] or cell.get("scale") != 1
+                        or cell.get("printed_scale") != scale or not _finite_number(cell.get("value"))
+                        or Fraction(str(cell["value"])) != expected for cell in cells):
+        return claim
+    return {**claim, "asserted_value": cells[0]["value"], "asserted_unit": scaled[1]}
+
+
 def _claim_references(claim, references):
     _string(claim.get("text"), "claim.text")
     unknown = {}
@@ -615,7 +652,8 @@ def validate_response(role: str, result: Any, context: dict) -> dict:
         return result
 
     reqs = set(requirements(context))
-    evidence = set(_records(context.get("evidence", []), "evidence"))
+    evidence_records = _records(context.get("evidence", []), "evidence")
+    evidence = set(evidence_records)
     calculations = set(_records(context.get("calculations", []), "calculations"))
     if evidence & calculations:
         raise ModelError("Evidence and calculation IDs must be distinct")
@@ -637,6 +675,7 @@ def validate_response(role: str, result: Any, context: dict) -> dict:
                 if cid in reqs:
                     raise ModelError("Claim and requirement IDs must be distinct")
                 target = cid
+                claim = _base_unit_assertion(claim, evidence_records)
                 unknown = _claim_references(claim, references)
             except ModelError as exc:
                 if target is None:
@@ -668,7 +707,7 @@ def validate_response(role: str, result: Any, context: dict) -> dict:
                     "unanswered_requirement_ids":[*unanswered, *(rid for rid in answered if rid not in linked)],
                     "reference_quarantine":{"claims":rejected, "summary":result["summary"],
                                             "answered_requirement_ids":answered, "unanswered_requirement_ids":unanswered}}
-        return result
+        return {**result, "claims": accepted}
 
     claims = set(_records(context.get("claims", []), "claims"))
     if claims & reqs:

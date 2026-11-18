@@ -18,7 +18,7 @@ import uuid
 
 from . import fiscal_followup, planner_evidence, income_followup
 from .verification import Verifier, check_rules
-from .model import ContextLimitReached, SpendLimitReached, USAGE_FIELDS
+from .model import ContextLimitReached, OutputContractError, SpendLimitReached, USAGE_FIELDS
 from .request_review import clarify_request, request_parts, coverage_issues, report_coverage, single_question_mismatch, unresolved_checklist
 
 
@@ -58,7 +58,7 @@ def review_sources(context):
 
 
 def record_review(episode, context, instruction):
-    """Count consecutive reviews of each target/category on the same evidence."""
+    """Track recurring objections and progress on the user's questions across rewrites."""
     sources = review_sources(context)
     previous = episode.get("revision_memory", {})
     same_inputs = (sources == previous.get("sources") and
@@ -66,11 +66,49 @@ def record_review(episode, context, instruction):
     counts = {(r["target_id"], r["issue_type"]): r["reviews"]
               for r in previous.get("open", [])} if same_inputs else {}
     targets = sorted({(i["target_id"], i["issue_type"]) for i in episode["issues"]})
+    # A claim ID, objection label or revised sentence can change on every
+    # draft. A user question remains the same. Only count a newly reached
+    # coverage level on an unchallenged answer to that question as progress.
+    # A requirement-level objection can coexist with a supported amount.
+    # This accounting limits retries; it never certifies a claim or question.
+    best = dict(previous.get("best_part_coverage", {})) if same_inputs else {}
+    objected = {target for target, _ in targets}
+    improved = False
+    parts = context.get("request_parts", {})
+    reviewed = set(episode.get("reviewed_claim_ids", []))
+    for row in episode.get("request_coverage", []):
+        if not isinstance(row, dict):
+            continue
+        part, claim = row.get("part"), row.get("claim_id")
+        status = row.get("status")
+        if status not in ("partial", "answered"):
+            continue
+        level = 2 if status == "answered" else 1
+        if (isinstance(part, str) and part in parts and isinstance(claim, str) and claim in reviewed and claim not in objected
+                and (part not in objected or level == 1) and level > best.get(part, 0)):
+            best[part] = level
+            improved = True
+    # Include the review that established this coverage level. The default
+    # allowance of three reviews permits two rewrites after that review.
+    review_span = previous.get("review_span", 0) + 1 if same_inputs and not improved else 1
     episode["revision_memory"] = {
         "sources": sources, "scope_version": context["session"]["scope_version"],
+        "best_part_coverage": best, "review_span": review_span,
         "open": [{"target_id": target, "issue_type": category,
                   "reviews": counts.get((target, category), 0) + 1} for target, category in targets],
         "last_draft_instruction": instruction, "tool_calls_at_review": episode["tool_calls"]}
+
+
+def repeated_redraft(episode, limit):
+    """Let the planner fetch new material; decline an unproductive draft on old inputs."""
+    memory = episode.get("revision_memory", {})
+    open_issues = memory.get("open", [])
+    if not episode.get("reviewed") or not open_issues:
+        return False
+    if memory.get("tool_calls_at_review") != episode["tool_calls"] and not episode["no_progress"]:
+        return False
+    return (all(item["reviews"] >= 2 for item in open_issues)
+            or memory.get("review_span", 0) >= limit)
 
 
 @dataclass(frozen=True)
@@ -628,7 +666,7 @@ class ResearchEngine:
                 except Exception as exc:
                     # Never echo raw provider responses or credentials to the report.
                     event.update(ok=False, error_type=type(exc).__name__)
-                    from .model import OutputContractError, ProviderOutputError
+                    from .model import ProviderOutputError
                     if isinstance(exc, OutputContractError):
                         event["contract_error"] = exc.code
                     if isinstance(exc, ProviderOutputError):
@@ -1066,10 +1104,7 @@ class ResearchEngine:
                         if episode.get("reviewed") and limits.max_model_calls - episode["model_calls"] < 2:
                             # Preserve the last review when the next revision cannot be checked.
                             raise StopEpisode("model_budget_exhausted")
-                        last = episode.get("revision_memory", {})
-                        repeats = last.get("open", [])
-                        if (episode.get("reviewed") and repeats and all(item["reviews"] >= 2 for item in repeats)
-                                and last.get("tool_calls_at_review") == episode["tool_calls"]):
+                        if repeated_redraft(episode, limits.max_no_progress):
                             raise StopEpisode("repeated_review_without_progress")
                         episode["draft_attempted"] = True
                         ctx = self._context(session_id, episode)
@@ -1113,7 +1148,31 @@ class ResearchEngine:
                         ctx["rule_findings"] = rules
                         if instruction:
                             ctx["draft_instruction"] = instruction
-                        model_call("critic", ctx, commit_result=lambda review: self._commit_review(session_id, episode, ctx, instruction, review))
+                        def commit_review(review):
+                            self._commit_review(session_id, episode, ctx, instruction, review)
+
+                        try:
+                            model_call("critic", ctx, commit_result=commit_review)
+                        except OutputContractError as exc:
+                            # A malformed envelope has no attributable verdict. Give the
+                            # Critic one correction per episode without reopening research.
+                            if (exc.code not in {"invalid_critic_json", "unknown_issue_target"}
+                                    or episode.get("critic_receipt_retry_used")):
+                                raise
+                            guard("model")
+                            if not self._role_inputs_current(session_id, "critic", ctx, {"issues": []}):
+                                raise StopEpisode("role_inputs_changed")
+                            episode["critic_receipt_retry_used"] = True
+                            retry = {
+                                "previous_contract_error": exc.code,
+                                "instruction": ("Return the full review for this unchanged draft as a single JSON object. "
+                                                "Copy each issue target_id exactly from claims[].id or requirements[].id. "
+                                                "Retain all substantive objections and review each current claim and requirement.")
+                            }
+                            self.store.add_event(session_id, {"type": "controller_route", "episode_id": episode["id"],
+                                "from": "critic", "to": "critic", "reason": "retry_invalid_critic_receipt",
+                                "contract_error": exc.code})
+                            model_call("critic", {**ctx, "critic_receipt_repair": retry}, commit_result=commit_review)
                         pending_recovery = episode.pop("tool_recovery", None)
                         if finalize_recovery or pending_recovery:
                             # A reviewed partial answer ends this recovery path.
@@ -1227,6 +1286,8 @@ class ResearchEngine:
             recent = ctx["episode"].get("recent_tool_results", [])
             ctx["repair_feedback"] = {
                 "targets_and_consecutive_reviews_on_same_sources": memory["open"],
+                "reviews_at_current_or_lower_question_coverage": memory.get("review_span", 1),
+                "same_evidence_review_limit": episode["budget"].get("max_no_progress", Budget.max_no_progress),
                 "previous_draft_instruction": memory["last_draft_instruction"],
                 "tool_calls_since_review": since,
                 "last_tool_in_this_turn": (
