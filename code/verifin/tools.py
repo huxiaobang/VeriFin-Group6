@@ -1066,6 +1066,22 @@ class ToolRegistry:
                    "forms": args.get("forms"), "document_ids": args.get("document_ids")}
         result = retrieve(corpus, args["query"], filters, args.get("retrieval_mode", "bm25"),
                           args.get("limit", 5), embeddings, args.get("max_context_chars", 9000))
+        if len(filters.get("document_ids") or []) == 1 and result["eligible_document_ids"]:
+            source_id = filters["document_ids"][0]
+            source = next(doc for doc in corpus.documents if doc["id"] == source_id)
+            period = source.get("document_report_date")
+            if period:
+                result["single_document_period_end"] = period
+                # Catalog metadata only. Do not read or return another document on a narrow search.
+                alternatives = {row["document_id"]:row.get("document_period_start") for row in
+                                corpus.eligible({**filters, "document_ids":None, "period_end":period})}
+                start = source.get("document_period_start")
+                allowed = sorted(doc_id for doc_id, date in alternatives.items() if date == start)
+                if len(allowed) > 1 and start:
+                    if len(allowed) == len(alternatives):
+                        result["same_period_search"] = {"period_end":period}
+                    elif len(allowed) <= 50:  # search_documents' public document_ids bound
+                        result["same_period_search"] = {"period_end":period, "document_ids":allowed}
         if end and not result["eligible_document_ids"]:
             # Only show metadata of the same issuer/form/document IDs already
             # visible at this cutoff. Never silently change the requested filter.

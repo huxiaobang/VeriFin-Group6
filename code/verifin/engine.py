@@ -16,7 +16,7 @@ import threading
 import time
 import uuid
 
-from . import fiscal_followup, planner_evidence, income_followup
+from . import fiscal_followup, planner_evidence, income_followup, issuer_attribution, source_scope
 from .verification import Verifier, check_rules
 from .model import ContextLimitReached, OutputContractError, SpendLimitReached, USAGE_FIELDS
 from .request_review import clarify_request, request_parts, coverage_issues, report_coverage, single_question_mismatch, unresolved_checklist
@@ -728,6 +728,23 @@ class ResearchEngine:
                     recovery = episode.get("tool_recovery")
                     finalize_recovery = False
                     step = skill_calculations.next_action(work, ctx) if work is not None else None
+                    if (self.model is None and self.planner is None and auto and new_followup
+                            and work is None and not income_plan and not step):
+                        from . import offline_attribution
+                        args = None
+                        if episode["tool_calls"] == 0:
+                            args = offline_attribution.initial_search(ctx, prior_report)
+                            if args:
+                                episode["offline_attribution_search"] = True
+                        elif episode.get("offline_attribution_search"):
+                            if episode["tool_calls"] < limits.max_tool_calls:
+                                args = issuer_attribution.next_search(ctx, {"action":"research"})
+                            if args:
+                                episode["attribution_search_expanded"] = True
+                            else:
+                                episode["offline_part_findings"] = offline_attribution.findings(ctx)
+                        if args:
+                            step = {"action":"tool", "tool":"search_documents", "arguments":args}
                     income_action={"action":"tool","tool":"reconcile_net_income","arguments":income_plan["arguments"]} if (
                         income_plan and "arguments" in income_plan and not income_attempted and
                         any(t["name"]=="reconcile_net_income" for t in ctx["tools"])) else None
@@ -912,6 +929,24 @@ class ResearchEngine:
                             decision = {"action":"tool", "tool":check["tool"], "arguments":check["arguments"]}
                             self.store.add_event(session_id, {"type":"controller_route", "episode_id":episode["id"],
                                 "from":"research", "to":check["tool"], "reason":"check_quarterly_expenses_before_drafting"})
+                    # Source restrictions come from the user. A document_ids choice by
+                    # the Planner alone need not constrain a later search for an explanation.
+                    source_ctx = self._context(session_id, episode) if changed_scope else ctx
+                    bounded = source_scope.bound_decision(source_ctx, decision)
+                    if bounded is not decision:
+                        self.store.add_event(session_id, {"type":"controller_route", "episode_id":episode["id"],
+                            "from":action, "to":bounded.get("tool", bounded["action"]), "reason":"user_document_scope"})
+                        decision, action = bounded, bounded["action"]
+                    if (self.model is not None and self.planner is None and step is None and not recovery
+                            and episode["tool_calls"] < limits.max_tool_calls and not draft_after_tool):
+                        expanded = issuer_attribution.next_search(source_ctx, decision)
+                        if expanded:
+                            draft_after_tool = decision if action == "research" else None
+                            self.store.add_event(session_id, {"type":"controller_route", "episode_id":episode["id"],
+                                "from":action, "to":"search_documents", "reason":"same_period_attribution_search"})
+                            episode["attribution_search_expanded"] = True
+                            decision = {"action":"tool", "tool":"search_documents", "arguments":expanded}
+                            action = "tool"
                     if action == "clarify":
                         question = decision.get("question")
                         if not isinstance(question, str) or not question.strip():
@@ -1044,6 +1079,8 @@ class ResearchEngine:
                                        "error": result.get("error"),
                                        "evidence_ids": [r["id"] for r in result.get("evidence", [])],
                                        "calculation_ids": [r["id"] for r in result.get("calculations", [])]})
+                        if name == "search_documents":
+                            recent[-1]["search_scope"] = {k:v for k,v in tool_session["scope"].items() if k != "requirements"}
                         if name == "analyze_disclosures":
                             recent[-1]["planner_instruction"] = decision.get("reason", "")
                         if name in ("reconcile_net_income", income_followup.EXPLANATION_TOOL):
@@ -1112,6 +1149,11 @@ class ResearchEngine:
                             ctx["request_parts"] = {"part-1":episode["request"]}
                             episode["inherited_parts"] = ctx["request_parts"]
                         instruction = decision.get("reason", "")
+                        if ctx.get("issuer_attribution", {}).get("candidates"):
+                            instruction = (instruction + "\nCurrent retrieval returned the issuer_attribution candidate "
+                                "passages. Check the named metric, period, and causal language against the cited "
+                                "original. Use applicable company explanations with their evidence IDs; a prior "
+                                "search of one document cannot establish their absence. Separate inference.").strip()
                         if draft_after_tool is not None and ctx.get("income_bridge"):
                             # A real Planner may correctly say no arithmetic exists *at decision time*.
                             # The receipt just committed supersedes that premise for both roles.
@@ -1266,8 +1308,11 @@ class ResearchEngine:
         ctx["episode"] = {k: v for k, v in episode.items() if k not in {"seen_results", "revision_memory", "draft_reference_issues", "planner_added_requirements", "followup_limits"}}
         companies = getattr(getattr(self.tools, "data", None), "manifest", {}).get("companies", [])
         ctx = issuer_scoped_context(ctx, companies)
+        ctx = source_scope.bound_context(ctx)
         reopen_comparison_receipt(ctx, self.store)
         ctx = current_tool_receipts(ctx)
+        if found := issuer_attribution.evidence_context(ctx):
+            ctx["issuer_attribution"] = found
         if current_income := income_followup.current_bridge(ctx):
             ctx["income_bridge"]=current_income
             if explanation := income_followup.explanation_context(ctx):

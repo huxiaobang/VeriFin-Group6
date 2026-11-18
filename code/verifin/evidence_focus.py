@@ -79,7 +79,7 @@ def focused_evidence(context, role):
         keep.update(matches)
     # Keep the current claims, objections, and underlying operands; prior report
     # citations do not implicitly become active claims when the user changes focus.
-    for name in ("claims", "issues", "calculations", "income_bridge", "income_explanation", "followup_focus",
+    for name in ("claims", "issues", "calculations", "income_bridge", "income_explanation", "issuer_attribution", "followup_focus",
                  "rule_findings", "source_context_notes", "display_review_notes", "repair_feedback"):
         keep.update(ids.intersection(_strings(context.get(name))))
     for name in ("issues", "skill_notes", "statement_notes", "skill_assessments"):
