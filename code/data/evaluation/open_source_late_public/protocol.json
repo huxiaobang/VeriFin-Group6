@@ -1,0 +1,42 @@
+{
+  "protocol": "public-convfinqa-late-interaction-v1",
+  "frozen_at": "2026-11-06T09:45:07.554370+00:00",
+  "status": "frozen before PPLX model inference; Qwen baseline already available",
+  "model_id": "perplexity-ai/pplx-embed-v2-late-0.6b",
+  "revision": "7bba8e7cf2075dec747fa8557f41eb90e70361ed",
+  "official_weight_sha256": "107eaae48d026ea20458b30dd755a0f1475b34fcf5a1895123ad67a2385b9d6b",
+  "selection_sha256": "2e65eecd02ae4747fb753ebb5682b6aedef09f73fb59e9cf4ef6aa60c2d3bc57",
+  "data_sha256": "8a2461be571a3277c443e2dce6e3cce6f4df197db5b7d0b60eed3477f4c952b9",
+  "device": "cpu",
+  "dtype": "float32",
+  "threads": 4,
+  "interop_threads": 1,
+  "passage_batch_size": 8,
+  "query_latency_batch_size": 1,
+  "query_throughput_batch_size": 8,
+  "query_variants": [
+    "current question",
+    "newline join of previous questions + current; no enumeration, labels or added numbers"
+  ],
+  "candidate_pool": "all supplied source blocks for each case; no gold filtering",
+  "scoring": "normalized per-token dot product Sum-MaxSim",
+  "hybrid": "BM25 + MaxSim equal-weight RRF k=60, top100 per component",
+  "final_top_k": 5,
+  "context_char_budget": null,
+  "primary_metrics": [
+    "macro evidence recall@5",
+    "all evidence fraction@5",
+    "MRR@5"
+  ],
+  "resource_metrics": [
+    "indexing time",
+    "single query latency",
+    "batch query throughput",
+    "exact eligible MaxSim latency",
+    "peak process RSS",
+    "token index bytes"
+  ],
+  "held_out": false,
+  "visual_inputs": false,
+  "generative_model_calls": 0
+}

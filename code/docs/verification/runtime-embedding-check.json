@@ -1,0 +1,168 @@
+{
+  "protocol": "real-local-encoder-integration-check",
+  "model": {
+    "model_path": "External local weights, not bundled",
+    "model_id": "intfloat/multilingual-e5-small",
+    "revision": "614241f622f53c4eeff9890bdc4f31cfecc418b3",
+    "query_prefix": "query: ",
+    "passage_prefix": "passage: ",
+    "batch_size": 8,
+    "chunk_chars": 600,
+    "chunk_overlap": 80
+  },
+  "real_llm_calls": 0,
+  "network_requests_during_encoding": 0,
+  "semantic_answer_scored": false,
+  "checks": [
+    "unseen query encoded",
+    "second query reused passages",
+    "reopened registry reused disk cache",
+    "cold and warm artifact hash equal"
+  ],
+  "rows": [
+    {
+      "turn": 1,
+      "query": "哪些因素推动了微软云业务的收入增长？",
+      "ok": true,
+      "error": null,
+      "evidence_count": 5,
+      "retrieval": {
+        "mode": "hybrid",
+        "query": "哪些因素推动了微软云业务的收入增长？",
+        "filters": {
+          "entity": "MSFT",
+          "period_end": null,
+          "cutoff": null,
+          "forms": null,
+          "document_ids": null
+        },
+        "corpus_fingerprint": "corpus_59f5576b526292b642e7dde9",
+        "eligible_chunks": 56,
+        "eligible_document_ids": [
+          "source_doc_46d5f99ce5f770df7276c00f",
+          "source_doc_d648a9d1ce6b6d52c5dbbf5f"
+        ],
+        "ranking_latency_ms": 2.43687501642853,
+        "context_chars": 2928,
+        "max_context_chars": 9000,
+        "limit": 5,
+        "candidate_limit": 100,
+        "scoring": "equal-weight reciprocal rank fusion k=60",
+        "embedding_artifact_hash": "7e81812eee0f301f71cf5bd969b1f570935f01f075b3407677409dbed173e0e2",
+        "runtime_encoding": {
+          "cache_hits": 0,
+          "encoded_passages": 155,
+          "encoded_queries": 1,
+          "network_requests": 0,
+          "encoding_seconds": 3.0846425000345334,
+          "artifact_path": "unbundled-runtime-cache/7e81812eee0f301f71cf5bd969b1f570935f01f075b3407677409dbed173e0e2.artifact.json",
+          "corpus_fingerprint": "corpus_59f5576b526292b642e7dde9"
+        },
+        "corpus_complete": false,
+        "eligible_documents": [
+          "source_doc_46d5f99ce5f770df7276c00f",
+          "source_doc_d648a9d1ce6b6d52c5dbbf5f"
+        ],
+        "retrieval": "equal-weight reciprocal rank fusion k=60",
+        "document_period_semantics": "report metadata only; statement periods require checking the actual passage",
+        "network_requests": 0
+      }
+    },
+    {
+      "turn": 2,
+      "query": "微软收入增长与汇率变动有关系吗？",
+      "ok": true,
+      "error": null,
+      "evidence_count": 5,
+      "retrieval": {
+        "mode": "hybrid",
+        "query": "微软收入增长与汇率变动有关系吗？",
+        "filters": {
+          "entity": "MSFT",
+          "period_end": null,
+          "cutoff": null,
+          "forms": null,
+          "document_ids": null
+        },
+        "corpus_fingerprint": "corpus_59f5576b526292b642e7dde9",
+        "eligible_chunks": 56,
+        "eligible_document_ids": [
+          "source_doc_46d5f99ce5f770df7276c00f",
+          "source_doc_d648a9d1ce6b6d52c5dbbf5f"
+        ],
+        "ranking_latency_ms": 2.1930000511929393,
+        "context_chars": 2765,
+        "max_context_chars": 9000,
+        "limit": 5,
+        "candidate_limit": 100,
+        "scoring": "equal-weight reciprocal rank fusion k=60",
+        "embedding_artifact_hash": "14cbc2b6a6901f6eb6084425a842c6140bd959828677ca20066da435cf9c905e",
+        "runtime_encoding": {
+          "cache_hits": 155,
+          "encoded_passages": 0,
+          "encoded_queries": 1,
+          "network_requests": 0,
+          "encoding_seconds": 0.12766654195729643,
+          "artifact_path": "unbundled-runtime-cache/14cbc2b6a6901f6eb6084425a842c6140bd959828677ca20066da435cf9c905e.artifact.json",
+          "corpus_fingerprint": "corpus_59f5576b526292b642e7dde9"
+        },
+        "corpus_complete": false,
+        "eligible_documents": [
+          "source_doc_46d5f99ce5f770df7276c00f",
+          "source_doc_d648a9d1ce6b6d52c5dbbf5f"
+        ],
+        "retrieval": "equal-weight reciprocal rank fusion k=60",
+        "document_period_semantics": "report metadata only; statement periods require checking the actual passage",
+        "network_requests": 0
+      }
+    },
+    {
+      "turn": 3,
+      "query": "哪些因素推动了微软云业务的收入增长？",
+      "ok": true,
+      "error": null,
+      "evidence_count": 5,
+      "retrieval": {
+        "mode": "hybrid",
+        "query": "哪些因素推动了微软云业务的收入增长？",
+        "filters": {
+          "entity": "MSFT",
+          "period_end": null,
+          "cutoff": null,
+          "forms": null,
+          "document_ids": null
+        },
+        "corpus_fingerprint": "corpus_59f5576b526292b642e7dde9",
+        "eligible_chunks": 56,
+        "eligible_document_ids": [
+          "source_doc_46d5f99ce5f770df7276c00f",
+          "source_doc_d648a9d1ce6b6d52c5dbbf5f"
+        ],
+        "ranking_latency_ms": 2.256333944387734,
+        "context_chars": 2928,
+        "max_context_chars": 9000,
+        "limit": 5,
+        "candidate_limit": 100,
+        "scoring": "equal-weight reciprocal rank fusion k=60",
+        "embedding_artifact_hash": "7e81812eee0f301f71cf5bd969b1f570935f01f075b3407677409dbed173e0e2",
+        "runtime_encoding": {
+          "cache_hits": 156,
+          "encoded_passages": 0,
+          "encoded_queries": 0,
+          "network_requests": 0,
+          "encoding_seconds": 0.10225704195909202,
+          "artifact_path": "unbundled-runtime-cache/7e81812eee0f301f71cf5bd969b1f570935f01f075b3407677409dbed173e0e2.artifact.json",
+          "corpus_fingerprint": "corpus_59f5576b526292b642e7dde9"
+        },
+        "corpus_complete": false,
+        "eligible_documents": [
+          "source_doc_46d5f99ce5f770df7276c00f",
+          "source_doc_d648a9d1ce6b6d52c5dbbf5f"
+        ],
+        "retrieval": "equal-weight reciprocal rank fusion k=60",
+        "document_period_semantics": "report metadata only; statement periods require checking the actual passage",
+        "network_requests": 0
+      }
+    }
+  ]
+}

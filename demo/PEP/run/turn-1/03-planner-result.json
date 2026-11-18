@@ -1,0 +1,13 @@
+{
+  "action": "tool",
+  "tool": "read_document",
+  "arguments": {
+    "entity": "PEP",
+    "document_id": "source_doc_10051e485ae3e4f6272a9b32",
+    "cutoff": "2026-11-16",
+    "offset": 0,
+    "limit_chars": 6000
+  },
+  "reason": "沿用已确认的R1、R2，读取最新季度业绩公告，核实报告期、收入盈利、口径和展望；这是季度概览，无需专项分析方法。",
+  "research_skills": []
+}

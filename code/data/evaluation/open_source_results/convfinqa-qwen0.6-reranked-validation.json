@@ -1,0 +1,434 @@
+{
+  "status": "PASS",
+  "case_count": 100,
+  "source_groups": 18,
+  "candidate_scores": 1968,
+  "top5_oracle_bounds": {
+    "cases_with_more_than_5_gold_blocks": 1,
+    "all_evidence_fraction_upper_bound": 0.99,
+    "macro_recall_upper_bound": 0.9971428571428571
+  },
+  "checks": [
+    "six baseline methods and candidate20 equal canonical per case",
+    "all scores finite in [0,1]",
+    "same-history top20 preserved; score descending and ID tie break reproduced",
+    "all per-case recall/all-evidence/MRR/context characters recomputed from published source IDs",
+    "all/initial/followup summaries independently recomputed",
+    "source/selection/embedding provenance matches"
+  ],
+  "paired_bootstrap": {
+    "unit": "source-page group; all turns retained per sampled group",
+    "groups": 18,
+    "iterations": 4000,
+    "seed": 20261106,
+    "estimand": "turn-weighted paired mean: same-history reranker minus hybrid",
+    "interval": "percentile 95%; group resampling with replacement",
+    "development_diagnostic_only": true,
+    "metrics": {
+      "evidence_recall": {
+        "observed_difference": -0.0054761904761904765,
+        "ci95": [
+          -0.0823045267489712,
+          0.053772713032581465
+        ]
+      },
+      "all_evidence": {
+        "observed_difference": -0.02,
+        "ci95": [
+          -0.12745619524405505,
+          0.07088020247469072
+        ]
+      },
+      "mrr": {
+        "observed_difference": -0.065,
+        "ci95": [
+          -0.18280399575202444,
+          0.023499968169085873
+        ]
+      }
+    }
+  },
+  "examples": {
+    "selection": "up to three largest positive/negative recall changes; MRR and ID tie break",
+    "improved_count": 10,
+    "declined_count": 7,
+    "unchanged_recall_count": 83,
+    "improvements": [
+      {
+        "case_id": "convfinqa:dev:Double_INTC/2013/page_29.pdf_0",
+        "group_id": "INTC/2013/page_29.pdf",
+        "query": "as of december 28, 2013, what percentage of the square footage of major facilities was owned?",
+        "gold_count": 2,
+        "recall_change": 0.5,
+        "mrr_change": 0.0,
+        "before": {
+          "evidence_recall": 0.5,
+          "all_evidence": false,
+          "mrr": 0.5,
+          "passage_ids": [
+            "public_source_7e46c3fe1c331c34142d4a9e",
+            "public_source_8bcdc1d1e3054abf8b1561d2",
+            "public_source_842be0724f5d9ccdd19cc279",
+            "public_source_da784a95ca9a420c5e0f8edd",
+            "public_source_00ec3fe8c6ffac15b4badac2"
+          ],
+          "context_chars": 699
+        },
+        "after": {
+          "evidence_recall": 1.0,
+          "all_evidence": true,
+          "mrr": 0.5,
+          "passage_ids": [
+            "public_source_7e46c3fe1c331c34142d4a9e",
+            "public_source_8bcdc1d1e3054abf8b1561d2",
+            "public_source_6f335a6e1e5ebcf8f593a98b",
+            "public_source_d47e0bbaadbabb889df31348",
+            "public_source_a5c1494d4e9a0d940390fa78"
+          ],
+          "context_chars": 585
+        },
+        "promoted": [
+          {
+            "id": "public_source_6f335a6e1e5ebcf8f593a98b",
+            "locator": "table_3",
+            "published_gold": true,
+            "text_preview": "total facilities; unitedstates: 32.2; othercountries: 22.7; total: 54.9"
+          },
+          {
+            "id": "public_source_d47e0bbaadbabb889df31348",
+            "locator": "table_2",
+            "published_gold": false,
+            "text_preview": "leased facilities2; unitedstates: 2.3; othercountries: 6.0; total: 8.3"
+          },
+          {
+            "id": "public_source_a5c1494d4e9a0d940390fa78",
+            "locator": "text_18",
+            "published_gold": false,
+            "text_preview": "for information on net property , plant and equipment by country , see 201cnote 27 : operating segments and geographic information 201d in part ii , item 8 of this form 10-k ."
+          }
+        ],
+        "dropped": [
+          {
+            "id": "public_source_842be0724f5d9ccdd19cc279",
+            "locator": "text_10",
+            "published_gold": false,
+            "text_preview": "we also completed construction of a large-scale fabrication building in arizona in 2013 , which is currently not in use and is not being depreciated ."
+          },
+          {
+            "id": "public_source_da784a95ca9a420c5e0f8edd",
+            "locator": "table_0",
+            "published_gold": false,
+            "text_preview": "( square feet in millions ) | unitedstates | othercountries | total"
+          },
+          {
+            "id": "public_source_00ec3fe8c6ffac15b4badac2",
+            "locator": "text_16",
+            "published_gold": false,
+            "text_preview": "we believe that the facilities described above are suitable and adequate for our present purposes and that the productive capacity in our facilities is substantially being utilized or we have plans to utilize it ."
+          }
+        ]
+      },
+      {
+        "case_id": "convfinqa:dev:Double_IP/2007/page_75.pdf_1",
+        "group_id": "IP/2007/page_75.pdf",
+        "query": "as of december 31, 2007, what was the amount of the purchase obligations due in 2008?\nand what was the total of all obligations?",
+        "gold_count": 2,
+        "recall_change": 0.5,
+        "mrr_change": 0.0,
+        "before": {
+          "evidence_recall": 0.5,
+          "all_evidence": false,
+          "mrr": 0.5,
+          "passage_ids": [
+            "public_source_222e47401d7760be5ceaa122",
+            "public_source_3ac6fc460691ee37e1dd929c",
+            "public_source_a4aaa7a8d4bfea96a3a68f3a",
+            "public_source_17c1f3e1b80a19bfabf7cc60",
+            "public_source_6d1425287dcc2d23878a5644"
+          ],
+          "context_chars": 841
+        },
+        "after": {
+          "evidence_recall": 1.0,
+          "all_evidence": true,
+          "mrr": 0.5,
+          "passage_ids": [
+            "public_source_222e47401d7760be5ceaa122",
+            "public_source_3ac6fc460691ee37e1dd929c",
+            "public_source_17c1f3e1b80a19bfabf7cc60",
+            "public_source_17b4b3752a5b84069bcf00ff",
+            "public_source_1171778ab3d98589f9145c1c"
+          ],
+          "context_chars": 672
+        },
+        "promoted": [
+          {
+            "id": "public_source_17b4b3752a5b84069bcf00ff",
+            "locator": "table_3",
+            "published_gold": true,
+            "text_preview": "total; 2008: $ 2089; 2009: $ 410; 2010: $ 362; 2011: $ 319; 2012: $ 279; thereafter: $ 1572"
+          },
+          {
+            "id": "public_source_1171778ab3d98589f9145c1c",
+            "locator": "text_15",
+            "published_gold": false,
+            "text_preview": "and state tax credit carryforwards that expire as follows : 2008 through 2017 2014 $ 67 million , 2018 through 2027 2014 $ 92 million , and indefinite carryforwards 2014 $ 316 million ."
+          }
+        ],
+        "dropped": [
+          {
+            "id": "public_source_a4aaa7a8d4bfea96a3a68f3a",
+            "locator": "text_21",
+            "published_gold": false,
+            "text_preview": "unconditional purchase obligations have been entered into in the ordinary course of business , prin- cipally for capital projects and the purchase of cer- tain pulpwood , wood chips , raw materials , energy and services , including fiber su"
+          },
+          {
+            "id": "public_source_6d1425287dcc2d23878a5644",
+            "locator": "text_27",
+            "published_gold": false,
+            "text_preview": "the company has no future obligations under this agreement. ."
+          }
+        ]
+      },
+      {
+        "case_id": "convfinqa:dev:Double_INTC/2013/page_29.pdf_1",
+        "group_id": "INTC/2013/page_29.pdf",
+        "query": "as of december 28, 2013, what percentage of the square footage of major facilities was owned?\nand what percentage was leased?",
+        "gold_count": 2,
+        "recall_change": 0.5,
+        "mrr_change": -0.16666666666666669,
+        "before": {
+          "evidence_recall": 0.5,
+          "all_evidence": false,
+          "mrr": 0.5,
+          "passage_ids": [
+            "public_source_7e46c3fe1c331c34142d4a9e",
+            "public_source_d47e0bbaadbabb889df31348",
+            "public_source_8bcdc1d1e3054abf8b1561d2",
+            "public_source_da784a95ca9a420c5e0f8edd",
+            "public_source_842be0724f5d9ccdd19cc279"
+          ],
+          "context_chars": 556
+        },
+        "after": {
+          "evidence_recall": 1.0,
+          "all_evidence": true,
+          "mrr": 0.3333333333333333,
+          "passage_ids": [
+            "public_source_7e46c3fe1c331c34142d4a9e",
+            "public_source_8bcdc1d1e3054abf8b1561d2",
+            "public_source_d47e0bbaadbabb889df31348",
+            "public_source_6f335a6e1e5ebcf8f593a98b",
+            "public_source_ccaedf68d00b33b530d18038"
+          ],
+          "context_chars": 507
+        },
+        "promoted": [
+          {
+            "id": "public_source_6f335a6e1e5ebcf8f593a98b",
+            "locator": "table_3",
+            "published_gold": true,
+            "text_preview": "total facilities; unitedstates: 32.2; othercountries: 22.7; total: 54.9"
+          },
+          {
+            "id": "public_source_ccaedf68d00b33b530d18038",
+            "locator": "text_4",
+            "published_gold": false,
+            "text_preview": "1 leases on portions of the land used for these facilities expire on varying dates through 2062 ."
+          }
+        ],
+        "dropped": [
+          {
+            "id": "public_source_da784a95ca9a420c5e0f8edd",
+            "locator": "table_0",
+            "published_gold": false,
+            "text_preview": "( square feet in millions ) | unitedstates | othercountries | total"
+          },
+          {
+            "id": "public_source_842be0724f5d9ccdd19cc279",
+            "locator": "text_10",
+            "published_gold": false,
+            "text_preview": "we also completed construction of a large-scale fabrication building in arizona in 2013 , which is currently not in use and is not being depreciated ."
+          }
+        ]
+      }
+    ],
+    "regressions": [
+      {
+        "case_id": "convfinqa:dev:Single_MA/2008/page_126.pdf-1_0",
+        "group_id": "MA/2008/page_126.pdf",
+        "query": "what was the change in total liabilities for litigation settlements from 2006 to 2007?",
+        "gold_count": 1,
+        "recall_change": -1.0,
+        "mrr_change": -0.2,
+        "before": {
+          "evidence_recall": 1.0,
+          "all_evidence": true,
+          "mrr": 0.2,
+          "passage_ids": [
+            "public_source_36edbf3c805094c99509e7a5",
+            "public_source_ec43e27991b6c1c9106a3e9e",
+            "public_source_27c47c28b5d9080f5ecf3e27",
+            "public_source_429a360bc32196afc43013d6",
+            "public_source_e2d008133421f8240fcee72b"
+          ],
+          "context_chars": 339
+        },
+        "after": {
+          "evidence_recall": 0.0,
+          "all_evidence": false,
+          "mrr": 0,
+          "passage_ids": [
+            "public_source_36edbf3c805094c99509e7a5",
+            "public_source_429a360bc32196afc43013d6",
+            "public_source_27c47c28b5d9080f5ecf3e27",
+            "public_source_ec43e27991b6c1c9106a3e9e",
+            "public_source_5b75fb490aa11059da5eb4e4"
+          ],
+          "context_chars": 430
+        },
+        "promoted": [
+          {
+            "id": "public_source_5b75fb490aa11059da5eb4e4",
+            "locator": "text_17",
+            "published_gold": false,
+            "text_preview": "merchant lawsuit settlement , the company was required to pay $ 125000 in 2003 and $ 100000 annually each december from 2004 through 2012 ."
+          }
+        ],
+        "dropped": [
+          {
+            "id": "public_source_e2d008133421f8240fcee72b",
+            "locator": "table_4",
+            "published_gold": true,
+            "text_preview": "balance as of december 31 2007; $ 476915: 404436"
+          }
+        ]
+      },
+      {
+        "case_id": "convfinqa:dev:Single_MA/2008/page_126.pdf-1_1",
+        "group_id": "MA/2008/page_126.pdf",
+        "query": "what was the change in total liabilities for litigation settlements from 2006 to 2007?\nand how much does this change represent in relation to those liabilities in 2006, in percentage?",
+        "gold_count": 1,
+        "recall_change": -1.0,
+        "mrr_change": -0.2,
+        "before": {
+          "evidence_recall": 1.0,
+          "all_evidence": true,
+          "mrr": 0.2,
+          "passage_ids": [
+            "public_source_36edbf3c805094c99509e7a5",
+            "public_source_ec43e27991b6c1c9106a3e9e",
+            "public_source_27c47c28b5d9080f5ecf3e27",
+            "public_source_429a360bc32196afc43013d6",
+            "public_source_e2d008133421f8240fcee72b"
+          ],
+          "context_chars": 339
+        },
+        "after": {
+          "evidence_recall": 0.0,
+          "all_evidence": false,
+          "mrr": 0,
+          "passage_ids": [
+            "public_source_36edbf3c805094c99509e7a5",
+            "public_source_429a360bc32196afc43013d6",
+            "public_source_27c47c28b5d9080f5ecf3e27",
+            "public_source_ec43e27991b6c1c9106a3e9e",
+            "public_source_5b75fb490aa11059da5eb4e4"
+          ],
+          "context_chars": 430
+        },
+        "promoted": [
+          {
+            "id": "public_source_5b75fb490aa11059da5eb4e4",
+            "locator": "text_17",
+            "published_gold": false,
+            "text_preview": "merchant lawsuit settlement , the company was required to pay $ 125000 in 2003 and $ 100000 annually each december from 2004 through 2012 ."
+          }
+        ],
+        "dropped": [
+          {
+            "id": "public_source_e2d008133421f8240fcee72b",
+            "locator": "table_4",
+            "published_gold": true,
+            "text_preview": "balance as of december 31 2007; $ 476915: 404436"
+          }
+        ]
+      },
+      {
+        "case_id": "convfinqa:dev:Single_FRT/2005/page_117.pdf-2_2",
+        "group_id": "FRT/2005/page_117.pdf",
+        "query": "what is the value of accumulated depreciation and amortization at the end of 2005?\nwhat is the balance at the end of 2004?\nwhat is the ratio of 2005 to 2004?",
+        "gold_count": 2,
+        "recall_change": -0.5,
+        "mrr_change": -0.8,
+        "before": {
+          "evidence_recall": 1.0,
+          "all_evidence": true,
+          "mrr": 1.0,
+          "passage_ids": [
+            "public_source_564551b55c508b2661f62bf6",
+            "public_source_1772b9b2de1ee96124f496b8",
+            "public_source_73cf24705b5f0aad619b2414",
+            "public_source_6264970b20c6349d92d150c2",
+            "public_source_cf723f64338372afa0ed2ee1"
+          ],
+          "context_chars": 433
+        },
+        "after": {
+          "evidence_recall": 0.5,
+          "all_evidence": false,
+          "mrr": 0.2,
+          "passage_ids": [
+            "public_source_73cf24705b5f0aad619b2414",
+            "public_source_cf723f64338372afa0ed2ee1",
+            "public_source_7d0a393f0dd8575c7c75deb3",
+            "public_source_094af0126e1b7b097e4213df",
+            "public_source_564551b55c508b2661f62bf6"
+          ],
+          "context_chars": 523
+        },
+        "promoted": [
+          {
+            "id": "public_source_7d0a393f0dd8575c7c75deb3",
+            "locator": "table_1",
+            "published_gold": false,
+            "text_preview": "additions during period 2014depreciation and amortization expense; $ 450697000: 68125000"
+          },
+          {
+            "id": "public_source_094af0126e1b7b097e4213df",
+            "locator": "table_7",
+            "published_gold": false,
+            "text_preview": "additions during period 2014depreciation and amortization expense; $ 450697000: 83656000"
+          }
+        ],
+        "dropped": [
+          {
+            "id": "public_source_1772b9b2de1ee96124f496b8",
+            "locator": "table_6",
+            "published_gold": true,
+            "text_preview": "balance december 31 2004; $ 450697000: 595338000"
+          },
+          {
+            "id": "public_source_6264970b20c6349d92d150c2",
+            "locator": "table_0",
+            "published_gold": false,
+            "text_preview": "balance december 31 2002 | $ 450697000"
+          }
+        ]
+      }
+    ]
+  },
+  "limits": [
+    "Development subset; correlated turns resampled by source-page group, not 100 independent reports.",
+    "Percentile intervals describe this frozen subset only; no held-out or end-to-end Agent claim.",
+    "Unannotated alternative evidence is not automatically irrelevant.",
+    "Saved scores are checked, not regenerated; elapsed inference times are not remeasured."
+  ],
+  "model_calls": 0,
+  "network_calls": 0,
+  "created_at": "2026-11-06T10:19:58.251045+00:00",
+  "script_sha256": "183d19eba79640ff32135de6ca2c7c901236e210119a67c64af2f8272856e1ad",
+  "result_sha256": "3703bad3ac9777d44a4f41d8d581cce7847eacca14731da87b8049ff0b82c620",
+  "canonical_sha256": "25abcb3d79fd1983d6b1b2aca89c2d112b593ee9d7c72b0120efe710f2e7133f",
+  "data_sha256": "8a2461be571a3277c443e2dce6e3cce6f4df197db5b7d0b60eed3477f4c952b9"
+}

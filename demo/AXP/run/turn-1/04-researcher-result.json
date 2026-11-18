@@ -1,0 +1,215 @@
+{
+  "claims": [
+    {
+      "id": "claim:latest-quarter",
+      "text": "截至2026年11月16日，在有限本地资料快照中，美国运通最新可核实的已披露财季为截至2026年9月30日的第三季度，业绩公告及10-Q均于10月23日披露。这不是实时联网核验，不能据此保证本地目录以外没有更新披露。",
+      "evidence_ids": [
+        "metadata_286185e77f063ec7f55fd4c8"
+      ],
+      "calculation_ids": [],
+      "requirement_ids": [
+        "R1"
+      ],
+      "constraints": {
+        "entity": "AXP",
+        "period_end": "2026-09-30",
+        "cutoff": "2026-11-16",
+        "coverage": "有限本地回放目录，非实时联网核验",
+        "missing_evidence": [
+          "截至截止日对本地目录之外新增披露的实时完整核验"
+        ]
+      }
+    },
+    {
+      "id": "claim:revenue",
+      "text": "第三季度合并收入（扣除利息支出后）约201亿美元，同比增长9%，创公司第三季度收入纪录。",
+      "evidence_ids": [
+        "span_3b74985e92f2fa70a68c88af"
+      ],
+      "calculation_ids": [],
+      "requirement_ids": [
+        "R2"
+      ],
+      "constraints": {
+        "entity": "AXP",
+        "period_start": "2026-07-01",
+        "period_end": "2026-09-30",
+        "business_scope": "合并",
+        "currency": "USD",
+        "basis": "报告口径；同比2025年第三季度"
+      }
+    },
+    {
+      "id": "claim:net-income",
+      "text": "第三季度净利润约37亿美元，同比增长28%。",
+      "evidence_ids": [
+        "span_3b74985e92f2fa70a68c88af"
+      ],
+      "calculation_ids": [],
+      "requirement_ids": [
+        "R2"
+      ],
+      "constraints": {
+        "entity": "AXP",
+        "period_start": "2026-07-01",
+        "period_end": "2026-09-30",
+        "business_scope": "合并",
+        "currency": "USD",
+        "basis": "报告口径；同比2025年第三季度"
+      }
+    },
+    {
+      "id": "claim:eps",
+      "text": "第三季度报告摊薄每股收益为5.42美元，同比增长31%；公司披露的非GAAP调整后每股收益为4.68美元，同比增长13%。两种口径的增长力度应加以区分。",
+      "evidence_ids": [
+        "span_3b74985e92f2fa70a68c88af"
+      ],
+      "calculation_ids": [],
+      "requirement_ids": [
+        "R2"
+      ],
+      "constraints": {
+        "entity": "AXP",
+        "period_start": "2026-07-01",
+        "period_end": "2026-09-30",
+        "currency": "USD",
+        "unit": "美元/股",
+        "basis": "报告摊薄EPS与公司非GAAP调整后EPS；同比2025年第三季度"
+      }
+    },
+    {
+      "id": "claim:adjustment",
+      "text": "调整后业绩剔除了出售GBTG股权的收益影响，但扣除了其中用于相关效率提升重组的部分。公告披露，该出售收益为税前9.82亿美元、税后7.51亿美元；不能将出售收益全额直接视为报告利润与调整后利润的差额。",
+      "evidence_ids": [
+        "span_3b74985e92f2fa70a68c88af"
+      ],
+      "calculation_ids": [],
+      "requirement_ids": [
+        "R2"
+      ],
+      "constraints": {
+        "entity": "AXP",
+        "period_start": "2026-07-01",
+        "period_end": "2026-09-30",
+        "currency": "USD",
+        "basis": "原始公告段落所述非GAAP调整口径，未自行计算调整金额"
+      }
+    },
+    {
+      "id": "claim:business-drivers",
+      "text": "管理层将收入增长主要归因于持卡人消费增加、卡余额增长支持净利息收入上升，以及卡费收入强劲增长。",
+      "evidence_ids": [
+        "span_3b74985e92f2fa70a68c88af"
+      ],
+      "calculation_ids": [],
+      "requirement_ids": [
+        "R2"
+      ],
+      "constraints": {
+        "entity": "AXP",
+        "period_end": "2026-09-30",
+        "business_scope": "合并",
+        "attribution": "管理层对收入同比变化的解释，非独立因果验证"
+      }
+    },
+    {
+      "id": "claim:credit",
+      "text": "信用损失准备费用约10亿美元，低于上年同期的13亿美元。公司解释，本季释放准备金，而上年同期增提准备金，但净核销金额增加部分抵消了这一影响；净核销率则由1.9%降至1.8%。因此，准备费用下降并不等同于所有信用指标都在改善。",
+      "evidence_ids": [
+        "span_3b74985e92f2fa70a68c88af"
+      ],
+      "calculation_ids": [],
+      "requirement_ids": [
+        "R2"
+      ],
+      "constraints": {
+        "entity": "AXP",
+        "period_end": "2026-09-30",
+        "business_scope": "合并",
+        "currency": "USD",
+        "basis": "2026年第三季度与2025年第三季度比较；变动原因来自公司披露"
+      }
+    },
+    {
+      "id": "claim:expenses",
+      "text": "合并费用约145亿美元，同比增长9%。公司称，主要压力来自消费增加及美国白金卡焕新带来的可变客户互动成本上升；经营费用下降部分抵消了压力，而经营费用下降主要受GBTG出售收益影响，法律准备金增加和重组成本则构成抵消。",
+      "evidence_ids": [
+        "span_3b74985e92f2fa70a68c88af"
+      ],
+      "calculation_ids": [],
+      "requirement_ids": [
+        "R2"
+      ],
+      "constraints": {
+        "entity": "AXP",
+        "period_end": "2026-09-30",
+        "business_scope": "合并",
+        "currency": "USD",
+        "basis": "同比2025年第三季度",
+        "attribution": "费用变化原因来自公司披露"
+      }
+    },
+    {
+      "id": "claim:tax",
+      "text": "有效税率由上年同期的24.1%降至18.1%。公司称，主要原因是解决部分以前期间税务事项带来的当期离散税收利益；较低税率也是本季报告净利润的有利因素，但公告这段说明未量化其对利润增长的贡献。",
+      "evidence_ids": [
+        "span_3b74985e92f2fa70a68c88af"
+      ],
+      "calculation_ids": [],
+      "requirement_ids": [
+        "R2"
+      ],
+      "constraints": {
+        "entity": "AXP",
+        "period_end": "2026-09-30",
+        "business_scope": "合并",
+        "basis": "同比2025年第三季度",
+        "attribution": "税率原因来自管理层；利润方向影响为会计解释",
+        "missing_evidence": [
+          "用于量化该税务因素对净利润同比增量贡献的税项桥接"
+        ]
+      }
+    },
+    {
+      "id": "claim:outlook",
+      "text": "公司上调2026年全年EPS指引至18.30—18.60美元，调整后EPS指引为17.60—17.90美元，并表示仍有望实现全年收入增长10%。这些是管理层展望，并非已实现业绩。",
+      "evidence_ids": [
+        "span_3b74985e92f2fa70a68c88af"
+      ],
+      "calculation_ids": [],
+      "requirement_ids": [
+        "R2"
+      ],
+      "constraints": {
+        "entity": "AXP",
+        "period_start": "2026-01-01",
+        "period_end": "2026-12-31",
+        "currency": "USD",
+        "basis": "2026年10月23日披露的前瞻性指引；报告及调整后口径"
+      }
+    },
+    {
+      "id": "claim:assessment",
+      "text": "简评：这一季收入和调整后EPS均保持增长，表现稳健；但报告EPS的高增长不能全部归因于持续经营改善，GBTG出售收益、较低税率及准备金释放都需单独看待，同时客户互动成本仍在上升。",
+      "evidence_ids": [
+        "span_3b74985e92f2fa70a68c88af"
+      ],
+      "calculation_ids": [],
+      "requirement_ids": [
+        "R2"
+      ],
+      "constraints": {
+        "entity": "AXP",
+        "period_end": "2026-09-30",
+        "basis": "基于已披露经营表现和利润影响因素的定性分析；不分配未量化贡献",
+        "interpretation": "分析判断，非管理层原话或投资建议"
+      }
+    }
+  ],
+  "answered_requirement_ids": [
+    "R1",
+    "R2"
+  ],
+  "unanswered_requirement_ids": [],
+  "summary": "有限本地快照中最新可核实季度为2026年第三季度，10月23日披露，非实时联网核验。收入同比增长9%，净利润增长28%，报告EPS增长31%，调整后EPS增长13%。整体表现稳健，但出售收益、较低税率和准备金释放支持了报告利润，不能将全部增幅视为经营改善；公司同时上调全年EPS指引。"
+}

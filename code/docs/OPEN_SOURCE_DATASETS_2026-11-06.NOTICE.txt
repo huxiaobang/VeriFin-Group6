@@ -1,0 +1,83 @@
+VeriFin public data and offline replay attribution notice
+Checked 2026-11-06. This notice accompanies the benchmark summaries and HTML replay.
+
+ConvFinQA (the public question/evidence data displayed in the HTML replay):
+Zhiyu Chen, Shiyang Li, Charese Smiley, Zhiqiang Ma, Sameena Shah,
+William Yang Wang. ConvFinQA: Exploring the Chain of Numerical Reasoning in
+Conversational Finance Question Answering. EMNLP 2022.
+https://aclanthology.org/2022.emnlp-main.421/
+https://github.com/czyssrs/ConvFinQA
+Pinned revision: cf3eed2d5984960bf06bb8145bcea5e80b0222a6
+The original repository MIT notice is reproduced in full below.
+
+MIT License
+
+Copyright (c) 2022 Zhiyu Chen
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+Other audited datasets (not displayed as question/evidence in this replay):
+
+FinQA: Chen et al., EMNLP 2021.
+https://aclanthology.org/2021.emnlp-main.300/
+https://github.com/czyssrs/FinQA/blob/main/LICENSE
+Repository MIT; copyright (c) 2021 Zhiyu Chen. When downloading or redistributing
+its repository material, retain that original LICENSE downloaded with the data.
+No separate dataset license was found in the audited official repository.
+
+TAT-QA: Zhu et al., ACL-IJCNLP 2021.
+https://aclanthology.org/2021.acl-long.254/
+https://github.com/NExTplusplus/TAT-QA#license
+Dataset: Creative Commons Attribution 4.0 International (CC BY 4.0).
+https://creativecommons.org/licenses/by/4.0/
+The separate repository MIT code license does not replace the dataset license.
+Adapter changes: source units and fields are normalized; original answers,
+reference IDs and official split names are preserved. No new human gold is added.
+
+FinanceBench: Islam et al., 2023.
+https://arxiv.org/abs/2311.11944
+Official public dataset: https://huggingface.co/datasets/PatronusAI/financebench
+Dataset card: CC BY-NC 4.0. Only 150 questions are publicly released in this source.
+https://creativecommons.org/licenses/by-nc/4.0/
+No GitHub repository-wide code LICENSE was found in the inspected revision.
+
+FinDER: Choi et al., 2025.
+https://arxiv.org/abs/2504.15800
+https://huggingface.co/datasets/Linq-AI-Research/FinDER
+Dataset card: CC BY-NC 4.0; cite and attribute original authors.
+This audit inspected a 50-row schema sample, not an independent held-out split.
+
+Original financial reports are third-party source material. Public availability
+does not by itself transfer their copyright or make corporate filings government
+works. Retain original source attribution; do not interpret the repository or
+dataset license as a new grant covering every third-party report.
+
+Apple R2 replay: Apple Inc., quarterly report ending 2025-03-29.
+Canonical: https://www.sec.gov/Archives/edgar/data/320193/000032019325000057/R2.htm
+Downloaded snapshot is the EDGAR Tools project's pinned test-fixture mirror:
+https://github.com/dgunning/edgartools/tree/107d182146ccf5d22a4e71f82cde8b363b212cf1/tests/fixtures/attachments/aapl/20250329
+The replay preserves original numeric strings and marks structural transformations.
+It does not represent financial advice or verified financial semantics.
+
+Qwen embedding inference outputs are displayed; model weights are not redistributed.
+Model identity and exact revision appear inside the replay provenance section.
+https://huggingface.co/Qwen/Qwen3-Embedding-0.6B
+
+The HTML is a replay of saved component experiments, not a live Agent conversation.
+It contains published references for transparent evaluation, not new human labels.

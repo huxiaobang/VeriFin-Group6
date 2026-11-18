@@ -1,0 +1,71 @@
+{
+  "frozen_at": "2026-11-16T16:21:49.485781+00:00",
+  "sources": {
+    "MCD": {
+      "file": "work/large_batch_20261117/MCD/corpus/snapshots/exhibit991-9302026.htm.txt",
+      "sha256": "c619f19fe1bf6beba669c93c771553ba5d11bbe381589ee372b4d03480256584",
+      "lines": {
+        "14": "CHICAGO, IL - McDonald's Corporation today announced results for the third quarter ended September 30, 2026.",
+        "17": "•Global comparable sales increased 1.5%:",
+        "18": "•U.S. decreased 0.2%",
+        "19": "•International Operated Markets increased 1.4%",
+        "20": "•International Developmental Licensed Markets increased 4.2%",
+        "21": "•Consolidated revenues increased 1% (1% in constant currencies).",
+        "22": "•Systemwide sales increased 4% (4% in constant currencies).",
+        "23": "•Consolidated operating income increased 7% (7% in constant currencies). Results reflected pre-tax charges of $56 million and $39 million for the current year and prior year, respectively, primarily related to restructuring charges associated with Accelerating the Organization. Excluding these current and prior year charges, consolidated operating income increased 8% (8% in constant currencies).**",
+        "24": "•Diluted earnings per share was $3.51, an increase of 10% (11% in constant currencies). Excluding the current year charges described above of $0.06 per share, diluted earnings per share was $3.57, an increase of 11% (11% in constant currencies) when also excluding prior year charges.**",
+        "37": "•U.S.: Comparable sales declined slightly as negative comparable guest counts were largely offset by positive check growth.",
+        "50": "Revenues $ 7,157 $ 7,078 1 % 1 % $ 20,773 $ 19,876 5 % 2 %",
+        "51": "Operating income 3,595 3,357 7 7 9,887 9,237 7 5",
+        "52": "Net income 2,486 2,278 9 9 6,831 6,399 7 5",
+        "53": "Earnings per share-diluted $ 3.51 $ 3.18 10 % 11 % $ 9.61 $ 8.92 8 % 6 %",
+        "58": "Excluding the above items, results for the quarter and nine months ended September 30, 2026 were primarily driven by higher Other operating income and higher sales-driven Franchised margins. Results for the nine months were partly offset by higher Selling, general and administrative expenses.",
+        "88": "Constant currency results exclude the effects of foreign currency translation and are calculated by translating current year results at prior year average exchange rates. Management reviews and analyzes business results excluding the effect of foreign currency translation, impairment and other charges and gains, as well as material regulatory and other income tax impacts, and bases incentive compensation plans on these results because the Company believes this better represents underlying business trends.",
+        "89": "Comparable sales and comparable guest counts are compared to the same period in the prior year and represent sales and transactions, respectively, at all restaurants, whether owned and operated by the Company or by franchisees, in operation at least thirteen months, including those temporarily closed. Some of the reasons restaurants may be temporarily closed include reimaging or remodeling, rebuilding, road construction, natural disasters, pandemics and acts of war, terrorism or other hostilities. Comparable sales exclude the impact of currency translation and the sales of any market considered hyperinflationary (generally identified as those markets whose cumulative inflation rate over a three-year period exceeds 100%), which management believes more accurately reflects the underlying business trends. Comparable sales are driven by changes in guest counts and average check, the latter of which is affected by changes in pricing and product mix."
+      }
+    },
+    "AXP": {
+      "file": "work/large_batch_20261117/AXP/corpus/snapshots/axp-20260930.htm.txt",
+      "sha256": "ef693507486ba203d8840f2a5a45b68756b60f3a5b0ffa4214d35255921ca4b3",
+      "lines": {
+        "124": "(Millions, except percentages, per share amounts and where indicated) 2026 2025 2026 2025",
+        "125": "Selected Income Statement Data",
+        "126": "Total revenues net of interest expense $ 20,062 $ 18,426 $ 1,636 9 % $ 58,606 $ 53,249 $ 5,357 10 %",
+        "127": "Total revenues net of interest expense (FX-adjusted) (a)",
+        "128": "18,413 1,649 9 53,503 5,103 10",
+        "129": "Provisions for credit losses 985 1,287 (302) (23) 3,320 3,842 (522) (14)",
+        "130": "Total expenses 14,546 13,314 1,232 9 42,906 38,702 4,204 11",
+        "131": "Pretax income 4,531 3,825 706 18 12,380 10,705 1,675 16",
+        "132": "Income tax provision 819 923 (104) (11) 2,586 2,334 252 11",
+        "133": "Net income 3,712 2,902 810 28 9,794 8,371 1,423 17",
+        "134": "Earnings per common share — diluted (b)",
+        "135": "$ 5.42 $ 4.14 $ 1.28 31 % $ 14.22 $ 11.85 $ 2.37 20 %",
+        "178": "We delivered strong results for the third quarter of 2026, reflecting the strength of our premium customer base, success of our product refresh strategy and power of our differentiated Membership Model. We continued to see strong Card Member spend, new card acquisitions and customer retention, and excellent credit performance. Our results for the third quarter also reflect the sale of our equity interest in Global Business Travel Group, Inc. (GBTG), which resulted in a gain of $982 million ($751 million after tax; $1.11 per share). We used a portion of the gain to invest in efficiency initiatives, resulting in a restructuring charge of $336 million ($253 million after tax; $0.37 per share) in the third quarter of 2026. Net income for the quarter was $3.7 billion, or $5.42 per share, compared with net income of $2.9 billion, or $4.14 per share, a year ago.",
+        "181": "Total revenues net of interest expense increased 9 percent on both a reported and FX-adjusted basis.1 Growth in billed business drove an 8 percent increase in Discount revenue, our largest revenue line. Net card fees grew 16 percent, reflecting our ongoing cycle of product refreshes, including the U.S. Platinum refresh last year. Net interest income grew 10 percent, primarily reflecting growth in balances and net yield expansion, partially offset by the impact from the exits of the small business cobrand held-for-sale portfolios, as mentioned above.",
+        "182": "Card balances and Other loans increased 8 percent, in line with billed business. Provisions for credit losses decreased, primarily driven by a reserve release in the current period compared to a reserve build in the prior period, partially offset by higher net write-offs. Net write-off rates declined and delinquency rates remained stable, supported by our premium customer base and reflecting our strategy to invest in the value propositions of our premium products that attract customers with high credit quality.",
+        "183": "Growth in Card Member rewards, Card Member services and Business development expenses (collectively, variable customer engagement expenses) were driven by Card Member spending, usage of Card Member benefits and enhancements we made to the value propositions of our refreshed U.S. Platinum cards last year. We expect growth in variable customer engagement expenses to moderate next quarter as the impact of the refresh of our U.S. Platinum cards will be reflected in both current and prior period results. Marketing expense increased 11 percent year-over-year as we continued to invest to acquire, engage and retain high-spending, high credit-quality customers.",
+        "184": "Operating expenses decreased, reflecting the previously-mentioned gain from the sale of our equity interest in GBTG, partially offset by increases in legal reserves and restructuring costs. Excluding the impact of these discrete items, operating expense grew modestly. We have invested significantly in risk and controls over the last several years and will continue to make the investments necessary to strengthen our risk management and compliance programs so that they meet our expectations and those of our regulators."
+      }
+    },
+    "PEP": {
+      "file": "work/large_batch_20261117/PEP/corpus/snapshots/pep-20260905.htm.txt",
+      "sha256": "9a37422a2be6a3690bd84cf22f6a92e03e5b374742ea4a79d11545d2afbc8da8",
+      "lines": {
+        "1090": "Consolidated Net Revenue and Operating Profit",
+        "1091": "12 Weeks Ended 36 Weeks Ended",
+        "1092": "9/5/2026 9/6/2025 Change 9/5/2026 9/6/2025 Change",
+        "1093": "Net revenue $ 25,274 $ 23,937 6 % $ 68,898 $ 64,582 7 %",
+        "1094": "Operating profit $ 4,260 $ 3,569 19 % $ 11,496 $ 7,941 45 %",
+        "1095": "Operating margin 16.9 % 14.9 % 2.0 16.7 % 12.3 % 4.4",
+        "1096": "See “Results of Operations – Segment Review” for a tabular presentation and discussion of key drivers of net revenue.",
+        "1097": "12 Weeks",
+        "1098": "Operating profit increased 19%, primarily driven by productivity savings, a favorable net impact of acquisition and divestiture-related charges/credits, effective net pricing, a 4-percentage-point favorable impact of tariff refunds and a favorable impact of net mark-to-market gains on commodity derivatives. These impacts were partially offset by certain operating cost increases and higher advertising and marketing expenses.",
+        "1099": "36 Weeks",
+        "1100": "Operating profit increased 45%, primarily driven by productivity savings, prior-year impairment charges related to the Rockstar and Be & Cheery brands, effective net pricing and a favorable net impact of acquisition and divestiture-related charges/credits, partially offset by certain operating cost increases.",
+        "1107": "Net income attributable to PepsiCo $ 3,048 $ 2,603 17 % $ 8,356 $ 5,700 47 %",
+        "1109": "$ 2.23 $ 1.90 17 % $ 6.10 $ 4.15 47 %",
+        "1122": "In the discussions of net revenue and operating profit below, “effective net pricing” reflects the year-over-year impact of discrete pricing actions, sales incentive activities and mix resulting from selling varying products in different package sizes and in different countries."
+      }
+    }
+  }
+}

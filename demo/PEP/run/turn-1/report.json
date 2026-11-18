@@ -1,0 +1,701 @@
+{
+  "episode_id": "episode_2fcde3146c794680ab4da0b828105cee",
+  "request": "百事最近一季表现怎么样？",
+  "status": "complete",
+  "stop_reason": "completed",
+  "scope": {
+    "cutoff": "2026-11-16",
+    "requirements": [
+      {
+        "id": "R1",
+        "text": "确认截至2026年11月16日可核实的百事公司最新已披露季度及数据覆盖限制。"
+      },
+      {
+        "id": "R2",
+        "text": "用中文概述该季度收入、盈利及同比表现，区分报告口径与有机或调整后口径，并依据可得披露说明主要业务表现、管理层展望和关键风险。"
+      }
+    ]
+  },
+  "scope_version": 3,
+  "summary": "百事最新可核实季度呈现“收入增长、报告利润亮眼，但核心盈利偏弱”的组合：国际业务较强，北美仍需修复，全年核心EPS增长指引下调。结论基于截至2026年11月16日的有限本地披露资料，并非实时全网核验。",
+  "summary_kind": "unverified_researcher_draft",
+  "model_mode": "configured_model",
+  "claims": [
+    {
+      "id": "claim:coverage",
+      "text": "截至2026年11月16日，在可核实的有限本地资料中，百事最新披露季度为2026年第三季度，即截至9月5日的12周；这不是实时全网核验。业绩公告正文日期为10月8日，而目录记录的SEC接收时间为10月7日，两者日期口径不同。",
+      "evidence_ids": [
+        "metadata_ad760c6692f956a4d6a61c1a",
+        "span_e15075b0f56ab75de1fba9f1"
+      ],
+      "calculation_ids": [],
+      "requirement_ids": [
+        "R1"
+      ],
+      "constraints": {
+        "entity": "PEP",
+        "period_end": "2026-09-05",
+        "cutoff": "2026-11-16",
+        "missing_evidence": [
+          "超出有限本地目录的实时披露检索，才能进一步确认全网披露完整性"
+        ]
+      },
+      "status": "Supported",
+      "scope_version": 3,
+      "evidence_versions": {
+        "metadata_ad760c6692f956a4d6a61c1a": 1,
+        "span_e15075b0f56ab75de1fba9f1": 1
+      },
+      "calculation_versions": {},
+      "critic_verdict": {
+        "claim_id": "claim:coverage",
+        "status": "Supported",
+        "evidence_refs": [
+          "metadata_ad760c6692f956a4d6a61c1a",
+          "span_e15075b0f56ab75de1fba9f1"
+        ],
+        "basis": "目录明确仅覆盖截至截止日的4份本地文件，最新报告日为2026年9月5日；公告明确为第三季度、截至该日的12周。正文10月8日与目录SEC接收时间10月7日的区别准确，且结论限定于有限本地资料。"
+      },
+      "version": 2,
+      "created_at": "2026-11-16T16:24:22.095813+00:00",
+      "stale": false,
+      "display_check": {
+        "method": "source_review",
+        "label": "核验方式为原文审读，数字与期间、指标的对应关系需结合引文判断。"
+      }
+    },
+    {
+      "id": "claim:revenue",
+      "text": "第三季度报告净收入为25,274百万美元，同比增长5.6%；有机收入增长3.1%。公告另列收购及剥离净贡献1.7个百分点、汇率折算贡献0.7个百分点，因此报告收入增速不能全部视为内生增长；各项披露存在四舍五入。",
+      "evidence_ids": [
+        "span_e15075b0f56ab75de1fba9f1"
+      ],
+      "calculation_ids": [],
+      "requirement_ids": [
+        "R2"
+      ],
+      "constraints": {
+        "entity": "PEP",
+        "period_start": "2026-06-14",
+        "period_end": "2026-09-05",
+        "business_scope": "consolidated",
+        "currency": "USD",
+        "basis": "GAAP净收入；有机收入为非GAAP口径"
+      },
+      "status": "Supported",
+      "scope_version": 3,
+      "evidence_versions": {
+        "span_e15075b0f56ab75de1fba9f1": 1
+      },
+      "calculation_versions": {},
+      "critic_verdict": {
+        "claim_id": "claim:revenue",
+        "status": "Supported",
+        "evidence_refs": [
+          "span_e15075b0f56ab75de1fba9f1",
+          "span_866e7defb63fa38a7cf48e44"
+        ],
+        "basis": "季度汇总表列示净收入25,274百万美元、同比5.6%；季度讨论列示有机增长3.1%、收购剥离贡献1.7个百分点、汇率贡献0.7个百分点。有机指标被明确标为非GAAP，后续汇总表注明数字可能因四舍五入不能加总。"
+      },
+      "version": 2,
+      "created_at": "2026-11-16T16:24:22.096347+00:00",
+      "stale": false,
+      "display_check": {
+        "method": "source_review",
+        "label": "核验方式为原文审读，数字与期间、指标的对应关系需结合引文判断。"
+      }
+    },
+    {
+      "id": "claim:operating-profit",
+      "text": "第三季度报告营业利润为4,260百万美元，同比增长19%；核心营业利润为4,277百万美元，同比增长3%。报告利润改善明显强于核心口径所反映的改善。",
+      "evidence_ids": [
+        "span_e15075b0f56ab75de1fba9f1"
+      ],
+      "calculation_ids": [],
+      "requirement_ids": [
+        "R2"
+      ],
+      "constraints": {
+        "entity": "PEP",
+        "period_end": "2026-09-05",
+        "business_scope": "consolidated",
+        "currency": "USD",
+        "basis": "GAAP与非GAAP Core分别比较上年同期"
+      },
+      "status": "Supported",
+      "scope_version": 3,
+      "evidence_versions": {
+        "span_e15075b0f56ab75de1fba9f1": 1
+      },
+      "calculation_versions": {},
+      "critic_verdict": {
+        "claim_id": "claim:operating-profit",
+        "status": "Supported",
+        "evidence_refs": [
+          "span_e15075b0f56ab75de1fba9f1"
+        ],
+        "basis": "第三季度而非年初至今列分别列示报告营业利润4,260百万美元、增长19%，核心营业利润4,277百万美元、增长3%；报告增幅明显高于核心增幅的比较成立。"
+      },
+      "version": 2,
+      "created_at": "2026-11-16T16:24:22.096696+00:00",
+      "stale": false,
+      "display_check": {
+        "method": "source_review",
+        "label": "核验方式为原文审读，数字与期间、指标的对应关系需结合引文判断。"
+      }
+    },
+    {
+      "id": "claim:margin",
+      "text": "第三季度报告营业利润率为16.9%，同比上升195个基点；核心营业利润率同为16.9%，但同比下降35个基点。这里采用公告披露的变动幅度，不能仅凭四舍五入后显示的利润率重算。",
+      "evidence_ids": [
+        "span_e15075b0f56ab75de1fba9f1"
+      ],
+      "calculation_ids": [],
+      "requirement_ids": [
+        "R2"
+      ],
+      "constraints": {
+        "entity": "PEP",
+        "period_end": "2026-09-05",
+        "business_scope": "consolidated",
+        "basis": "GAAP与非GAAP Core",
+        "unit": "percent; basis points"
+      },
+      "status": "Supported",
+      "scope_version": 3,
+      "evidence_versions": {
+        "span_e15075b0f56ab75de1fba9f1": 1
+      },
+      "calculation_versions": {},
+      "critic_verdict": {
+        "claim_id": "claim:margin",
+        "status": "Supported",
+        "evidence_refs": [
+          "span_e15075b0f56ab75de1fba9f1"
+        ],
+        "basis": "季度表直接披露报告营业利润率16.9%、上升195基点，核心营业利润率16.9%、下降35基点；采用原披露变动而非从一位小数显示值重算，处理恰当。"
+      },
+      "version": 2,
+      "created_at": "2026-11-16T16:24:22.097028+00:00",
+      "stale": false,
+      "display_check": {
+        "method": "source_review",
+        "label": "核验方式为原文审读，数字与期间、指标的对应关系需结合引文判断。"
+      }
+    },
+    {
+      "id": "claim:eps",
+      "text": "第三季度报告每股收益为2.23美元，同比增长17%；核心每股收益为2.34美元，同比增长2%，核心固定汇率每股收益增长1.5%。因此，报告每股收益的两位数增长不代表调整后盈利也有同等强度。",
+      "evidence_ids": [
+        "span_e15075b0f56ab75de1fba9f1"
+      ],
+      "calculation_ids": [],
+      "requirement_ids": [
+        "R2"
+      ],
+      "constraints": {
+        "entity": "PEP",
+        "period_end": "2026-09-05",
+        "business_scope": "consolidated",
+        "currency": "USD",
+        "basis": "GAAP、Core及Core constant currency分别列示"
+      },
+      "status": "Supported",
+      "scope_version": 3,
+      "evidence_versions": {
+        "span_e15075b0f56ab75de1fba9f1": 1
+      },
+      "calculation_versions": {},
+      "critic_verdict": {
+        "claim_id": "claim:eps",
+        "status": "Supported",
+        "evidence_refs": [
+          "span_e15075b0f56ab75de1fba9f1"
+        ],
+        "basis": "季度表对应EPS为2.23美元、增长17%，核心EPS为2.34美元、增长2%，核心固定汇率EPS增长1.5%。关于报告增长不能代表调整后同等增长的判断有直接比较依据。"
+      },
+      "version": 2,
+      "created_at": "2026-11-16T16:24:22.097363+00:00",
+      "stale": false,
+      "display_check": {
+        "method": "source_review",
+        "label": "核验方式为原文审读，数字与期间、指标的对应关系需结合引文判断。"
+      }
+    },
+    {
+      "id": "claim:reported-profit-attribution",
+      "text": "管理层将本季度报告营业利润及利润率的改善，主要归因于收购及剥离相关费用或收益的有利净影响，以及商品衍生品盯市净收益的有利影响。这是公司对报告口径同比变化的解释，而非独立验证的因果分解。",
+      "evidence_ids": [
+        "span_e15075b0f56ab75de1fba9f1"
+      ],
+      "calculation_ids": [],
+      "requirement_ids": [
+        "R2"
+      ],
+      "constraints": {
+        "entity": "PEP",
+        "period_end": "2026-09-05",
+        "basis": "GAAP",
+        "attribution": "management"
+      },
+      "status": "Supported",
+      "scope_version": 3,
+      "evidence_versions": {
+        "span_e15075b0f56ab75de1fba9f1": 1
+      },
+      "calculation_versions": {},
+      "critic_verdict": {
+        "claim_id": "claim:reported-profit-attribution",
+        "status": "Supported",
+        "evidence_refs": [
+          "span_e15075b0f56ab75de1fba9f1"
+        ],
+        "basis": "季度讨论将19%的报告营业利润增长及195基点利润率扩张主要归于收购剥离相关费用或收益的有利净影响、商品衍生品盯市净收益。草稿保留公司归因，未误用年初至今的上年减值解释，也未宣称独立量化因果。"
+      },
+      "version": 2,
+      "created_at": "2026-11-16T16:24:22.097674+00:00",
+      "stale": false
+    },
+    {
+      "id": "claim:core-profit-attribution",
+      "text": "就核心营业利润表现，管理层称生产率节约、有效净定价及关税退款提供支持，其中关税退款对核心营业利润增长有4个百分点的有利影响；部分支持被若干运营成本上升及更高的广告营销费用抵消。不能把本季核心利润增长全部理解为持续性经营改善。",
+      "evidence_ids": [
+        "span_e15075b0f56ab75de1fba9f1"
+      ],
+      "calculation_ids": [],
+      "requirement_ids": [
+        "R2"
+      ],
+      "constraints": {
+        "entity": "PEP",
+        "period_end": "2026-09-05",
+        "basis": "Core",
+        "attribution": "management"
+      },
+      "status": "Supported",
+      "scope_version": 3,
+      "evidence_versions": {
+        "span_e15075b0f56ab75de1fba9f1": 1
+      },
+      "calculation_versions": {},
+      "critic_verdict": {
+        "claim_id": "claim:core-profit-attribution",
+        "status": "Supported",
+        "evidence_refs": [
+          "span_e15075b0f56ab75de1fba9f1"
+        ],
+        "basis": "季度讨论明确列出生产率节约、有效净定价及关税退款的4个百分点有利影响，并列出运营成本和广告营销费用的抵消。草稿将该影响表述为核心营业利润增长贡献而非利润率贡献，且未将退款支持认定为持续性改善。"
+      },
+      "version": 2,
+      "created_at": "2026-11-16T16:24:22.097937+00:00",
+      "stale": false,
+      "display_check": {
+        "method": "source_review",
+        "label": "核验方式为原文审读，数字与期间、指标的对应关系需结合引文判断。"
+      }
+    },
+    {
+      "id": "claim:north-america-foods",
+      "text": "北美食品业务仍承压：本季度PFNA报告收入和有机收入均基本持平，核心固定汇率营业利润下降12%。管理层称，方便食品收入趋势环比改善，咸味零食销量及销量份额改善，但较低的有效净定价形成抵消；趋势改善尚不等于利润恢复增长。",
+      "evidence_ids": [
+        "span_866e7defb63fa38a7cf48e44",
+        "span_e15075b0f56ab75de1fba9f1"
+      ],
+      "calculation_ids": [],
+      "requirement_ids": [
+        "R2"
+      ],
+      "constraints": {
+        "entity": "PEP",
+        "period_end": "2026-09-05",
+        "business_scope": "PFNA",
+        "basis": "报告收入、有机收入及Core constant currency营业利润分别列示",
+        "attribution": "定量同比披露；环比趋势及业务原因来自管理层"
+      },
+      "status": "Supported",
+      "scope_version": 3,
+      "evidence_versions": {
+        "span_866e7defb63fa38a7cf48e44": 1,
+        "span_e15075b0f56ab75de1fba9f1": 1
+      },
+      "calculation_versions": {},
+      "critic_verdict": {
+        "claim_id": "claim:north-america-foods",
+        "status": "Supported",
+        "evidence_refs": [
+          "span_866e7defb63fa38a7cf48e44",
+          "span_e15075b0f56ab75de1fba9f1"
+        ],
+        "basis": "第三季度PFNA行的报告及有机收入变化均为横线，核心固定汇率营业利润为下降12%。季度讨论说明方便食品收入趋势环比改善，受咸味零食销量和份额改善支持、被较低净定价抵消；草稿正确区分趋势改善与利润同比恢复。"
+      },
+      "version": 2,
+      "created_at": "2026-11-16T16:24:22.098214+00:00",
+      "stale": false,
+      "display_check": {
+        "method": "source_review",
+        "label": "核验方式为原文审读，数字与期间、指标的对应关系需结合引文判断。"
+      }
+    },
+    {
+      "id": "claim:north-america-beverages",
+      "text": "北美饮料业务本季度报告收入增长5%，但有机收入基本持平，剔除收购及剥离影响的饮料销量下降2%；管理层称收入增长主要反映2025年收购的贡献，不能据报告收入增长认定其内生需求已明显转强。",
+      "evidence_ids": [
+        "span_866e7defb63fa38a7cf48e44",
+        "span_e15075b0f56ab75de1fba9f1"
+      ],
+      "calculation_ids": [],
+      "requirement_ids": [
+        "R2"
+      ],
+      "constraints": {
+        "entity": "PEP",
+        "period_end": "2026-09-05",
+        "business_scope": "PBNA",
+        "basis": "报告收入、有机收入及剔除收购剥离影响的销量",
+        "attribution": "收购驱动解释来自管理层"
+      },
+      "status": "Supported",
+      "scope_version": 3,
+      "evidence_versions": {
+        "span_866e7defb63fa38a7cf48e44": 1,
+        "span_e15075b0f56ab75de1fba9f1": 1
+      },
+      "calculation_versions": {},
+      "critic_verdict": {
+        "claim_id": "claim:north-america-beverages",
+        "status": "Supported",
+        "evidence_refs": [
+          "span_866e7defb63fa38a7cf48e44",
+          "span_e15075b0f56ab75de1fba9f1"
+        ],
+        "basis": "第三季度PBNA行列示报告收入增长5%、有机收入持平、饮料销量下降2%；销量脚注明确排除收购剥离影响。季度讨论将收入增长主要归于2025年收购，因而草稿对内生需求推断的限制合理。"
+      },
+      "version": 2,
+      "created_at": "2026-11-16T16:24:22.098499+00:00",
+      "stale": false,
+      "display_check": {
+        "method": "source_review",
+        "label": "核验方式为原文审读，数字与期间、指标的对应关系需结合引文判断。"
+      }
+    },
+    {
+      "id": "claim:international",
+      "text": "国际业务增长较强：本季度国际饮料特许经营、欧洲中东非洲、拉美食品和亚太食品的有机收入分别增长7%、9%、6%和9%。这些分部增长率不能直接当作其对集团增长的贡献。",
+      "evidence_ids": [
+        "span_866e7defb63fa38a7cf48e44"
+      ],
+      "calculation_ids": [],
+      "requirement_ids": [
+        "R2"
+      ],
+      "constraints": {
+        "entity": "PEP",
+        "period_end": "2026-09-05",
+        "business_scope": "IB Franchise; EMEA; LatAm Foods; Asia Pacific Foods",
+        "basis": "Organic revenue",
+        "unit": "percent"
+      },
+      "status": "Supported",
+      "scope_version": 3,
+      "evidence_versions": {
+        "span_866e7defb63fa38a7cf48e44": 1
+      },
+      "calculation_versions": {},
+      "critic_verdict": {
+        "claim_id": "claim:international",
+        "status": "Supported",
+        "evidence_refs": [
+          "span_866e7defb63fa38a7cf48e44"
+        ],
+        "basis": "第三季度收入表的有机增长列依次列示IB Franchise 7%、EMEA 9%、LatAm Foods 6%、Asia Pacific Foods 9%。这些为各分部增长率，并非集团增长的加权贡献，草稿保持了该区别。"
+      },
+      "version": 2,
+      "created_at": "2026-11-16T16:24:22.098762+00:00",
+      "stale": false,
+      "display_check": {
+        "method": "source_review",
+        "label": "核验方式为原文审读，数字与期间、指标的对应关系需结合引文判断。"
+      }
+    },
+    {
+      "id": "claim:revenue-outlook",
+      "text": "全年收入展望方面，公司将2026年有机收入增长预期由2%—4%收窄至约3%，报告净收入增长预期由4%—6%调整至约6%；同期汇率及收购净贡献假设各由约1个百分点提高至约1.5个百分点，不能将报告收入指引的变化直接等同于有机增长加速。",
+      "evidence_ids": [
+        "span_866e7defb63fa38a7cf48e44"
+      ],
+      "calculation_ids": [],
+      "requirement_ids": [
+        "R2"
+      ],
+      "constraints": {
+        "entity": "PEP",
+        "period": "fiscal 2026",
+        "business_scope": "consolidated",
+        "basis": "management guidance",
+        "forward_looking": true
+      },
+      "status": "Supported",
+      "scope_version": 3,
+      "evidence_versions": {
+        "span_866e7defb63fa38a7cf48e44": 1
+      },
+      "calculation_versions": {},
+      "critic_verdict": {
+        "claim_id": "claim:revenue-outlook",
+        "status": "Supported",
+        "evidence_refs": [
+          "span_866e7defb63fa38a7cf48e44"
+        ],
+        "basis": "2026财年指引表的当前及此前列分别支持有机增长约3%对2%—4%、净收入约6%对4%—6%，以及汇率、收购净贡献各约1.5%对约1%。草稿准确保留预测性质，未将报告指引变化认作有机增长加速。"
+      },
+      "version": 2,
+      "created_at": "2026-11-16T16:24:22.099020+00:00",
+      "stale": false,
+      "display_check": {
+        "method": "source_review",
+        "label": "核验方式为原文审读，数字与期间、指标的对应关系需结合引文判断。"
+      }
+    },
+    {
+      "id": "claim:earnings-outlook",
+      "text": "盈利展望下调更值得关注：2026年核心固定汇率每股收益增长指引，由此前4%—6%区间的低端降至1%—2%；核心每股收益增长指引，由此前5%—7%区间的低端降至2.5%—3.5%。这些是非GAAP前瞻指引，不是已实现结果。",
+      "evidence_ids": [
+        "span_866e7defb63fa38a7cf48e44"
+      ],
+      "calculation_ids": [],
+      "requirement_ids": [
+        "R2"
+      ],
+      "constraints": {
+        "entity": "PEP",
+        "period": "fiscal 2026",
+        "business_scope": "consolidated",
+        "basis": "Core constant currency EPS; Core EPS",
+        "forward_looking": true
+      },
+      "status": "Supported",
+      "scope_version": 3,
+      "evidence_versions": {
+        "span_866e7defb63fa38a7cf48e44": 1
+      },
+      "calculation_versions": {},
+      "critic_verdict": {
+        "claim_id": "claim:earnings-outlook",
+        "status": "Supported",
+        "evidence_refs": [
+          "span_866e7defb63fa38a7cf48e44"
+        ],
+        "basis": "指引表列示核心固定汇率EPS增长由4%—6%的低端改为1%—2%，核心EPS增长由5%—7%的低端改为2.5%—3.5%；此前区间低端的限定及非GAAP前瞻属性均保留正确。"
+      },
+      "version": 2,
+      "created_at": "2026-11-16T16:24:22.099286+00:00",
+      "stale": false,
+      "display_check": {
+        "method": "source_review",
+        "label": "核验方式为原文审读，数字与期间、指标的对应关系需结合引文判断。"
+      }
+    },
+    {
+      "id": "claim:risks",
+      "text": "后续主要观察风险是北美修复力度，以及投入与成本对利润率的挤压。管理层表示将加大创新、品牌建设和渠道执行投入，并计划以进一步结构性降本支持这些投入、缓解投入品成本通胀上升；这些措施的效果尚待兑现。本季核心利润率下降和全年核心EPS增长指引下调，意味着不能仅凭报告利润大增判断盈利压力已经解除。",
+      "evidence_ids": [
+        "span_e15075b0f56ab75de1fba9f1",
+        "span_866e7defb63fa38a7cf48e44"
+      ],
+      "calculation_ids": [],
+      "requirement_ids": [
+        "R2"
+      ],
+      "constraints": {
+        "entity": "PEP",
+        "business_scope": "consolidated",
+        "basis": "管理层计划与基于已披露结果的分析判断",
+        "forward_looking": true
+      },
+      "status": "Supported",
+      "scope_version": 3,
+      "evidence_versions": {
+        "span_e15075b0f56ab75de1fba9f1": 1,
+        "span_866e7defb63fa38a7cf48e44": 1
+      },
+      "calculation_versions": {},
+      "critic_verdict": {
+        "claim_id": "claim:risks",
+        "status": "Supported",
+        "evidence_refs": [
+          "span_e15075b0f56ab75de1fba9f1",
+          "span_866e7defb63fa38a7cf48e44"
+        ],
+        "basis": "管理层原话涉及改善北美表现、创新和品牌及渠道投入、进一步结构性降本和上升的投入品成本通胀。结合本季核心利润率下降35基点及下调全年核心EPS增长指引，草稿将其作为后续观察风险而非已证实的未来结果，表述有据。"
+      },
+      "version": 2,
+      "created_at": "2026-11-16T16:24:22.099588+00:00",
+      "stale": false
+    }
+  ],
+  "evidence": [
+    {
+      "id": "metadata_ad760c6692f956a4d6a61c1a",
+      "kind": "source_metadata",
+      "entity": "PEP",
+      "text": "Finite local replay catalog for PEP: 4 eligible document(s) at cutoff 2026-11-16, newest publication first. Catalog metadata only.\n8-K Exhibit 99.1 | document report date 2026-09-05 | published_at 2026-10-07T21:57:44.000Z (SEC EDGAR acceptance 0000077476-26-000050) | https://www.sec.gov/Archives/edgar/data/77476/000007747626000050/q320268-kxexhibit991.htm\n10-Q | document report date 2026-09-05 | published_at 2026-10-07T21:52:53.000Z (SEC EDGAR acceptance 0000077476-26-000048) | https://www.sec.gov/Archives/edgar/data/77476/000007747626000048/pep-20260905.htm\n10-Q | document report date 2026-06-13 | published_at 2026-07-08T21:52:18.000Z (SEC EDGAR acceptance 0000077476-26-000035) | https://www.sec.gov/Archives/edgar/data/77476/000007747626000035/pep-20260613.htm\n10-K | document report date 2025-12-27 | published_at 2026-02-02T23:07:04.000Z (SEC EDGAR acceptance 0000077476-26-000007) | https://www.sec.gov/Archives/edgar/data/77476/000007747626000007/pep-20251227.htm",
+      "source_url": "manifest.json",
+      "snapshot_hash": "dbf78f320aca77b3e4dfaa055e02f216fab9a11fcfa79426fb195da46f9d64f5",
+      "snapshot_path": "manifest.json",
+      "locator": "documents[3], documents[0], documents[1], documents[2]",
+      "published_at": "2026-11-16",
+      "publication_basis": "effective availability of filtered metadata preview",
+      "coverage_cutoff": "2026-11-16",
+      "retrieved_at": null,
+      "mode": "replay",
+      "version": 1,
+      "created_at": "2026-11-16T16:22:52.739037+00:00",
+      "stale": false
+    },
+    {
+      "id": "span_e15075b0f56ab75de1fba9f1",
+      "text": "EX-99.1\n2\nq320268-kxexhibit991.htm\nEX-99.1\nDocument\nExhibit 99.1\nPepsiCo Reports Third-Quarter 2026 Results\nThird-Quarter and Year-to-Date Results1\n•Net revenue increased 5.6% and 6.7%, respectively\n•Organic revenue2 increased 3.1% and 2.7%, respectively\n•Earnings per share (EPS) increased 17% and 47%, respectively\n•Core2 EPS increased 2% and 5%, respectively\n•Core constant currency2 EPS increased 1.5% and 2%, respectively\nGuidance\n•Company updates fiscal 2026 financial guidance2\nPURCHASE, N.Y. - October 8, 2026 - PepsiCo, Inc. (NASDAQ: PEP) today reported results for third-quarter 2026.\n“Our third-quarter results featured strong net revenue growth, an acceleration in organic revenue growth with organic volume growth across both global beverages and convenient foods. The results reflect the scale and resilience of the international business, the ongoing evolution of the global portfolio and an improved presence in underpenetrated channels and occasions,” said Chairman and CEO Ramon Laguarta.\nLaguarta continued, “Looking ahead, we remain focused on building upon the strength of the International business while acting with urgency to sustainably improve our performance in North America through more investments in innovation, effective brand building, and sharper marketplace execution by channel. Additional structural cost reduction actions are being identified and will be implemented in the coming months to help fund investments that aim to accelerate organic revenue growth and mitigate the impacts of rising input cost inflation.”\nThird-Quarter Year-to-Date\n($ in millions, except EPS) Q3 2026 Q3 2025 Change Q3 2026 Q3 2025 Change\nNet revenue $25,274 $23,937 5.6% $68,898 $64,582 6.7%\nOrganic revenue performance 3.1% 2.7%\nOperating profit $4,260 $3,569 19% $11,496 $7,941 45%\nOperating margin 16.9% 14.9% 195 bps 16.7% 12.3% 440 bps\nCore operating profit $4,277 $4,137 3% $11,394 $10,837 5%\nCore operating margin 16.9% 17.3% (35) bps 16.5% 16.8% (25) bps\nEPS $2.23 $1.90 17% $6.10 $4.15 47%\nCore EPS $2.34 $2.29 2% $6.15 $5.88 5%\nCore constant currency EPS 1.5% 2%\n1 Versus the prior year.\n2 Please refer to the reconciliation of generally accepted accounting principles (GAAP) and non-GAAP information in the attached exhibits and to the Glossary for the definitions of non-GAAP financial measures, including “Organic revenue performance,” “Core” and “Constant currency,” and to “Guidance and Outlook” for additional information regarding PepsiCo’s full-year 2026 financial guidance. PepsiCo provides guidance on a non-GAAP basis as we cannot predict certain elements which are included in reported GAAP results, including the impact of foreign exchange and commodity mark-to-market net impacts. Please refer to PepsiCo’s Quarterly Report on Form 10-Q for the 12 and 36 weeks ended September 5, 2026 (Q3 2026 Form 10-Q) filed with the Securities and Exchange Commission (SEC) for additional information regarding PepsiCo’s financial results.\n1\nThird-Quarter Results Discussion\n•Net revenue increased 5.6% due to 3.1% organic revenue growth, a 1.7-percentage-point net benefit from acquisitions and divestitures and a 0.7-percentage-point benefit from foreign exchange translation. Organic revenue growth reflects the benefits associated with effective net pricing and a contribution from organic volume growth.\n◦In North America, convenient foods net revenue trends improved sequentially, reflecting savory snacks volume growth and volume market share improvement, offset by lower effective net pricing. The beverages business delivered 5 percent net revenue growth, primarily reflecting the benefits of acquisitions made in 2025.\n◦The international businesses performed well with each segment delivering strong net revenue growth - aided by organic volume growth within Asia Pacific Foods, International Beverages Franchise and Latin America Foods.\n•Operating profit increased 19% and operating margin expanded 195 basis points, primarily reflecting a favorable net impact of acquisition and divestiture-related charges/credits and a favorable impact of net mark-to-market gains on commodity derivatives. Core operating profit increased 3%, with core operating margin contracting 35 basis points. The core operating profit performance reflects productivity savings, effective net pricing and a 4-percentage-point favorable impact of tariff refunds. These impacts were partially offset by certain operating cost increases and higher advertising and marketing expenses.\n•EPS increased 17% and core EPS increased 2%, primarily driven by operating profit growth.\nYear-to-Date Results Discussion\n•Net revenue increased 6.7% due to 2.7% organic revenue growth, a 2.0-percentage-point benefit from foreign exchange translation and a 2.0-percentage-point net benefit from acquisitions and divestitures. Organic revenue growth reflects the benefits associated with effective net pricing and a contribution from organic volume growth.\n◦In North America convenient foods, organic volume and volume market share increased aided by innovation and affordability initiatives. Convenient foods net revenue reflects organic volume growth and the benefits of an acquisition, offset by lower effective net pricing. The beverages business delivered 7 percent net revenue growth, primarily reflecting the benefits of acquisitions made in 2025 with organic revenue growth increasing 1 percent.\n◦The international businesses performed well with each segment delivering strong net revenue growth - aided by organic volume growth within Asia Pacific Foods, International Beverages Franchise and EMEA.\n•Operating profit increased 45% and operating margin expanded 440 basis points, primarily reflecting prior-year impairment charges related to the Rockstar and Be & Cheery brands and a favorable net impact of acquisition and divestiture-related charges/credits. Core operating profit increased 5%, with core operating margin contracting 25 basis points. The core operating profit performance was p",
+      "entity": "PEP",
+      "document_report_date": "2026-09-05",
+      "document_period_start": "2026-06-14",
+      "form": "8-K Exhibit 99.1",
+      "published_at": "2026-10-07T21:57:44.000Z",
+      "publication_precision": "timestamp",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/77476/000007747626000050/q320268-kxexhibit991.htm",
+      "snapshot_hash": "6669dac8002dacf42b74325b81221b20e6975d573da2427a62d7968e29bc7899",
+      "snapshot_path": "snapshots/q320268-kxexhibit991.htm",
+      "text_snapshot_path": "snapshots/q320268-kxexhibit991.htm.txt",
+      "text_snapshot_hash": "a664b6e4c0e9f7ef89f60e790d806ec2b0021e2600bc9879531f4d4b68b2f92d",
+      "retrieved_at": "2026-11-16T16:21:19.083804+00:00",
+      "extraction_method": "All visible HTML tables and body in source order.",
+      "mode": "replay",
+      "document_id": "source_doc_10051e485ae3e4f6272a9b32",
+      "kind": "document",
+      "start": 0,
+      "end": 6000,
+      "period_start": null,
+      "period_end": null,
+      "locator": "snapshots/q320268-kxexhibit991.htm.txt:characters[0:6000] (zero-based Unicode offsets)",
+      "version": 1,
+      "created_at": "2026-11-16T16:22:56.824656+00:00",
+      "stale": false
+    },
+    {
+      "id": "span_866e7defb63fa38a7cf48e44",
+      "text": "rimarily driven by productivity savings and effective net pricing, partially offset by certain operating cost increases.\n•EPS increased 47% and core EPS increased 5%, primarily driven by operating profit growth.\n2\nSummary Third-Quarter 2026 Performance\nRevenue\nVolume(a)\nGAAP Reported\n% Change Percentage Point Impact Organic\n% Change % Change\nForeign Exchange Translation Acquisitions and Divestitures Convenient Foods Beverages\nPepsiCo Foods North America (PFNA) — — — — —\nPepsiCo Beverages North America (PBNA) 5 — (6) — (2)\nInternational Beverages Franchise (IB Franchise) 8 (1) — 7 5\nEurope, Middle East and Africa (EMEA) 8 1 — 9 (1) 4\nLatin America Foods (LatAm Foods) 14 (8) — 6 3\nAsia Pacific Foods 10 (1) — 9 11\nTotal 6 (1) (2) 3 1 3\nOperating Profit and EPS\nGAAP Reported % Change Percentage Point Impact Core Constant Currency\n% Change\nItems Affecting Comparability Foreign Exchange Translation\nPFNA (13) 1 — (12)\nPBNA 45 (41) — 4\nIB Franchise 29 (19) (1.5) 9\nEMEA 25 (8) 2 19\nLatAm Foods 47 (27) (9) 10\nAsia Pacific Foods 15 (1) (2) 12\nCorporate unallocated expenses (10) 15 — 5\nTotal 19 (16) (1) 2.5\nEPS 17 (15) (1) 1.5\n(a)Excludes the impact of acquisitions and divestitures. In certain instances, the volume change shown here differs from the impact of organic volume change on net revenue performance disclosed in the Organic Revenue Performance table on page A-7, due to the impacts of product mix, nonconsolidated joint venture volume, and, for our franchise beverage businesses, temporary timing differences between bottler case sales (BCS) and concentrate shipments and equivalents (CSE). We report net revenue from our franchise beverage businesses based on CSE. The volume sold by our nonconsolidated joint ventures has no direct impact on our net revenue.\nNote: Amounts may not sum due to rounding.\nOrganic revenue and core constant currency results are non-GAAP financial measures. Please refer to the reconciliation of GAAP and non-GAAP information in the attached exhibits and to the Glossary for definitions of “Organic revenue performance,” “Core” and “Constant currency.”\n3\nSummary Year-to-Date 2026 Performance\nRevenue\nVolume(a)\nGAAP Reported\n% Change Percentage Point Impact Organic\n% Change % Change\nForeign Exchange Translation Acquisitions and Divestitures Convenient Foods Beverages\nPFNA — — — — 1\nPBNA 7 — (6) 1 (3)\nIB Franchise 10 (2) — 8 4\nEMEA 11 (3) — 7 3 2\nLatAm Foods 15 (11) — 4.5 —\nAsia Pacific Foods 11 (3) — 9 10\nTotal 7 (2) (2) 3 3 2\nOperating Profit and EPS\nGAAP Reported\n% Change Percentage Point Impact Core Constant Currency\n% Change\nItems Affecting Comparability Foreign Exchange Translation\nPFNA (8) — — (8)\nPBNA 416 (413) — 3\nIB Franchise 22 (7) (2) 13\nEMEA 47 (29) (2) 17\nLatAm Foods 28 (10) (12) 6\nAsia Pacific Foods 62 (32) (4) 25\nCorporate unallocated expenses (13) 16 — 3\nTotal 45 (40) (2) 3\nEPS 47 (42) (2.5) 2\n(a)Excludes the impact of acquisitions and divestitures. In certain instances, the volume change shown here differs from the impact of organic volume change on net revenue performance disclosed in the Organic Revenue Performance table on page A-7, due to the impacts of product mix, nonconsolidated joint venture volume, and, for our franchise beverage businesses, temporary timing differences between BCS and CSE. We report net revenue from our franchise beverage businesses based on CSE. The volume sold by our nonconsolidated joint ventures has no direct impact on our net revenue.\nNote: Amounts may not sum due to rounding.\nOrganic revenue and core constant currency results are non-GAAP financial measures. Please refer to the reconciliation of GAAP and non-GAAP information in the attached exhibits and to the Glossary for definitions of “Organic revenue performance,” “Core” and “Constant currency.”\n4\nGuidance and Outlook\nThe Company provides guidance on a non-GAAP basis as we cannot predict certain elements which are included in reported GAAP results, including the impact of foreign exchange translation and commodity mark-to-market net impacts. PepsiCo’s current and previous fiscal 2026 outlook is summarized below.\nFiscal 2026 Guidance (changes are bolded & italicized below)\nCurrent Previous\nOrganic Revenue Approximately +3% +2% to +4%\nForeign Exchange Translation (a)\nApproximately +1.5% to net revenue and core EPS growth Approximately +1% to net revenue and core EPS growth\nAcquisitions, net of Divestitures (b)\nApproximately +1.5% to net revenue growth Approximately +1% to net revenue growth\nNet Revenue Approximately +6% +4% to +6%\nCore Annual Effective Tax Rate (c)\nApproximately 21% Approximately 22%\nCore Constant Currency EPS +1% to +2% Low-end of +4% to +6%\nCore EPS +2.5% to +3.5% Low-end of +5% to +7%\nCapital Spending Below 5% of net revenue Below 5% of net revenue\nFree Cash Flow Conversion Ratio At least 80 percent At least 80 percent\nCash Returns to Shareholders (d)\n$8.9 billion $8.9 billion\n(a)Assumptions are based on current foreign exchange rates, as we are unable to predict the impact of exchange translation rates.\n(b)Refers to acquisitions, net of divestitures, that occurred in 2025.\n(c)Includes the anticipated impact of global minimum tax regulations.\n(d)Comprised of dividends of $7.9 billion and share repurchases of $1.0 billion.\nPrepared Management Remarks and Live Question and Answer Webcast\nAt approximately 6:00 a.m. (Eastern time) on October 8, 2026, the Company will post prepared management remarks (in pdf format) regarding its third quarter results and business update, including its outlook for 2026, at https://www.pepsico.com/investors. At 8:15 a.m. (Eastern time) on October 8, 2026, the Company will host a live question and answer session with investors and financial analysts. Further details will be accessible on the Company’s website at https://www.pepsico.com/investors.\nContacts: Investor Relations Communications\ninvestor@pepsico.com pepsicomediarelations@pepsico.com\n5\nPepsiCo, Inc. and Subsidiaries\nCondensed Consolidated Statement of Income\n(in millions",
+      "entity": "PEP",
+      "document_report_date": "2026-09-05",
+      "document_period_start": "2026-06-14",
+      "form": "8-K Exhibit 99.1",
+      "published_at": "2026-10-07T21:57:44.000Z",
+      "publication_precision": "timestamp",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/77476/000007747626000050/q320268-kxexhibit991.htm",
+      "snapshot_hash": "6669dac8002dacf42b74325b81221b20e6975d573da2427a62d7968e29bc7899",
+      "snapshot_path": "snapshots/q320268-kxexhibit991.htm",
+      "text_snapshot_path": "snapshots/q320268-kxexhibit991.htm.txt",
+      "text_snapshot_hash": "a664b6e4c0e9f7ef89f60e790d806ec2b0021e2600bc9879531f4d4b68b2f92d",
+      "retrieved_at": "2026-11-16T16:21:19.083804+00:00",
+      "extraction_method": "All visible HTML tables and body in source order.",
+      "mode": "replay",
+      "document_id": "source_doc_10051e485ae3e4f6272a9b32",
+      "kind": "document",
+      "start": 6000,
+      "end": 12000,
+      "period_start": null,
+      "period_end": null,
+      "locator": "snapshots/q320268-kxexhibit991.htm.txt:characters[6000:12000] (zero-based Unicode offsets)",
+      "version": 1,
+      "created_at": "2026-11-16T16:23:02.046905+00:00",
+      "stale": false
+    }
+  ],
+  "calculations": [],
+  "issues": [],
+  "unanswered": [],
+  "verification_available": true,
+  "usage": {
+    "model_calls": 7,
+    "tool_calls": 4,
+    "planner_steps": 5,
+    "active_seconds": 106.43360883404966,
+    "total_tokens": 78302,
+    "total_tokens_reported_calls": 7,
+    "prompt_tokens": 72692,
+    "prompt_tokens_reported_calls": 7,
+    "completion_tokens": 5610,
+    "completion_tokens_reported_calls": 7,
+    "cached_input_tokens": 33877,
+    "cached_input_tokens_reported_calls": 7,
+    "cache_write_tokens": 5611,
+    "cache_write_tokens_reported_calls": 7,
+    "cache_write_30m_tokens": 5611,
+    "cache_write_30m_tokens_reported_calls": 7,
+    "cache_write_12h_tokens": 0,
+    "cache_write_12h_tokens_reported_calls": 7,
+    "reasoning_tokens": 178,
+    "reasoning_tokens_reported_calls": 7
+  },
+  "created_at": "2026-11-16T16:24:22.109418+00:00",
+  "research_skills": [],
+  "skill_selection_source": "planner",
+  "request_parts": {
+    "part-1": "百事最近一季表现怎么样？"
+  },
+  "request_coverage": [
+    {
+      "part": "part-1",
+      "status": "answered",
+      "claim_id": "claim:operating-profit",
+      "answer_sentence": "第三季度报告营业利润为4,260百万美元，同比增长19%；核心营业利润为4,277百万美元，同比增长3%。",
+      "supporting_claim_ids": [
+        "claim:coverage",
+        "claim:revenue",
+        "claim:operating-profit",
+        "claim:margin",
+        "claim:eps",
+        "claim:reported-profit-attribution",
+        "claim:core-profit-attribution",
+        "claim:north-america-foods",
+        "claim:north-america-beverages",
+        "claim:international",
+        "claim:revenue-outlook",
+        "claim:earnings-outlook",
+        "claim:risks"
+      ]
+    }
+  ],
+  "delivery_stage": "reviewed",
+  "episode_material_ids": {
+    "evidence": [
+      "metadata_ad760c6692f956a4d6a61c1a",
+      "span_e15075b0f56ab75de1fba9f1",
+      "span_866e7defb63fa38a7cf48e44"
+    ],
+    "calculations": []
+  },
+  "id": "827ce97311f148b587ea6a596694d660",
+  "version": 1,
+  "record_versions": {
+    "evidence": {
+      "metadata_ad760c6692f956a4d6a61c1a": 1,
+      "span_e15075b0f56ab75de1fba9f1": 1,
+      "span_866e7defb63fa38a7cf48e44": 1
+    },
+    "calculation": {},
+    "claim": {
+      "claim:coverage": 2,
+      "claim:revenue": 2,
+      "claim:operating-profit": 2,
+      "claim:margin": 2,
+      "claim:eps": 2,
+      "claim:reported-profit-attribution": 2,
+      "claim:core-profit-attribution": 2,
+      "claim:north-america-foods": 2,
+      "claim:north-america-beverages": 2,
+      "claim:international": 2,
+      "claim:revenue-outlook": 2,
+      "claim:earnings-outlook": 2,
+      "claim:risks": 2
+    }
+  }
+}

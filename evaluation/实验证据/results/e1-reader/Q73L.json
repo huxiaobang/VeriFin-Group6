@@ -1,0 +1,70 @@
+{
+  "request": "GM 当季在调整后 EBIT 调节表中对 Cruise 列了什么，金额是多少？",
+  "claims": [
+    {
+      "calculation_ids": [],
+      "constraints": {},
+      "evidence_ids": [
+        "src_1",
+        "src_2"
+      ],
+      "evidence_versions": {
+        "src_1": 1,
+        "src_2": 1
+      },
+      "id": "c1",
+      "requirement_ids": [
+        "r1"
+      ],
+      "scope_version": 1,
+      "text": "GM 第四季度从归属股东净利调节至调整后 EBIT 的表中，Cruise 一行的 5.20 亿美元是当季列入调节的重组费用。"
+    }
+  ],
+  "evidence": [
+    {
+      "entity": "GM",
+      "id": "src_1",
+      "kind": "document",
+      "locator": "12: Reconciliation of net income (loss) attributable to stockholders to EBIT-adjusted and segment profit (loss)",
+      "published_at": "2025-01-28",
+      "snapshot_hash": "2688063623832f3c34c2615f129889c8a4cfc60c4fd08266c456e12690ed03b9",
+      "snapshot_hash_kind": "sha256 of public transcribed row and locator, not original document bytes",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1467858/000146785825000030/gmq42024pressreleaseandfin.htm",
+      "text": "{\"currency_unit\": \"USD million\", \"period_order\": [\"2024-Q4\", \"2023-Q4\"], \"rows\": {\"China JV restructuring actions\": [4010, 0], \"Cruise restructuring\": [520, 478]}}",
+      "version": 1
+    },
+    {
+      "entity": "GM",
+      "id": "src_2",
+      "kind": "document",
+      "locator": "95: Note 18; December 2024 Cruise decision and cumulative outflows",
+      "published_at": "2025-01-28",
+      "snapshot_hash": "c0fca15e112b49b4ad0e60e2be3f3da376b11478a327824b64a032432a080410",
+      "snapshot_hash_kind": "sha256 of public transcribed row and locator, not original document bytes",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1467858/000146785825000032/R26.htm",
+      "text": "{\"currency_unit\": \"USD million\", \"fields_normalized_from_prose\": {\"December recorded net charges before noncontrolling interest\": 522, \"cumulative cash outflows for these restructuring activities\": 287, \"net non-cash restructuring charges included in December amount\": 173}, \"period\": \"December 2024 and cumulative through 2024-12-31 as individually indicated\"}",
+      "version": 1
+    }
+  ],
+  "reviews": {
+    "A": {
+      "rule_findings": [],
+      "review": {
+        "issues": [],
+        "reviewed_claim_ids": [
+          "c1"
+        ],
+        "reviewed_requirement_ids": [
+          "r1"
+        ]
+      }
+    },
+    "B": {
+      "rule_findings": [],
+      "review": {
+        "review": "拟答的核心内容有直接证据支持。src_1 的调节表明确列示“Cruise restructuring”，2024 年第四季度金额为 520 百万美元，即 5.20 亿美元；将其表述为当季调整后 EBIT 调节表中的 Cruise 重组费用，符合用户所问。该行的 478 百万美元属于 2023 年第四季度对比数，不应混用。建议将“第四季度”明确为“2024 年第四季度”，避免年份歧义。证据引用上，src_1 已足以支持答案；src_2 披露的是 2024 年 12 月录得的、扣除非控股权益前的 522 百万美元净费用，与调节表的 520 百万美元并非完全相同的口径。现有证据未解释两者差额，不能直接认定其具体来源。src_2 中累计现金流出 287 百万美元及净非现金重组费用 173 百万美元，也不能替代该调节表金额，或据此将 520 百万美元全部称为现金支出。拟答本身没有作这些错误延伸，但并列引用 src_2 容易让读者误以为两处披露直接印证同一金额。用户的问题很窄，无需展开重组背景或现金流明细。",
+        "suggested_actions": "将最终回答精简为：“GM 在 2024 年第四季度从归属股东净利润（亏损）调节至调整后 EBIT 的表中，列示了‘Cruise 重组（Cruise restructuring）’，金额为 5.20 亿美元（520 百万美元）。”引用 src_1 即可。无需为回答当前问题追加检索或计算；若另行解释 522 百万美元与 520 百万美元的差异，则需先取得明确的口径或调节说明，不应凭现有证据推断。"
+      }
+    }
+  }
+}

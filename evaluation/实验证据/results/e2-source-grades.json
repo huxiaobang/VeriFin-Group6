@@ -1,0 +1,219 @@
+{
+  "references": {
+    "latest-msft": {
+      "entity": "MSFT",
+      "metric": "revenue",
+      "period_start": "2024-10-01",
+      "period_end": "2024-12-31",
+      "value": 69632000000,
+      "form_record": {
+        "start": "2024-10-01",
+        "end": "2024-12-31",
+        "val": 69632000000,
+        "accn": "0000950170-25-010491",
+        "fy": 2025,
+        "fp": "Q2",
+        "form": "10-Q",
+        "filed": "2025-01-29"
+      },
+      "source": "code/data/replay/snapshots/sec_msft_companyfacts.json",
+      "tag": "RevenueFromContractWithCustomerExcludingAssessedTax"
+    },
+    "prior-msft": {
+      "entity": "MSFT",
+      "metric": "revenue",
+      "period_start": "2024-07-01",
+      "period_end": "2024-09-30",
+      "value": 65585000000,
+      "form_record": {
+        "start": "2024-07-01",
+        "end": "2024-09-30",
+        "val": 65585000000,
+        "accn": "0000950170-24-118967",
+        "fy": 2025,
+        "fp": "Q1",
+        "form": "10-Q",
+        "filed": "2024-10-30"
+      },
+      "source": "code/data/replay/snapshots/sec_msft_companyfacts.json",
+      "tag": "RevenueFromContractWithCustomerExcludingAssessedTax"
+    },
+    "latest-nvda": {
+      "entity": "NVDA",
+      "metric": "revenue",
+      "period_start": "2024-07-29",
+      "period_end": "2024-10-27",
+      "value": 35082000000,
+      "form_record": {
+        "start": "2024-07-29",
+        "end": "2024-10-27",
+        "val": 35082000000,
+        "accn": "0001045810-24-000316",
+        "fy": 2025,
+        "fp": "Q3",
+        "form": "10-Q",
+        "filed": "2024-11-20"
+      },
+      "source": "code/data/replay/snapshots/sec_nvda_companyfacts.json",
+      "tag": "Revenues"
+    }
+  },
+  "rows": [
+    {
+      "case": "01-direct",
+      "arm": "adaptive",
+      "turn": 1,
+      "source_key": "latest-msft",
+      "controller": "complete",
+      "correct_record_acquired": true,
+      "first_claims_match": true,
+      "final_claims_match": true,
+      "reported_values": [
+        69632000000
+      ]
+    },
+    {
+      "case": "01-direct",
+      "arm": "fixed",
+      "turn": 1,
+      "source_key": "latest-msft",
+      "controller": "complete",
+      "correct_record_acquired": true,
+      "first_claims_match": true,
+      "final_claims_match": true,
+      "reported_values": [
+        69632000000
+      ]
+    },
+    {
+      "case": "02-previous",
+      "arm": "fixed",
+      "turn": 1,
+      "source_key": "latest-msft",
+      "controller": "complete",
+      "correct_record_acquired": true,
+      "first_claims_match": true,
+      "final_claims_match": true,
+      "reported_values": [
+        69632000000
+      ]
+    },
+    {
+      "case": "02-previous",
+      "arm": "fixed",
+      "turn": 2,
+      "source_key": "prior-msft",
+      "controller": "complete",
+      "correct_record_acquired": true,
+      "first_claims_match": false,
+      "final_claims_match": false,
+      "reported_values": [
+        69632000000
+      ]
+    },
+    {
+      "case": "02-previous",
+      "arm": "adaptive",
+      "turn": 1,
+      "source_key": "latest-msft",
+      "controller": "complete",
+      "correct_record_acquired": true,
+      "first_claims_match": true,
+      "final_claims_match": true,
+      "reported_values": [
+        69632000000
+      ]
+    },
+    {
+      "case": "02-previous",
+      "arm": "adaptive",
+      "turn": 2,
+      "source_key": "prior-msft",
+      "controller": "complete",
+      "correct_record_acquired": true,
+      "first_claims_match": false,
+      "final_claims_match": false,
+      "reported_values": [
+        69632000000
+      ]
+    },
+    {
+      "case": "03-source-outage",
+      "arm": "adaptive",
+      "turn": 1,
+      "source_key": "latest-msft",
+      "controller": "partial",
+      "correct_record_acquired": true,
+      "first_claims_match": false,
+      "final_claims_match": false,
+      "reported_values": [
+        135217000000
+      ]
+    },
+    {
+      "case": "03-source-outage",
+      "arm": "fixed",
+      "turn": 1,
+      "source_key": "latest-msft",
+      "controller": "partial",
+      "correct_record_acquired": true,
+      "first_claims_match": false,
+      "final_claims_match": false,
+      "reported_values": [
+        135217000000
+      ]
+    },
+    {
+      "case": "04-switch",
+      "arm": "fixed",
+      "turn": 1,
+      "source_key": "latest-msft",
+      "controller": "complete",
+      "correct_record_acquired": true,
+      "first_claims_match": true,
+      "final_claims_match": true,
+      "reported_values": [
+        69632000000
+      ]
+    },
+    {
+      "case": "04-switch",
+      "arm": "fixed",
+      "turn": 2,
+      "source_key": "latest-nvda",
+      "controller": "complete",
+      "correct_record_acquired": true,
+      "first_claims_match": true,
+      "final_claims_match": true,
+      "reported_values": [
+        35082000000
+      ]
+    },
+    {
+      "case": "04-switch",
+      "arm": "adaptive",
+      "turn": 1,
+      "source_key": "latest-msft",
+      "controller": "complete",
+      "correct_record_acquired": true,
+      "first_claims_match": true,
+      "final_claims_match": true,
+      "reported_values": [
+        69632000000
+      ]
+    },
+    {
+      "case": "04-switch",
+      "arm": "adaptive",
+      "turn": 2,
+      "source_key": "latest-nvda",
+      "controller": "complete",
+      "correct_record_acquired": true,
+      "first_claims_match": true,
+      "final_claims_match": true,
+      "reported_values": [
+        35082000000
+      ]
+    }
+  ]
+}

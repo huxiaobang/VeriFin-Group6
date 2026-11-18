@@ -1,0 +1,751 @@
+{
+  "schema_version": 1,
+  "created_at": "2026-11-06T09:17:51.960572+00:00",
+  "scope": "Open-source component adoption; source fidelity and implementation parity; no end-to-end accuracy claim",
+  "independent_test_gold": false,
+  "LLM_calls": 0,
+  "decisions": [
+    {
+      "component": "lxml+pandas",
+      "status": "implemented_and_probed; core_read_filing_integration_deferred",
+      "versions": {
+        "lxml": "6.1.3",
+        "pandas": "2.2.3"
+      },
+      "license": "lxml BSD-family, pandas BSD-3-Clause; retain transitive notices",
+      "official": [
+        "https://lxml.de/",
+        "https://pandas.pydata.org/docs/reference/api/pandas.read_html.html"
+      ],
+      "limitations": [
+        "source-marked headers only",
+        "no CSS class visibility/rendering",
+        "no financial semantic validation",
+        "new text coordinates require new citation hashes"
+      ]
+    },
+    {
+      "component": "BM25S",
+      "version": "0.3.16",
+      "status": "offline_adapter_prototype_passed; not_integrated_into_core",
+      "license": "MIT",
+      "official": [
+        "https://github.com/xhluca/bm25s"
+      ],
+      "integration": "filtered-corpus index cache; retain tokenizer/query dedup/formula/tie policy"
+    },
+    {
+      "component": "EdgarTools",
+      "version": "5.62.1",
+      "status": "offline_comparison_completed; requires_adapter",
+      "license": "top-level MIT; installed Unidecode 1.4.0 is GPLv2+",
+      "official": [
+        "https://github.com/dgunning/edgartools/blob/v5.62.1/pyproject.toml"
+      ],
+      "observed_issues": [
+        "hidden XBRL definition tables included",
+        "to_dataframe converts percentages/leading zeros and missing placeholders",
+        "no snapshot SHA/original XPath contract by default"
+      ]
+    },
+    {
+      "component": "sec-parser",
+      "version": "0.58.1",
+      "status": "not_adopted_due_to_official_unmaintained_status",
+      "license": "MIT",
+      "official": [
+        "https://sec-parser.readthedocs.io/en/latest/"
+      ]
+    },
+    {
+      "component": "Docling/docling-core",
+      "status": "official_docs_reviewed_not_probed; deferred for PDF/token-aware structural chunking",
+      "license": "MIT for code; model artifact licenses separate",
+      "official": [
+        "https://docling-project.github.io/docling/concepts/chunking/"
+      ]
+    }
+  ],
+  "source_manifest": [
+    {
+      "name": "parser_probe_aapl-20250329.htm",
+      "download_url": "https://raw.githubusercontent.com/dgunning/edgartools/107d182146ccf5d22a4e71f82cde8b363b212cf1/tests/fixtures/attachments/aapl/20250329/aapl-20250329.htm",
+      "repository_revision": "107d182146ccf5d22a4e71f82cde8b363b212cf1",
+      "repository_path": "tests/fixtures/attachments/aapl/20250329/aapl-20250329.htm",
+      "sha256": "487848fb1b223cb23fe4f359fce0795902800a81f386d372fc2507d36569a003",
+      "bytes": 889976,
+      "retrieved_at": "2026-11-06T08:47:46.919175+00:00",
+      "kind": "real_SEC_HTML_filing_mirrored_in_upstream_test_fixture",
+      "independent_test_gold": false,
+      "canonical_sec_url": "https://www.sec.gov/Archives/edgar/data/320193/000032019325000057/aapl-20250329.htm",
+      "sec_page_content_crosscheck": "2026-11-06: R2 official page independently opened via browser research; four net-sales numbers and period headers agree; downloaded bytes remain pinned upstream mirror"
+    },
+    {
+      "name": "parser_probe_R2.htm",
+      "download_url": "https://raw.githubusercontent.com/dgunning/edgartools/107d182146ccf5d22a4e71f82cde8b363b212cf1/tests/fixtures/attachments/aapl/20250329/R2.htm",
+      "repository_revision": "107d182146ccf5d22a4e71f82cde8b363b212cf1",
+      "repository_path": "tests/fixtures/attachments/aapl/20250329/R2.htm",
+      "sha256": "13cad7f06f77cf15858b13ed3dc4dc468265e9fdfe0cf2c9d895b392e9ff50f1",
+      "bytes": 81015,
+      "retrieved_at": "2026-11-06T08:47:48.138260+00:00",
+      "kind": "real_SEC_HTML_filing_mirrored_in_upstream_test_fixture",
+      "independent_test_gold": false,
+      "canonical_sec_url": "https://www.sec.gov/Archives/edgar/data/320193/000032019325000057/R2.htm",
+      "sec_page_content_crosscheck": "2026-11-06: R2 official page independently opened via browser research; four net-sales numbers and period headers agree; downloaded bytes remain pinned upstream mirror"
+    }
+  ],
+  "parser_probe": {
+    "created_at": "2026-11-06T09:14:17.141666+00:00",
+    "kind": "offline_development_source_fidelity_probe",
+    "independent_test_gold": false,
+    "LLM_calls": 0,
+    "network_connection_attempts": 0,
+    "environment": {
+      "python": "3.12.14",
+      "platform": "macOS-15.6-arm64-64bit",
+      "machine": "arm64",
+      "libraries": {
+        "lxml": "6.1.3",
+        "pandas": "2.2.3"
+      },
+      "process_peak_rss_bytes": 196591616
+    },
+    "timing_note": "one run per source; imports/OS caches affect timings; not a throughput benchmark",
+    "records": [
+      {
+        "input": "/Users/apple/Documents/Codex/2026-10-08/san/work/open-source-audit/parser_probe_R2.htm",
+        "sha256": "13cad7f06f77cf15858b13ed3dc4dc468265e9fdfe0cf2c9d895b392e9ff50f1",
+        "bytes": 81015,
+        "source": {
+          "name": "parser_probe_R2.htm",
+          "download_url": "https://raw.githubusercontent.com/dgunning/edgartools/107d182146ccf5d22a4e71f82cde8b363b212cf1/tests/fixtures/attachments/aapl/20250329/R2.htm",
+          "repository_revision": "107d182146ccf5d22a4e71f82cde8b363b212cf1",
+          "repository_path": "tests/fixtures/attachments/aapl/20250329/R2.htm",
+          "sha256": "13cad7f06f77cf15858b13ed3dc4dc468265e9fdfe0cf2c9d895b392e9ff50f1",
+          "bytes": 81015,
+          "retrieved_at": "2026-11-06T08:47:48.138260+00:00",
+          "kind": "real_SEC_HTML_filing_mirrored_in_upstream_test_fixture",
+          "independent_test_gold": false,
+          "canonical_sec_url": "https://www.sec.gov/Archives/edgar/data/320193/000032019325000057/R2.htm",
+          "sec_page_content_crosscheck": "2026-11-06: R2 official page independently opened via browser research; four net-sales numbers and period headers agree; downloaded bytes remain pinned upstream mirror"
+        },
+        "baseline_FilingText": {
+          "latency_ms": 7.308583939447999,
+          "characters": 46092,
+          "line_count": 1,
+          "row_column_structure_available": false,
+          "hidden_marker_leaked": false
+        },
+        "lxml_pandas_adapter": {
+          "latency_ms": 725.89020896703,
+          "visible_tables": 1,
+          "table_status_counts": {
+            "parsed": 1
+          },
+          "failures": {},
+          "structured_cells": 127,
+          "table_chunks": 5,
+          "whole_table_chunks_without_declared_headers": 0,
+          "hidden_marker_leaked": false,
+          "financial_semantics_validated": false,
+          "source_bound_locators": true
+        },
+        "checks": {
+          "kind": "selected_real_source_row_and_header_fidelity",
+          "expected_net_sales": [
+            "Net sales",
+            "$ 95,359",
+            "$ 90,753",
+            "$ 219,659",
+            "$ 210,328"
+          ],
+          "net_sales_row_preserved": true,
+          "period_header_preserved": true,
+          "flat_text_contains_same_numbers": true,
+          "not_a_financial_semantic_accuracy_test": true
+        },
+        "edgartools": {
+          "version": "5.62.1",
+          "latency_ms": 57.193332933820784,
+          "numeric_value_api_probe": {
+            "001,203": 1203.0,
+            "N/A": 0.0,
+            "—": 0.0,
+            "(52.3)": -52.3,
+            "10.5%": 10.5
+          },
+          "original_snapshot_xpath_provided": false,
+          "table_count_including_hidden": 21,
+          "net_sales_raw_row_preserved": true
+        }
+      },
+      {
+        "input": "/Users/apple/Documents/Codex/2026-10-08/san/work/open-source-audit/parser_probe_aapl-20250329.htm",
+        "sha256": "487848fb1b223cb23fe4f359fce0795902800a81f386d372fc2507d36569a003",
+        "bytes": 889976,
+        "source": {
+          "name": "parser_probe_aapl-20250329.htm",
+          "download_url": "https://raw.githubusercontent.com/dgunning/edgartools/107d182146ccf5d22a4e71f82cde8b363b212cf1/tests/fixtures/attachments/aapl/20250329/aapl-20250329.htm",
+          "repository_revision": "107d182146ccf5d22a4e71f82cde8b363b212cf1",
+          "repository_path": "tests/fixtures/attachments/aapl/20250329/aapl-20250329.htm",
+          "sha256": "487848fb1b223cb23fe4f359fce0795902800a81f386d372fc2507d36569a003",
+          "bytes": 889976,
+          "retrieved_at": "2026-11-06T08:47:46.919175+00:00",
+          "kind": "real_SEC_HTML_filing_mirrored_in_upstream_test_fixture",
+          "independent_test_gold": false,
+          "canonical_sec_url": "https://www.sec.gov/Archives/edgar/data/320193/000032019325000057/aapl-20250329.htm",
+          "sec_page_content_crosscheck": "2026-11-06: R2 official page independently opened via browser research; four net-sales numbers and period headers agree; downloaded bytes remain pinned upstream mirror"
+        },
+        "baseline_FilingText": {
+          "latency_ms": 40.898957988247275,
+          "characters": 82892,
+          "line_count": 1,
+          "row_column_structure_available": false,
+          "hidden_marker_leaked": false
+        },
+        "lxml_pandas_adapter": {
+          "latency_ms": 198.13058397267014,
+          "visible_tables": 37,
+          "table_status_counts": {
+            "unresolved": 8,
+            "parsed": 29
+          },
+          "failures": {
+            "empty_layout_table": 8
+          },
+          "structured_cells": 4165,
+          "table_chunks": 29,
+          "whole_table_chunks_without_declared_headers": 29,
+          "hidden_marker_leaked": false,
+          "financial_semantics_validated": false,
+          "source_bound_locators": true
+        },
+        "checks": {
+          "kind": "primary_filing_numeric_string_crosscheck_against_R2_attachment",
+          "target_tables": [
+            12,
+            17,
+            28,
+            29
+          ],
+          "all_four_net_sales_strings_present_in_same_row": true,
+          "not_a_financial_semantic_accuracy_test": true
+        },
+        "edgartools": {
+          "version": "5.62.1",
+          "latency_ms": 268.38187500834465,
+          "numeric_value_api_probe": {
+            "001,203": 1203.0,
+            "N/A": 0.0,
+            "—": 0.0,
+            "(52.3)": -52.3,
+            "10.5%": 10.5
+          },
+          "original_snapshot_xpath_provided": false,
+          "table_count_including_hidden": 37
+        }
+      },
+      {
+        "input": "/Users/apple/Documents/Codex/2026-10-08/san/work/open-source-audit/parser_probe_results/parser_probe_complex.html",
+        "sha256": "2cbcee48b807b80b55a40a3f7ffd3262091333b365844882b3d1070a5910c03a",
+        "bytes": 755,
+        "source": {
+          "download_url": "local-fixture://parser_probe_complex.html",
+          "independent_test_gold": false
+        },
+        "baseline_FilingText": {
+          "latency_ms": 0.19241601694375277,
+          "characters": 271,
+          "line_count": 1,
+          "row_column_structure_available": false,
+          "hidden_marker_leaked": true
+        },
+        "lxml_pandas_adapter": {
+          "latency_ms": 5.072041996754706,
+          "visible_tables": 1,
+          "table_status_counts": {
+            "parsed": 1
+          },
+          "failures": {},
+          "structured_cells": 15,
+          "table_chunks": 1,
+          "whole_table_chunks_without_declared_headers": 0,
+          "hidden_marker_leaked": false,
+          "financial_semantics_validated": false,
+          "source_bound_locators": true
+        },
+        "checks": {
+          "kind": "synthetic_geometry_and_string_fidelity",
+          "expected_rows_preserved": true,
+          "actual_vs_outlook_headers_separate": true,
+          "not_a_financial_semantic_accuracy_test": true
+        },
+        "edgartools": {
+          "version": "5.62.1",
+          "latency_ms": 2.1273749880492687,
+          "numeric_value_api_probe": {
+            "001,203": 1203.0,
+            "N/A": 0.0,
+            "—": 0.0,
+            "(52.3)": -52.3,
+            "10.5%": 10.5
+          },
+          "original_snapshot_xpath_provided": false,
+          "table_count_including_hidden": 1
+        }
+      }
+    ]
+  },
+  "bm25s_probe": {
+    "kind": "implementation_parity_probe_not_retrieval_quality_evaluation",
+    "independent_test_gold": false,
+    "library": "bm25s",
+    "version": "0.3.16",
+    "license": "MIT",
+    "network_connection_attempts": 0,
+    "LLM_calls": 0,
+    "corpus_chunks": 158,
+    "filtered_indexes": 4,
+    "cases": 17,
+    "all_top5_match": true,
+    "all_positive_sets_match": true,
+    "formula": "atire TF saturation + lucene IDF; k1=1.2 b=.75 float64; set(query terms)",
+    "timing_note": "single process, warm imports and cache; not a service throughput benchmark",
+    "results": [
+      {
+        "id": "msft-cloud-margin",
+        "eligible_chunks": 56,
+        "top5_same": true,
+        "positive_result_ids_same": true,
+        "maximum_score_abs_delta": 1.7763568394002505e-15,
+        "baseline_ms": 1.5508750220760703,
+        "bm25s_ms": 0.38591702468693256,
+        "index_build_ms": 115.3898339252919
+      },
+      {
+        "id": "msft-operating-expenses",
+        "eligible_chunks": 56,
+        "top5_same": true,
+        "positive_result_ids_same": true,
+        "maximum_score_abs_delta": 8.881784197001252e-16,
+        "baseline_ms": 1.550207962282002,
+        "bm25s_ms": 0.050875009037554264,
+        "index_build_ms": 0.0
+      },
+      {
+        "id": "msft-shareholder-return",
+        "eligible_chunks": 56,
+        "top5_same": true,
+        "positive_result_ids_same": true,
+        "maximum_score_abs_delta": 4.440892098500626e-16,
+        "baseline_ms": 1.3371249660849571,
+        "bm25s_ms": 0.040749902836978436,
+        "index_build_ms": 0.0
+      },
+      {
+        "id": "msft-azure-growth",
+        "eligible_chunks": 56,
+        "top5_same": true,
+        "positive_result_ids_same": true,
+        "maximum_score_abs_delta": 1.7763568394002505e-15,
+        "baseline_ms": 1.322791911661625,
+        "bm25s_ms": 0.03583298530429602,
+        "index_build_ms": 0.0
+      },
+      {
+        "id": "msft-constant-currency",
+        "eligible_chunks": 56,
+        "top5_same": true,
+        "positive_result_ids_same": true,
+        "maximum_score_abs_delta": 8.881784197001252e-16,
+        "baseline_ms": 1.2950829695910215,
+        "bm25s_ms": 0.028499984182417393,
+        "index_build_ms": 0.0
+      },
+      {
+        "id": "nvda-blackwell",
+        "eligible_chunks": 102,
+        "top5_same": true,
+        "positive_result_ids_same": true,
+        "maximum_score_abs_delta": 8.881784197001252e-16,
+        "baseline_ms": 2.6689580408856273,
+        "bm25s_ms": 0.05908298771828413,
+        "index_build_ms": 5.518832942470908
+      },
+      {
+        "id": "nvda-gaming-supply",
+        "eligible_chunks": 102,
+        "top5_same": true,
+        "positive_result_ids_same": true,
+        "maximum_score_abs_delta": 8.881784197001252e-16,
+        "baseline_ms": 2.77124997228384,
+        "bm25s_ms": 0.0801669666543603,
+        "index_build_ms": 0.0
+      },
+      {
+        "id": "nvda-gross-margin",
+        "eligible_chunks": 102,
+        "top5_same": true,
+        "positive_result_ids_same": true,
+        "maximum_score_abs_delta": 8.881784197001252e-16,
+        "baseline_ms": 2.5464579230174422,
+        "bm25s_ms": 0.04624994471669197,
+        "index_build_ms": 0.0
+      },
+      {
+        "id": "nvda-dividend",
+        "eligible_chunks": 102,
+        "top5_same": true,
+        "positive_result_ids_same": true,
+        "maximum_score_abs_delta": 1.7763568394002505e-15,
+        "baseline_ms": 2.7624169597402215,
+        "bm25s_ms": 0.08991698268800974,
+        "index_build_ms": 0.0
+      },
+      {
+        "id": "nvda-datacenter-year",
+        "eligible_chunks": 102,
+        "top5_same": true,
+        "positive_result_ids_same": true,
+        "maximum_score_abs_delta": 1.7763568394002505e-15,
+        "baseline_ms": 2.843208028934896,
+        "bm25s_ms": 0.08158409036695957,
+        "index_build_ms": 0.0
+      },
+      {
+        "id": "msft-before-release",
+        "eligible_chunks": 0,
+        "top5_same": true,
+        "positive_result_ids_same": true,
+        "maximum_score_abs_delta": 0.0,
+        "baseline_ms": 0.005166977643966675,
+        "bm25s_ms": 0.0027079368010163307,
+        "index_build_ms": 0.002625049091875553
+      },
+      {
+        "id": "nvda-before-release",
+        "eligible_chunks": 0,
+        "top5_same": true,
+        "positive_result_ids_same": true,
+        "maximum_score_abs_delta": 0.0,
+        "baseline_ms": 0.0020830193534493446,
+        "bm25s_ms": 0.001583946868777275,
+        "index_build_ms": 0.0
+      },
+      {
+        "id": "wrong-report-date",
+        "eligible_chunks": 0,
+        "top5_same": true,
+        "positive_result_ids_same": true,
+        "maximum_score_abs_delta": 0.0,
+        "baseline_ms": 0.0015420373529195786,
+        "bm25s_ms": 0.0012919772416353226,
+        "index_build_ms": 0.0
+      },
+      {
+        "id": "unrelated-lexical",
+        "eligible_chunks": 102,
+        "top5_same": true,
+        "positive_result_ids_same": true,
+        "maximum_score_abs_delta": 0.0,
+        "baseline_ms": 2.4337080540135503,
+        "bm25s_ms": 0.019166036508977413,
+        "index_build_ms": 0.0
+      },
+      {
+        "id": "repeated-query-token",
+        "eligible_chunks": 56,
+        "top5_same": true,
+        "positive_result_ids_same": true,
+        "maximum_score_abs_delta": 8.881784197001252e-16,
+        "baseline_ms": 1.3095419853925705,
+        "bm25s_ms": 0.026499968953430653,
+        "index_build_ms": 0.0
+      },
+      {
+        "id": "out-of-vocabulary",
+        "eligible_chunks": 158,
+        "top5_same": true,
+        "positive_result_ids_same": true,
+        "maximum_score_abs_delta": 0.0,
+        "baseline_ms": 4.205332952551544,
+        "bm25s_ms": 0.03224995452910662,
+        "index_build_ms": 7.547958986833692
+      },
+      {
+        "id": "empty-metadata-filter",
+        "eligible_chunks": 0,
+        "top5_same": true,
+        "positive_result_ids_same": true,
+        "maximum_score_abs_delta": 0.0,
+        "baseline_ms": 0.002625049091875553,
+        "bm25s_ms": 0.001500011421740055,
+        "index_build_ms": 0.0
+      }
+    ]
+  },
+  "unit_checks": {
+    "tests": 10,
+    "result": "passed",
+    "kind": "structure/provenance/regression checks, not model-quality evaluation"
+  },
+  "implementation_files": [
+    {
+      "path": "/Users/apple/Documents/Codex/2026-10-08/san/outputs/VeriFin_Code/verifin/structured_documents.py",
+      "sha256": "0fbc88a12a1c81223a6fd426ed207fdc3bfdd09c15ae8d1ec71207fa3bd88f28"
+    },
+    {
+      "path": "/Users/apple/Documents/Codex/2026-10-08/san/outputs/VeriFin_Code/tests/test_structured_documents.py",
+      "sha256": "101a9aee09272aca94433bbf3a952b3c87aeb07040eaf040562d60d7d2cf2ac6"
+    },
+    {
+      "path": "/Users/apple/Documents/Codex/2026-10-08/san/outputs/VeriFin_Code/scripts/compare_document_parsers.py",
+      "sha256": "0e83ba81af9222b15d0b361c880b4fa1a0e5a6c51bfe3eabd62148e404a1cf02"
+    }
+  ],
+  "source_policy": [
+    "https://www.sec.gov/about/webmaster-frequently-asked-questions",
+    "https://www.sec.gov/about/developer-resources"
+  ],
+  "selected_table_example": {
+    "id": "table_b18903dd1d1872e34aeb63c5",
+    "locator": {
+      "source_url": "https://raw.githubusercontent.com/dgunning/edgartools/107d182146ccf5d22a4e71f82cde8b363b212cf1/tests/fixtures/attachments/aapl/20250329/R2.htm",
+      "snapshot_hash": "13cad7f06f77cf15858b13ed3dc4dc468265e9fdfe0cf2c9d895b392e9ff50f1",
+      "snapshot_path": "/Users/apple/Documents/Codex/2026-10-08/san/work/open-source-audit/parser_probe_R2.htm",
+      "dom_xpath": "/html/body/table",
+      "source_line": 13,
+      "locator_kind": "original_html_dom_xpath",
+      "parser_version": "lxml-pandas-structure-v1"
+    },
+    "column_headers": [
+      [
+        "CONDENSED CONSOLIDATED STATEMENTS OF OPERATIONS (Unaudited) - USD ($)  shares in Thousands, $ in Millions",
+        "CONDENSED CONSOLIDATED STATEMENTS OF OPERATIONS (Unaudited) - USD ($)  shares in Thousands, $ in Millions"
+      ],
+      [
+        "3 Months Ended",
+        "Mar. 29, 2025"
+      ],
+      [
+        "3 Months Ended",
+        "Mar. 30, 2024"
+      ],
+      [
+        "6 Months Ended",
+        "Mar. 29, 2025"
+      ],
+      [
+        "6 Months Ended",
+        "Mar. 30, 2024"
+      ]
+    ],
+    "rows": [
+      [
+        "Net sales",
+        "$ 95,359",
+        "$ 90,753",
+        "$ 219,659",
+        "$ 210,328"
+      ],
+      [
+        "Cost of sales",
+        "50,492",
+        "48,482",
+        "116,517",
+        "113,202"
+      ],
+      [
+        "Gross margin",
+        "44,867",
+        "42,271",
+        "103,142",
+        "97,126"
+      ],
+      [
+        "Operating expenses:",
+        "",
+        "",
+        "",
+        ""
+      ],
+      [
+        "Research and development",
+        "8,550",
+        "7,903",
+        "16,818",
+        "15,599"
+      ],
+      [
+        "Selling, general and administrative",
+        "6,728",
+        "6,468",
+        "13,903",
+        "13,254"
+      ],
+      [
+        "Total operating expenses",
+        "15,278",
+        "14,371",
+        "30,721",
+        "28,853"
+      ],
+      [
+        "Operating income",
+        "29,589",
+        "27,900",
+        "72,421",
+        "68,273"
+      ],
+      [
+        "Other income/(expense), net",
+        "(279)",
+        "158",
+        "(527)",
+        "108"
+      ],
+      [
+        "Income before provision for income taxes",
+        "29,310",
+        "28,058",
+        "71,894",
+        "68,381"
+      ],
+      [
+        "Provision for income taxes",
+        "4,530",
+        "4,422",
+        "10,784",
+        "10,829"
+      ],
+      [
+        "Net income",
+        "$ 24,780",
+        "$ 23,636",
+        "$ 61,110",
+        "$ 57,552"
+      ],
+      [
+        "Earnings per share:",
+        "",
+        "",
+        "",
+        ""
+      ],
+      [
+        "Basic (in dollars per share)",
+        "$ 1.65",
+        "$ 1.53",
+        "$ 4.06",
+        "$ 3.72"
+      ],
+      [
+        "Diluted (in dollars per share)",
+        "$ 1.65",
+        "$ 1.53",
+        "$ 4.05",
+        "$ 3.71"
+      ],
+      [
+        "Shares used in computing earnings per share:",
+        "",
+        "",
+        "",
+        ""
+      ],
+      [
+        "Basic (in shares)",
+        "14,994,082",
+        "15,405,856",
+        "15,037,903",
+        "15,457,810"
+      ],
+      [
+        "Diluted (in shares)",
+        "15,056,133",
+        "15,464,709",
+        "15,103,499",
+        "15,520,675"
+      ],
+      [
+        "Products",
+        "",
+        "",
+        "",
+        ""
+      ],
+      [
+        "Net sales",
+        "$ 68,714",
+        "$ 66,886",
+        "$ 166,674",
+        "$ 163,344"
+      ],
+      [
+        "Cost of sales",
+        "44,030",
+        "42,424",
+        "103,477",
+        "100,864"
+      ],
+      [
+        "Services",
+        "",
+        "",
+        "",
+        ""
+      ],
+      [
+        "Net sales",
+        "26,645",
+        "23,867",
+        "52,985",
+        "46,984"
+      ],
+      [
+        "Cost of sales",
+        "$ 6,462",
+        "$ 6,058",
+        "$ 13,040",
+        "$ 12,338"
+      ]
+    ],
+    "header_source_rows": [
+      0,
+      1
+    ],
+    "status": "parsed",
+    "financial_semantics_validated": false
+  },
+  "additional_real_retrieval_probe": {
+    "result": "data/evaluation/open_source_results/findver-retrieval.json",
+    "validation": "data/evaluation/open_source_results/findver-retrieval-validation.json",
+    "report": "docs/OPEN_SOURCE_COMPONENTS_2026-11-06_FINDVER.md",
+    "status": "completed",
+    "claims": 24,
+    "reports": 9,
+    "blocks": 2971,
+    "recall_at5": {
+      "bm25": 0.5409722222222222,
+      "dense": 0.4076388888888889,
+      "hybrid": 0.5131944444444444
+    },
+    "interpretation": "Published gold block matching; keep BM25 as a strong baseline; no universal model ranking claim."
+  },
+  "portable_fixture_reproduction": {
+    "manifest": "data/evaluation/parser_fixture_manifest.json",
+    "fetch_script": "scripts/fetch_parser_fixtures.py",
+    "default": "plan_only_no_network_no_writes",
+    "network_opt_in": "--download",
+    "total_fixed_bytes": 970991,
+    "generated_manifest": "source-manifest.json",
+    "machine_absolute_paths_in_generated_manifest": false,
+    "cache_sha_checked": true,
+    "checks": [
+      "default plan does not create output directory or connect",
+      "valid existing cache produces portable manifest without connecting",
+      "corrupt cache is rejected before connecting",
+      "fresh fixed-URL download completed: two files verified against exact sizes and SHA256"
+    ]
+  }
+}

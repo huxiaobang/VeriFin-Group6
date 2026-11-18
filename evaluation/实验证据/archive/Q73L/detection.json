@@ -1,0 +1,196 @@
+{
+  "protocol": "e1-frozen-detection-v1",
+  "case_id": "Q73L",
+  "context_sha256": "81150851cdee57cc02e428b9302d6b6d8402ae596152a9246deee806fe597ad2",
+  "created_at": "2026-11-14T18:03:10.425804+00:00",
+  "settings": {
+    "model": "gpt-6.1-sol",
+    "base_url": "https://api.openai.com/v1",
+    "max_output_tokens": 4096,
+    "max_context_chars": 200000,
+    "enable_thinking": null,
+    "timeout": 60.0,
+    "api_mode": "responses",
+    "reasoning_effort": "medium",
+    "service_tier": "default"
+  },
+  "review_order": [
+    "generic_review",
+    "structured_critic"
+  ],
+  "served_model_consistency": {
+    "status": "matched",
+    "served_models": [
+      "gpt-6.1-sol"
+    ],
+    "reported_calls": 2,
+    "model_attempts": 2
+  },
+  "model_mode": "configured_model",
+  "prompt_sha256": {
+    "shared": "725e84c80a9e6fa042a4c533b7ce419fafb23df91eb92b6188b9b60d1b8acbae",
+    "generic_reviewer": "5a8ddfdd5a97fec67d3480211f9f414e6a1bacaf7a2d8de5d7cb94eaab1a95e6",
+    "critic": "f34240012f4595c7a0834466fb899c10e0d0d2e2c1506953d50346a99e5efa7e"
+  },
+  "conditions": {
+    "no_verification": {
+      "condition": "no_verification",
+      "case_id": "Q73L",
+      "context_sha256": "81150851cdee57cc02e428b9302d6b6d8402ae596152a9246deee806fe597ad2",
+      "model_mode": "configured_model",
+      "status": "ok",
+      "model_attempts": 0,
+      "rule_seconds": 0.0,
+      "model_seconds": 0.0,
+      "usage": {},
+      "feedback": {
+        "rule_findings": []
+      },
+      "settings_sha256": "b967fc844bfe7c14d6938de204ce041325d2c2dc35584316dd7992d759b03870",
+      "events": [],
+      "seconds": 0.0,
+      "output_sha256": "09486f4afe897b1532ccb8602cda2d5c7d101a5b374cc9ed62819a279d5bb123"
+    },
+    "rules_only": {
+      "condition": "rules_only",
+      "case_id": "Q73L",
+      "context_sha256": "81150851cdee57cc02e428b9302d6b6d8402ae596152a9246deee806fe597ad2",
+      "model_mode": "configured_model",
+      "status": "ok",
+      "model_attempts": 0,
+      "rule_seconds": 8.85830377228558e-05,
+      "model_seconds": 0.0,
+      "usage": {},
+      "feedback": {
+        "rule_findings": []
+      },
+      "settings_sha256": "b967fc844bfe7c14d6938de204ce041325d2c2dc35584316dd7992d759b03870",
+      "events": [],
+      "seconds": 8.85830377228558e-05,
+      "output_sha256": "09486f4afe897b1532ccb8602cda2d5c7d101a5b374cc9ed62819a279d5bb123"
+    },
+    "generic_review": {
+      "condition": "generic_review",
+      "case_id": "Q73L",
+      "context_sha256": "81150851cdee57cc02e428b9302d6b6d8402ae596152a9246deee806fe597ad2",
+      "model_mode": "configured_model",
+      "status": "ok",
+      "model_attempts": 1,
+      "rule_seconds": 8.85830377228558e-05,
+      "model_seconds": 11.823188708047383,
+      "usage": {
+        "total_tokens": 4118,
+        "prompt_tokens": 3557,
+        "completion_tokens": 561,
+        "cached_input_tokens": 2512,
+        "cache_write_tokens": 0,
+        "cache_write_30m_tokens": 0,
+        "cache_write_12h_tokens": 0,
+        "reasoning_tokens": 126
+      },
+      "feedback": {
+        "rule_findings": [],
+        "review": {
+          "review": "拟答的核心内容有直接证据支持。src_1 的调节表明确列示“Cruise restructuring”，2024 年第四季度金额为 520 百万美元，即 5.20 亿美元；将其表述为当季调整后 EBIT 调节表中的 Cruise 重组费用，符合用户所问。该行的 478 百万美元属于 2023 年第四季度对比数，不应混用。建议将“第四季度”明确为“2024 年第四季度”，避免年份歧义。证据引用上，src_1 已足以支持答案；src_2 披露的是 2024 年 12 月录得的、扣除非控股权益前的 522 百万美元净费用，与调节表的 520 百万美元并非完全相同的口径。现有证据未解释两者差额，不能直接认定其具体来源。src_2 中累计现金流出 287 百万美元及净非现金重组费用 173 百万美元，也不能替代该调节表金额，或据此将 520 百万美元全部称为现金支出。拟答本身没有作这些错误延伸，但并列引用 src_2 容易让读者误以为两处披露直接印证同一金额。用户的问题很窄，无需展开重组背景或现金流明细。",
+          "suggested_actions": "将最终回答精简为：“GM 在 2024 年第四季度从归属股东净利润（亏损）调节至调整后 EBIT 的表中，列示了‘Cruise 重组（Cruise restructuring）’，金额为 5.20 亿美元（520 百万美元）。”引用 src_1 即可。无需为回答当前问题追加检索或计算；若另行解释 522 百万美元与 520 百万美元的差异，则需先取得明确的口径或调节说明，不应凭现有证据推断。"
+        }
+      },
+      "settings_sha256": "b967fc844bfe7c14d6938de204ce041325d2c2dc35584316dd7992d759b03870",
+      "events": [
+        {
+          "type": "model_call",
+          "role": "generic_reviewer",
+          "ok": true,
+          "mode": "configured_model",
+          "model": "gpt-6.1-sol",
+          "base_url": "https://api.openai.com/v1",
+          "api_mode": "responses",
+          "service_tier": "default",
+          "seconds": 11.823188708047383,
+          "usage": {
+            "total_tokens": 4118,
+            "prompt_tokens": 3557,
+            "completion_tokens": 561,
+            "cached_input_tokens": 2512,
+            "cache_write_tokens": 0,
+            "cache_write_30m_tokens": 0,
+            "cache_write_12h_tokens": 0,
+            "reasoning_tokens": 126
+          },
+          "response_metadata": {
+            "model": "gpt-6.1-sol",
+            "service_tier": "default"
+          }
+        }
+      ],
+      "review_input_sha256": "bb0819549fb11e3276eacf8b7015d173ae8eb3001de89e33dd16c030a05c3f3d",
+      "seconds": 11.823277291085105,
+      "output_sha256": "7bc1849f037065b3d8b44f9560b92611fcc97dad34744728ffd7673ecdc7c627"
+    },
+    "structured_critic": {
+      "condition": "structured_critic",
+      "case_id": "Q73L",
+      "context_sha256": "81150851cdee57cc02e428b9302d6b6d8402ae596152a9246deee806fe597ad2",
+      "model_mode": "configured_model",
+      "status": "ok",
+      "model_attempts": 1,
+      "rule_seconds": 8.85830377228558e-05,
+      "model_seconds": 4.0719523330335505,
+      "usage": {
+        "total_tokens": 3733,
+        "prompt_tokens": 3647,
+        "completion_tokens": 86,
+        "cached_input_tokens": 2512,
+        "cache_write_tokens": 0,
+        "cache_write_30m_tokens": 0,
+        "cache_write_12h_tokens": 0,
+        "reasoning_tokens": 55
+      },
+      "feedback": {
+        "rule_findings": [],
+        "review": {
+          "issues": [],
+          "reviewed_claim_ids": [
+            "c1"
+          ],
+          "reviewed_requirement_ids": [
+            "r1"
+          ]
+        }
+      },
+      "settings_sha256": "b967fc844bfe7c14d6938de204ce041325d2c2dc35584316dd7992d759b03870",
+      "events": [
+        {
+          "type": "model_call",
+          "role": "critic",
+          "ok": true,
+          "mode": "configured_model",
+          "model": "gpt-6.1-sol",
+          "base_url": "https://api.openai.com/v1",
+          "api_mode": "responses",
+          "service_tier": "default",
+          "seconds": 4.0719523330335505,
+          "usage": {
+            "total_tokens": 3733,
+            "prompt_tokens": 3647,
+            "completion_tokens": 86,
+            "cached_input_tokens": 2512,
+            "cache_write_tokens": 0,
+            "cache_write_30m_tokens": 0,
+            "cache_write_12h_tokens": 0,
+            "reasoning_tokens": 55
+          },
+          "response_metadata": {
+            "model": "gpt-6.1-sol",
+            "service_tier": "default"
+          }
+        }
+      ],
+      "review_input_sha256": "bb0819549fb11e3276eacf8b7015d173ae8eb3001de89e33dd16c030a05c3f3d",
+      "seconds": 4.072040916071273,
+      "output_sha256": "ff7ee43ba3b7a2dbe31870faa3a5a3cb9133051e6351c6193ed8897a6dad9948"
+    }
+  },
+  "revision_evaluated": false,
+  "truth_scored": false
+}

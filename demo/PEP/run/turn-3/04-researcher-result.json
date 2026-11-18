@@ -1,0 +1,135 @@
+{
+  "claims": [
+    {
+      "id": "claim:guidance-constant-currency-eps",
+      "text": "百事2026财年核心固定汇率每股收益（EPS）同比增长指引，由此前“4%—6%区间的低端”下调至“1%—2%”。这是非GAAP盈利增长率指引，不是每股收益的美元金额；此前也不是仍预期整个4%—6%区间。",
+      "evidence_ids": [
+        "span_866e7defb63fa38a7cf48e44"
+      ],
+      "calculation_ids": [],
+      "requirement_ids": [
+        "request:episode_1448faa1340c4cd5ab29ba150d164b2f"
+      ],
+      "constraints": {
+        "entity": "PEP",
+        "metric": "Core Constant Currency EPS",
+        "basis": "non-GAAP; constant currency",
+        "business_scope": "consolidated",
+        "period": "fiscal 2026",
+        "unit": "percent",
+        "forward_looking": true,
+        "cutoff": "2026-11-16"
+      }
+    },
+    {
+      "id": "claim:guidance-core-eps",
+      "text": "包含汇率折算影响的核心EPS同比增长指引，则由此前“5%—7%区间的低端”下调至“2.5%—3.5%”。这同样是非GAAP全年增长指引，而非GAAP每股收益预测。",
+      "evidence_ids": [
+        "span_866e7defb63fa38a7cf48e44"
+      ],
+      "calculation_ids": [],
+      "requirement_ids": [
+        "request:episode_1448faa1340c4cd5ab29ba150d164b2f"
+      ],
+      "constraints": {
+        "entity": "PEP",
+        "metric": "Core EPS",
+        "basis": "non-GAAP",
+        "business_scope": "consolidated",
+        "period": "fiscal 2026",
+        "unit": "percent",
+        "forward_looking": true
+      }
+    },
+    {
+      "id": "claim:management-investment-cost-context",
+      "text": "公司明确谈到了经营压力与应对方向：管理层表示，要通过更多创新、有效品牌建设及更精准的渠道执行来改善北美表现，并将识别和实施进一步结构性降本，以支持这些投入、缓解投入品成本通胀上升的影响。这些是公司披露的经营背景和计划，不能直接当成其对全年盈利指引下调幅度的完整归因。",
+      "evidence_ids": [
+        "span_e15075b0f56ab75de1fba9f1"
+      ],
+      "calculation_ids": [],
+      "requirement_ids": [
+        "request:episode_1448faa1340c4cd5ab29ba150d164b2f"
+      ],
+      "constraints": {
+        "entity": "PEP",
+        "business_scope": "consolidated; North America investment commentary",
+        "attribution": "management",
+        "basis": "qualitative operating commentary, not a quantified guidance bridge",
+        "forward_looking": true
+      }
+    },
+    {
+      "id": "claim:guidance-fx-assumption",
+      "text": "同期，汇率对全年核心EPS增长的预期贡献反而由约1个百分点提高至约1.5个百分点。按指引表的方向判断，这是更有利的假设，而不是盈利增长指引下调的表面原因；它也不解释核心固定汇率EPS指引为何下调。",
+      "evidence_ids": [
+        "span_866e7defb63fa38a7cf48e44"
+      ],
+      "calculation_ids": [],
+      "requirement_ids": [
+        "request:episode_1448faa1340c4cd5ab29ba150d164b2f"
+      ],
+      "constraints": {
+        "entity": "PEP",
+        "metric": "Foreign Exchange Translation",
+        "basis": "management guidance; contribution to core EPS growth",
+        "business_scope": "consolidated",
+        "period": "fiscal 2026",
+        "unit": "percentage points",
+        "forward_looking": true,
+        "interpretation": "directional comparison, not a quantified causal allocation"
+      }
+    },
+    {
+      "id": "claim:guidance-tax-assumption",
+      "text": "全年核心有效税率预期也由约22%降至约21%。在其他条件不变时，较低税率通常有利于税后盈利，因此这项假设变化本身也不是盈利增长指引下调的解释；公告没有据此量化其对EPS的抵消作用。",
+      "evidence_ids": [
+        "span_866e7defb63fa38a7cf48e44"
+      ],
+      "calculation_ids": [],
+      "requirement_ids": [
+        "request:episode_1448faa1340c4cd5ab29ba150d164b2f"
+      ],
+      "constraints": {
+        "entity": "PEP",
+        "metric": "Core Annual Effective Tax Rate",
+        "basis": "non-GAAP management guidance",
+        "business_scope": "consolidated",
+        "period": "fiscal 2026",
+        "unit": "percent",
+        "forward_looking": true,
+        "interpretation": "directional tax interpretation with other conditions held constant"
+      }
+    },
+    {
+      "id": "claim:guidance-explanation-limit",
+      "text": "所以，数字改了多少是清楚的，但现有证据中的原因解释不完整、也未量化：已取得的公告及10-Q段落没有把北美投入、成本通胀、降本及其他因素逐项连接成全年盈利指引下调桥。公告预告还会发布管理层准备稿并举行问答，但本次没有取得这些材料；因此不能进一步断言，公司在所有沟通中都没有解释下调原因。",
+      "evidence_ids": [
+        "span_e15075b0f56ab75de1fba9f1",
+        "span_866e7defb63fa38a7cf48e44",
+        "chunk_d71dd73a1a5ed77942290805"
+      ],
+      "calculation_ids": [],
+      "requirement_ids": [
+        "request:episode_1448faa1340c4cd5ab29ba150d164b2f"
+      ],
+      "constraints": {
+        "entity": "PEP",
+        "business_scope": "consolidated",
+        "period": "fiscal 2026",
+        "cutoff": "2026-11-16",
+        "basis": "bounded conclusion from retrieved original passages",
+        "missing_evidence": [
+          "第三季度管理层准备稿",
+          "第三季度业绩问答实录",
+          "将此前与修订后全年核心EPS增长指引连接起来的逐项量化变动桥"
+        ]
+      }
+    }
+  ],
+  "answered_requirement_ids": [
+    "request:episode_1448faa1340c4cd5ab29ba150d164b2f"
+  ],
+  "unanswered_requirement_ids": [],
+  "summary": "2026全年核心固定汇率EPS增长指引由4%—6%区间低端降至1%—2%，核心EPS增长由5%—7%区间低端降至2.5%—3.5%。公司谈到了北美投入及成本通胀压力，但现有材料未提供完整、量化的下调归因；未取得的管理层准备稿和问答仍是证据缺口。"
+}

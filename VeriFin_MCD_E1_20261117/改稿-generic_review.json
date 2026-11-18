@@ -1,0 +1,344 @@
+{
+  "status": "partial",
+  "stop_reason": "no_progress",
+  "error_type": null,
+  "claims": [
+    {
+      "calculation_ids": [],
+      "constraints": {
+        "basis": "management attribution and source-table comparison",
+        "business_scope": "consolidated",
+        "entity": "MCD",
+        "period_end": "2026-09-30",
+        "period_start": "2026-07-01"
+      },
+      "evidence_ids": [
+        "chunk_bf02f4d88a13ecc63477b8ab",
+        "chunk_6d40ed804857fe9823b396ea",
+        "chunk_20aff608c3e8516e185830d7",
+        "chunk_d202b96c8de92effd96b8946"
+      ],
+      "id": "claim:profit_driver_bounded_answer",
+      "requirement_ids": [
+        "request:episode_ad223a58ece545b9aa3227556e8c9e64"
+      ],
+      "scope_version": 2,
+      "text": "这季并不只是加盟业务撑起来的：加盟餐厅利润改善是重要支撑，其他营业净收入增加也很突出，管理费用下降则提供额外帮助。公司对剔除相关费用后的营业利润增长，主要归因于销售带动的加盟餐厅利润增加及其他营业收入提高；这是管理层解释，不是对各因素贡献比例的独立量化。",
+      "status": "Pending Verification",
+      "evidence_versions": {
+        "chunk_bf02f4d88a13ecc63477b8ab": 1,
+        "chunk_6d40ed804857fe9823b396ea": 1,
+        "chunk_20aff608c3e8516e185830d7": 1,
+        "chunk_d202b96c8de92effd96b8946": 1
+      },
+      "calculation_versions": {},
+      "version": 1,
+      "stale": false
+    },
+    {
+      "calculation_ids": [],
+      "constraints": {
+        "basis": "original disclosed amounts; not a saved calculation",
+        "business_scope": "consolidated restaurant operations",
+        "comparison_period_end": "2025-09-30",
+        "comparison_period_start": "2025-07-01",
+        "currency": "USD",
+        "entity": "MCD",
+        "metric": "Restaurant margins",
+        "period_end": "2026-09-30",
+        "period_start": "2026-07-01",
+        "unit": "亿美元"
+      },
+      "evidence_ids": [
+        "chunk_6d40ed804857fe9823b396ea",
+        "chunk_90e48c44adbcf3862d8a712e"
+      ],
+      "id": "claim:restaurant_profit_comparatives",
+      "requirement_ids": [
+        "request:episode_ad223a58ece545b9aa3227556e8c9e64"
+      ],
+      "scope_version": 2,
+      "text": "看餐厅层面，公司直接披露的加盟餐厅利润，本季为38.00亿美元、上年同期为36.97亿美元；自营餐厅利润分别为3.92亿美元和3.91亿美元。因此，餐厅层面的改善主要出现在加盟业务，而不是自营业务。这里的餐厅利润尚不是集团营业利润，还需考虑集团管理费用及其他营业收支等。",
+      "status": "Pending Verification",
+      "evidence_versions": {
+        "chunk_6d40ed804857fe9823b396ea": 1,
+        "chunk_90e48c44adbcf3862d8a712e": 1
+      },
+      "calculation_versions": {},
+      "version": 1,
+      "stale": false
+    },
+    {
+      "calculation_ids": [],
+      "constraints": {
+        "basis": "original disclosed amounts",
+        "business_scope": "consolidated",
+        "comparison_period_end": "2025-09-30",
+        "comparison_period_start": "2025-07-01",
+        "currency": "USD",
+        "entity": "MCD",
+        "metric": "Selling, general & administrative expenses",
+        "period_end": "2026-09-30",
+        "period_start": "2026-07-01",
+        "unit": "亿美元"
+      },
+      "evidence_ids": [
+        "chunk_20aff608c3e8516e185830d7",
+        "chunk_bf02f4d88a13ecc63477b8ab"
+      ],
+      "id": "claim:administrative_expense_comparatives",
+      "requirement_ids": [
+        "request:episode_ad223a58ece545b9aa3227556e8c9e64"
+      ],
+      "scope_version": 2,
+      "text": "管理费用也是顺风，而不是拖累：第三季度销售、一般及管理费用，本季为7.59亿美元，上年同期为7.85亿美元。不要把公司对前九个月管理费用上升的解释，套到这个单季。",
+      "status": "Pending Verification",
+      "evidence_versions": {
+        "chunk_20aff608c3e8516e185830d7": 1,
+        "chunk_bf02f4d88a13ecc63477b8ab": 1
+      },
+      "calculation_versions": {},
+      "version": 1,
+      "stale": false
+    },
+    {
+      "calculation_ids": [],
+      "constraints": {
+        "basis": "GAAP; change directly disclosed in earnings release",
+        "business_scope": "consolidated",
+        "comparison_period_end": "2025-09-30",
+        "comparison_period_start": "2025-07-01",
+        "currency": "USD",
+        "entity": "MCD",
+        "metric": "Other operating (income) expense, net",
+        "period_end": "2026-09-30",
+        "period_start": "2026-07-01",
+        "unit": "亿美元"
+      },
+      "evidence_ids": [
+        "span_b081d896504fbf43a75bb556",
+        "chunk_d202b96c8de92effd96b8946"
+      ],
+      "id": "claim:other_operating_income_direct_change",
+      "requirement_ids": [
+        "request:episode_ad223a58ece545b9aa3227556e8c9e64"
+      ],
+      "scope_version": 2,
+      "text": "另一个显著来源是其他营业净收入：本季为1.39亿美元，上年同期为0.37亿美元；业绩公告直接列示，这一项目对营业利润同比改善贡献1.02亿美元。因此，不能把集团利润增长全解释成加盟店日常销售带来的收益。",
+      "status": "Pending Verification",
+      "evidence_versions": {
+        "span_b081d896504fbf43a75bb556": 1,
+        "chunk_d202b96c8de92effd96b8946": 1
+      },
+      "calculation_versions": {},
+      "version": 1,
+      "stale": false
+    },
+    {
+      "calculation_ids": [],
+      "constraints": {
+        "basis": "original disclosed component amounts; business explanations attributed to management",
+        "business_scope": "consolidated",
+        "comparison_period_end": "2025-09-30",
+        "comparison_period_start": "2025-07-01",
+        "currency": "USD",
+        "entity": "MCD",
+        "metric": "Other Operating (Income) Expense, Net",
+        "period_end": "2026-09-30",
+        "period_start": "2026-07-01",
+        "unit": "亿美元"
+      },
+      "evidence_ids": [
+        "chunk_d202b96c8de92effd96b8946"
+      ],
+      "id": "claim:other_operating_income_components",
+      "requirement_ids": [
+        "request:episode_ad223a58ece545b9aa3227556e8c9e64"
+      ],
+      "scope_version": 2,
+      "text": "其他营业净收入里既有经营相关收益，也有资产出售收益。季度原表列示：餐厅业务出售收益本季0.97亿美元、上年同期0.35亿美元；未合并附属公司收益分别为0.75亿和0.63亿美元；资产处置及其他净收支由上年的0.21亿美元净费用转为本季0.23亿美元净收入；减值及其他净费用则由0.39亿升至0.56亿美元，形成抵消。公司称，餐厅出售收益增加反映美国餐厅出售更多，附属公司收益改善主要反映中国餐厅经营表现改善，资产处置等项目的变化主要反映剩余物业出售收益提高。这些因素不宜一概视为同店销售增长。",
+      "status": "Pending Verification",
+      "evidence_versions": {
+        "chunk_d202b96c8de92effd96b8946": 1
+      },
+      "calculation_versions": {},
+      "version": 1,
+      "stale": false
+    },
+    {
+      "calculation_ids": [],
+      "constraints": {
+        "basis": "GAAP versus Non-GAAP",
+        "business_scope": "consolidated",
+        "comparison_period_end": "2025-09-30",
+        "comparison_period_start": "2025-07-01",
+        "currency": "USD",
+        "entity": "MCD",
+        "period_end": "2026-09-30",
+        "period_start": "2026-07-01"
+      },
+      "evidence_ids": [
+        "span_de69cbdff59e9d164a29cd48",
+        "span_b081d896504fbf43a75bb556",
+        "chunk_bf02f4d88a13ecc63477b8ab",
+        "chunk_d202b96c8de92effd96b8946"
+      ],
+      "id": "claim:gaap_adjusted_distinction",
+      "requirement_ids": [
+        "request:episode_ad223a58ece545b9aa3227556e8c9e64"
+      ],
+      "scope_version": 2,
+      "text": "口径上，本季收入同比增长1%，GAAP营业利润增长7%；公告直接列示营业利润同比增加2.39亿美元。剔除本季0.56亿美元及上年同期0.39亿美元的相关费用后，非GAAP营业利润增长8%。调整表只加回这些费用，并没有把餐厅业务出售收益等上述收益一并剔除，所以“调整后增长8%”也不能直接理解为纯粹的日常经营增长。",
+      "status": "Pending Verification",
+      "evidence_versions": {
+        "span_de69cbdff59e9d164a29cd48": 1,
+        "span_b081d896504fbf43a75bb556": 1,
+        "chunk_bf02f4d88a13ecc63477b8ab": 1,
+        "chunk_d202b96c8de92effd96b8946": 1
+      },
+      "calculation_versions": {},
+      "version": 1,
+      "stale": false
+    },
+    {
+      "calculation_ids": [],
+      "constraints": {
+        "business_scope": "consolidated",
+        "entity": "MCD",
+        "missing_evidence": [
+          "加盟餐厅利润、自营餐厅利润、管理费用及其他营业收支同比贡献的已保存计算记录",
+          "其他收入减其他餐厅费用的同比贡献计算记录",
+          "完整利润桥、舍入残差及加盟贡献占比的已保存计算记录"
+        ],
+        "period_end": "2026-09-30",
+        "period_start": "2026-07-01"
+      },
+      "evidence_ids": [
+        "chunk_90e48c44adbcf3862d8a712e",
+        "span_b081d896504fbf43a75bb556",
+        "chunk_80fac8d893ffff0b3c0923ee"
+      ],
+      "id": "claim:quantitative_bridge_limitation",
+      "requirement_ids": [
+        "request:episode_ad223a58ece545b9aa3227556e8c9e64"
+      ],
+      "scope_version": 2,
+      "text": "量化核验仍有缺口：本次分析器未生成可保存的利润桥计算结果，加盟餐厅利润指标查询也返回不支持该指标；这不等于原始报表没有数据。以上保留原表两期金额及公告直接披露的变动额，但尚不能给出经过计算记录核验的完整贡献拆分、加盟贡献占比或精确勾稽。报表还包含其他收入与其他餐厅费用，完整利润桥不能漏掉这两行；披露整数存在舍入，也不应强行凑平。",
+      "status": "Pending Verification",
+      "evidence_versions": {
+        "chunk_90e48c44adbcf3862d8a712e": 1,
+        "span_b081d896504fbf43a75bb556": 1,
+        "chunk_80fac8d893ffff0b3c0923ee": 1
+      },
+      "calculation_versions": {},
+      "version": 1,
+      "stale": false
+    }
+  ],
+  "events": [
+    {
+      "type": "model_call",
+      "role": "revision_planner",
+      "ok": true,
+      "mode": "configured_model",
+      "model": "gpt-6.1-sol",
+      "base_url": "https://api.openai.com/v1",
+      "api_mode": "responses",
+      "service_tier": "default",
+      "seconds": 0.009711291990242898,
+      "usage": {
+        "total_tokens": 23001,
+        "prompt_tokens": 22885,
+        "completion_tokens": 116,
+        "cached_input_tokens": 3102,
+        "cache_write_tokens": 0,
+        "cache_write_30m_tokens": 0,
+        "cache_write_12h_tokens": 0,
+        "reasoning_tokens": 0
+      },
+      "response_metadata": {
+        "model": "gpt-6.1-sol",
+        "service_tier": "default"
+      }
+    },
+    {
+      "type": "tool_call",
+      "tool": "reconcile_operating_margin",
+      "arguments": {
+        "entity": "MCD",
+        "document_id": "source_doc_0cdcf4786366028311a04eeb",
+        "period_start": "2026-07-01",
+        "period_end": "2026-09-30"
+      },
+      "ok": false,
+      "seconds": 0.0010481250938028097,
+      "network_requests": 0,
+      "summary": "No unambiguous retrieved quarterly statement for the named issuer and period. Locate its original revenue, gross profit, expense and operating income rows."
+    },
+    {
+      "type": "model_call",
+      "role": "revision_planner",
+      "ok": true,
+      "mode": "configured_model",
+      "model": "gpt-6.1-sol",
+      "base_url": "https://api.openai.com/v1",
+      "api_mode": "responses",
+      "service_tier": "default",
+      "seconds": 6.43854637502227,
+      "usage": {
+        "total_tokens": 23171,
+        "prompt_tokens": 22973,
+        "completion_tokens": 198,
+        "cached_input_tokens": 3102,
+        "cache_write_tokens": 0,
+        "cache_write_30m_tokens": 0,
+        "cache_write_12h_tokens": 0,
+        "reasoning_tokens": 38
+      },
+      "response_metadata": {
+        "model": "gpt-6.1-sol",
+        "service_tier": "default"
+      }
+    },
+    {
+      "type": "tool_call",
+      "tool": "reconcile_operating_margin",
+      "arguments": {
+        "entity": "MCD",
+        "document_id": "source_doc_0cdcf4786366028311a04eeb",
+        "period_start": "2026-07-01",
+        "period_end": "2026-09-30"
+      },
+      "ok": false,
+      "seconds": 0.0021174579160287976,
+      "network_requests": 0,
+      "summary": "No unambiguous retrieved quarterly statement for the named issuer and period. Locate its original revenue, gross profit, expense and operating income rows."
+    }
+  ],
+  "unanswered": [],
+  "usage": {
+    "model_calls": 2,
+    "tool_calls": 2,
+    "network_requests": 0,
+    "planner_steps": 2,
+    "prompt_tokens_reported_calls": 2,
+    "completion_tokens_reported_calls": 2,
+    "total_tokens_reported_calls": 2,
+    "total_tokens": 46172,
+    "prompt_tokens": 45858,
+    "completion_tokens": 314,
+    "cached_input_tokens": 6204,
+    "cached_input_tokens_reported_calls": 2,
+    "cache_write_tokens": 0,
+    "cache_write_tokens_reported_calls": 2,
+    "cache_write_30m_tokens": 0,
+    "cache_write_30m_tokens_reported_calls": 2,
+    "cache_write_12h_tokens": 0,
+    "cache_write_12h_tokens_reported_calls": 2,
+    "reasoning_tokens": 38,
+    "reasoning_tokens_reported_calls": 2,
+    "active_seconds": 11.08099383302033
+  },
+  "input_sha256": "884ad1ce918bb110fa59e6231337e5f6fdee1c9e7f0002daa9cb7d8277f9e3c3",
+  "feedback_sha256": "ff12554ea4fc255b3ef8a0119df7479b70ca5b94b6b4bc7847975791923fcccb"
+}

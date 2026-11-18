@@ -1,0 +1,1247 @@
+{
+  "case_id": "draft-04",
+  "context_sha256": "1757847bbd8fb64fe61b2a3ccfea01e834d15ec34a3cab8c6c476759bb60b525",
+  "context": {
+    "calculations": [],
+    "claims": [
+      {
+        "calculation_ids": [],
+        "calculation_versions": {},
+        "constraints": {
+          "basis": "non-GAAP; constant currency",
+          "business_scope": "consolidated",
+          "cutoff": "2026-11-16",
+          "entity": "PEP",
+          "forward_looking": true,
+          "metric": "Core Constant Currency EPS",
+          "period": "fiscal 2026",
+          "unit": "percent"
+        },
+        "evidence_ids": [
+          "span_866e7defb63fa38a7cf48e44"
+        ],
+        "evidence_versions": {
+          "span_866e7defb63fa38a7cf48e44": 1
+        },
+        "id": "claim:guidance-constant-currency-eps",
+        "requirement_ids": [
+          "request:episode_1448faa1340c4cd5ab29ba150d164b2f"
+        ],
+        "scope_version": 8,
+        "stale": false,
+        "text": "百事2026财年核心固定汇率每股收益（EPS）同比增长指引，由此前“4%—6%区间的低端”下调至“1%—2%”。这是非GAAP盈利增长率指引，不是每股收益的美元金额；此前也不是仍预期整个4%—6%区间。",
+        "version": 1
+      },
+      {
+        "calculation_ids": [],
+        "calculation_versions": {},
+        "constraints": {
+          "basis": "non-GAAP",
+          "business_scope": "consolidated",
+          "entity": "PEP",
+          "forward_looking": true,
+          "metric": "Core EPS",
+          "period": "fiscal 2026",
+          "unit": "percent"
+        },
+        "evidence_ids": [
+          "span_866e7defb63fa38a7cf48e44"
+        ],
+        "evidence_versions": {
+          "span_866e7defb63fa38a7cf48e44": 1
+        },
+        "id": "claim:guidance-core-eps",
+        "requirement_ids": [
+          "request:episode_1448faa1340c4cd5ab29ba150d164b2f"
+        ],
+        "scope_version": 8,
+        "stale": false,
+        "text": "包含汇率折算影响的核心EPS同比增长指引，则由此前“5%—7%区间的低端”下调至“2.5%—3.5%”。这同样是非GAAP全年增长指引，而非GAAP每股收益预测。",
+        "version": 1
+      },
+      {
+        "calculation_ids": [],
+        "calculation_versions": {},
+        "constraints": {
+          "attribution": "management",
+          "basis": "qualitative operating commentary, not a quantified guidance bridge",
+          "business_scope": "consolidated; North America investment commentary",
+          "entity": "PEP",
+          "forward_looking": true
+        },
+        "evidence_ids": [
+          "span_e15075b0f56ab75de1fba9f1"
+        ],
+        "evidence_versions": {
+          "span_e15075b0f56ab75de1fba9f1": 1
+        },
+        "id": "claim:management-investment-cost-context",
+        "requirement_ids": [
+          "request:episode_1448faa1340c4cd5ab29ba150d164b2f"
+        ],
+        "scope_version": 8,
+        "stale": false,
+        "text": "公司明确谈到了经营压力与应对方向：管理层表示，要通过更多创新、有效品牌建设及更精准的渠道执行来改善北美表现，并将识别和实施进一步结构性降本，以支持这些投入、缓解投入品成本通胀上升的影响。",
+        "version": 1
+      },
+      {
+        "calculation_ids": [],
+        "calculation_versions": {},
+        "constraints": {
+          "basis": "management guidance; contribution to core EPS growth",
+          "business_scope": "consolidated",
+          "entity": "PEP",
+          "forward_looking": true,
+          "interpretation": "directional comparison, not a quantified causal allocation",
+          "metric": "Foreign Exchange Translation",
+          "period": "fiscal 2026",
+          "unit": "percentage points"
+        },
+        "evidence_ids": [
+          "span_866e7defb63fa38a7cf48e44"
+        ],
+        "evidence_versions": {
+          "span_866e7defb63fa38a7cf48e44": 1
+        },
+        "id": "claim:guidance-fx-assumption",
+        "requirement_ids": [
+          "request:episode_1448faa1340c4cd5ab29ba150d164b2f"
+        ],
+        "scope_version": 8,
+        "stale": false,
+        "text": "同期，汇率对全年核心EPS增长的预期贡献反而由约1个百分点提高至约1.5个百分点。按指引表的方向判断，这是更有利的假设，而不是盈利增长指引下调的表面原因；它也不解释核心固定汇率EPS指引为何下调。",
+        "version": 1
+      },
+      {
+        "calculation_ids": [],
+        "calculation_versions": {},
+        "constraints": {
+          "basis": "non-GAAP management guidance",
+          "business_scope": "consolidated",
+          "entity": "PEP",
+          "forward_looking": true,
+          "interpretation": "directional tax interpretation with other conditions held constant",
+          "metric": "Core Annual Effective Tax Rate",
+          "period": "fiscal 2026",
+          "unit": "percent"
+        },
+        "evidence_ids": [
+          "span_866e7defb63fa38a7cf48e44"
+        ],
+        "evidence_versions": {
+          "span_866e7defb63fa38a7cf48e44": 1
+        },
+        "id": "claim:guidance-tax-assumption",
+        "requirement_ids": [
+          "request:episode_1448faa1340c4cd5ab29ba150d164b2f"
+        ],
+        "scope_version": 8,
+        "stale": false,
+        "text": "全年核心有效税率预期也由约22%降至约21%。在其他条件不变时，较低税率通常有利于税后盈利，因此这项假设变化本身也不是盈利增长指引下调的解释；公告没有据此量化其对EPS的抵消作用。",
+        "version": 1
+      },
+      {
+        "calculation_ids": [],
+        "calculation_versions": {},
+        "constraints": {
+          "basis": "bounded conclusion from retrieved original passages",
+          "business_scope": "consolidated",
+          "cutoff": "2026-11-16",
+          "entity": "PEP",
+          "missing_evidence": [
+            "第三季度管理层准备稿",
+            "第三季度业绩问答实录",
+            "将此前与修订后全年核心EPS增长指引连接起来的逐项量化变动桥"
+          ],
+          "period": "fiscal 2026"
+        },
+        "evidence_ids": [
+          "span_e15075b0f56ab75de1fba9f1",
+          "span_866e7defb63fa38a7cf48e44",
+          "chunk_d71dd73a1a5ed77942290805"
+        ],
+        "evidence_versions": {
+          "chunk_d71dd73a1a5ed77942290805": 1,
+          "span_866e7defb63fa38a7cf48e44": 1,
+          "span_e15075b0f56ab75de1fba9f1": 1
+        },
+        "id": "claim:guidance-explanation-limit",
+        "requirement_ids": [
+          "request:episode_1448faa1340c4cd5ab29ba150d164b2f"
+        ],
+        "scope_version": 8,
+        "stale": false,
+        "text": "公司已经确认，北美业务投入增加及投入品成本通胀完整解释了这次全年盈利增长指引下调。",
+        "version": 1
+      }
+    ],
+    "evidence": [
+      {
+        "coverage_cutoff": "2026-11-16",
+        "created_at": "2026-11-16T16:22:52.739037+00:00",
+        "entity": "PEP",
+        "id": "metadata_ad760c6692f956a4d6a61c1a",
+        "kind": "source_metadata",
+        "locator": "documents[3], documents[0], documents[1], documents[2]",
+        "mode": "replay",
+        "publication_basis": "effective availability of filtered metadata preview",
+        "published_at": "2026-11-16",
+        "retrieved_at": null,
+        "snapshot_hash": "dbf78f320aca77b3e4dfaa055e02f216fab9a11fcfa79426fb195da46f9d64f5",
+        "snapshot_path": "manifest.json",
+        "source_url": "manifest.json",
+        "stale": false,
+        "text": "Finite local replay catalog for PEP: 4 eligible document(s) at cutoff 2026-11-16, newest publication first. Catalog metadata only.\n8-K Exhibit 99.1 | document report date 2026-09-05 | published_at 2026-10-07T21:57:44.000Z (SEC EDGAR acceptance 0000077476-26-000050) | https://www.sec.gov/Archives/edgar/data/77476/000007747626000050/q320268-kxexhibit991.htm\n10-Q | document report date 2026-09-05 | published_at 2026-10-07T21:52:53.000Z (SEC EDGAR acceptance 0000077476-26-000048) | https://www.sec.gov/Archives/edgar/data/77476/000007747626000048/pep-20260905.htm\n10-Q | document report date 2026-06-13 | published_at 2026-07-08T21:52:18.000Z (SEC EDGAR acceptance 0000077476-26-000035) | https://www.sec.gov/Archives/edgar/data/77476/000007747626000035/pep-20260613.htm\n10-K | document report date 2025-12-27 | published_at 2026-02-02T23:07:04.000Z (SEC EDGAR acceptance 0000077476-26-000007) | https://www.sec.gov/Archives/edgar/data/77476/000007747626000007/pep-20251227.htm",
+        "version": 1
+      },
+      {
+        "created_at": "2026-11-16T16:22:56.824656+00:00",
+        "document_id": "source_doc_10051e485ae3e4f6272a9b32",
+        "document_period_start": "2026-06-14",
+        "document_report_date": "2026-09-05",
+        "end": 6000,
+        "entity": "PEP",
+        "extraction_method": "All visible HTML tables and body in source order.",
+        "form": "8-K Exhibit 99.1",
+        "id": "span_e15075b0f56ab75de1fba9f1",
+        "kind": "document",
+        "locator": "snapshots/q320268-kxexhibit991.htm.txt:characters[0:6000] (zero-based Unicode offsets)",
+        "mode": "replay",
+        "period_end": null,
+        "period_start": null,
+        "publication_precision": "timestamp",
+        "published_at": "2026-10-07T21:57:44.000Z",
+        "retrieved_at": "2026-11-16T16:21:19.083804+00:00",
+        "snapshot_hash": "6669dac8002dacf42b74325b81221b20e6975d573da2427a62d7968e29bc7899",
+        "snapshot_path": "snapshots/q320268-kxexhibit991.htm",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/77476/000007747626000050/q320268-kxexhibit991.htm",
+        "stale": false,
+        "start": 0,
+        "text": "EX-99.1\n2\nq320268-kxexhibit991.htm\nEX-99.1\nDocument\nExhibit 99.1\nPepsiCo Reports Third-Quarter 2026 Results\nThird-Quarter and Year-to-Date Results1\n•Net revenue increased 5.6% and 6.7%, respectively\n•Organic revenue2 increased 3.1% and 2.7%, respectively\n•Earnings per share (EPS) increased 17% and 47%, respectively\n•Core2 EPS increased 2% and 5%, respectively\n•Core constant currency2 EPS increased 1.5% and 2%, respectively\nGuidance\n•Company updates fiscal 2026 financial guidance2\nPURCHASE, N.Y. - October 8, 2026 - PepsiCo, Inc. (NASDAQ: PEP) today reported results for third-quarter 2026.\n“Our third-quarter results featured strong net revenue growth, an acceleration in organic revenue growth with organic volume growth across both global beverages and convenient foods. The results reflect the scale and resilience of the international business, the ongoing evolution of the global portfolio and an improved presence in underpenetrated channels and occasions,” said Chairman and CEO Ramon Laguarta.\nLaguarta continued, “Looking ahead, we remain focused on building upon the strength of the International business while acting with urgency to sustainably improve our performance in North America through more investments in innovation, effective brand building, and sharper marketplace execution by channel. Additional structural cost reduction actions are being identified and will be implemented in the coming months to help fund investments that aim to accelerate organic revenue growth and mitigate the impacts of rising input cost inflation.”\nThird-Quarter Year-to-Date\n($ in millions, except EPS) Q3 2026 Q3 2025 Change Q3 2026 Q3 2025 Change\nNet revenue $25,274 $23,937 5.6% $68,898 $64,582 6.7%\nOrganic revenue performance 3.1% 2.7%\nOperating profit $4,260 $3,569 19% $11,496 $7,941 45%\nOperating margin 16.9% 14.9% 195 bps 16.7% 12.3% 440 bps\nCore operating profit $4,277 $4,137 3% $11,394 $10,837 5%\nCore operating margin 16.9% 17.3% (35) bps 16.5% 16.8% (25) bps\nEPS $2.23 $1.90 17% $6.10 $4.15 47%\nCore EPS $2.34 $2.29 2% $6.15 $5.88 5%\nCore constant currency EPS 1.5% 2%\n1 Versus the prior year.\n2 Please refer to the reconciliation of generally accepted accounting principles (GAAP) and non-GAAP information in the attached exhibits and to the Glossary for the definitions of non-GAAP financial measures, including “Organic revenue performance,” “Core” and “Constant currency,” and to “Guidance and Outlook” for additional information regarding PepsiCo’s full-year 2026 financial guidance. PepsiCo provides guidance on a non-GAAP basis as we cannot predict certain elements which are included in reported GAAP results, including the impact of foreign exchange and commodity mark-to-market net impacts. Please refer to PepsiCo’s Quarterly Report on Form 10-Q for the 12 and 36 weeks ended September 5, 2026 (Q3 2026 Form 10-Q) filed with the Securities and Exchange Commission (SEC) for additional information regarding PepsiCo’s financial results.\n1\nThird-Quarter Results Discussion\n•Net revenue increased 5.6% due to 3.1% organic revenue growth, a 1.7-percentage-point net benefit from acquisitions and divestitures and a 0.7-percentage-point benefit from foreign exchange translation. Organic revenue growth reflects the benefits associated with effective net pricing and a contribution from organic volume growth.\n◦In North America, convenient foods net revenue trends improved sequentially, reflecting savory snacks volume growth and volume market share improvement, offset by lower effective net pricing. The beverages business delivered 5 percent net revenue growth, primarily reflecting the benefits of acquisitions made in 2025.\n◦The international businesses performed well with each segment delivering strong net revenue growth - aided by organic volume growth within Asia Pacific Foods, International Beverages Franchise and Latin America Foods.\n•Operating profit increased 19% and operating margin expanded 195 basis points, primarily reflecting a favorable net impact of acquisition and divestiture-related charges/credits and a favorable impact of net mark-to-market gains on commodity derivatives. Core operating profit increased 3%, with core operating margin contracting 35 basis points. The core operating profit performance reflects productivity savings, effective net pricing and a 4-percentage-point favorable impact of tariff refunds. These impacts were partially offset by certain operating cost increases and higher advertising and marketing expenses.\n•EPS increased 17% and core EPS increased 2%, primarily driven by operating profit growth.\nYear-to-Date Results Discussion\n•Net revenue increased 6.7% due to 2.7% organic revenue growth, a 2.0-percentage-point benefit from foreign exchange translation and a 2.0-percentage-point net benefit from acquisitions and divestitures. Organic revenue growth reflects the benefits associated with effective net pricing and a contribution from organic volume growth.\n◦In North America convenient foods, organic volume and volume market share increased aided by innovation and affordability initiatives. Convenient foods net revenue reflects organic volume growth and the benefits of an acquisition, offset by lower effective net pricing. The beverages business delivered 7 percent net revenue growth, primarily reflecting the benefits of acquisitions made in 2025 with organic revenue growth increasing 1 percent.\n◦The international businesses performed well with each segment delivering strong net revenue growth - aided by organic volume growth within Asia Pacific Foods, International Beverages Franchise and EMEA.\n•Operating profit increased 45% and operating margin expanded 440 basis points, primarily reflecting prior-year impairment charges related to the Rockstar and Be & Cheery brands and a favorable net impact of acquisition and divestiture-related charges/credits. Core operating profit increased 5%, with core operating margin contracting 25 basis points. The core operating profit performance was p",
+        "text_snapshot_hash": "a664b6e4c0e9f7ef89f60e790d806ec2b0021e2600bc9879531f4d4b68b2f92d",
+        "text_snapshot_path": "snapshots/q320268-kxexhibit991.htm.txt",
+        "version": 1
+      },
+      {
+        "created_at": "2026-11-16T16:23:02.046905+00:00",
+        "document_id": "source_doc_10051e485ae3e4f6272a9b32",
+        "document_period_start": "2026-06-14",
+        "document_report_date": "2026-09-05",
+        "end": 12000,
+        "entity": "PEP",
+        "extraction_method": "All visible HTML tables and body in source order.",
+        "form": "8-K Exhibit 99.1",
+        "id": "span_866e7defb63fa38a7cf48e44",
+        "kind": "document",
+        "locator": "snapshots/q320268-kxexhibit991.htm.txt:characters[6000:12000] (zero-based Unicode offsets)",
+        "mode": "replay",
+        "period_end": null,
+        "period_start": null,
+        "publication_precision": "timestamp",
+        "published_at": "2026-10-07T21:57:44.000Z",
+        "retrieved_at": "2026-11-16T16:21:19.083804+00:00",
+        "snapshot_hash": "6669dac8002dacf42b74325b81221b20e6975d573da2427a62d7968e29bc7899",
+        "snapshot_path": "snapshots/q320268-kxexhibit991.htm",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/77476/000007747626000050/q320268-kxexhibit991.htm",
+        "stale": false,
+        "start": 6000,
+        "text": "rimarily driven by productivity savings and effective net pricing, partially offset by certain operating cost increases.\n•EPS increased 47% and core EPS increased 5%, primarily driven by operating profit growth.\n2\nSummary Third-Quarter 2026 Performance\nRevenue\nVolume(a)\nGAAP Reported\n% Change Percentage Point Impact Organic\n% Change % Change\nForeign Exchange Translation Acquisitions and Divestitures Convenient Foods Beverages\nPepsiCo Foods North America (PFNA) — — — — —\nPepsiCo Beverages North America (PBNA) 5 — (6) — (2)\nInternational Beverages Franchise (IB Franchise) 8 (1) — 7 5\nEurope, Middle East and Africa (EMEA) 8 1 — 9 (1) 4\nLatin America Foods (LatAm Foods) 14 (8) — 6 3\nAsia Pacific Foods 10 (1) — 9 11\nTotal 6 (1) (2) 3 1 3\nOperating Profit and EPS\nGAAP Reported % Change Percentage Point Impact Core Constant Currency\n% Change\nItems Affecting Comparability Foreign Exchange Translation\nPFNA (13) 1 — (12)\nPBNA 45 (41) — 4\nIB Franchise 29 (19) (1.5) 9\nEMEA 25 (8) 2 19\nLatAm Foods 47 (27) (9) 10\nAsia Pacific Foods 15 (1) (2) 12\nCorporate unallocated expenses (10) 15 — 5\nTotal 19 (16) (1) 2.5\nEPS 17 (15) (1) 1.5\n(a)Excludes the impact of acquisitions and divestitures. In certain instances, the volume change shown here differs from the impact of organic volume change on net revenue performance disclosed in the Organic Revenue Performance table on page A-7, due to the impacts of product mix, nonconsolidated joint venture volume, and, for our franchise beverage businesses, temporary timing differences between bottler case sales (BCS) and concentrate shipments and equivalents (CSE). We report net revenue from our franchise beverage businesses based on CSE. The volume sold by our nonconsolidated joint ventures has no direct impact on our net revenue.\nNote: Amounts may not sum due to rounding.\nOrganic revenue and core constant currency results are non-GAAP financial measures. Please refer to the reconciliation of GAAP and non-GAAP information in the attached exhibits and to the Glossary for definitions of “Organic revenue performance,” “Core” and “Constant currency.”\n3\nSummary Year-to-Date 2026 Performance\nRevenue\nVolume(a)\nGAAP Reported\n% Change Percentage Point Impact Organic\n% Change % Change\nForeign Exchange Translation Acquisitions and Divestitures Convenient Foods Beverages\nPFNA — — — — 1\nPBNA 7 — (6) 1 (3)\nIB Franchise 10 (2) — 8 4\nEMEA 11 (3) — 7 3 2\nLatAm Foods 15 (11) — 4.5 —\nAsia Pacific Foods 11 (3) — 9 10\nTotal 7 (2) (2) 3 3 2\nOperating Profit and EPS\nGAAP Reported\n% Change Percentage Point Impact Core Constant Currency\n% Change\nItems Affecting Comparability Foreign Exchange Translation\nPFNA (8) — — (8)\nPBNA 416 (413) — 3\nIB Franchise 22 (7) (2) 13\nEMEA 47 (29) (2) 17\nLatAm Foods 28 (10) (12) 6\nAsia Pacific Foods 62 (32) (4) 25\nCorporate unallocated expenses (13) 16 — 3\nTotal 45 (40) (2) 3\nEPS 47 (42) (2.5) 2\n(a)Excludes the impact of acquisitions and divestitures. In certain instances, the volume change shown here differs from the impact of organic volume change on net revenue performance disclosed in the Organic Revenue Performance table on page A-7, due to the impacts of product mix, nonconsolidated joint venture volume, and, for our franchise beverage businesses, temporary timing differences between BCS and CSE. We report net revenue from our franchise beverage businesses based on CSE. The volume sold by our nonconsolidated joint ventures has no direct impact on our net revenue.\nNote: Amounts may not sum due to rounding.\nOrganic revenue and core constant currency results are non-GAAP financial measures. Please refer to the reconciliation of GAAP and non-GAAP information in the attached exhibits and to the Glossary for definitions of “Organic revenue performance,” “Core” and “Constant currency.”\n4\nGuidance and Outlook\nThe Company provides guidance on a non-GAAP basis as we cannot predict certain elements which are included in reported GAAP results, including the impact of foreign exchange translation and commodity mark-to-market net impacts. PepsiCo’s current and previous fiscal 2026 outlook is summarized below.\nFiscal 2026 Guidance (changes are bolded & italicized below)\nCurrent Previous\nOrganic Revenue Approximately +3% +2% to +4%\nForeign Exchange Translation (a)\nApproximately +1.5% to net revenue and core EPS growth Approximately +1% to net revenue and core EPS growth\nAcquisitions, net of Divestitures (b)\nApproximately +1.5% to net revenue growth Approximately +1% to net revenue growth\nNet Revenue Approximately +6% +4% to +6%\nCore Annual Effective Tax Rate (c)\nApproximately 21% Approximately 22%\nCore Constant Currency EPS +1% to +2% Low-end of +4% to +6%\nCore EPS +2.5% to +3.5% Low-end of +5% to +7%\nCapital Spending Below 5% of net revenue Below 5% of net revenue\nFree Cash Flow Conversion Ratio At least 80 percent At least 80 percent\nCash Returns to Shareholders (d)\n$8.9 billion $8.9 billion\n(a)Assumptions are based on current foreign exchange rates, as we are unable to predict the impact of exchange translation rates.\n(b)Refers to acquisitions, net of divestitures, that occurred in 2025.\n(c)Includes the anticipated impact of global minimum tax regulations.\n(d)Comprised of dividends of $7.9 billion and share repurchases of $1.0 billion.\nPrepared Management Remarks and Live Question and Answer Webcast\nAt approximately 6:00 a.m. (Eastern time) on October 8, 2026, the Company will post prepared management remarks (in pdf format) regarding its third quarter results and business update, including its outlook for 2026, at https://www.pepsico.com/investors. At 8:15 a.m. (Eastern time) on October 8, 2026, the Company will host a live question and answer session with investors and financial analysts. Further details will be accessible on the Company’s website at https://www.pepsico.com/investors.\nContacts: Investor Relations Communications\ninvestor@pepsico.com pepsicomediarelations@pepsico.com\n5\nPepsiCo, Inc. and Subsidiaries\nCondensed Consolidated Statement of Income\n(in millions",
+        "text_snapshot_hash": "a664b6e4c0e9f7ef89f60e790d806ec2b0021e2600bc9879531f4d4b68b2f92d",
+        "text_snapshot_path": "snapshots/q320268-kxexhibit991.htm.txt",
+        "version": 1
+      },
+      {
+        "created_at": "2026-11-16T16:25:02.541085+00:00",
+        "document_id": "source_doc_10051e485ae3e4f6272a9b32",
+        "document_period_start": "2026-06-14",
+        "document_report_date": "2026-09-05",
+        "end": 7149,
+        "entity": "PEP",
+        "extraction_method": "All visible HTML tables and body in source order.",
+        "form": "8-K Exhibit 99.1",
+        "id": "chunk_2daf7bb6c7a896a72ec40dc6",
+        "kind": "document",
+        "locator": "snapshots/q320268-kxexhibit991.htm.txt:characters[5355:7149] (zero-based Unicode offsets)",
+        "mode": "replay",
+        "period_end": null,
+        "period_start": null,
+        "publication_precision": "timestamp",
+        "published_at": "2026-10-07T21:57:44.000Z",
+        "retrieval_method": "bm25",
+        "retrieval_score": 15.288698411831616,
+        "retrieved_at": "2026-11-16T16:21:19.083804+00:00",
+        "snapshot_hash": "6669dac8002dacf42b74325b81221b20e6975d573da2427a62d7968e29bc7899",
+        "snapshot_path": "snapshots/q320268-kxexhibit991.htm",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/77476/000007747626000050/q320268-kxexhibit991.htm",
+        "stale": false,
+        "start": 5355,
+        "text": "organic revenue growth increasing 1 percent.\n◦The international businesses performed well with each segment delivering strong net revenue growth - aided by organic volume growth within Asia Pacific Foods, International Beverages Franchise and EMEA.\n•Operating profit increased 45% and operating margin expanded 440 basis points, primarily reflecting prior-year impairment charges related to the Rockstar and Be & Cheery brands and a favorable net impact of acquisition and divestiture-related charges/credits. Core operating profit increased 5%, with core operating margin contracting 25 basis points. The core operating profit performance was primarily driven by productivity savings and effective net pricing, partially offset by certain operating cost increases.\n•EPS increased 47% and core EPS increased 5%, primarily driven by operating profit growth.\n2\nSummary Third-Quarter 2026 Performance\nRevenue\nVolume(a)\nGAAP Reported\n% Change Percentage Point Impact Organic\n% Change % Change\nForeign Exchange Translation Acquisitions and Divestitures Convenient Foods Beverages\nPepsiCo Foods North America (PFNA) — — — — —\nPepsiCo Beverages North America (PBNA) 5 — (6) — (2)\nInternational Beverages Franchise (IB Franchise) 8 (1) — 7 5\nEurope, Middle East and Africa (EMEA) 8 1 — 9 (1) 4\nLatin America Foods (LatAm Foods) 14 (8) — 6 3\nAsia Pacific Foods 10 (1) — 9 11\nTotal 6 (1) (2) 3 1 3\nOperating Profit and EPS\nGAAP Reported % Change Percentage Point Impact Core Constant Currency\n% Change\nItems Affecting Comparability Foreign Exchange Translation\nPFNA (13) 1 — (12)\nPBNA 45 (41) — 4\nIB Franchise 29 (19) (1.5) 9\nEMEA 25 (8) 2 19\nLatAm Foods 47 (27) (9) 10\nAsia Pacific Foods 15 (1) (2) 12\nCorporate unallocated expenses (10) 15 — 5\nTotal 19 (16) (1) 2.5\nEPS 17 (15) (1) 1.5\n(a)Excludes the ",
+        "text_snapshot_hash": "a664b6e4c0e9f7ef89f60e790d806ec2b0021e2600bc9879531f4d4b68b2f92d",
+        "text_snapshot_path": "snapshots/q320268-kxexhibit991.htm.txt",
+        "version": 1
+      },
+      {
+        "created_at": "2026-11-16T16:25:02.541497+00:00",
+        "document_id": "source_doc_10051e485ae3e4f6272a9b32",
+        "document_period_start": "2026-06-14",
+        "document_report_date": "2026-09-05",
+        "end": 4225,
+        "entity": "PEP",
+        "extraction_method": "All visible HTML tables and body in source order.",
+        "form": "8-K Exhibit 99.1",
+        "id": "chunk_b0832db85ae6eb61c6f2a5a8",
+        "kind": "document",
+        "locator": "snapshots/q320268-kxexhibit991.htm.txt:characters[2476:4225] (zero-based Unicode offsets)",
+        "mode": "replay",
+        "period_end": null,
+        "period_start": null,
+        "publication_precision": "timestamp",
+        "published_at": "2026-10-07T21:57:44.000Z",
+        "retrieval_method": "bm25",
+        "retrieval_score": 12.57456448132028,
+        "retrieved_at": "2026-11-16T16:21:19.083804+00:00",
+        "snapshot_hash": "6669dac8002dacf42b74325b81221b20e6975d573da2427a62d7968e29bc7899",
+        "snapshot_path": "snapshots/q320268-kxexhibit991.htm",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/77476/000007747626000050/q320268-kxexhibit991.htm",
+        "stale": false,
+        "start": 2476,
+        "text": "full-year 2026 financial guidance. PepsiCo provides guidance on a non-GAAP basis as we cannot predict certain elements which are included in reported GAAP results, including the impact of foreign exchange and commodity mark-to-market net impacts. Please refer to PepsiCo’s Quarterly Report on Form 10-Q for the 12 and 36 weeks ended September 5, 2026 (Q3 2026 Form 10-Q) filed with the Securities and Exchange Commission (SEC) for additional information regarding PepsiCo’s financial results.\n1\nThird-Quarter Results Discussion\n•Net revenue increased 5.6% due to 3.1% organic revenue growth, a 1.7-percentage-point net benefit from acquisitions and divestitures and a 0.7-percentage-point benefit from foreign exchange translation. Organic revenue growth reflects the benefits associated with effective net pricing and a contribution from organic volume growth.\n◦In North America, convenient foods net revenue trends improved sequentially, reflecting savory snacks volume growth and volume market share improvement, offset by lower effective net pricing. The beverages business delivered 5 percent net revenue growth, primarily reflecting the benefits of acquisitions made in 2025.\n◦The international businesses performed well with each segment delivering strong net revenue growth - aided by organic volume growth within Asia Pacific Foods, International Beverages Franchise and Latin America Foods.\n•Operating profit increased 19% and operating margin expanded 195 basis points, primarily reflecting a favorable net impact of acquisition and divestiture-related charges/credits and a favorable impact of net mark-to-market gains on commodity derivatives. Core operating profit increased 3%, with core operating margin contracting 35 basis points. ",
+        "text_snapshot_hash": "a664b6e4c0e9f7ef89f60e790d806ec2b0021e2600bc9879531f4d4b68b2f92d",
+        "text_snapshot_path": "snapshots/q320268-kxexhibit991.htm.txt",
+        "version": 1
+      },
+      {
+        "created_at": "2026-11-16T16:25:02.541916+00:00",
+        "document_id": "source_doc_10051e485ae3e4f6272a9b32",
+        "document_period_start": "2026-06-14",
+        "document_report_date": "2026-09-05",
+        "end": 1315,
+        "entity": "PEP",
+        "extraction_method": "All visible HTML tables and body in source order.",
+        "form": "8-K Exhibit 99.1",
+        "id": "chunk_95d83fe58fc0d574467eed76",
+        "kind": "document",
+        "locator": "snapshots/q320268-kxexhibit991.htm.txt:characters[0:1315] (zero-based Unicode offsets)",
+        "mode": "replay",
+        "period_end": null,
+        "period_start": null,
+        "publication_precision": "timestamp",
+        "published_at": "2026-10-07T21:57:44.000Z",
+        "retrieval_method": "bm25",
+        "retrieval_score": 12.43667465609828,
+        "retrieved_at": "2026-11-16T16:21:19.083804+00:00",
+        "snapshot_hash": "6669dac8002dacf42b74325b81221b20e6975d573da2427a62d7968e29bc7899",
+        "snapshot_path": "snapshots/q320268-kxexhibit991.htm",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/77476/000007747626000050/q320268-kxexhibit991.htm",
+        "stale": false,
+        "start": 0,
+        "text": "EX-99.1\n2\nq320268-kxexhibit991.htm\nEX-99.1\nDocument\nExhibit 99.1\nPepsiCo Reports Third-Quarter 2026 Results\nThird-Quarter and Year-to-Date Results1\n•Net revenue increased 5.6% and 6.7%, respectively\n•Organic revenue2 increased 3.1% and 2.7%, respectively\n•Earnings per share (EPS) increased 17% and 47%, respectively\n•Core2 EPS increased 2% and 5%, respectively\n•Core constant currency2 EPS increased 1.5% and 2%, respectively\nGuidance\n•Company updates fiscal 2026 financial guidance2\nPURCHASE, N.Y. - October 8, 2026 - PepsiCo, Inc. (NASDAQ: PEP) today reported results for third-quarter 2026.\n“Our third-quarter results featured strong net revenue growth, an acceleration in organic revenue growth with organic volume growth across both global beverages and convenient foods. The results reflect the scale and resilience of the international business, the ongoing evolution of the global portfolio and an improved presence in underpenetrated channels and occasions,” said Chairman and CEO Ramon Laguarta.\nLaguarta continued, “Looking ahead, we remain focused on building upon the strength of the International business while acting with urgency to sustainably improve our performance in North America through more investments in innovation, effective brand building, and sharper marketplace execution by channel. ",
+        "text_snapshot_hash": "a664b6e4c0e9f7ef89f60e790d806ec2b0021e2600bc9879531f4d4b68b2f92d",
+        "text_snapshot_path": "snapshots/q320268-kxexhibit991.htm.txt",
+        "version": 1
+      },
+      {
+        "created_at": "2026-11-16T16:25:02.542300+00:00",
+        "document_id": "source_doc_10051e485ae3e4f6272a9b32",
+        "document_period_start": "2026-06-14",
+        "document_report_date": "2026-09-05",
+        "end": 28825,
+        "entity": "PEP",
+        "extraction_method": "All visible HTML tables and body in source order.",
+        "form": "8-K Exhibit 99.1",
+        "id": "chunk_ae5bdbdc960fbb64f4203c72",
+        "kind": "document",
+        "locator": "snapshots/q320268-kxexhibit991.htm.txt:characters[27029:28825] (zero-based Unicode offsets)",
+        "mode": "replay",
+        "period_end": null,
+        "period_start": null,
+        "publication_precision": "timestamp",
+        "published_at": "2026-10-07T21:57:44.000Z",
+        "retrieval_method": "bm25",
+        "retrieval_score": 11.5435057626627,
+        "retrieved_at": "2026-11-16T16:21:19.083804+00:00",
+        "snapshot_hash": "6669dac8002dacf42b74325b81221b20e6975d573da2427a62d7968e29bc7899",
+        "snapshot_path": "snapshots/q320268-kxexhibit991.htm",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/77476/000007747626000050/q320268-kxexhibit991.htm",
+        "stale": false,
+        "start": 27029,
+        "text": "impact on commodity derivatives due to the unpredictability of future changes in foreign exchange rates and commodity prices. Therefore, we are unable to provide a reconciliation of these measures, without unreasonable effort.\nA - 6\nPepsiCo, Inc. and Subsidiaries\nReconciliation of GAAP and Non-GAAP Information\nOrganic Revenue Performance\n12 and 36 Weeks Ended September 5, 2026\n(dollars in millions, unaudited)\n12 Weeks Ended 9/5/2026\nPFNA PBNA IB Franchise EMEA LatAm Foods Asia Pacific Foods Total\nReported Net Revenue, GAAP measure $ 6,504 $ 7,706 $ 1,401 $ 5,413 $ 3,021 $ 1,229 $ 25,274\nImpact of foreign exchange translation (a)\n10 11 (14) 42 (214) (13) (178)\nImpact of acquisitions and structural changes — (428) — — — — (428)\nOrganic Revenue, non-GAAP measure (b)\n$ 6,514 $ 7,289 $ 1,387 $ 5,455 $ 2,807 $ 1,216 $ 24,668\nPrior Year Reported Net Revenue, GAAP measure $ 6,526 $ 7,327 $ 1,291 $ 5,022 $ 2,656 $ 1,115 $ 23,937\nImpact of divestitures — (15) — — — — (15)\nPrior Year Organic Revenue, non-GAAP measure (b)\n$ 6,526 $ 7,312 $ 1,291 $ 5,022 $ 2,656 $ 1,115 $ 23,922\nReported Net Revenue % Change, GAAP measure — 5 8 8 14 10 6\nImpact of foreign exchange translation — — (1) 1 (8) (1) (1)\nImpact of acquisitions and divestitures — (6) — — — — (2)\nOrganic Revenue % Change, non-GAAP measure (c)\n— — 7 9 6 9 3\nImpact on % Change of:\nOrganic volume change (d)\n0.5 (3) 5.5 1 2.5 11 0.5\nEffective net pricing (1) 3 2 7 3 (2) 3\n36 Weeks Ended 9/5/2026\nPFNA PBNA IB Franchise EMEA LatAm Foods Asia Pacific Foods Total\nReported Net Revenue, GAAP measure $ 19,204 $ 21,340 $ 3,748 $ 13,219 $ 7,895 $ 3,492 $ 68,898\nImpact of foreign exchange translation (a)\n(13) (11) (71) (390) (721) (83) (1,289)\nImpact of acquisitions and structural changes (54) (1,245) — — — — (1,299)\nOrganic Revenue, ",
+        "text_snapshot_hash": "a664b6e4c0e9f7ef89f60e790d806ec2b0021e2600bc9879531f4d4b68b2f92d",
+        "text_snapshot_path": "snapshots/q320268-kxexhibit991.htm.txt",
+        "version": 1
+      },
+      {
+        "created_at": "2026-11-16T16:25:02.542653+00:00",
+        "document_id": "source_doc_10051e485ae3e4f6272a9b32",
+        "document_period_start": "2026-06-14",
+        "document_report_date": "2026-09-05",
+        "end": 5604,
+        "entity": "PEP",
+        "extraction_method": "All visible HTML tables and body in source order.",
+        "form": "8-K Exhibit 99.1",
+        "id": "chunk_f33322f4a274b72c73b45362",
+        "kind": "document",
+        "locator": "snapshots/q320268-kxexhibit991.htm.txt:characters[3978:5604] (zero-based Unicode offsets)",
+        "mode": "replay",
+        "period_end": null,
+        "period_start": null,
+        "publication_precision": "timestamp",
+        "published_at": "2026-10-07T21:57:44.000Z",
+        "retrieval_method": "bm25",
+        "retrieval_score": 11.273515347336062,
+        "retrieved_at": "2026-11-16T16:21:19.083804+00:00",
+        "snapshot_hash": "6669dac8002dacf42b74325b81221b20e6975d573da2427a62d7968e29bc7899",
+        "snapshot_path": "snapshots/q320268-kxexhibit991.htm",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/77476/000007747626000050/q320268-kxexhibit991.htm",
+        "stale": false,
+        "start": 3978,
+        "text": "a favorable net impact of acquisition and divestiture-related charges/credits and a favorable impact of net mark-to-market gains on commodity derivatives. Core operating profit increased 3%, with core operating margin contracting 35 basis points. The core operating profit performance reflects productivity savings, effective net pricing and a 4-percentage-point favorable impact of tariff refunds. These impacts were partially offset by certain operating cost increases and higher advertising and marketing expenses.\n•EPS increased 17% and core EPS increased 2%, primarily driven by operating profit growth.\nYear-to-Date Results Discussion\n•Net revenue increased 6.7% due to 2.7% organic revenue growth, a 2.0-percentage-point benefit from foreign exchange translation and a 2.0-percentage-point net benefit from acquisitions and divestitures. Organic revenue growth reflects the benefits associated with effective net pricing and a contribution from organic volume growth.\n◦In North America convenient foods, organic volume and volume market share increased aided by innovation and affordability initiatives. Convenient foods net revenue reflects organic volume growth and the benefits of an acquisition, offset by lower effective net pricing. The beverages business delivered 7 percent net revenue growth, primarily reflecting the benefits of acquisitions made in 2025 with organic revenue growth increasing 1 percent.\n◦The international businesses performed well with each segment delivering strong net revenue growth - aided by organic volume growth within Asia Pacific Foods, International Beverages Franchise and EMEA.\n",
+        "text_snapshot_hash": "a664b6e4c0e9f7ef89f60e790d806ec2b0021e2600bc9879531f4d4b68b2f92d",
+        "text_snapshot_path": "snapshots/q320268-kxexhibit991.htm.txt",
+        "version": 1
+      },
+      {
+        "created_at": "2026-11-16T16:25:11.526535+00:00",
+        "document_id": "source_doc_10051e485ae3e4f6272a9b32",
+        "document_period_start": "2026-06-14",
+        "document_report_date": "2026-09-05",
+        "end": 33825,
+        "entity": "PEP",
+        "extraction_method": "All visible HTML tables and body in source order.",
+        "form": "8-K Exhibit 99.1",
+        "id": "span_8c9a2825bb1288d3bfc9eebe",
+        "kind": "document",
+        "locator": "snapshots/q320268-kxexhibit991.htm.txt:characters[28825:33825] (zero-based Unicode offsets)",
+        "mode": "replay",
+        "period_end": null,
+        "period_start": null,
+        "publication_precision": "timestamp",
+        "published_at": "2026-10-07T21:57:44.000Z",
+        "retrieved_at": "2026-11-16T16:21:19.083804+00:00",
+        "snapshot_hash": "6669dac8002dacf42b74325b81221b20e6975d573da2427a62d7968e29bc7899",
+        "snapshot_path": "snapshots/q320268-kxexhibit991.htm",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/77476/000007747626000050/q320268-kxexhibit991.htm",
+        "stale": false,
+        "start": 28825,
+        "text": "non-GAAP measure (b)\n$ 19,137 $ 20,084 $ 3,677 $ 12,829 $ 7,174 $ 3,409 $ 66,310\nPrior Year Reported Net Revenue, GAAP measure $ 19,215 $ 19,999 $ 3,418 $ 11,946 $ 6,865 $ 3,139 $ 64,582\nImpact of divestitures — (37) — — — — (37)\nPrior Year Organic Revenue, non-GAAP measure (b)\n$ 19,215 $ 19,962 $ 3,418 $ 11,946 $ 6,865 $ 3,139 $ 64,545\nReported Net Revenue % Change, GAAP measure — 7 10 11 15 11 7\nImpact of foreign exchange translation — — (2) (3) (11) (3) (2)\nImpact of acquisitions and divestitures — (6) — — — — (2)\nOrganic Revenue % Change, non-GAAP measure (c)\n— 1 8 7 4.5 9 3\nImpact on % Change of:\nOrganic volume change (d)\n1 (3) 4 3 — 10 0.5\nEffective net pricing (1) 4 4 4 4 (2) 2\n(a)Represents the adjustment needed to reflect translation of revenue using prior-year period foreign currency exchange rates.\n(b)Represents underlying amount, not in accordance with GAAP, used in the calculation of Organic Revenue Performance, which is a financial measure that is not in accordance with GAAP. See pages A-5 through A-6 for further discussion.\n(c)A financial measure that is not in accordance with GAAP. See pages A-5 through A-6 for further discussion.\n(d)Excludes the impact of acquisitions and divestitures. In certain instances, the impact of organic volume change on net revenue performance differs from the unit volume change disclosed in the Summary Third-Quarter 2026 Performance table and Summary Year-to-Date 2026 Performance table on pages 3 and 4 respectively, due to the impacts of product mix, nonconsolidated joint venture volume, and, for our franchise beverage businesses, temporary timing differences between BCS and CSE. We report net revenue from our franchise beverage businesses based on CSE. The volume sold by our nonconsolidated joint ventures has no direct impact on our net revenue.\nNote – Amounts may not sum due to rounding.\nA - 7\nPepsiCo, Inc. and Subsidiaries\nReconciliation of GAAP and Non-GAAP Information (continued)\nCertain Line Items by Segment\n12 Weeks Ended September 5, 2026\n(dollars in millions, unaudited)\nPFNA PBNA IB Franchise EMEA LatAm Foods Asia Pacific Foods Corporate Unallocated Expenses Total\nReported Cost of Sales, GAAP measure $ 2,578 $ 3,540 $ 409 $ 3,044 $ 1,233 $ 731 $ (15) $ 11,520\nMark-to-market net impact — — — — — — 15 15\nRestructuring and impairment charges (2) (5) — (3) 1 — — (9)\nCore Cost of Sales, non-GAAP measure (a)\n$ 2,576 $ 3,535 $ 409 $ 3,041 $ 1,234 $ 731 $ — $ 11,526\nGross Margin\nReported Gross Profit, GAAP measure $ 3,926 $ 4,166 $ 992 $ 2,369 $ 1,788 $ 498 $ 15 $ 13,754 54.4 %\nMark-to-market net impact — — — — — — (15) (15) (0.1)\nRestructuring and impairment charges 2 5 — 3 (1) — — 9 —\nCore Gross Profit, non-GAAP measure (a)\n$ 3,928 $ 4,171 $ 992 $ 2,372 $ 1,787 $ 498 $ — $ 13,748 54.4 %\nReported Selling, General and Administrative Expenses, GAAP measure $ 2,593 $ 3,110 $ 430 $ 1,472 $ 1,164 $ 324 $ 401 $ 9,494\nMark-to-market net impact — — — — — — 64 64\nRestructuring and impairment charges (46) (48) (2) (40) (3) (5) (39) (183)\nAcquisition and divestiture-related charges/credits (1) 97 — — — — — 96\nCore Selling, General and Administrative Expenses, non-GAAP measure (a)\n$ 2,546 $ 3,159 $ 428 $ 1,432 $ 1,161 $ 319 $ 426 $ 9,471\nOperating Margin\nReported Operating Profit, GAAP measure $ 1,333 $ 1,056 $ 562 $ 897 $ 624 $ 174 $ (386) $ 4,260 16.9 %\nMark-to-market net impact — — — — — — (79) (79) (0.3)\nRestructuring and impairment charges 48 53 2 43 2 5 39 192 0.8\nAcquisition and divestiture-related charges/credits 1 (97) — — — — — (96) (0.4)\nCore Operating Profit, non-GAAP measure (a)\n1,382 1,012 564 940 626 179 (426) 4,277 16.9 %\nImpact of foreign exchange translation (b)\n2 3 (8) 18 (49) (4) — (38)\nCore Constant Currency Operating Profit, non-GAAP measure (a)\n$ 1,384 $ 1,015 $ 556 $ 958 $ 577 $ 175 $ (426) $ 4,239\nReported Operating Profit % Change, GAAP measure (13) 45 29 25 47 15 (10) 19\nCore Operating Profit % Change, non-GAAP measure (a)\n(12) 4 10 16 20 14 5 3\nCore Constant Currency Operating Profit % Change, non-GAAP measure (a)\n(12) 4 9 19 10 12 5 2.5\n(a)A financial measure that is not in accordance with GAAP. See pages A-5 through A-6 for further discussion.\n(b)Represents the adjustment needed to reflect translation of operating profit using prior-year period foreign currency exchange rates.\nNote – Amounts may not sum due to rounding.\nA - 8\nPepsiCo, Inc. and Subsidiaries\nReconciliation of GAAP and Non-GAAP Information (continued)\nCertain Line Items by Segment (continued)\n12 Weeks Ended September 6, 2025\n(dollars in millions, unaudited)\nPFNA PBNA IB Franchise EMEA LatAm Foods Asia Pacific Foods Corporate Unallocated Expenses Total\nReported Cost of Sales, GAAP measure $ 2,567 $ 3,452 $ 405 $ 2,871 $ 1,134 $ 666 $ 18 $ 11,113\nMark-to-market net impact — — — — — — (18) (18)\nRestructuring and impairment charges (10) 1 — (7) — — — (16)\nAcquisition and divestiture-related charges/credits — (46) — — — — — (46)\nCore Cost of Sales, non-GAAP measure (a)\n$ 2,557 $ 3,407 ",
+        "text_snapshot_hash": "a664b6e4c0e9f7ef89f60e790d806ec2b0021e2600bc9879531f4d4b68b2f92d",
+        "text_snapshot_path": "snapshots/q320268-kxexhibit991.htm.txt",
+        "version": 1
+      },
+      {
+        "created_at": "2026-11-16T16:28:06.307517+00:00",
+        "document_id": "source_doc_10051e485ae3e4f6272a9b32",
+        "document_period_start": "2026-06-14",
+        "document_report_date": "2026-09-05",
+        "end": 11010,
+        "entity": "PEP",
+        "extraction_method": "All visible HTML tables and body in source order.",
+        "form": "8-K Exhibit 99.1",
+        "id": "chunk_a8a31aeef18e168803843ca8",
+        "kind": "document",
+        "locator": "snapshots/q320268-kxexhibit991.htm.txt:characters[9215:11010] (zero-based Unicode offsets)",
+        "mode": "replay",
+        "period_end": null,
+        "period_start": null,
+        "publication_precision": "timestamp",
+        "published_at": "2026-10-07T21:57:44.000Z",
+        "retrieval_method": "bm25",
+        "retrieval_score": 38.52730368429626,
+        "retrieved_at": "2026-11-16T16:21:19.083804+00:00",
+        "snapshot_hash": "6669dac8002dacf42b74325b81221b20e6975d573da2427a62d7968e29bc7899",
+        "snapshot_path": "snapshots/q320268-kxexhibit991.htm",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/77476/000007747626000050/q320268-kxexhibit991.htm",
+        "stale": false,
+        "start": 9215,
+        "text": "beverage businesses, temporary timing differences between BCS and CSE. We report net revenue from our franchise beverage businesses based on CSE. The volume sold by our nonconsolidated joint ventures has no direct impact on our net revenue.\nNote: Amounts may not sum due to rounding.\nOrganic revenue and core constant currency results are non-GAAP financial measures. Please refer to the reconciliation of GAAP and non-GAAP information in the attached exhibits and to the Glossary for definitions of “Organic revenue performance,” “Core” and “Constant currency.”\n4\nGuidance and Outlook\nThe Company provides guidance on a non-GAAP basis as we cannot predict certain elements which are included in reported GAAP results, including the impact of foreign exchange translation and commodity mark-to-market net impacts. PepsiCo’s current and previous fiscal 2026 outlook is summarized below.\nFiscal 2026 Guidance (changes are bolded & italicized below)\nCurrent Previous\nOrganic Revenue Approximately +3% +2% to +4%\nForeign Exchange Translation (a)\nApproximately +1.5% to net revenue and core EPS growth Approximately +1% to net revenue and core EPS growth\nAcquisitions, net of Divestitures (b)\nApproximately +1.5% to net revenue growth Approximately +1% to net revenue growth\nNet Revenue Approximately +6% +4% to +6%\nCore Annual Effective Tax Rate (c)\nApproximately 21% Approximately 22%\nCore Constant Currency EPS +1% to +2% Low-end of +4% to +6%\nCore EPS +2.5% to +3.5% Low-end of +5% to +7%\nCapital Spending Below 5% of net revenue Below 5% of net revenue\nFree Cash Flow Conversion Ratio At least 80 percent At least 80 percent\nCash Returns to Shareholders (d)\n$8.9 billion $8.9 billion\n(a)Assumptions are based on current foreign exchange rates, as we are unable to predict the impact of exchange ",
+        "text_snapshot_hash": "a664b6e4c0e9f7ef89f60e790d806ec2b0021e2600bc9879531f4d4b68b2f92d",
+        "text_snapshot_path": "snapshots/q320268-kxexhibit991.htm.txt",
+        "version": 1
+      },
+      {
+        "created_at": "2026-11-16T16:28:06.308437+00:00",
+        "document_id": "source_doc_10051e485ae3e4f6272a9b32",
+        "document_period_start": "2026-06-14",
+        "document_report_date": "2026-09-05",
+        "end": 2723,
+        "entity": "PEP",
+        "extraction_method": "All visible HTML tables and body in source order.",
+        "form": "8-K Exhibit 99.1",
+        "id": "chunk_8982971aecc0ecb7cbc84840",
+        "kind": "document",
+        "locator": "snapshots/q320268-kxexhibit991.htm.txt:characters[1073:2723] (zero-based Unicode offsets)",
+        "mode": "replay",
+        "period_end": null,
+        "period_start": null,
+        "publication_precision": "timestamp",
+        "published_at": "2026-10-07T21:57:44.000Z",
+        "retrieval_method": "bm25",
+        "retrieval_score": 37.512213956203446,
+        "retrieved_at": "2026-11-16T16:21:19.083804+00:00",
+        "snapshot_hash": "6669dac8002dacf42b74325b81221b20e6975d573da2427a62d7968e29bc7899",
+        "snapshot_path": "snapshots/q320268-kxexhibit991.htm",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/77476/000007747626000050/q320268-kxexhibit991.htm",
+        "stale": false,
+        "start": 1073,
+        "text": "upon the strength of the International business while acting with urgency to sustainably improve our performance in North America through more investments in innovation, effective brand building, and sharper marketplace execution by channel. Additional structural cost reduction actions are being identified and will be implemented in the coming months to help fund investments that aim to accelerate organic revenue growth and mitigate the impacts of rising input cost inflation.”\nThird-Quarter Year-to-Date\n($ in millions, except EPS) Q3 2026 Q3 2025 Change Q3 2026 Q3 2025 Change\nNet revenue $25,274 $23,937 5.6% $68,898 $64,582 6.7%\nOrganic revenue performance 3.1% 2.7%\nOperating profit $4,260 $3,569 19% $11,496 $7,941 45%\nOperating margin 16.9% 14.9% 195 bps 16.7% 12.3% 440 bps\nCore operating profit $4,277 $4,137 3% $11,394 $10,837 5%\nCore operating margin 16.9% 17.3% (35) bps 16.5% 16.8% (25) bps\nEPS $2.23 $1.90 17% $6.10 $4.15 47%\nCore EPS $2.34 $2.29 2% $6.15 $5.88 5%\nCore constant currency EPS 1.5% 2%\n1 Versus the prior year.\n2 Please refer to the reconciliation of generally accepted accounting principles (GAAP) and non-GAAP information in the attached exhibits and to the Glossary for the definitions of non-GAAP financial measures, including “Organic revenue performance,” “Core” and “Constant currency,” and to “Guidance and Outlook” for additional information regarding PepsiCo’s full-year 2026 financial guidance. PepsiCo provides guidance on a non-GAAP basis as we cannot predict certain elements which are included in reported GAAP results, including the impact of foreign exchange and commodity mark-to-market net impacts. ",
+        "text_snapshot_hash": "a664b6e4c0e9f7ef89f60e790d806ec2b0021e2600bc9879531f4d4b68b2f92d",
+        "text_snapshot_path": "snapshots/q320268-kxexhibit991.htm.txt",
+        "version": 1
+      },
+      {
+        "created_at": "2026-11-16T16:28:06.309267+00:00",
+        "document_id": "source_doc_10051e485ae3e4f6272a9b32",
+        "document_period_start": "2026-06-14",
+        "document_report_date": "2026-09-05",
+        "end": 26116,
+        "entity": "PEP",
+        "extraction_method": "All visible HTML tables and body in source order.",
+        "form": "8-K Exhibit 99.1",
+        "id": "chunk_35a48ca15b32e7021c45b95a",
+        "kind": "document",
+        "locator": "snapshots/q320268-kxexhibit991.htm.txt:characters[24582:26116] (zero-based Unicode offsets)",
+        "mode": "replay",
+        "period_end": null,
+        "period_start": null,
+        "publication_precision": "timestamp",
+        "published_at": "2026-10-07T21:57:44.000Z",
+        "retrieval_method": "bm25",
+        "retrieval_score": 28.690672213782182,
+        "retrieved_at": "2026-11-16T16:21:19.083804+00:00",
+        "snapshot_hash": "6669dac8002dacf42b74325b81221b20e6975d573da2427a62d7968e29bc7899",
+        "snapshot_path": "snapshots/q320268-kxexhibit991.htm",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/77476/000007747626000050/q320268-kxexhibit991.htm",
+        "stale": false,
+        "start": 24582,
+        "text": "for discretionary expenditures since we have certain non-discretionary obligations such as debt service that are not deducted from the measure.\nFree cash flow conversion ratio: Free cash flow divided by core net income attributable to PepsiCo.\nOrganic revenue performance: A measure that adjusts for the impacts of foreign exchange translation (on a constant currency basis, as defined above), acquisitions and divestitures, and every five or six years, the impact of an additional week of results. We also apply the constant currency calculation for our subsidiaries operating in highly inflationary economies. We believe organic revenue performance provides useful information in evaluating the results of our business because it adjusts for items that we believe are not indicative of ongoing performance or that we believe impact comparability with the prior year.\n2026 guidance\nOur 2026 organic revenue performance guidance adjusts for the impacts of foreign exchange translation (on a constant currency basis, as defined above) and acquisitions and divestitures. Our 2026 core effective tax rate guidance, our 2026 core constant currency EPS growth guidance and our projected 2026 core net income attributable to PepsiCo (a component of free cash flow conversion ratio) exclude the mark-to-market net impact included in corporate unallocated expenses, restructuring and impairment charges and other items noted above. Our 2026 core constant currency EPS growth guidance also excludes the impact of foreign exchange translation. ",
+        "text_snapshot_hash": "a664b6e4c0e9f7ef89f60e790d806ec2b0021e2600bc9879531f4d4b68b2f92d",
+        "text_snapshot_path": "snapshots/q320268-kxexhibit991.htm.txt",
+        "version": 1
+      },
+      {
+        "created_at": "2026-11-16T16:28:06.309966+00:00",
+        "document_id": "source_doc_10051e485ae3e4f6272a9b32",
+        "document_period_start": "2026-06-14",
+        "document_report_date": "2026-09-05",
+        "end": 27276,
+        "entity": "PEP",
+        "extraction_method": "All visible HTML tables and body in source order.",
+        "form": "8-K Exhibit 99.1",
+        "id": "chunk_de3092c3eeb14bd730017b88",
+        "kind": "document",
+        "locator": "snapshots/q320268-kxexhibit991.htm.txt:characters[25866:27276] (zero-based Unicode offsets)",
+        "mode": "replay",
+        "period_end": null,
+        "period_start": null,
+        "publication_precision": "timestamp",
+        "published_at": "2026-10-07T21:57:44.000Z",
+        "retrieval_method": "bm25",
+        "retrieval_score": 26.20518884897204,
+        "retrieved_at": "2026-11-16T16:21:19.083804+00:00",
+        "snapshot_hash": "6669dac8002dacf42b74325b81221b20e6975d573da2427a62d7968e29bc7899",
+        "snapshot_path": "snapshots/q320268-kxexhibit991.htm",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/77476/000007747626000050/q320268-kxexhibit991.htm",
+        "stale": false,
+        "start": 25866,
+        "text": "the mark-to-market net impact included in corporate unallocated expenses, restructuring and impairment charges and other items noted above. Our 2026 core constant currency EPS growth guidance also excludes the impact of foreign exchange translation. We are unable to reconcile our full year projected 2026 organic revenue growth to our full year projected 2026 reported net revenue growth because we are unable to predict the 2026 impact of foreign exchange due to the unpredictability of future changes in foreign exchange rates and because we are unable to predict the occurrence or impact of any acquisitions and divestitures. We are also not able to reconcile our full year projected 2026 core effective tax rate to our full year projected 2026 reported effective tax rate, our full year projected 2026 core constant currency EPS growth to our full year projected 2026 reported EPS growth and our full year projected 2026 core net income attributable to PepsiCo (a component of free cash flow conversion ratio) to our full year projected 2026 reported net income, because we are unable to predict the 2026 impact of foreign exchange or the mark-to-market net impact on commodity derivatives due to the unpredictability of future changes in foreign exchange rates and commodity prices. Therefore, we are unable to provide a reconciliation of these measures, without unreasonable effort.\nA - 6\nPepsiCo, Inc. ",
+        "text_snapshot_hash": "a664b6e4c0e9f7ef89f60e790d806ec2b0021e2600bc9879531f4d4b68b2f92d",
+        "text_snapshot_path": "snapshots/q320268-kxexhibit991.htm.txt",
+        "version": 1
+      },
+      {
+        "created_at": "2026-11-16T16:28:24.238874+00:00",
+        "document_id": "source_doc_d449d3357bc8b204d1ad9eb2",
+        "document_period_start": "2026-06-14",
+        "document_report_date": "2026-09-05",
+        "end": 19292,
+        "entity": "PEP",
+        "extraction_method": "All visible HTML tables and body in source order.",
+        "form": "10-Q",
+        "id": "chunk_d407d4affad50e074eff0707",
+        "kind": "document",
+        "locator": "snapshots/pep-20260905.htm.txt:characters[17494:19292] (zero-based Unicode offsets)",
+        "mode": "replay",
+        "period_end": null,
+        "period_start": null,
+        "publication_precision": "timestamp",
+        "published_at": "2026-10-07T21:52:53.000Z",
+        "retrieval_method": "bm25",
+        "retrieval_score": 11.303538385223083,
+        "retrieved_at": "2026-11-16T16:20:54.930778+00:00",
+        "snapshot_hash": "e6d7c8bd8fa095ef9320b6977f8450bc86f152da76ccc398c1f4bc2a2d4495f0",
+        "snapshot_path": "snapshots/pep-20260905.htm",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/77476/000007747626000048/pep-20260905.htm",
+        "stale": false,
+        "start": 17494,
+        "text": "expanded or retaliatory tariffs and changes in the interest rate and inflationary cost environment have made such estimates and assumptions more difficult to calculate. Accordingly, actual results and outcomes could differ from those estimates.\nOur significant interim accounting policies include the recognition of a pro rata share of certain estimated annual sales incentives and certain advertising and marketing costs in proportion to revenue or volume, as applicable, and the recognition of income taxes using an estimated annual effective tax rate.\nUnless otherwise noted, tabular dollars are in millions, except per share amounts. All per share amounts reflect common per share amounts, assume dilution unless otherwise noted, and are based on unrounded amounts. Certain reclassifications were made to the prior year’s financial statements to conform to the current year presentation.\n8\nTable of Contents\nOur Segments\nWe are organized into six reportable segments, as follows:\n1)PepsiCo Foods North America (PFNA), which includes all of our convenient food businesses in the United States and Canada;\n2)PepsiCo Beverages North America (PBNA), which includes all of our beverage businesses in the United States and Canada;\n3)International Beverages Franchise (IB Franchise), which includes our international franchise beverage businesses, as well as our SodaStream business;\n4)Europe, Middle East and Africa (EMEA), which includes our convenient food businesses and our beverage businesses with company-owned bottlers in Europe, the Middle East and Africa;\n5)Latin America Foods (LatAm Foods), which includes all of our convenient food businesses in Latin America; and\n6)Asia Pacific Foods, which consists of our convenient food businesses in Asia Pacific, including China, Australia and New ",
+        "text_snapshot_hash": "9a37422a2be6a3690bd84cf22f6a92e03e5b374742ea4a79d11545d2afbc8da8",
+        "text_snapshot_path": "snapshots/pep-20260905.htm.txt",
+        "version": 1
+      },
+      {
+        "created_at": "2026-11-16T16:28:24.239548+00:00",
+        "document_id": "source_doc_d449d3357bc8b204d1ad9eb2",
+        "document_period_start": "2026-06-14",
+        "document_report_date": "2026-09-05",
+        "end": 25161,
+        "entity": "PEP",
+        "extraction_method": "All visible HTML tables and body in source order.",
+        "form": "10-Q",
+        "id": "chunk_b7527a9031a54a66f74d68dd",
+        "kind": "document",
+        "locator": "snapshots/pep-20260905.htm.txt:characters[23543:25161] (zero-based Unicode offsets)",
+        "mode": "replay",
+        "period_end": null,
+        "period_start": null,
+        "publication_precision": "timestamp",
+        "published_at": "2026-10-07T21:52:53.000Z",
+        "retrieval_method": "bm25",
+        "retrieval_score": 9.44315704546513,
+        "retrieved_at": "2026-11-16T16:20:54.930778+00:00",
+        "snapshot_hash": "e6d7c8bd8fa095ef9320b6977f8450bc86f152da76ccc398c1f4bc2a2d4495f0",
+        "snapshot_path": "snapshots/pep-20260905.htm",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/77476/000007747626000048/pep-20260905.htm",
+        "stale": false,
+        "start": 23543,
+        "text": "segments and the Be & Cheery brand in our Asia Pacific Foods segment, with $1,943 million recorded in impairment of intangible assets and $17 million recorded in selling, general and administrative expenses. See Note 4 for further information.\n(e)In the 12 and 36 weeks ended September 6, 2025, we recorded a pre-tax charge of $82 million in selling, general and administrative expenses and income tax expense of $47 million in provision for income taxes (collectively, $0.09 per share) related to an indirect and income tax audit settlement in our LatAm Foods segment.\nDisaggregation of Net Revenue\nOur primary performance obligation is the distribution and sales of beverage and convenient food products to our customers. The following tables reflect the percentage of net revenue generated between our beverage business and our convenient food business:\n12 Weeks Ended\n9/5/2026 9/6/2025\nBeverages(a)\nConvenient Foods\nBeverages(a)\nConvenient Foods\nNorth America 54 % 46 % 53 % 47 %\nInternational (b)\n33 % 67 % 33 % 67 %\nPepsiCo 45 % 55 % 45 % 55 %\n11\nTable of Contents\n36 Weeks Ended\n9/5/2026 9/6/2025\nBeverages(a)\nConvenient Foods\nBeverages(a)\nConvenient Foods\nNorth America 53 % 47 % 51 % 49 %\nInternational (b)\n31 % 69 % 32 % 68 %\nPepsiCo 44 % 56 % 43 % 57 %\n(a)Beverage revenue from company-owned bottlers, which includes our consolidated bottling operations in our PBNA and EMEA segments, was 38% of our consolidated net revenue in each of the 12 weeks ended September 5, 2026 and September 6, 2025, and 37% of our consolidated net revenue in each of the 36 weeks ended September 5, 2026 and September 6, 2025. ",
+        "text_snapshot_hash": "9a37422a2be6a3690bd84cf22f6a92e03e5b374742ea4a79d11545d2afbc8da8",
+        "text_snapshot_path": "snapshots/pep-20260905.htm.txt",
+        "version": 1
+      },
+      {
+        "created_at": "2026-11-16T16:28:24.240076+00:00",
+        "document_id": "source_doc_d449d3357bc8b204d1ad9eb2",
+        "document_period_start": "2026-06-14",
+        "document_report_date": "2026-09-05",
+        "end": 83872,
+        "entity": "PEP",
+        "extraction_method": "All visible HTML tables and body in source order.",
+        "form": "10-Q",
+        "id": "chunk_3ae3bfc1b2ddd3ecd30b084e",
+        "kind": "document",
+        "locator": "snapshots/pep-20260905.htm.txt:characters[82206:83872] (zero-based Unicode offsets)",
+        "mode": "replay",
+        "period_end": null,
+        "period_start": null,
+        "publication_precision": "timestamp",
+        "published_at": "2026-10-07T21:52:53.000Z",
+        "retrieval_method": "bm25",
+        "retrieval_score": 8.935034580581302,
+        "retrieved_at": "2026-11-16T16:20:54.930778+00:00",
+        "snapshot_hash": "e6d7c8bd8fa095ef9320b6977f8450bc86f152da76ccc398c1f4bc2a2d4495f0",
+        "snapshot_path": "snapshots/pep-20260905.htm",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/77476/000007747626000048/pep-20260905.htm",
+        "stale": false,
+        "start": 82206,
+        "text": "operating results.\nSee Note 8 to our condensed consolidated financial statements in this Form 10-Q and Note 9 to our consolidated financial statements in our 2025 Form 10-K for further information on how we manage our exposure to commodity prices.\nRisks Associated with Climate Change\nCertain jurisdictions in which our products are made, manufactured, distributed or sold have either imposed, or are considering imposing, new or increased legal and regulatory requirements to reduce or mitigate the potential effects of climate change, including regulation of greenhouse gas emissions and potential carbon pricing programs. These new or increased legal or regulatory requirements, along with initiatives to meet our sustainability goals, could result in significant increased costs and additional investments in facilities and equipment. However, we are unable to predict the scope, nature and timing of any new or increased environmental laws and regulations and therefore cannot predict the ultimate impact of such laws and regulations on our business or financial results. We continue to monitor existing and proposed laws and regulations in the jurisdictions in which our products are made, manufactured, distributed and sold and to consider actions we may take to potentially mitigate the unfavorable impact, if any, of such laws or regulations.\nRisks Associated with International Operations\nIn the 12 weeks ended September 5, 2026, our financial results outside of North America reflect the months of June, July and August. In the 36 weeks ended September 5, 2026, our financial results outside of North America reflect the months of January through August. ",
+        "text_snapshot_hash": "9a37422a2be6a3690bd84cf22f6a92e03e5b374742ea4a79d11545d2afbc8da8",
+        "text_snapshot_path": "snapshots/pep-20260905.htm.txt",
+        "version": 1
+      },
+      {
+        "created_at": "2026-11-16T16:28:24.240610+00:00",
+        "document_id": "source_doc_d449d3357bc8b204d1ad9eb2",
+        "document_period_start": "2026-06-14",
+        "document_report_date": "2026-09-05",
+        "end": 78190,
+        "entity": "PEP",
+        "extraction_method": "All visible HTML tables and body in source order.",
+        "form": "10-Q",
+        "id": "chunk_7ef7ecff19e7c72fceeb8442",
+        "kind": "document",
+        "locator": "snapshots/pep-20260905.htm.txt:characters[76884:78190] (zero-based Unicode offsets)",
+        "mode": "replay",
+        "period_end": null,
+        "period_start": null,
+        "publication_precision": "timestamp",
+        "published_at": "2026-10-07T21:52:53.000Z",
+        "retrieval_method": "bm25",
+        "retrieval_score": 8.53953727510293,
+        "retrieved_at": "2026-11-16T16:20:54.930778+00:00",
+        "snapshot_hash": "e6d7c8bd8fa095ef9320b6977f8450bc86f152da76ccc398c1f4bc2a2d4495f0",
+        "snapshot_path": "snapshots/pep-20260905.htm",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/77476/000007747626000048/pep-20260905.htm",
+        "stale": false,
+        "start": 76884,
+        "text": "they occur.\nOur Business Risks\nThis Form 10-Q contains statements reflecting our views about our future performance that constitute “forward-looking statements” within the meaning of the Private Securities Litigation Reform Act of 1995 (Reform Act). Statements that constitute forward-looking statements within the meaning of the Reform Act\n32\nTable of Contents\nare generally identified through the inclusion of words such as “aim,” “anticipate,” “believe,” “drive,” “estimate,” “expect,” “expressed confidence,” “forecast,” “future,” “goal,” “guidance,” “intend,” “may,” “objective,” “outlook,” “plan,” “position,” “potential,” “project,” “seek,” “should,” “strategy,” “target,” “will” or similar statements or variations of such words and other similar expressions. All statements addressing our future operating performance, and statements addressing events and developments that we expect or anticipate will occur in the future, are forward-looking statements within the meaning of the Reform Act. These forward-looking statements are based on currently available information, operating plans and projections about future events and trends. They inherently involve risks and uncertainties that could cause actual results to differ materially from those predicted in any such forward-looking statement. ",
+        "text_snapshot_hash": "9a37422a2be6a3690bd84cf22f6a92e03e5b374742ea4a79d11545d2afbc8da8",
+        "text_snapshot_path": "snapshots/pep-20260905.htm.txt",
+        "version": 1
+      },
+      {
+        "created_at": "2026-11-16T16:28:24.241417+00:00",
+        "document_id": "source_doc_d449d3357bc8b204d1ad9eb2",
+        "document_period_start": "2026-06-14",
+        "document_report_date": "2026-09-05",
+        "end": 122999,
+        "entity": "PEP",
+        "extraction_method": "All visible HTML tables and body in source order.",
+        "form": "10-Q",
+        "id": "chunk_d71dd73a1a5ed77942290805",
+        "kind": "document",
+        "locator": "snapshots/pep-20260905.htm.txt:characters[121243:122999] (zero-based Unicode offsets)",
+        "mode": "replay",
+        "period_end": null,
+        "period_start": null,
+        "publication_precision": "timestamp",
+        "published_at": "2026-10-07T21:52:53.000Z",
+        "retrieval_method": "bm25",
+        "retrieval_score": 8.307215272912071,
+        "retrieved_at": "2026-11-16T16:20:54.930778+00:00",
+        "snapshot_hash": "e6d7c8bd8fa095ef9320b6977f8450bc86f152da76ccc398c1f4bc2a2d4495f0",
+        "snapshot_path": "snapshots/pep-20260905.htm",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/77476/000007747626000048/pep-20260905.htm",
+        "stale": false,
+        "start": 121243,
+        "text": "435) — 554 13 100 467\nAcquisition and divestiture-related charges/credits (46) 46 (212) (50) 308 — 72 236\nImpairment and other charges — — (17) (1,943) 1,960 — 421 1,539\nIndirect and income tax impact (b)\n— — (82) — 82 — (47) 129\nPension and retiree medical-related impact — — — — — 12 2 10\nCore, non-GAAP measure $ 29,169 $ 35,413 $ 24,576 $ — $ 10,837 $ 116 $ 2,050 $ 8,075\n(a)Provision for income taxes is the expected tax charge/benefit on the underlying item based on the tax laws and income tax rates applicable to the underlying item in its corresponding tax jurisdiction.\n(b)Provision for income taxes reflects the unfavorable impact of an income tax audit settlement in our LatAm Foods segment.\n12 Weeks Ended 36 Weeks Ended\n9/5/2026 9/6/2025 Change 9/5/2026 9/6/2025 Change\nNet income attributable to PepsiCo per common share – diluted, GAAP measure $ 2.23 $ 1.90 17 % $ 6.10 $ 4.15 47 %\nMark-to-market net impact\n(0.04) 0.01 (0.12) —\nRestructuring and impairment charges 0.11 0.08 0.21 0.34\nAcquisition and divestiture-related charges/credits (0.05) 0.12 (0.14) 0.17\nImpairment and other charges — 0.07 — 1.12\nIndirect and income tax impact — 0.09 — 0.09\nPension and retiree medical-related impact 0.10 0.01 0.10 0.01\nCore net income attributable to PepsiCo per common share – diluted, non-GAAP measure $ 2.34\n(a)\n$ 2.29\n(a)\n2 % $ 6.15 $ 5.88 5 %\nImpact of foreign exchange translation\n(1) (2.5)\nChange in core net income attributable to PepsiCo per common share – diluted, on a constant currency basis, non-GAAP measure 1.5 %\n(a)\n2 %\n(a)\n(a)Does not sum due to rounding.\nMark-to-Market Net Impact\nWe centrally manage commodity derivatives on behalf of our segments. These commodity derivatives include agricultural products, energy and metals. ",
+        "text_snapshot_hash": "9a37422a2be6a3690bd84cf22f6a92e03e5b374742ea4a79d11545d2afbc8da8",
+        "text_snapshot_path": "snapshots/pep-20260905.htm.txt",
+        "version": 1
+      }
+    ],
+    "messages": [
+      {
+        "content": "百事最近一季表现怎么样？",
+        "created_at": "2026-11-16T16:22:35.645530+00:00",
+        "id": "007ba985f18b44d18b941ae1d9022317",
+        "role": "user"
+      },
+      {
+        "content": "Research complete (completed). See the report's findings, sources and unresolved items.",
+        "created_at": "2026-11-16T16:24:22.110685+00:00",
+        "id": "8b326e69b9ad4e78bb9f2dcf1e5a4ff3",
+        "role": "assistant"
+      },
+      {
+        "content": "你说国际业务较强、北美还在修复。北美具体是哪块拖了后腿，卖得少了还是价格变了？",
+        "created_at": "2026-11-16T16:24:54.613077+00:00",
+        "id": "42ea01564d12435f88c6213fc06b251f",
+        "role": "user"
+      },
+      {
+        "content": "Research complete (completed). See the report's findings, sources and unresolved items.",
+        "created_at": "2026-11-16T16:27:13.111968+00:00",
+        "id": "6ff7f49ce8844f158573a54c3f3b5cdd",
+        "role": "assistant"
+      },
+      {
+        "content": "那你前面说的全年盈利指引下调，具体从多少改到多少？公司把原因也说清了吗？",
+        "created_at": "2026-11-16T16:27:58.559397+00:00",
+        "id": "6daa6e763e8047ad88482dbb9aff98d9",
+        "role": "user"
+      }
+    ],
+    "request": "那你前面说的全年盈利指引下调，具体从多少改到多少？公司把原因也说清了吗？",
+    "requirements": [
+      {
+        "id": "request:episode_1448faa1340c4cd5ab29ba150d164b2f",
+        "text": "核实百事2026财年盈利增长指引此前与修订后的数值及口径，并说明公司对下调原因的明确解释、量化程度和证据限制。"
+      }
+    ],
+    "scope": {
+      "cutoff": "2026-11-16",
+      "entities": [
+        "PEP"
+      ],
+      "requirements": [
+        {
+          "id": "request:episode_1448faa1340c4cd5ab29ba150d164b2f",
+          "text": "核实百事2026财年盈利增长指引此前与修订后的数值及口径，并说明公司对下调原因的明确解释、量化程度和证据限制。"
+        }
+      ]
+    },
+    "session": {
+      "id": "11d2b97914b74aa79434d479526e7894",
+      "scope": {
+        "cutoff": "2026-11-16",
+        "entities": [
+          "PEP"
+        ],
+        "requirements": [
+          {
+            "id": "request:episode_1448faa1340c4cd5ab29ba150d164b2f",
+            "text": "核实百事2026财年盈利增长指引此前与修订后的数值及口径，并说明公司对下调原因的明确解释、量化程度和证据限制。"
+          }
+        ]
+      },
+      "scope_version": 8
+    },
+    "tools": [
+      {
+        "description": "Resolve issuers and display finite replay coverage. For one matched issuer, metadata_evidence_id cites the dated local index rows; document_id opens the source text. An exact live CIK fetches submissions; a live ticker/name query fetches the ticker directory. At most one HTTP request.",
+        "name": "discover_company",
+        "parameters": {
+          "additionalProperties": false,
+          "properties": {
+            "cutoff": {
+              "description": "Information cutoff: ISO date or timezone-aware timestamp.",
+              "type": "string"
+            },
+            "query": {
+              "type": "string"
+            },
+            "source": {
+              "default": "auto",
+              "description": "auto prefers verified replay/persistent cached snapshots, which are not fresh online observations; live always requests a refresh; replay forbids network.",
+              "enum": [
+                "auto",
+                "replay",
+                "live"
+              ],
+              "type": "string"
+            },
+            "view": {
+              "default": "coverage",
+              "description": "Identity resolves issuer names only. Coverage includes the local document catalog.",
+              "enum": [
+                "coverage",
+                "identity"
+              ],
+              "type": "string"
+            }
+          },
+          "required": [
+            "query"
+          ],
+          "type": "object"
+        }
+      },
+      {
+        "description": "Read SEC facts for exact periods. With incomplete dates, show available periods rather than choosing quarterly versus cumulative data. Explicit taxonomy:concept is supported in addition to metric aliases. Latest filing available at cutoff is selected, with conflicts explicit.",
+        "name": "financial_facts",
+        "parameters": {
+          "additionalProperties": false,
+          "properties": {
+            "cutoff": {
+              "description": "Information cutoff: ISO date or timezone-aware timestamp.",
+              "type": "string"
+            },
+            "entity": {
+              "description": "Ticker/name resolved by discover_company, or SEC CIK digits.",
+              "type": "string"
+            },
+            "metric": {
+              "type": "string"
+            },
+            "period_end": {
+              "description": "Exact YYYY-MM-DD; do not guess fiscal-calendar dates.",
+              "type": "string"
+            },
+            "period_start": {
+              "description": "Exact YYYY-MM-DD; do not guess fiscal-calendar dates.",
+              "type": "string"
+            },
+            "source": {
+              "default": "auto",
+              "description": "auto prefers verified replay/persistent cached snapshots, which are not fresh online observations; live always requests a refresh; replay forbids network.",
+              "enum": [
+                "auto",
+                "replay",
+                "live"
+              ],
+              "type": "string"
+            },
+            "unit": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "metric"
+          ],
+          "type": "object"
+        }
+      },
+      {
+        "description": "List SEC recent-submissions metadata by acceptance time. Cite metadata_evidence_id for the previewed filings, cutoff and snapshot coverage. Use offset to cite later rows. Filing metadata does not establish press-release contents or results. Uses replay or one live submissions request, without following older-history files.",
+        "name": "discover_filings",
+        "parameters": {
+          "additionalProperties": false,
+          "properties": {
+            "cutoff": {
+              "description": "Information cutoff: ISO date or timezone-aware timestamp.",
+              "type": "string"
+            },
+            "entity": {
+              "description": "Ticker/name resolved by discover_company, or SEC CIK digits.",
+              "type": "string"
+            },
+            "forms": {
+              "items": {
+                "type": "string"
+              },
+              "maxItems": 10,
+              "minItems": 1,
+              "type": "array"
+            },
+            "limit": {
+              "maximum": 50,
+              "minimum": 1,
+              "type": "integer"
+            },
+            "offset": {
+              "maximum": 1000000,
+              "minimum": 0,
+              "type": "integer"
+            },
+            "report_date": {
+              "description": "Exact YYYY-MM-DD; do not guess fiscal-calendar dates.",
+              "type": "string"
+            },
+            "source": {
+              "default": "auto",
+              "description": "auto prefers verified replay/persistent cached snapshots, which are not fresh online observations; live always requests a refresh; replay forbids network.",
+              "enum": [
+                "auto",
+                "replay",
+                "live"
+              ],
+              "type": "string"
+            }
+          },
+          "required": [],
+          "type": "object"
+        }
+      },
+      {
+        "description": "Read one older SEC submissions JSON file explicitly listed by discover_filings for this issuer. The exact filename must already be discovered. One HTTP request at most; offset paginates returned rows without hiding archive requests. Filing report dates are metadata, not fiscal-quarter inference.",
+        "name": "read_filing_history",
+        "parameters": {
+          "additionalProperties": false,
+          "properties": {
+            "cutoff": {
+              "description": "Information cutoff: ISO date or timezone-aware timestamp.",
+              "type": "string"
+            },
+            "entity": {
+              "description": "Ticker/name resolved by discover_company, or SEC CIK digits.",
+              "type": "string"
+            },
+            "filename": {
+              "type": "string"
+            },
+            "forms": {
+              "items": {
+                "type": "string"
+              },
+              "maxItems": 10,
+              "minItems": 1,
+              "type": "array"
+            },
+            "limit": {
+              "maximum": 50,
+              "minimum": 1,
+              "type": "integer"
+            },
+            "offset": {
+              "maximum": 1000000,
+              "minimum": 0,
+              "type": "integer"
+            },
+            "report_date": {
+              "description": "Exact YYYY-MM-DD; do not guess fiscal-calendar dates.",
+              "type": "string"
+            },
+            "source": {
+              "default": "auto",
+              "description": "auto prefers verified replay/persistent cached snapshots, which are not fresh online observations; live always requests a refresh; replay forbids network.",
+              "enum": [
+                "auto",
+                "replay",
+                "live"
+              ],
+              "type": "string"
+            }
+          },
+          "required": [
+            "filename"
+          ],
+          "type": "object"
+        }
+      },
+      {
+        "description": "Retrieve exact, boundary-aware passages using BM25 and strict issuer/publication/report-date filters. period_end filters document report dates, not the period of every statement. Optional dense/hybrid needs configured genuine embeddings. Retrieval never proves semantic support.",
+        "name": "search_documents",
+        "parameters": {
+          "additionalProperties": false,
+          "properties": {
+            "cutoff": {
+              "description": "Information cutoff: ISO date or timezone-aware timestamp.",
+              "type": "string"
+            },
+            "document_ids": {
+              "items": {
+                "type": "string"
+              },
+              "maxItems": 50,
+              "minItems": 1,
+              "type": "array"
+            },
+            "entity": {
+              "description": "Ticker/name resolved by discover_company, or SEC CIK digits.",
+              "type": "string"
+            },
+            "forms": {
+              "items": {
+                "type": "string"
+              },
+              "maxItems": 10,
+              "minItems": 1,
+              "type": "array"
+            },
+            "limit": {
+              "maximum": 10,
+              "minimum": 1,
+              "type": "integer"
+            },
+            "max_context_chars": {
+              "maximum": 18000,
+              "minimum": 1800,
+              "type": "integer"
+            },
+            "period_end": {
+              "description": "Exact YYYY-MM-DD; do not guess fiscal-calendar dates.",
+              "type": "string"
+            },
+            "query": {
+              "type": "string"
+            },
+            "retrieval_mode": {
+              "enum": [
+                "bm25",
+                "dense",
+                "hybrid"
+              ],
+              "type": "string"
+            }
+          },
+          "required": [
+            "query"
+          ],
+          "type": "object"
+        }
+      },
+      {
+        "description": "Open an exact text span. Search and read attach the same supported numeric cells. Read beyond a cut row to recover a complete row. For an operating cash flow bridge use analyze_disclosures; rereading its text_only passage does not generate cash flow operands. Copy document_id from discovery or search and use next_offset to advance.",
+        "name": "read_document",
+        "parameters": {
+          "additionalProperties": false,
+          "properties": {
+            "cutoff": {
+              "description": "Information cutoff: ISO date or timezone-aware timestamp.",
+              "type": "string"
+            },
+            "document_id": {
+              "type": "string"
+            },
+            "entity": {
+              "description": "Ticker/name resolved by discover_company, or SEC CIK digits.",
+              "type": "string"
+            },
+            "limit_chars": {
+              "maximum": 6000,
+              "minimum": 200,
+              "type": "integer"
+            },
+            "offset": {
+              "maximum": 8000000,
+              "minimum": 0,
+              "type": "integer"
+            }
+          },
+          "required": [
+            "document_id"
+          ],
+          "type": "object"
+        }
+      },
+      {
+        "description": "Inspect all local issuer disclosures available at cutoff for the named fiscal quarter and prior-year quarter, including comparative information in later releases. Returns located total/daily sales, selling days and customer-group daily sales, or question-specific gaps.",
+        "name": "inspect_sales_comparison",
+        "parameters": {
+          "additionalProperties": false,
+          "properties": {
+            "cutoff": {
+              "description": "Information cutoff: ISO date or timezone-aware timestamp.",
+              "type": "string"
+            },
+            "entity": {
+              "description": "Ticker/name resolved by discover_company, or SEC CIK digits.",
+              "type": "string"
+            },
+            "fiscal_quarter": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "entity",
+            "fiscal_quarter"
+          ],
+          "type": "object"
+        }
+      },
+      {
+        "description": "Reconcile quarterly year-over-year changes in operating profit and operating margin from visible consolidated income-statement cells. Returns signed money and percentage-point contributions for gross profit, expenses and reconciled other operating income, each quarter's gross-to-operating-income check, and missing rows. Reuse previously retrieved cells, or search the original table if they are missing.",
+        "name": "reconcile_operating_margin",
+        "parameters": {
+          "additionalProperties": false,
+          "properties": {
+            "document_id": {
+              "type": "string"
+            },
+            "entity": {
+              "description": "Ticker/name resolved by discover_company, or SEC CIK digits.",
+              "type": "string"
+            },
+            "period_end": {
+              "description": "Exact YYYY-MM-DD; do not guess fiscal-calendar dates.",
+              "type": "string"
+            },
+            "period_start": {
+              "description": "Exact YYYY-MM-DD; do not guess fiscal-calendar dates.",
+              "type": "string"
+            }
+          },
+          "required": [
+            "entity",
+            "period_end"
+          ],
+          "type": "object"
+        }
+      },
+      {
+        "description": "Locate the issuer's original quarterly income statement and reconcile the change from operating profit to net income against the year-ago quarter. Finds dates, rows and signed amounts itself. Returns saved cells, calculations and any missing evidence. Not for adjusted earnings, margins, cash flow or sequential comparisons.",
+        "name": "reconcile_net_income",
+        "parameters": {
+          "additionalProperties": false,
+          "properties": {
+            "entity": {
+              "description": "Ticker/name resolved by discover_company, or SEC CIK digits.",
+              "type": "string"
+            },
+            "period_end": {
+              "description": "Exact YYYY-MM-DD; do not guess fiscal-calendar dates.",
+              "type": "string"
+            },
+            "period_start": {
+              "description": "Exact YYYY-MM-DD; do not guess fiscal-calendar dates.",
+              "type": "string"
+            }
+          },
+          "required": [
+            "entity"
+          ],
+          "type": "object"
+        }
+      },
+      {
+        "description": "Find dated percentage cells in original replay HTML tables. Supply an issuer and English metric keywords, optionally an exact period or document ID. Returns alternative row labels, period headers, raw values and saved cell IDs. Check issuer, row, dates, accounting basis and table scope; select the matching ID(s) yourself for calculate. Covers explicit calendar-month duration/date headers and values carrying a percent sign.",
+        "name": "find_percentage_cells",
+        "parameters": {
+          "additionalProperties": false,
+          "properties": {
+            "cutoff": {
+              "description": "Information cutoff: ISO date or timezone-aware timestamp.",
+              "type": "string"
+            },
+            "document_id": {
+              "type": "string"
+            },
+            "entity": {
+              "description": "Ticker/name resolved by discover_company, or SEC CIK digits.",
+              "type": "string"
+            },
+            "limit": {
+              "maximum": 12,
+              "minimum": 1,
+              "type": "integer"
+            },
+            "offset": {
+              "maximum": 10000,
+              "minimum": 0,
+              "type": "integer"
+            },
+            "period_end": {
+              "description": "Exact YYYY-MM-DD; do not guess fiscal-calendar dates.",
+              "type": "string"
+            },
+            "period_start": {
+              "description": "Exact YYYY-MM-DD; do not guess fiscal-calendar dates.",
+              "type": "string"
+            },
+            "query": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "entity",
+            "query"
+          ],
+          "type": "object"
+        }
+      },
+      {
+        "description": "Use two saved IDs: numerator/denominator for ratio or margin, current/prior for growth or difference, later/prior cumulative for derive_quarter, end/start for price_return. Difference can also subtract identified same-period flows. exclude_tax_expense_item adds a signed monetary tax-reconciliation valuation-allowance change to reported basic common earnings, with all other allocations fixed. Check attribution in the filing. Compare that scenario to earlier reported common earnings using growth or difference.",
+        "name": "calculate",
+        "parameters": {
+          "additionalProperties": false,
+          "properties": {
+            "operand_ids": {
+              "items": {
+                "type": "string"
+              },
+              "maxItems": 2,
+              "minItems": 2,
+              "type": "array"
+            },
+            "operation": {
+              "enum": [
+                "ratio",
+                "margin",
+                "growth",
+                "difference",
+                "percentage_point_change",
+                "derive_quarter",
+                "price_return",
+                "exclude_tax_expense_item"
+              ],
+              "type": "string"
+            }
+          },
+          "required": [
+            "operation",
+            "operand_ids"
+          ],
+          "type": "object"
+        }
+      },
+      {
+        "description": "Run only the selected methods with specialized statement analyzers (see method enum); omit method to run all selected supported ones. Other methods use search_documents, read_document and calculate. Returns located cells, arithmetic and disclosure gaps.",
+        "name": "analyze_disclosures",
+        "parameters": {
+          "additionalProperties": false,
+          "properties": {
+            "entity": {
+              "description": "Ticker/name resolved by discover_company, or SEC CIK digits.",
+              "type": "string"
+            },
+            "method": {
+              "enum": [
+                "cash-flow-bridge",
+                "implied-period-guidance",
+                "unit-profit-reconciliation",
+                "reconcile-segment-totals",
+                "incremental-profit-margin",
+                "isolate-discrete-tax-item"
+              ],
+              "type": "string"
+            }
+          },
+          "required": [
+            "entity"
+          ],
+          "type": "object"
+        }
+      }
+    ]
+  }
+}

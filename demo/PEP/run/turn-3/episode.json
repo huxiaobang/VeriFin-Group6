@@ -1,0 +1,428 @@
+{
+  "id": "episode_1448faa1340c4cd5ab29ba150d164b2f",
+  "request": "那你前面说的全年盈利指引下调，具体从多少改到多少？公司把原因也说清了吗？",
+  "status": "complete",
+  "created_at": "2026-11-16T16:27:58.555864+00:00",
+  "budget": {
+    "max_model_calls": 14,
+    "max_tool_calls": 10,
+    "max_seconds": 600,
+    "max_no_progress": 3,
+    "max_planner_steps": 64
+  },
+  "model_calls": 5,
+  "tool_calls": 2,
+  "planner_steps": 3,
+  "active_seconds": 90.14923741598614,
+  "usage": {
+    "total_tokens": 149099,
+    "total_tokens_reported_calls": 5,
+    "prompt_tokens": 145010,
+    "prompt_tokens_reported_calls": 5,
+    "completion_tokens": 4089,
+    "completion_tokens_reported_calls": 5,
+    "cached_input_tokens": 83085,
+    "cached_input_tokens_reported_calls": 5,
+    "cache_write_tokens": 36763,
+    "cache_write_tokens_reported_calls": 5,
+    "cache_write_30m_tokens": 36763,
+    "cache_write_30m_tokens_reported_calls": 5,
+    "cache_write_12h_tokens": 0,
+    "cache_write_12h_tokens_reported_calls": 5,
+    "reasoning_tokens": 314,
+    "reasoning_tokens_reported_calls": 5
+  },
+  "no_progress": 0,
+  "active_claim_ids": [
+    "claim:guidance-constant-currency-eps",
+    "claim:guidance-core-eps",
+    "claim:management-investment-cost-context",
+    "claim:guidance-fx-assumption",
+    "claim:guidance-tax-assumption",
+    "claim:guidance-explanation-limit"
+  ],
+  "issues": [],
+  "reviewed": true,
+  "draft_saved": true,
+  "answered_requirement_ids": [
+    "request:episode_1448faa1340c4cd5ab29ba150d164b2f"
+  ],
+  "unanswered_requirement_ids": [],
+  "summary": "2026全年核心固定汇率EPS增长指引由4%—6%区间低端降至1%—2%，核心EPS增长由5%—7%区间低端降至2.5%—3.5%。公司谈到了北美投入及成本通胀压力，但现有材料未提供完整、量化的下调归因；未取得的管理层准备稿和问答仍是证据缺口。",
+  "seen_results": [
+    "bd4efe52954ece399d3298288f0337957b6fd21c84ccdf0ac3bad0880b19886a",
+    "d107b3b5cf5e1bc3439dd57ec275d2829165ebbe383c9c9d3b72e4f879f066a6",
+    "1546ffb117b48a3da1fcf5efcdccd819e4a5f559f1c136f592f5c2a5e2a9dbf4"
+  ],
+  "new_followup": true,
+  "model_mode": "configured_model",
+  "user_cutoff": "2026-11-16",
+  "research_skills": [],
+  "skill_selection_source": "planner",
+  "request_coverage": [
+    {
+      "part": "part-1",
+      "status": "answered",
+      "claim_id": "claim:guidance-constant-currency-eps",
+      "answer_sentence": "百事2026财年核心固定汇率每股收益（EPS）同比增长指引，由此前“4%—6%区间的低端”下调至“1%—2%”。",
+      "supporting_claim_ids": [
+        "claim:guidance-constant-currency-eps",
+        "claim:guidance-core-eps"
+      ]
+    },
+    {
+      "part": "part-2",
+      "status": "answered",
+      "claim_id": "claim:guidance-explanation-limit",
+      "answer_sentence": "所以，数字改了多少是清楚的，但现有证据中的原因解释不完整、也未量化：已取得的公告及10-Q段落没有把北美投入、成本通胀、降本及其他因素逐项连接成全年盈利指引下调桥。",
+      "supporting_claim_ids": [
+        "claim:management-investment-cost-context",
+        "claim:guidance-fx-assumption",
+        "claim:guidance-tax-assumption",
+        "claim:guidance-explanation-limit"
+      ]
+    }
+  ],
+  "last_tool_result": {
+    "ok": true,
+    "summary": "Found 5 bm25 passage(s) in 1 eligible document(s). A retrieved passage is not a verified conclusion.",
+    "evidence": [
+      {
+        "id": "chunk_d407d4affad50e074eff0707",
+        "text": "expanded or retaliatory tariffs and changes in the interest rate and inflationary cost environment have made such estimates and assumptions more difficult to calculate. Accordingly, actual results and outcomes could differ from those estimates.\nOur significant interim accounting policies include the recognition of a pro rata share of certain estimated annual sales incentives and certain advertising and marketing costs in proportion to revenue or volume, as applicable, and the recognition of income taxes using an estimated annual effective tax rate.\nUnless otherwise noted, tabular dollars are in millions, except per share amounts. All per share amounts reflect common per share amounts, assume dilution unless otherwise noted, and are based on unrounded amounts. Certain reclassifications were made to the prior year’s financial statements to conform to the current year presentation.\n8\nTable of Contents\nOur Segments\nWe are organized into six reportable segments, as follows:\n1)PepsiCo Foods North America (PFNA), which includes all of our convenient food businesses in the United States and Canada;\n2)PepsiCo Beverages North America (PBNA), which includes all of our beverage businesses in the United States and Canada;\n3)International Beverages Franchise (IB Franchise), which includes our international franchise beverage businesses, as well as our SodaStream business;\n4)Europe, Middle East and Africa (EMEA), which includes our convenient food businesses and our beverage businesses with company-owned bottlers in Europe, the Middle East and Africa;\n5)Latin America Foods (LatAm Foods), which includes all of our convenient food businesses in Latin America; and\n6)Asia Pacific Foods, which consists of our convenient food businesses in Asia Pacific, including China, Australia and New ",
+        "entity": "PEP",
+        "document_report_date": "2026-09-05",
+        "document_period_start": "2026-06-14",
+        "form": "10-Q",
+        "published_at": "2026-10-07T21:52:53.000Z",
+        "publication_precision": "timestamp",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/77476/000007747626000048/pep-20260905.htm",
+        "snapshot_hash": "e6d7c8bd8fa095ef9320b6977f8450bc86f152da76ccc398c1f4bc2a2d4495f0",
+        "snapshot_path": "snapshots/pep-20260905.htm",
+        "text_snapshot_path": "snapshots/pep-20260905.htm.txt",
+        "text_snapshot_hash": "9a37422a2be6a3690bd84cf22f6a92e03e5b374742ea4a79d11545d2afbc8da8",
+        "retrieved_at": "2026-11-16T16:20:54.930778+00:00",
+        "extraction_method": "All visible HTML tables and body in source order.",
+        "mode": "replay",
+        "document_id": "source_doc_d449d3357bc8b204d1ad9eb2",
+        "start": 17494,
+        "end": 19292,
+        "retrieval_score": 11.303538385223083,
+        "retrieval_method": "bm25",
+        "kind": "document",
+        "period_start": null,
+        "period_end": null,
+        "locator": "snapshots/pep-20260905.htm.txt:characters[17494:19292] (zero-based Unicode offsets)"
+      },
+      {
+        "id": "chunk_b7527a9031a54a66f74d68dd",
+        "text": "segments and the Be & Cheery brand in our Asia Pacific Foods segment, with $1,943 million recorded in impairment of intangible assets and $17 million recorded in selling, general and administrative expenses. See Note 4 for further information.\n(e)In the 12 and 36 weeks ended September 6, 2025, we recorded a pre-tax charge of $82 million in selling, general and administrative expenses and income tax expense of $47 million in provision for income taxes (collectively, $0.09 per share) related to an indirect and income tax audit settlement in our LatAm Foods segment.\nDisaggregation of Net Revenue\nOur primary performance obligation is the distribution and sales of beverage and convenient food products to our customers. The following tables reflect the percentage of net revenue generated between our beverage business and our convenient food business:\n12 Weeks Ended\n9/5/2026 9/6/2025\nBeverages(a)\nConvenient Foods\nBeverages(a)\nConvenient Foods\nNorth America 54 % 46 % 53 % 47 %\nInternational (b)\n33 % 67 % 33 % 67 %\nPepsiCo 45 % 55 % 45 % 55 %\n11\nTable of Contents\n36 Weeks Ended\n9/5/2026 9/6/2025\nBeverages(a)\nConvenient Foods\nBeverages(a)\nConvenient Foods\nNorth America 53 % 47 % 51 % 49 %\nInternational (b)\n31 % 69 % 32 % 68 %\nPepsiCo 44 % 56 % 43 % 57 %\n(a)Beverage revenue from company-owned bottlers, which includes our consolidated bottling operations in our PBNA and EMEA segments, was 38% of our consolidated net revenue in each of the 12 weeks ended September 5, 2026 and September 6, 2025, and 37% of our consolidated net revenue in each of the 36 weeks ended September 5, 2026 and September 6, 2025. ",
+        "entity": "PEP",
+        "document_report_date": "2026-09-05",
+        "document_period_start": "2026-06-14",
+        "form": "10-Q",
+        "published_at": "2026-10-07T21:52:53.000Z",
+        "publication_precision": "timestamp",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/77476/000007747626000048/pep-20260905.htm",
+        "snapshot_hash": "e6d7c8bd8fa095ef9320b6977f8450bc86f152da76ccc398c1f4bc2a2d4495f0",
+        "snapshot_path": "snapshots/pep-20260905.htm",
+        "text_snapshot_path": "snapshots/pep-20260905.htm.txt",
+        "text_snapshot_hash": "9a37422a2be6a3690bd84cf22f6a92e03e5b374742ea4a79d11545d2afbc8da8",
+        "retrieved_at": "2026-11-16T16:20:54.930778+00:00",
+        "extraction_method": "All visible HTML tables and body in source order.",
+        "mode": "replay",
+        "document_id": "source_doc_d449d3357bc8b204d1ad9eb2",
+        "start": 23543,
+        "end": 25161,
+        "retrieval_score": 9.44315704546513,
+        "retrieval_method": "bm25",
+        "kind": "document",
+        "period_start": null,
+        "period_end": null,
+        "locator": "snapshots/pep-20260905.htm.txt:characters[23543:25161] (zero-based Unicode offsets)"
+      },
+      {
+        "id": "chunk_3ae3bfc1b2ddd3ecd30b084e",
+        "text": "operating results.\nSee Note 8 to our condensed consolidated financial statements in this Form 10-Q and Note 9 to our consolidated financial statements in our 2025 Form 10-K for further information on how we manage our exposure to commodity prices.\nRisks Associated with Climate Change\nCertain jurisdictions in which our products are made, manufactured, distributed or sold have either imposed, or are considering imposing, new or increased legal and regulatory requirements to reduce or mitigate the potential effects of climate change, including regulation of greenhouse gas emissions and potential carbon pricing programs. These new or increased legal or regulatory requirements, along with initiatives to meet our sustainability goals, could result in significant increased costs and additional investments in facilities and equipment. However, we are unable to predict the scope, nature and timing of any new or increased environmental laws and regulations and therefore cannot predict the ultimate impact of such laws and regulations on our business or financial results. We continue to monitor existing and proposed laws and regulations in the jurisdictions in which our products are made, manufactured, distributed and sold and to consider actions we may take to potentially mitigate the unfavorable impact, if any, of such laws or regulations.\nRisks Associated with International Operations\nIn the 12 weeks ended September 5, 2026, our financial results outside of North America reflect the months of June, July and August. In the 36 weeks ended September 5, 2026, our financial results outside of North America reflect the months of January through August. ",
+        "entity": "PEP",
+        "document_report_date": "2026-09-05",
+        "document_period_start": "2026-06-14",
+        "form": "10-Q",
+        "published_at": "2026-10-07T21:52:53.000Z",
+        "publication_precision": "timestamp",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/77476/000007747626000048/pep-20260905.htm",
+        "snapshot_hash": "e6d7c8bd8fa095ef9320b6977f8450bc86f152da76ccc398c1f4bc2a2d4495f0",
+        "snapshot_path": "snapshots/pep-20260905.htm",
+        "text_snapshot_path": "snapshots/pep-20260905.htm.txt",
+        "text_snapshot_hash": "9a37422a2be6a3690bd84cf22f6a92e03e5b374742ea4a79d11545d2afbc8da8",
+        "retrieved_at": "2026-11-16T16:20:54.930778+00:00",
+        "extraction_method": "All visible HTML tables and body in source order.",
+        "mode": "replay",
+        "document_id": "source_doc_d449d3357bc8b204d1ad9eb2",
+        "start": 82206,
+        "end": 83872,
+        "retrieval_score": 8.935034580581302,
+        "retrieval_method": "bm25",
+        "kind": "document",
+        "period_start": null,
+        "period_end": null,
+        "locator": "snapshots/pep-20260905.htm.txt:characters[82206:83872] (zero-based Unicode offsets)"
+      },
+      {
+        "id": "chunk_7ef7ecff19e7c72fceeb8442",
+        "text": "they occur.\nOur Business Risks\nThis Form 10-Q contains statements reflecting our views about our future performance that constitute “forward-looking statements” within the meaning of the Private Securities Litigation Reform Act of 1995 (Reform Act). Statements that constitute forward-looking statements within the meaning of the Reform Act\n32\nTable of Contents\nare generally identified through the inclusion of words such as “aim,” “anticipate,” “believe,” “drive,” “estimate,” “expect,” “expressed confidence,” “forecast,” “future,” “goal,” “guidance,” “intend,” “may,” “objective,” “outlook,” “plan,” “position,” “potential,” “project,” “seek,” “should,” “strategy,” “target,” “will” or similar statements or variations of such words and other similar expressions. All statements addressing our future operating performance, and statements addressing events and developments that we expect or anticipate will occur in the future, are forward-looking statements within the meaning of the Reform Act. These forward-looking statements are based on currently available information, operating plans and projections about future events and trends. They inherently involve risks and uncertainties that could cause actual results to differ materially from those predicted in any such forward-looking statement. ",
+        "entity": "PEP",
+        "document_report_date": "2026-09-05",
+        "document_period_start": "2026-06-14",
+        "form": "10-Q",
+        "published_at": "2026-10-07T21:52:53.000Z",
+        "publication_precision": "timestamp",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/77476/000007747626000048/pep-20260905.htm",
+        "snapshot_hash": "e6d7c8bd8fa095ef9320b6977f8450bc86f152da76ccc398c1f4bc2a2d4495f0",
+        "snapshot_path": "snapshots/pep-20260905.htm",
+        "text_snapshot_path": "snapshots/pep-20260905.htm.txt",
+        "text_snapshot_hash": "9a37422a2be6a3690bd84cf22f6a92e03e5b374742ea4a79d11545d2afbc8da8",
+        "retrieved_at": "2026-11-16T16:20:54.930778+00:00",
+        "extraction_method": "All visible HTML tables and body in source order.",
+        "mode": "replay",
+        "document_id": "source_doc_d449d3357bc8b204d1ad9eb2",
+        "start": 76884,
+        "end": 78190,
+        "retrieval_score": 8.53953727510293,
+        "retrieval_method": "bm25",
+        "kind": "document",
+        "period_start": null,
+        "period_end": null,
+        "locator": "snapshots/pep-20260905.htm.txt:characters[76884:78190] (zero-based Unicode offsets)"
+      },
+      {
+        "id": "chunk_d71dd73a1a5ed77942290805",
+        "text": "435) — 554 13 100 467\nAcquisition and divestiture-related charges/credits (46) 46 (212) (50) 308 — 72 236\nImpairment and other charges — — (17) (1,943) 1,960 — 421 1,539\nIndirect and income tax impact (b)\n— — (82) — 82 — (47) 129\nPension and retiree medical-related impact — — — — — 12 2 10\nCore, non-GAAP measure $ 29,169 $ 35,413 $ 24,576 $ — $ 10,837 $ 116 $ 2,050 $ 8,075\n(a)Provision for income taxes is the expected tax charge/benefit on the underlying item based on the tax laws and income tax rates applicable to the underlying item in its corresponding tax jurisdiction.\n(b)Provision for income taxes reflects the unfavorable impact of an income tax audit settlement in our LatAm Foods segment.\n12 Weeks Ended 36 Weeks Ended\n9/5/2026 9/6/2025 Change 9/5/2026 9/6/2025 Change\nNet income attributable to PepsiCo per common share – diluted, GAAP measure $ 2.23 $ 1.90 17 % $ 6.10 $ 4.15 47 %\nMark-to-market net impact\n(0.04) 0.01 (0.12) —\nRestructuring and impairment charges 0.11 0.08 0.21 0.34\nAcquisition and divestiture-related charges/credits (0.05) 0.12 (0.14) 0.17\nImpairment and other charges — 0.07 — 1.12\nIndirect and income tax impact — 0.09 — 0.09\nPension and retiree medical-related impact 0.10 0.01 0.10 0.01\nCore net income attributable to PepsiCo per common share – diluted, non-GAAP measure $ 2.34\n(a)\n$ 2.29\n(a)\n2 % $ 6.15 $ 5.88 5 %\nImpact of foreign exchange translation\n(1) (2.5)\nChange in core net income attributable to PepsiCo per common share – diluted, on a constant currency basis, non-GAAP measure 1.5 %\n(a)\n2 %\n(a)\n(a)Does not sum due to rounding.\nMark-to-Market Net Impact\nWe centrally manage commodity derivatives on behalf of our segments. These commodity derivatives include agricultural products, energy and metals. ",
+        "entity": "PEP",
+        "document_report_date": "2026-09-05",
+        "document_period_start": "2026-06-14",
+        "form": "10-Q",
+        "published_at": "2026-10-07T21:52:53.000Z",
+        "publication_precision": "timestamp",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/77476/000007747626000048/pep-20260905.htm",
+        "snapshot_hash": "e6d7c8bd8fa095ef9320b6977f8450bc86f152da76ccc398c1f4bc2a2d4495f0",
+        "snapshot_path": "snapshots/pep-20260905.htm",
+        "text_snapshot_path": "snapshots/pep-20260905.htm.txt",
+        "text_snapshot_hash": "9a37422a2be6a3690bd84cf22f6a92e03e5b374742ea4a79d11545d2afbc8da8",
+        "retrieved_at": "2026-11-16T16:20:54.930778+00:00",
+        "extraction_method": "All visible HTML tables and body in source order.",
+        "mode": "replay",
+        "document_id": "source_doc_d449d3357bc8b204d1ad9eb2",
+        "start": 121243,
+        "end": 122999,
+        "retrieval_score": 8.307215272912071,
+        "retrieval_method": "bm25",
+        "kind": "document",
+        "period_start": null,
+        "period_end": null,
+        "locator": "snapshots/pep-20260905.htm.txt:characters[121243:122999] (zero-based Unicode offsets)"
+      }
+    ],
+    "data": {
+      "mode": "bm25",
+      "query": "2026 outlook guidance inflation investments North America core earnings per share",
+      "filters": {
+        "entity": "PEP",
+        "period_end": null,
+        "cutoff": "2026-11-16",
+        "forms": null,
+        "document_ids": [
+          "source_doc_d449d3357bc8b204d1ad9eb2"
+        ]
+      },
+      "corpus_fingerprint": "corpus_0f8a6dc143f4a8de60b52d2e",
+      "eligible_chunks": 104,
+      "eligible_document_ids": [
+        "source_doc_d449d3357bc8b204d1ad9eb2"
+      ],
+      "ranking_latency_ms": 13.609917019493878,
+      "context_chars": 8144,
+      "max_context_chars": 14000,
+      "limit": 5,
+      "candidate_limit": 100,
+      "scoring": "BM25 k1=1.2 b=0.75, filtered corpus statistics",
+      "embedding_artifact_hash": null,
+      "corpus_complete": false,
+      "eligible_documents": [
+        "source_doc_d449d3357bc8b204d1ad9eb2"
+      ],
+      "retrieval": "BM25 k1=1.2 b=0.75, filtered corpus statistics",
+      "document_period_semantics": "report metadata only; statement periods require checking the actual passage",
+      "numeric_operand_status": "text_only",
+      "network_requests": 0
+    },
+    "calculations": [],
+    "record_versions": {
+      "chunk_d407d4affad50e074eff0707": 1,
+      "chunk_b7527a9031a54a66f74d68dd": 1,
+      "chunk_3ae3bfc1b2ddd3ecd30b084e": 1,
+      "chunk_7ef7ecff19e7c72fceeb8442": 1,
+      "chunk_d71dd73a1a5ed77942290805": 1
+    }
+  },
+  "recent_tool_results": [
+    {
+      "tool": "search_documents",
+      "arguments": {
+        "entity": "PEP",
+        "cutoff": "2026-11-16",
+        "query": "2026 outlook core constant currency EPS growth previous guidance revised investment input cost inflation",
+        "limit": 5,
+        "max_context_chars": 16000
+      },
+      "ok": true,
+      "scope_version": 8,
+      "summary": "Found 5 bm25 passage(s) in 4 eligible document(s). A retrieved passage is not a verified conclusion.",
+      "data": {
+        "mode": "bm25",
+        "query": "2026 outlook core constant currency EPS growth previous guidance revised investment input cost inflation",
+        "filters": {
+          "entity": "PEP",
+          "period_end": null,
+          "cutoff": "2026-11-16",
+          "forms": null,
+          "document_ids": null
+        },
+        "corpus_fingerprint": "corpus_0f8a6dc143f4a8de60b52d2e",
+        "eligible_chunks": 540,
+        "eligible_document_ids": [
+          "source_doc_10051e485ae3e4f6272a9b32",
+          "source_doc_3775f2d910c9790f5bed6efd",
+          "source_doc_ab2ef82f3beaf1270b969eb3",
+          "source_doc_d449d3357bc8b204d1ad9eb2"
+        ],
+        "ranking_latency_ms": 72.11791700683534,
+        "context_chars": 7704,
+        "max_context_chars": 16000,
+        "limit": 5,
+        "candidate_limit": 100,
+        "scoring": "BM25 k1=1.2 b=0.75, filtered corpus statistics",
+        "embedding_artifact_hash": null,
+        "corpus_complete": false,
+        "eligible_documents": [
+          "source_doc_10051e485ae3e4f6272a9b32",
+          "source_doc_3775f2d910c9790f5bed6efd",
+          "source_doc_ab2ef82f3beaf1270b969eb3",
+          "source_doc_d449d3357bc8b204d1ad9eb2"
+        ],
+        "retrieval": "BM25 k1=1.2 b=0.75, filtered corpus statistics",
+        "document_period_semantics": "report metadata only; statement periods require checking the actual passage",
+        "numeric_operand_status": "text_only",
+        "network_requests": 0
+      },
+      "error": null,
+      "evidence_ids": [
+        "chunk_a8a31aeef18e168803843ca8",
+        "chunk_8982971aecc0ecb7cbc84840",
+        "chunk_35a48ca15b32e7021c45b95a",
+        "chunk_de3092c3eeb14bd730017b88",
+        "chunk_95d83fe58fc0d574467eed76"
+      ],
+      "calculation_ids": [],
+      "record_versions": {
+        "chunk_a8a31aeef18e168803843ca8": 1,
+        "chunk_8982971aecc0ecb7cbc84840": 1,
+        "chunk_35a48ca15b32e7021c45b95a": 1,
+        "chunk_de3092c3eeb14bd730017b88": 1,
+        "chunk_95d83fe58fc0d574467eed76": 1
+      }
+    },
+    {
+      "tool": "search_documents",
+      "arguments": {
+        "entity": "PEP",
+        "cutoff": "2026-11-16",
+        "document_ids": [
+          "source_doc_d449d3357bc8b204d1ad9eb2"
+        ],
+        "query": "2026 outlook guidance inflation investments North America core earnings per share",
+        "limit": 5,
+        "max_context_chars": 14000
+      },
+      "ok": true,
+      "scope_version": 8,
+      "summary": "Found 5 bm25 passage(s) in 1 eligible document(s). A retrieved passage is not a verified conclusion.",
+      "data": {
+        "mode": "bm25",
+        "query": "2026 outlook guidance inflation investments North America core earnings per share",
+        "filters": {
+          "entity": "PEP",
+          "period_end": null,
+          "cutoff": "2026-11-16",
+          "forms": null,
+          "document_ids": [
+            "source_doc_d449d3357bc8b204d1ad9eb2"
+          ]
+        },
+        "corpus_fingerprint": "corpus_0f8a6dc143f4a8de60b52d2e",
+        "eligible_chunks": 104,
+        "eligible_document_ids": [
+          "source_doc_d449d3357bc8b204d1ad9eb2"
+        ],
+        "ranking_latency_ms": 13.609917019493878,
+        "context_chars": 8144,
+        "max_context_chars": 14000,
+        "limit": 5,
+        "candidate_limit": 100,
+        "scoring": "BM25 k1=1.2 b=0.75, filtered corpus statistics",
+        "embedding_artifact_hash": null,
+        "corpus_complete": false,
+        "eligible_documents": [
+          "source_doc_d449d3357bc8b204d1ad9eb2"
+        ],
+        "retrieval": "BM25 k1=1.2 b=0.75, filtered corpus statistics",
+        "document_period_semantics": "report metadata only; statement periods require checking the actual passage",
+        "numeric_operand_status": "text_only",
+        "network_requests": 0
+      },
+      "error": null,
+      "evidence_ids": [
+        "chunk_d407d4affad50e074eff0707",
+        "chunk_b7527a9031a54a66f74d68dd",
+        "chunk_3ae3bfc1b2ddd3ecd30b084e",
+        "chunk_7ef7ecff19e7c72fceeb8442",
+        "chunk_d71dd73a1a5ed77942290805"
+      ],
+      "calculation_ids": [],
+      "record_versions": {
+        "chunk_d407d4affad50e074eff0707": 1,
+        "chunk_b7527a9031a54a66f74d68dd": 1,
+        "chunk_3ae3bfc1b2ddd3ecd30b084e": 1,
+        "chunk_7ef7ecff19e7c72fceeb8442": 1,
+        "chunk_d71dd73a1a5ed77942290805": 1
+      }
+    }
+  ],
+  "draft_attempted": true,
+  "draft_skill_selection": {
+    "skills": [],
+    "source": "planner"
+  },
+  "draft_scope_version": 8,
+  "reviewed_claim_ids": [
+    "claim:guidance-constant-currency-eps",
+    "claim:guidance-core-eps",
+    "claim:management-investment-cost-context",
+    "claim:guidance-fx-assumption",
+    "claim:guidance-tax-assumption",
+    "claim:guidance-explanation-limit"
+  ],
+  "reviewed_requirement_ids": [
+    "request:episode_1448faa1340c4cd5ab29ba150d164b2f"
+  ],
+  "reviewed_scope_version": 8,
+  "revision_memory": {
+    "sources": "440d06d820427e4d8dbf1e2888ac630db69dd88c674b0817b2031848ff13fc75",
+    "scope_version": 8,
+    "open": [],
+    "last_draft_instruction": "当前要求已覆盖指引前后数值、口径及下调解释。现有原文足以起草：列明2026财年核心固定汇率EPS增长由此前4%—6%区间低端改为1%—2%，核心EPS增长由此前5%—7%区间低端改为2.5%—3.5%，均为非GAAP同比增长指引而非EPS金额。解释须区分公司明确提及的北美创新、品牌及渠道投入与投入品成本通胀压力，以及分析判断；不能把这些经营背景直接说成公司完整解释了下调幅度。同步指出汇率贡献假设由约1%升至约1.5%、核心税率由约22%降至约21%，均非表面上的下调因素。现有已取得公告及10-Q段落没有逐项量化全年盈利指引下调桥；公告预告的管理层准备稿和问答未取得，因此不能断言公司在所有沟通中均未进一步解释。以此明确回答‘数字清楚，但现有证据中的原因解释不完整、未量化’，引用原文而非此前报告。此为直接核对指引和披露措辞，不需反推剩余期间，故不选择专项计算方法。",
+    "tool_calls_at_review": 2
+  },
+  "stop_reason": "completed",
+  "finished_at": "2026-11-16T16:29:28.725208+00:00"
+}

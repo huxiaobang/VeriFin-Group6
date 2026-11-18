@@ -1,0 +1,13 @@
+{
+  "action": "tool",
+  "tool": "read_document",
+  "arguments": {
+    "entity": "PEP",
+    "document_id": "source_doc_10051e485ae3e4f6272a9b32",
+    "cutoff": "2026-11-16",
+    "offset": 6000,
+    "limit_chars": 6000
+  },
+  "reason": "沿用已确认的R1、R2及截止日；现有证据已覆盖季度业绩和业务表现，继续读取尚未覆盖的管理层全年指引与风险说明。本题为业绩概览，无需专项计算方法。",
+  "research_skills": []
+}

@@ -1,0 +1,227 @@
+[
+  {
+    "id": "msft-cloud-margin",
+    "query": "Why did Microsoft Cloud gross margin decrease?",
+    "filters": {
+      "entity": "MSFT",
+      "period_end": "2024-12-31",
+      "cutoff": "2025-02-28"
+    },
+    "relevant": [
+      {
+        "document_id": "source_doc_46d5f99ce5f770df7276c00f",
+        "start": 2035,
+        "end": 2132
+      }
+    ],
+    "annotation_status": "development_example_not_independent_gold",
+    "annotation_note": "One manually selected source span; alternative supporting spans are not exhaustively adjudicated."
+  },
+  {
+    "id": "msft-operating-expenses",
+    "query": "What drove Microsoft operating expense growth?",
+    "filters": {
+      "entity": "MSFT",
+      "period_end": "2024-12-31",
+      "cutoff": "2025-02-28"
+    },
+    "relevant": [
+      {
+        "document_id": "source_doc_46d5f99ce5f770df7276c00f",
+        "start": 2133,
+        "end": 2224
+      }
+    ],
+    "annotation_status": "development_example_not_independent_gold",
+    "annotation_note": "One manually selected source span; alternative supporting spans are not exhaustively adjudicated."
+  },
+  {
+    "id": "msft-shareholder-return",
+    "query": "How much did Microsoft return to shareholders through dividends and share repurchases?",
+    "filters": {
+      "entity": "MSFT",
+      "period_end": "2024-12-31",
+      "cutoff": "2025-02-28"
+    },
+    "relevant": [
+      {
+        "document_id": "source_doc_d648a9d1ce6b6d52c5dbbf5f",
+        "start": 3657,
+        "end": 3794
+      }
+    ],
+    "annotation_status": "development_example_not_independent_gold",
+    "annotation_note": "One manually selected source span; alternative supporting spans are not exhaustively adjudicated."
+  },
+  {
+    "id": "msft-azure-growth",
+    "query": "How fast did Azure and other cloud services revenue grow?",
+    "filters": {
+      "entity": "MSFT",
+      "period_end": "2024-12-31",
+      "cutoff": "2025-02-28"
+    },
+    "relevant": [
+      {
+        "document_id": "source_doc_d648a9d1ce6b6d52c5dbbf5f",
+        "start": 3267,
+        "end": 3319
+      }
+    ],
+    "annotation_status": "development_example_not_independent_gold",
+    "annotation_note": "One manually selected source span; alternative supporting spans are not exhaustively adjudicated."
+  },
+  {
+    "id": "msft-constant-currency",
+    "query": "How does Microsoft calculate constant currency comparisons?",
+    "filters": {
+      "entity": "MSFT",
+      "period_end": "2024-12-31",
+      "cutoff": "2025-02-28"
+    },
+    "relevant": [
+      {
+        "document_id": "source_doc_d648a9d1ce6b6d52c5dbbf5f",
+        "start": 5749,
+        "end": 5965
+      }
+    ],
+    "annotation_status": "development_example_not_independent_gold",
+    "annotation_note": "One manually selected source span; alternative supporting spans are not exhaustively adjudicated."
+  },
+  {
+    "id": "nvda-blackwell",
+    "query": "How much quarterly revenue came from the Blackwell architecture?",
+    "filters": {
+      "entity": "NVDA",
+      "period_end": "2025-01-26",
+      "cutoff": "2025-02-28"
+    },
+    "relevant": [
+      {
+        "document_id": "source_doc_4fcb327c02ad293760b50485",
+        "start": 3841,
+        "end": 3938
+      }
+    ],
+    "annotation_status": "development_example_not_independent_gold",
+    "annotation_note": "One manually selected source span; alternative supporting spans are not exhaustively adjudicated."
+  },
+  {
+    "id": "nvda-gaming-supply",
+    "query": "Why did NVIDIA Gaming revenue decline sequentially?",
+    "filters": {
+      "entity": "NVDA",
+      "period_end": "2025-01-26",
+      "cutoff": "2025-02-28"
+    },
+    "relevant": [
+      {
+        "document_id": "source_doc_4fcb327c02ad293760b50485",
+        "start": 4786,
+        "end": 4935
+      }
+    ],
+    "annotation_status": "development_example_not_independent_gold",
+    "annotation_note": "One manually selected source span; alternative supporting spans are not exhaustively adjudicated."
+  },
+  {
+    "id": "nvda-gross-margin",
+    "query": "What drove the decrease in NVIDIA quarterly gross margins?",
+    "filters": {
+      "entity": "NVDA",
+      "period_end": "2025-01-26",
+      "cutoff": "2025-02-28"
+    },
+    "relevant": [
+      {
+        "document_id": "source_doc_4fcb327c02ad293760b50485",
+        "start": 5527,
+        "end": 5717
+      }
+    ],
+    "annotation_status": "development_example_not_independent_gold",
+    "annotation_note": "One manually selected source span; alternative supporting spans are not exhaustively adjudicated."
+  },
+  {
+    "id": "nvda-dividend",
+    "query": "When is the announced NVIDIA quarterly dividend paid and what is its record date?",
+    "filters": {
+      "entity": "NVDA",
+      "period_end": "2025-01-26",
+      "cutoff": "2025-02-28"
+    },
+    "relevant": [
+      {
+        "document_id": "source_doc_dd9b1648e9a67f7d6a51f372",
+        "start": 2251,
+        "end": 2385
+      }
+    ],
+    "annotation_status": "development_example_not_independent_gold",
+    "annotation_note": "One manually selected source span; alternative supporting spans are not exhaustively adjudicated."
+  },
+  {
+    "id": "nvda-datacenter-year",
+    "query": "What was NVIDIA Data Center revenue for the full fiscal year?",
+    "filters": {
+      "entity": "NVDA",
+      "period_end": "2025-01-26",
+      "cutoff": "2025-02-28"
+    },
+    "relevant": [
+      {
+        "document_id": "source_doc_4fcb327c02ad293760b50485",
+        "start": 3457,
+        "end": 3537
+      }
+    ],
+    "annotation_status": "development_example_not_independent_gold",
+    "annotation_note": "One manually selected source span; alternative supporting spans are not exhaustively adjudicated."
+  },
+  {
+    "id": "msft-before-release",
+    "query": "Microsoft Cloud margin",
+    "filters": {
+      "entity": "MSFT",
+      "cutoff": "2025-01-28"
+    },
+    "relevant": [],
+    "annotation_status": "development_example_not_independent_gold",
+    "annotation_note": "Engineering negative control, not a complete semantic relevance judgment."
+  },
+  {
+    "id": "nvda-before-release",
+    "query": "Blackwell architecture revenue",
+    "filters": {
+      "entity": "NVDA",
+      "cutoff": "2025-02-25"
+    },
+    "relevant": [],
+    "annotation_status": "development_example_not_independent_gold",
+    "annotation_note": "Engineering negative control, not a complete semantic relevance judgment."
+  },
+  {
+    "id": "wrong-report-date",
+    "query": "Microsoft revenue growth",
+    "filters": {
+      "entity": "MSFT",
+      "period_end": "2023-12-31",
+      "cutoff": "2025-02-28"
+    },
+    "relevant": [],
+    "annotation_status": "development_example_not_independent_gold",
+    "annotation_note": "Engineering negative control, not a complete semantic relevance judgment."
+  },
+  {
+    "id": "unrelated-lexical",
+    "query": "zebrafish coral symbiosis",
+    "filters": {
+      "entity": "NVDA",
+      "cutoff": "2025-02-28"
+    },
+    "relevant": [],
+    "annotation_status": "development_example_not_independent_gold",
+    "annotation_note": "Engineering negative control, not a complete semantic relevance judgment."
+  }
+]

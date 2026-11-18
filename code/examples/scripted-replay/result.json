@@ -1,0 +1,21 @@
+{
+  "mode": "scripted_fixture",
+  "live_model_calls": 0,
+  "network_requests": 0,
+  "session_id": "d550f6f00f83439ba672929d849a4110",
+  "first_episode_model_fixture_calls": 7,
+  "first_episode_tool_calls": 3,
+  "followup_tool_calls": 0,
+  "saved_report_versions": 2,
+  "source_values": {
+    "revenue": 69632000000,
+    "operating_income": 31653000000
+  },
+  "operating_margin_percent": 45.45754825367647,
+  "exports": [
+    "report.md",
+    "report.json",
+    "evidence.csv",
+    "calculations.csv"
+  ]
+}

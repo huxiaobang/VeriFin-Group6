@@ -1,0 +1,25 @@
+{
+  "action": "tool",
+  "tool": "search_documents",
+  "arguments": {
+    "entity": "PEP",
+    "cutoff": "2026-11-16",
+    "query": "2026 outlook core constant currency EPS growth previous guidance revised investment input cost inflation",
+    "limit": 5,
+    "max_context_chars": 16000
+  },
+  "scope": {
+    "entities": [
+      "PEP"
+    ],
+    "cutoff": "2026-11-16",
+    "requirements": [
+      {
+        "id": "request:episode_1448faa1340c4cd5ab29ba150d164b2f",
+        "text": "核实百事2026财年盈利增长指引此前与修订后的数值及口径，并说明公司对下调原因的明确解释、量化程度和证据限制。"
+      }
+    ]
+  },
+  "research_skills": [],
+  "reason": "沿用前文百事2026年全年指引的指代，先检索原公告核对两种核心EPS口径及管理层下调解释；这是指引数值与原因核查，不需反推剩余季度，故不启用专门方法。"
+}

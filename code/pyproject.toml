@@ -1,0 +1,35 @@
+[build-system]
+requires = ["setuptools>=77"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "verifin"
+version = "0.5.0"
+description = "Evidence-grounded financial research with persistent sessions and structured verification"
+requires-python = ">=3.11"
+dependencies = []
+license-files = ["docs/OPEN_SOURCE_DATASETS_2026-11-06.NOTICE.txt", "docs/OPEN_SOURCE_EXTRA_NOTICES.txt"]
+
+[project.optional-dependencies]
+embeddings = ["sentence-transformers==6.2.0", "transformers==5.22.1", "torch==2.15.0"]
+html = ["lxml==6.1.3", "pandas==2.2.3"]
+disclosures = ["lxml>=5", "pdfplumber>=0.11,<0.12"]
+
+[project.scripts]
+verifin = "verifin.cli:main"
+verifin-pilot = "verifin.pilot:main"
+verifin-annotation-form = "verifin.annotation_form:main"
+verifin-costs = "verifin.costs:main"
+verifin-public-benchmark = "verifin.public_benchmarks:main"
+verifin-inspect-html = "verifin.structured_documents:main"
+
+[tool.setuptools]
+packages = ["verifin", "verifin_replay"]
+include-package-data = false
+
+[tool.setuptools.package-dir]
+verifin_replay = "data/replay"
+
+[tool.setuptools.package-data]
+verifin = ["web_assets/*.html", "web_assets/*.js", "web_assets/*.css", "skills/*/SKILL.md"]
+verifin_replay = ["manifest.json", "snapshots/*"]

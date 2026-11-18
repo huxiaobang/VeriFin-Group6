@@ -1,0 +1,906 @@
+{
+  "calculations": [],
+  "claims": [
+    {
+      "calculation_ids": [],
+      "calculation_versions": {},
+      "constraints": {
+        "basis": "公司公告的同店经营指标；数字直接读取原文",
+        "business_scope": "U.S.",
+        "entity": "MCD",
+        "missing_evidence": [
+          "美国客单金额增长的价格、购买数量及消费组合分解"
+        ],
+        "period_end": "2026-09-30",
+        "period_start": "2026-07-01"
+      },
+      "evidence_ids": [
+        "span_de69cbdff59e9d164a29cd48"
+      ],
+      "evidence_versions": {
+        "span_de69cbdff59e9d164a29cd48": 1
+      },
+      "id": "claim:us_quarter_traffic_check",
+      "requirement_ids": [
+        "request:episode_465eae543e8440bf8be304e801f37c64"
+      ],
+      "scope_version": 6,
+      "stale": false,
+      "text": "先看全季结果：2026年第三季度，美国同店销售同比下降0.2%；公告说明，同店客流下降，基本被客单金额增长抵消。因此，销售接近持平并不代表来客已经恢复增长。这里的客单金额也不能直接等同于菜单价格：客单增长不必然全由涨价造成，该引文未拆分其来源。",
+      "version": 1
+    },
+    {
+      "calculation_ids": [],
+      "calculation_versions": {},
+      "constraints": {
+        "attribution": "management commentary",
+        "business_scope": "U.S.",
+        "entity": "MCD",
+        "missing_evidence": [
+          "季内改善具体对应的经营指标及量化幅度",
+          "能够独立识别价值优惠措施效果的因果证据"
+        ],
+        "period_end": "2026-09-30",
+        "period_start": "2026-07-01"
+      },
+      "evidence_ids": [
+        "span_de69cbdff59e9d164a29cd48"
+      ],
+      "evidence_versions": {
+        "span_de69cbdff59e9d164a29cd48": 1
+      },
+      "id": "claim:us_intr aquarter_trend",
+      "requirement_ids": [
+        "request:episode_465eae543e8440bf8be304e801f37c64"
+      ],
+      "scope_version": 6,
+      "stale": false,
+      "text": "再看“好转”的含义：CEO表示，在价值优惠措施推出后，美国业务随季度推进出现改善。这是管理层对季内业务走势的定性描述，并未明确只指客流，也不等于宣布客流同比转正；“措施后改善”这一表述本身也不能独立证明优惠措施造成了改善。",
+      "version": 1
+    },
+    {
+      "calculation_ids": [],
+      "calculation_versions": {},
+      "constraints": {
+        "basis": "对全季同比披露与管理层季内趋势表述的分析解释",
+        "business_scope": "U.S.",
+        "entity": "MCD",
+        "period_end": "2026-09-30",
+        "period_start": "2026-07-01"
+      },
+      "evidence_ids": [
+        "span_de69cbdff59e9d164a29cd48"
+      ],
+      "evidence_versions": {
+        "span_de69cbdff59e9d164a29cd48": 1
+      },
+      "id": "claim:us_results_trend_compatible",
+      "requirement_ids": [
+        "request:episode_465eae543e8440bf8be304e801f37c64"
+      ],
+      "scope_version": 6,
+      "stale": false,
+      "text": "两句话不矛盾：一个讲全季相对去年同期的结果，一个讲季度内部的变化方向。即使季内表现逐步改善，全季客流仍可能低于去年同期。因此，更准确的理解是“美国业务有改善迹象，但全季同店客流仍同比下降”，而不是“客流已经恢复增长”。",
+      "version": 1
+    },
+    {
+      "calculation_ids": [],
+      "calculation_versions": {},
+      "constraints": {
+        "business_scope": "U.S.",
+        "entity": "MCD",
+        "missing_evidence": [
+          "美国逐月同店客流同比数据",
+          "美国季度末同店客流同比数据",
+          "季内改善幅度的量化披露"
+        ],
+        "period_end": "2026-09-30",
+        "period_start": "2026-07-01"
+      },
+      "evidence_ids": [
+        "span_de69cbdff59e9d164a29cd48"
+      ],
+      "evidence_versions": {
+        "span_de69cbdff59e9d164a29cd48": 1
+      },
+      "id": "claim:us_monthly_traffic_limit",
+      "requirement_ids": [
+        "request:episode_465eae543e8440bf8be304e801f37c64"
+      ],
+      "scope_version": 6,
+      "stale": false,
+      "text": "现有公告引文没有提供美国逐月同店客流或改善幅度，所以无法据此判断季度末客流是否已经同比转正，也无法量化恢复了多少。",
+      "version": 1
+    }
+  ],
+  "evidence": [
+    {
+      "coverage_cutoff": "2026-11-16",
+      "created_at": "2026-11-16T16:22:42.801099+00:00",
+      "entity": "MCD",
+      "id": "metadata_292ee90e389c62c63a2d1c21",
+      "kind": "source_metadata",
+      "locator": "documents[0], documents[3], documents[1], documents[2]",
+      "mode": "replay",
+      "publication_basis": "effective availability of filtered metadata preview",
+      "published_at": "2026-11-16",
+      "retrieved_at": null,
+      "snapshot_hash": "c98ef96e09ba9ea5452972813fe81d0bc5ab0d0a90cbc81905b9e9b7251dd5d2",
+      "snapshot_path": "manifest.json",
+      "source_url": "manifest.json",
+      "stale": false,
+      "text": "Finite local replay catalog for MCD: 4 eligible document(s) at cutoff 2026-11-16, newest publication first. Catalog metadata only.\n10-Q | document report date 2026-09-30 | published_at 2026-11-06T17:07:09.000Z (SEC EDGAR acceptance 0000063908-26-000083) | https://www.sec.gov/Archives/edgar/data/63908/000006390826000083/mcd-20260930.htm\n8-K Exhibit 99.1 | document report date 2026-09-30 | published_at 2026-11-04T12:01:40.000Z (SEC EDGAR acceptance 0000063908-26-000080) | https://www.sec.gov/Archives/edgar/data/63908/000006390826000080/exhibit991-9302026.htm\n10-Q | document report date 2026-06-30 | published_at 2026-08-07T16:52:32.000Z (SEC EDGAR acceptance 0000063908-26-000073) | https://www.sec.gov/Archives/edgar/data/63908/000006390826000073/mcd-20260630.htm\n10-K | document report date 2025-12-31 | published_at 2026-02-24T16:12:45.000Z (SEC EDGAR acceptance 0000063908-26-000035) | https://www.sec.gov/Archives/edgar/data/63908/000006390826000035/mcd-20251231.htm",
+      "version": 1
+    },
+    {
+      "created_at": "2026-11-16T16:22:47.795587+00:00",
+      "document_id": "source_doc_7ed1c5b5b7251626e61b3bdf",
+      "document_period_start": "2026-07-01",
+      "document_report_date": "2026-09-30",
+      "end": 6000,
+      "entity": "MCD",
+      "extraction_method": "All visible HTML tables and body in source order.",
+      "form": "8-K Exhibit 99.1",
+      "id": "span_de69cbdff59e9d164a29cd48",
+      "kind": "document",
+      "locator": "snapshots/exhibit991-9302026.htm.txt:characters[0:6000] (zero-based Unicode offsets)",
+      "mode": "replay",
+      "period_end": null,
+      "period_start": null,
+      "publication_precision": "timestamp",
+      "published_at": "2026-11-04T12:01:40.000Z",
+      "retrieved_at": "2026-11-16T16:21:16.405276+00:00",
+      "snapshot_hash": "f772a70440693cc4aa39a2d00eb13472a9f4139dece91f3fac19d52ad7fc2087",
+      "snapshot_path": "snapshots/exhibit991-9302026.htm",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/63908/000006390826000080/exhibit991-9302026.htm",
+      "stale": false,
+      "start": 0,
+      "text": "EX-99.1\n2\nexhibit991-9302026.htm\nEX-99.1\nDocument\nExhibit 99.1\nFOR IMMEDIATE RELEASE FOR MORE INFORMATION CONTACT:\n11/4/2026 Investors: Dexter Congbalay, investor.relations@us.mcd.com\nMedia: Lauren Altmin, lauren.altmin@us.mcd.com\nMcDONALD'S REPORTS THIRD QUARTER 2026 RESULTS\n•Global Systemwide sales* increased 4% to over $38 billion for the quarter\n•Consolidated operating income increased 7% and adjusted operating income increased 8% for the quarter\n•Systemwide sales to loyalty members across 70 loyalty markets were $41 billion for the trailing twelve-month period and more than $11 billion for the quarter\nCHICAGO, IL - McDonald's Corporation today announced results for the third quarter ended September 30, 2026.\n“McDonald’s delivered another quarter of global growth, with solid performance across much of our international business. In the U.S., we're encouraged by improvement as the quarter progressed following our intervention on value,” said Chris Kempczinski, Chairman and CEO. “We’re focused on building from here, strengthening the business today and investing in the next chapter of growth.”\nThird quarter financial performance:\n•Global comparable sales increased 1.5%:\n•U.S. decreased 0.2%\n•International Operated Markets increased 1.4%\n•International Developmental Licensed Markets increased 4.2%\n•Consolidated revenues increased 1% (1% in constant currencies).\n•Systemwide sales increased 4% (4% in constant currencies).\n•Consolidated operating income increased 7% (7% in constant currencies). Results reflected pre-tax charges of $56 million and $39 million for the current year and prior year, respectively, primarily related to restructuring charges associated with Accelerating the Organization. Excluding these current and prior year charges, consolidated operating income increased 8% (8% in constant currencies).**\n•Diluted earnings per share was $3.51, an increase of 10% (11% in constant currencies). Excluding the current year charges described above of $0.06 per share, diluted earnings per share was $3.57, an increase of 11% (11% in constant currencies) when also excluding prior year charges.**\n•The Company declared a 4% increase in its quarterly cash dividend to $1.93 per share.\n*Refer to page 4 for a definition of Systemwide sales.\n**Refer to pages 2 and 3 for additional details on our results for the third quarter 2026 and 2025.\n1\nCOMPARABLE SALES\nIncrease/(Decrease)\nQuarters Ended September 30,\n2026 2025\nU.S. (0.2) % 2.4 %\nInternational Operated Markets 1.4 4.3\nInternational Developmental Licensed Markets 4.2 4.7\nTotal Company 1.5 % 3.6 %\n•U.S.: Comparable sales declined slightly as negative comparable guest counts were largely offset by positive check growth.\n•International Operated Markets: Most markets reflected positive comparable sales, led by Germany and Australia, partly offset by France.\n•International Developmental Licensed Markets: All geographic regions reflected positive comparable sales. Positive comparable sales were led by Japan, partly offset by negative comparable sales in China.\nKEY FINANCIAL METRICS - CONSOLIDATED\nDollars in millions, except per share data\nQuarters Ended September 30, Nine Months Ended September 30,\n2026 2025 Inc/ (Dec) Inc/ (Dec)\nExcluding\nCurrency\nTranslation 2026 2025 Inc/ (Dec) Inc/ (Dec)\nExcluding\nCurrency\nTranslation\nRevenues $ 7,157 $ 7,078 1 % 1 % $ 20,773 $ 19,876 5 % 2 %\nOperating income 3,595 3,357 7 7 9,887 9,237 7 5\nNet income 2,486 2,278 9 9 6,831 6,399 7 5\nEarnings per share-diluted $ 3.51 $ 3.18 10 % 11 % $ 9.61 $ 8.92 8 % 6 %\nResults for 2026 included the following:\n•Net pre-tax charges of $56 million, or $0.06 per share, for the quarter and $155 million, or $0.17 per share, for the nine months, primarily related to restructuring charges associated with the Company's internal effort to modernize ways of working (Accelerating the Organization)\nResults for 2025 included the following:\n•Net pre-tax charges of $39 million, or $0.04 per share, for the quarter and $148 million, or $0.16 per share, for the nine months, primarily related to restructuring charges associated with Accelerating the Organization\nExcluding the above items, results for the quarter and nine months ended September 30, 2026 were primarily driven by higher Other operating income and higher sales-driven Franchised margins. Results for the nine months were partly offset by higher Selling, general and administrative expenses.\n2\nNET INCOME AND EARNINGS PER SHARE-DILUTED RECONCILIATION\nDollars in millions, except per share data\nQuarters Ended September 30,\nNet Income Earnings per share - diluted\n2026 2025 Inc/ (Dec) Inc/ (Dec)\nExcluding\nCurrency\nTranslation 2026 2025 Inc/ (Dec) Inc/ (Dec)\nExcluding\nCurrency\nTranslation\nGAAP $ 2,486 $ 2,278 9 % 9 % $ 3.51 $ 3.18 10 % 11 %\n(Gains)/Charges, net of tax 43 30 0.06 0.04\nNon-GAAP $ 2,529 $ 2,308 10 % 10 % $ 3.57 $ 3.22 11 % 11 %\nNine Months Ended September 30,\nNet Income Earnings per share - diluted\n2026 2025 Inc/ (Dec) Inc/ (Dec)\nExcluding\nCurrency\nTranslation 2026 2025 Inc/ (Dec) Inc/ (Dec)\nExcluding\nCurrency\nTranslation\nGAAP $ 6,831 $ 6,399 7 % 5 % $ 9.61 $ 8.92 8 % 6 %\n(Gains)/Charges, net of tax 119 114 0.17 0.16\nNon-GAAP $ 6,950 $ 6,513 7 % 5 % $ 9.78 $ 9.08 8 % 6 %\n3\nTHE FOLLOWING DEFINITIONS APPLY TO THESE TERMS AS USED THROUGHOUT THIS RELEASE\nConstant currency results exclude the effects of foreign currency translation and are calculated by translating current year results at prior year average exchange rates. Management reviews and analyzes business results excluding the effect of foreign currency translation, impairment and other charges and gains, as well as material regulatory and other income tax impacts, and bases incentive compensation plans on these results because the Company believes this better represents underlying business trends.\nComparable sales and comparable guest counts are compared to the same period in the prior year and represent sales and transactions, respectively, at all restaurants, whether own",
+      "text_snapshot_hash": "c619f19fe1bf6beba669c93c771553ba5d11bbe381589ee372b4d03480256584",
+      "text_snapshot_path": "snapshots/exhibit991-9302026.htm.txt",
+      "version": 1
+    },
+    {
+      "created_at": "2026-11-16T16:22:53.822232+00:00",
+      "document_id": "source_doc_0cdcf4786366028311a04eeb",
+      "document_period_start": "2026-07-01",
+      "document_report_date": "2026-09-30",
+      "end": 59772,
+      "entity": "MCD",
+      "extraction_method": "All visible HTML tables and body in source order.",
+      "form": "10-Q",
+      "id": "chunk_20aff608c3e8516e185830d7",
+      "kind": "document",
+      "locator": "snapshots/mcd-20260930.htm.txt:characters[58126:59772] (zero-based Unicode offsets)",
+      "mode": "replay",
+      "period_end": null,
+      "period_start": null,
+      "publication_precision": "timestamp",
+      "published_at": "2026-11-06T17:07:09.000Z",
+      "retrieval_method": "bm25",
+      "retrieval_score": 10.606719567159223,
+      "retrieved_at": "2026-11-16T16:20:49.234140+00:00",
+      "snapshot_hash": "c11db334ef38593bda60e8677d7136c71e98e04b7ea2424422949ac79e4ec25b",
+      "snapshot_path": "snapshots/mcd-20260930.htm",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/63908/000006390826000083/mcd-20260930.htm",
+      "stale": false,
+      "start": 58126,
+      "text": "currencies and hedging certain foreign-denominated cash flows. Results excluding the effect of foreign currency translation (referred to as constant currency) are calculated by translating current year results at prior year average exchange rates.\nIMPACT OF FOREIGN CURRENCY TRANSLATION\nDollars in millions, except per share data\nCurrency\nTranslation\nBenefit/ (Cost)\nQuarters Ended September 30, 2026 2025 2026\nRevenues $ 7,157 $ 7,078 $ 1\nFranchised margins 3,800 3,697 (6)\nCompany-owned and operated margins 392 391 1\nSelling, general & administrative expenses 759 785 —\nOperating income 3,595 3,357 (8)\nNet income 2,486 2,278 (8)\nEarnings per share-diluted $ 3.51 $ 3.18 $ (0.01)\nCurrency\nTranslation\nBenefit/ (Cost)\nNine Months Ended September 30, 2026 2025 2026\nRevenues $ 20,773 $ 19,876 $ 429\nFranchised margins 10,844 10,298 192\nCompany-owned and operated margins 1,064 1,044 27\nSelling, general & administrative expenses 2,335 2,167 (21)\nOperating income 9,887 9,237 194\nNet income 6,831 6,399 115\nEarnings per share-diluted $ 9.61 $ 8.92 $ 0.16\n21\nTable of Contents\nNet Income and Diluted Earnings per Share\nFor the quarter, net income increased 9% (9% in constant currencies) to $2,486 million, and diluted earnings per share increased 10% (11% in constant currencies) to $3.51. Foreign currency translation had a negative impact of $0.01 on diluted earnings per share.\nFor the nine months, net income increased 7% (5% in constant currencies) to $6,831 million, and diluted earnings per share increased 8% (6% in constant currencies) to $9.61. Foreign currency translation had a positive impact of $0.16 on diluted earnings per share.\n",
+      "text_snapshot_hash": "b88353e9f4948989085abe70d13e87dd9e723edd2a588539d6515fce7af41775",
+      "text_snapshot_path": "snapshots/mcd-20260930.htm.txt",
+      "version": 1
+    },
+    {
+      "created_at": "2026-11-16T16:22:53.822555+00:00",
+      "document_id": "source_doc_0cdcf4786366028311a04eeb",
+      "document_period_start": "2026-07-01",
+      "document_report_date": "2026-09-30",
+      "end": 75519,
+      "entity": "MCD",
+      "extraction_method": "All visible HTML tables and body in source order.",
+      "form": "10-Q",
+      "id": "chunk_bf02f4d88a13ecc63477b8ab",
+      "kind": "document",
+      "locator": "snapshots/mcd-20260930.htm.txt:characters[73848:75519] (zero-based Unicode offsets)",
+      "mode": "replay",
+      "period_end": null,
+      "period_start": null,
+      "publication_precision": "timestamp",
+      "published_at": "2026-11-06T17:07:09.000Z",
+      "retrieval_method": "bm25",
+      "retrieval_score": 10.572864767177258,
+      "retrieved_at": "2026-11-16T16:20:49.234140+00:00",
+      "snapshot_hash": "c11db334ef38593bda60e8677d7136c71e98e04b7ea2424422949ac79e4ec25b",
+      "snapshot_path": "snapshots/mcd-20260930.htm",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/63908/000006390826000083/mcd-20260930.htm",
+      "stale": false,
+      "start": 73848,
+      "text": "and $39 million for the quarters ended 2026 and 2025, respectively, and $155 million and $148 million for the nine months ended 2026 and 2025, respectively, primarily related to restructuring charges associated with Accelerating the Organization.\nOPERATING INCOME & OPERATING MARGIN RECONCILIATION*\nDollars in millions\nQuarters Ended September 30, Nine Months Ended September 30,\n2026 2025 Inc/ (Dec) Inc/ (Dec)\nExcluding\nCurrency\nTranslation 2026 2025 Inc/ (Dec) Inc/ (Dec)\nExcluding\nCurrency\nTranslation\nGAAP operating income $3,595 $3,357 7 % 7 % $9,887 $9,237 7 % 5 %\n(Gains)/Charges 56 39 155 148\nNon-GAAP operating income $3,651 $3,396 8 % 8 % $10,042 $9,385 7 % 5 %\nNon-GAAP operating margin 48.3 % 47.2 %\n*Refer to the Impairment and other charges (gains), net line within the Other Operating (Income) Expense, Net section on page 27 for details of the charges in this table.\n•Excluding the current and prior year charges shown in the table above, operating income increased 8% (8% in constant currencies) for the quarter and 7% (5% in constant currencies) for the nine months. Results for both periods primarily reflected higher sales-driven Franchised margins and higher Other operating income across all segments. Results for the nine months were partly offset by higher Selling, general, and administrative expenses in International Developmental Licensed Markets & Corporate.\n•Operating margin is defined as operating income as a percent of total revenues. The contributions to operating margin differ by segment due to each segment's ownership structure, primarily due to the relative percentage of franchised versus Company-owned and operated restaurants. ",
+      "text_snapshot_hash": "b88353e9f4948989085abe70d13e87dd9e723edd2a588539d6515fce7af41775",
+      "text_snapshot_path": "snapshots/mcd-20260930.htm.txt",
+      "version": 1
+    },
+    {
+      "created_at": "2026-11-16T16:22:53.822823+00:00",
+      "document_id": "source_doc_0cdcf4786366028311a04eeb",
+      "document_period_start": "2026-07-01",
+      "document_report_date": "2026-09-30",
+      "end": 61135,
+      "entity": "MCD",
+      "extraction_method": "All visible HTML tables and body in source order.",
+      "form": "10-Q",
+      "id": "chunk_d4b6ec17fa2cd6a1a3d7b0b1",
+      "kind": "document",
+      "locator": "snapshots/mcd-20260930.htm.txt:characters[59528:61135] (zero-based Unicode offsets)",
+      "mode": "replay",
+      "period_end": null,
+      "period_start": null,
+      "publication_precision": "timestamp",
+      "published_at": "2026-11-06T17:07:09.000Z",
+      "retrieval_method": "bm25",
+      "retrieval_score": 10.042651259987988,
+      "retrieved_at": "2026-11-16T16:20:49.234140+00:00",
+      "snapshot_hash": "c11db334ef38593bda60e8677d7136c71e98e04b7ea2424422949ac79e4ec25b",
+      "snapshot_path": "snapshots/mcd-20260930.htm",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/63908/000006390826000083/mcd-20260930.htm",
+      "stale": false,
+      "start": 59528,
+      "text": "net income increased 7% (5% in constant currencies) to $6,831 million, and diluted earnings per share increased 8% (6% in constant currencies) to $9.61. Foreign currency translation had a positive impact of $0.16 on diluted earnings per share.\nResults for 2026 included the following:\n•Net pre-tax charges of $56 million, or $0.06 per share, for the quarter and $155 million, or $0.17 per share, for the nine months, primarily related to restructuring charges associated with the Company's internal effort to modernize ways of working (Accelerating the Organization)\nResults for 2025 included the following:\n•Net pre-tax charges of $39 million, or $0.04 per share, for the quarter and $148 million, or $0.16 per share, for the nine months, primarily related to restructuring charges associated with Accelerating the Organization\nExcluding the above items, results for the quarter and nine months ended September 30, 2026 were primarily driven by higher Other operating income and higher sales-driven Franchised margins. Results for the nine months were partly offset by higher Selling, general and administrative expenses.\nDuring the quarter, the Company paid a dividend of $1.86 per share, or $1.3 billion, resulting in total dividends paid for the nine months of $4.0 billion. Additionally, during the quarter, the Company repurchased 1.9 million shares of stock for $519 million, resulting in total purchases for the nine months of 6.2 million shares, or $1.8 billion. In September 2026, the Company declared a 4% increase in its quarterly cash dividend to $1.93 per share, payable on December 15, 2026.\n",
+      "text_snapshot_hash": "b88353e9f4948989085abe70d13e87dd9e723edd2a588539d6515fce7af41775",
+      "text_snapshot_path": "snapshots/mcd-20260930.htm.txt",
+      "version": 1
+    },
+    {
+      "created_at": "2026-11-16T16:22:53.823091+00:00",
+      "document_id": "source_doc_0cdcf4786366028311a04eeb",
+      "document_period_start": "2026-07-01",
+      "document_report_date": "2026-09-30",
+      "end": 69457,
+      "entity": "MCD",
+      "extraction_method": "All visible HTML tables and body in source order.",
+      "form": "10-Q",
+      "id": "chunk_6d40ed804857fe9823b396ea",
+      "kind": "document",
+      "locator": "snapshots/mcd-20260930.htm.txt:characters[67691:69457] (zero-based Unicode offsets)",
+      "mode": "replay",
+      "period_end": null,
+      "period_start": null,
+      "publication_precision": "timestamp",
+      "published_at": "2026-11-06T17:07:09.000Z",
+      "retrieval_method": "bm25",
+      "retrieval_score": 8.363403894084527,
+      "retrieved_at": "2026-11-16T16:20:49.234140+00:00",
+      "snapshot_hash": "c11db334ef38593bda60e8677d7136c71e98e04b7ea2424422949ac79e4ec25b",
+      "snapshot_path": "snapshots/mcd-20260930.htm",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/63908/000006390826000083/mcd-20260930.htm",
+      "stale": false,
+      "start": 67691,
+      "text": "16,486 12 9\nForeign affiliated 10,789 10,123 7 7\nTotal $ 101,994 $ 95,656 7 % 5 %\n25\nTable of Contents\nRestaurant Margins\nFranchised restaurant margins are measured as revenues from franchised restaurants less franchised restaurant occupancy costs. Franchised restaurant occupancy costs include lease expense and depreciation, as the Company generally owns or secures a long-term lease on the land and building for the restaurant location.\nCompany-owned and operated restaurant margins are measured as sales from Company-owned and operated restaurants less costs for food & paper, payroll & employee benefits and occupancy & other operating expenses necessary to run an individual restaurant. Company-owned and operated margins exclude costs that are not allocated to individual restaurants, primarily payroll & employee benefit costs of non-restaurant support staff, which are included in Selling, general and administrative expenses.\nRESTAURANT MARGINS\nDollars in millions\nInc/ (Dec) Inc/ (Dec)\nExcluding\nCurrency\nTranslation\nQuarters Ended September 30, 2026 2025\nFranchised\nU.S. $ 1,619 $ 1,581 2 % 2 %\nInternational Operated Markets 1,645 1,620 2 2\nInternational Developmental Licensed Markets & Corporate 537 496 8 8\nTotal $ 3,800 $ 3,697 3 % 3 %\nCompany-owned and operated\nU.S. $ 75 $ 90 (16) % (16) %\nInternational Operated Markets 299 288 4 4\nInternational Developmental Licensed Markets & Corporate n/m n/m n/m n/m\nTotal $ 392 $ 391 — % — %\nTotal restaurant margins\nU.S. $ 1,694 $ 1,671 1 % 1 %\nInternational Operated Markets 1,943 1,908 2 2\nInternational Developmental Licensed Markets & Corporate n/m n/m n/m n/m\nTotal $ 4,192 $ 4,088 3 % 3 %\nInc/ (Dec) Inc/ (Dec)\nExcluding\nCurrency\nTranslation\nNine Months Ended September 30, 2026 2025\nFranchised\nU.S. ",
+      "text_snapshot_hash": "b88353e9f4948989085abe70d13e87dd9e723edd2a588539d6515fce7af41775",
+      "text_snapshot_path": "snapshots/mcd-20260930.htm.txt",
+      "version": 1
+    },
+    {
+      "created_at": "2026-11-16T16:23:03.284478+00:00",
+      "document_id": "source_doc_0cdcf4786366028311a04eeb",
+      "document_period_start": "2026-07-01",
+      "document_report_date": "2026-09-30",
+      "end": 121525,
+      "entity": "MCD",
+      "extraction_method": "All visible HTML tables and body in source order.",
+      "form": "10-Q",
+      "id": "chunk_a2157b43fcb6278657ae786d",
+      "kind": "document",
+      "locator": "snapshots/mcd-20260930.htm.txt:characters[119754:121525] (zero-based Unicode offsets)",
+      "mode": "replay",
+      "period_end": null,
+      "period_start": null,
+      "publication_precision": "timestamp",
+      "published_at": "2026-11-06T17:07:09.000Z",
+      "retrieval_method": "bm25",
+      "retrieval_score": 16.346611711300167,
+      "retrieved_at": "2026-11-16T16:20:49.234140+00:00",
+      "snapshot_hash": "c11db334ef38593bda60e8677d7136c71e98e04b7ea2424422949ac79e4ec25b",
+      "snapshot_path": "snapshots/mcd-20260930.htm",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/63908/000006390826000083/mcd-20260930.htm",
+      "stale": false,
+      "start": 119754,
+      "text": "through AI, we face new and heightened risks under laws and regulations, including U.S. state-level regulations and the EU AI Act. Non-compliance or misuse of personal data could lead to significant fines, litigation and reputational harm.\nMACROECONOMIC AND MARKET CONDITIONS\nUnfavorable general economic conditions could adversely affect our business and financial results.\nOur results of operations are substantially affected by economic conditions, including inflationary pressures, which can vary significantly by market and can impact consumer disposable income levels and spending habits. Economic conditions can be impacted by a variety of factors, including hostilities, epidemics, pandemics and actions taken by governments to manage national and international economic matters, whether through austerity, stimulus measures or trade measures, and initiatives intended to control wages, unemployment, credit availability, inflation, taxation and other economic drivers. Sustained adverse economic conditions or periodic adverse changes in economic conditions put pressure on our operating performance and business continuity disruption planning, and our business and financial results may suffer as a result.\nOur results of operations are also affected by fluctuations in currency exchange rates, and unfavorable currency fluctuations could adversely affect reported earnings.\nHealth epidemics or pandemics could adversely affect our business and financial results.\nHealth epidemics or pandemics have in the past and may in the future impact macroeconomic conditions, consumer behavior, labor availability and supply chain management, as well as local operations in impacted markets, all of which can adversely affect our business, financial results and outlook. ",
+      "text_snapshot_hash": "b88353e9f4948989085abe70d13e87dd9e723edd2a588539d6515fce7af41775",
+      "text_snapshot_path": "snapshots/mcd-20260930.htm.txt",
+      "version": 1
+    },
+    {
+      "created_at": "2026-11-16T16:23:03.284821+00:00",
+      "document_id": "source_doc_0cdcf4786366028311a04eeb",
+      "document_period_start": "2026-07-01",
+      "document_report_date": "2026-09-30",
+      "end": 122853,
+      "entity": "MCD",
+      "extraction_method": "All visible HTML tables and body in source order.",
+      "form": "10-Q",
+      "id": "chunk_ca4eaef28c619ddbed9e3319",
+      "kind": "document",
+      "locator": "snapshots/mcd-20260930.htm.txt:characters[121275:122853] (zero-based Unicode offsets)",
+      "mode": "replay",
+      "period_end": null,
+      "period_start": null,
+      "publication_precision": "timestamp",
+      "published_at": "2026-11-06T17:07:09.000Z",
+      "retrieval_method": "bm25",
+      "retrieval_score": 11.284050627037775,
+      "retrieved_at": "2026-11-16T16:20:49.234140+00:00",
+      "snapshot_hash": "c11db334ef38593bda60e8677d7136c71e98e04b7ea2424422949ac79e4ec25b",
+      "snapshot_path": "snapshots/mcd-20260930.htm",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/63908/000006390826000083/mcd-20260930.htm",
+      "stale": false,
+      "start": 121275,
+      "text": "and may in the future impact macroeconomic conditions, consumer behavior, labor availability and supply chain management, as well as local operations in impacted markets, all of which can adversely affect our business, financial results and outlook. Governmental responses to health epidemics or pandemics, including operational restrictions and temporary restaurant closures, can also affect the foregoing items and adversely affect our business and financial results. The duration and scope of a health epidemic or pandemic can be difficult to predict and depends on many factors, including the emergence of new variants and the availability, acceptance and effectiveness of preventative measures. A health epidemic or pandemic may also heighten other risks disclosed in these Risk Factors, including, but not limited to, those related to the availability and costs of labor and commodities, supply chain interruptions, consumer behavior and consumer perceptions of our brand and industry.\n37\nTable of Contents\nChanges in commodity and other operating costs could adversely affect our results of operations.\nThe profitability of our Company-owned and operated restaurants depends in part on our ability to anticipate and react to changes in commodity costs, including food, paper, supplies, fuel and utilities, as well as distribution and other operating costs, including labor. Volatility in certain commodity prices and fluctuations in labor costs have adversely affected and in the future could adversely affect our operating results by impacting restaurant profitability. ",
+      "text_snapshot_hash": "b88353e9f4948989085abe70d13e87dd9e723edd2a588539d6515fce7af41775",
+      "text_snapshot_path": "snapshots/mcd-20260930.htm.txt",
+      "version": 1
+    },
+    {
+      "created_at": "2026-11-16T16:23:03.285025+00:00",
+      "document_id": "source_doc_0cdcf4786366028311a04eeb",
+      "document_period_start": "2026-07-01",
+      "document_report_date": "2026-09-30",
+      "end": 98436,
+      "entity": "MCD",
+      "extraction_method": "All visible HTML tables and body in source order.",
+      "form": "10-Q",
+      "id": "chunk_f0b1d3202995d32310105213",
+      "kind": "document",
+      "locator": "snapshots/mcd-20260930.htm.txt:characters[96661:98436] (zero-based Unicode offsets)",
+      "mode": "replay",
+      "period_end": null,
+      "period_start": null,
+      "publication_precision": "timestamp",
+      "published_at": "2026-11-06T17:07:09.000Z",
+      "retrieval_method": "bm25",
+      "retrieval_score": 10.491823326558727,
+      "retrieved_at": "2026-11-16T16:20:49.234140+00:00",
+      "snapshot_hash": "c11db334ef38593bda60e8677d7136c71e98e04b7ea2424422949ac79e4ec25b",
+      "snapshot_path": "snapshots/mcd-20260930.htm",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/63908/000006390826000083/mcd-20260930.htm",
+      "stale": false,
+      "start": 96661,
+      "text": "successes across markets and brand perceptions. Planned initiatives may not have appeal across multiple markets with McDonald’s customers and could drive unanticipated changes in customer perceptions and negatively impact our business results.\nDisruptions in operations or price volatility in a market can also result from governmental actions (whether proposed or realized, unilateral or bilateral), such as price, foreign exchange or trade-related tariffs or controls, trade policies and regulations, sanctions and counter sanctions, government-mandated closure of our, our franchisees’ or our suppliers’ operations and asset seizures. Some or all of the above-referenced disruptions or volatility can also result from acts of war, terrorism or other hostilities. Such governmental actions may have a broader impact on macroeconomic conditions, geopolitical tensions, anti-American sentiment, consumer demand and the ability of us and our franchisees to operate in certain geographic areas, which in turn may have an adverse impact on our business and financial results.\nWhile we may face challenges and uncertainties in any of the markets in which we operate, such challenges and uncertainties are often heightened in developing markets, which may entail a relatively higher risk of political instability, economic volatility, crime, corruption and social and ethnic unrest. In many cases, such challenges may be exacerbated by the lack of an independent and experienced judiciary and uncertainty in how local law is applied and enforced, including in areas most relevant to commercial transactions and foreign investment. An inability to manage effectively the risks associated with our international operations could adversely affect our business and financial results.\n",
+      "text_snapshot_hash": "b88353e9f4948989085abe70d13e87dd9e723edd2a588539d6515fce7af41775",
+      "text_snapshot_path": "snapshots/mcd-20260930.htm.txt",
+      "version": 1
+    }
+  ],
+  "messages": [
+    {
+      "content": "麦当劳最近一季表现怎么样？",
+      "created_at": "2026-11-16T16:22:35.643299+00:00",
+      "id": "6693b5000d1849f4910e5ff8141359d6",
+      "role": "user"
+    },
+    {
+      "content": "Research complete (completed). See the report's findings, sources and unresolved items.",
+      "created_at": "2026-11-16T16:24:28.956293+00:00",
+      "id": "b98db06a253749afb932265ce228b2e6",
+      "role": "assistant"
+    },
+    {
+      "content": "你说美国客流还在降，可公司又说情况在好转。这两句话怎么放在一起看？",
+      "created_at": "2026-11-16T16:24:36.292266+00:00",
+      "id": "75b6294b976c41dd8bba0095ed088ca2",
+      "role": "user"
+    }
+  ],
+  "request": "你说美国客流还在降，可公司又说情况在好转。这两句话怎么放在一起看？",
+  "requirements": [
+    {
+      "id": "request:episode_465eae543e8440bf8be304e801f37c64",
+      "text": "解释麦当劳2026年第三季度美国同店客流同比下降与管理层称季内业务改善为何不矛盾，区分全季同比结果、季内趋势及客流与客单指标，并说明管理层表述和现有数据无法证明的事项。"
+    }
+  ],
+  "scope": {
+    "cutoff": "2026-11-16",
+    "entities": [
+      "MCD"
+    ],
+    "requirements": [
+      {
+        "id": "request:episode_465eae543e8440bf8be304e801f37c64",
+        "text": "解释麦当劳2026年第三季度美国同店客流同比下降与管理层称季内业务改善为何不矛盾，区分全季同比结果、季内趋势及客流与客单指标，并说明管理层表述和现有数据无法证明的事项。"
+      }
+    ]
+  },
+  "session": {
+    "id": "a39fd6d626a545ad973416f9f037a378",
+    "scope": {
+      "cutoff": "2026-11-16",
+      "entities": [
+        "MCD"
+      ],
+      "requirements": [
+        {
+          "id": "request:episode_465eae543e8440bf8be304e801f37c64",
+          "text": "解释麦当劳2026年第三季度美国同店客流同比下降与管理层称季内业务改善为何不矛盾，区分全季同比结果、季内趋势及客流与客单指标，并说明管理层表述和现有数据无法证明的事项。"
+        }
+      ]
+    },
+    "scope_version": 6
+  },
+  "tools": [
+    {
+      "description": "Resolve issuers and display finite replay coverage. For one matched issuer, metadata_evidence_id cites the dated local index rows; document_id opens the source text. An exact live CIK fetches submissions; a live ticker/name query fetches the ticker directory. At most one HTTP request.",
+      "name": "discover_company",
+      "parameters": {
+        "additionalProperties": false,
+        "properties": {
+          "cutoff": {
+            "description": "Information cutoff: ISO date or timezone-aware timestamp.",
+            "type": "string"
+          },
+          "query": {
+            "type": "string"
+          },
+          "source": {
+            "default": "auto",
+            "description": "auto prefers verified replay/persistent cached snapshots, which are not fresh online observations; live always requests a refresh; replay forbids network.",
+            "enum": [
+              "auto",
+              "replay",
+              "live"
+            ],
+            "type": "string"
+          },
+          "view": {
+            "default": "coverage",
+            "description": "Identity resolves issuer names only. Coverage includes the local document catalog.",
+            "enum": [
+              "coverage",
+              "identity"
+            ],
+            "type": "string"
+          }
+        },
+        "required": [
+          "query"
+        ],
+        "type": "object"
+      }
+    },
+    {
+      "description": "Read SEC facts for exact periods. With incomplete dates, show available periods rather than choosing quarterly versus cumulative data. Explicit taxonomy:concept is supported in addition to metric aliases. Latest filing available at cutoff is selected, with conflicts explicit.",
+      "name": "financial_facts",
+      "parameters": {
+        "additionalProperties": false,
+        "properties": {
+          "cutoff": {
+            "description": "Information cutoff: ISO date or timezone-aware timestamp.",
+            "type": "string"
+          },
+          "entity": {
+            "description": "Ticker/name resolved by discover_company, or SEC CIK digits.",
+            "type": "string"
+          },
+          "metric": {
+            "type": "string"
+          },
+          "period_end": {
+            "description": "Exact YYYY-MM-DD; do not guess fiscal-calendar dates.",
+            "type": "string"
+          },
+          "period_start": {
+            "description": "Exact YYYY-MM-DD; do not guess fiscal-calendar dates.",
+            "type": "string"
+          },
+          "source": {
+            "default": "auto",
+            "description": "auto prefers verified replay/persistent cached snapshots, which are not fresh online observations; live always requests a refresh; replay forbids network.",
+            "enum": [
+              "auto",
+              "replay",
+              "live"
+            ],
+            "type": "string"
+          },
+          "unit": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "metric"
+        ],
+        "type": "object"
+      }
+    },
+    {
+      "description": "List SEC recent-submissions metadata by acceptance time. Cite metadata_evidence_id for the previewed filings, cutoff and snapshot coverage. Use offset to cite later rows. Filing metadata does not establish press-release contents or results. Uses replay or one live submissions request, without following older-history files.",
+      "name": "discover_filings",
+      "parameters": {
+        "additionalProperties": false,
+        "properties": {
+          "cutoff": {
+            "description": "Information cutoff: ISO date or timezone-aware timestamp.",
+            "type": "string"
+          },
+          "entity": {
+            "description": "Ticker/name resolved by discover_company, or SEC CIK digits.",
+            "type": "string"
+          },
+          "forms": {
+            "items": {
+              "type": "string"
+            },
+            "maxItems": 10,
+            "minItems": 1,
+            "type": "array"
+          },
+          "limit": {
+            "maximum": 50,
+            "minimum": 1,
+            "type": "integer"
+          },
+          "offset": {
+            "maximum": 1000000,
+            "minimum": 0,
+            "type": "integer"
+          },
+          "report_date": {
+            "description": "Exact YYYY-MM-DD; do not guess fiscal-calendar dates.",
+            "type": "string"
+          },
+          "source": {
+            "default": "auto",
+            "description": "auto prefers verified replay/persistent cached snapshots, which are not fresh online observations; live always requests a refresh; replay forbids network.",
+            "enum": [
+              "auto",
+              "replay",
+              "live"
+            ],
+            "type": "string"
+          }
+        },
+        "required": [],
+        "type": "object"
+      }
+    },
+    {
+      "description": "Read one older SEC submissions JSON file explicitly listed by discover_filings for this issuer. The exact filename must already be discovered. One HTTP request at most; offset paginates returned rows without hiding archive requests. Filing report dates are metadata, not fiscal-quarter inference.",
+      "name": "read_filing_history",
+      "parameters": {
+        "additionalProperties": false,
+        "properties": {
+          "cutoff": {
+            "description": "Information cutoff: ISO date or timezone-aware timestamp.",
+            "type": "string"
+          },
+          "entity": {
+            "description": "Ticker/name resolved by discover_company, or SEC CIK digits.",
+            "type": "string"
+          },
+          "filename": {
+            "type": "string"
+          },
+          "forms": {
+            "items": {
+              "type": "string"
+            },
+            "maxItems": 10,
+            "minItems": 1,
+            "type": "array"
+          },
+          "limit": {
+            "maximum": 50,
+            "minimum": 1,
+            "type": "integer"
+          },
+          "offset": {
+            "maximum": 1000000,
+            "minimum": 0,
+            "type": "integer"
+          },
+          "report_date": {
+            "description": "Exact YYYY-MM-DD; do not guess fiscal-calendar dates.",
+            "type": "string"
+          },
+          "source": {
+            "default": "auto",
+            "description": "auto prefers verified replay/persistent cached snapshots, which are not fresh online observations; live always requests a refresh; replay forbids network.",
+            "enum": [
+              "auto",
+              "replay",
+              "live"
+            ],
+            "type": "string"
+          }
+        },
+        "required": [
+          "filename"
+        ],
+        "type": "object"
+      }
+    },
+    {
+      "description": "Retrieve exact, boundary-aware passages using BM25 and strict issuer/publication/report-date filters. period_end filters document report dates, not the period of every statement. Optional dense/hybrid needs configured genuine embeddings. Retrieval never proves semantic support.",
+      "name": "search_documents",
+      "parameters": {
+        "additionalProperties": false,
+        "properties": {
+          "cutoff": {
+            "description": "Information cutoff: ISO date or timezone-aware timestamp.",
+            "type": "string"
+          },
+          "document_ids": {
+            "items": {
+              "type": "string"
+            },
+            "maxItems": 50,
+            "minItems": 1,
+            "type": "array"
+          },
+          "entity": {
+            "description": "Ticker/name resolved by discover_company, or SEC CIK digits.",
+            "type": "string"
+          },
+          "forms": {
+            "items": {
+              "type": "string"
+            },
+            "maxItems": 10,
+            "minItems": 1,
+            "type": "array"
+          },
+          "limit": {
+            "maximum": 10,
+            "minimum": 1,
+            "type": "integer"
+          },
+          "max_context_chars": {
+            "maximum": 18000,
+            "minimum": 1800,
+            "type": "integer"
+          },
+          "period_end": {
+            "description": "Exact YYYY-MM-DD; do not guess fiscal-calendar dates.",
+            "type": "string"
+          },
+          "query": {
+            "type": "string"
+          },
+          "retrieval_mode": {
+            "enum": [
+              "bm25",
+              "dense",
+              "hybrid"
+            ],
+            "type": "string"
+          }
+        },
+        "required": [
+          "query"
+        ],
+        "type": "object"
+      }
+    },
+    {
+      "description": "Open an exact text span. Search and read attach the same supported numeric cells. Read beyond a cut row to recover a complete row. For an operating cash flow bridge use analyze_disclosures; rereading its text_only passage does not generate cash flow operands. Copy document_id from discovery or search and use next_offset to advance.",
+      "name": "read_document",
+      "parameters": {
+        "additionalProperties": false,
+        "properties": {
+          "cutoff": {
+            "description": "Information cutoff: ISO date or timezone-aware timestamp.",
+            "type": "string"
+          },
+          "document_id": {
+            "type": "string"
+          },
+          "entity": {
+            "description": "Ticker/name resolved by discover_company, or SEC CIK digits.",
+            "type": "string"
+          },
+          "limit_chars": {
+            "maximum": 6000,
+            "minimum": 200,
+            "type": "integer"
+          },
+          "offset": {
+            "maximum": 8000000,
+            "minimum": 0,
+            "type": "integer"
+          }
+        },
+        "required": [
+          "document_id"
+        ],
+        "type": "object"
+      }
+    },
+    {
+      "description": "Inspect all local issuer disclosures available at cutoff for the named fiscal quarter and prior-year quarter, including comparative information in later releases. Returns located total/daily sales, selling days and customer-group daily sales, or question-specific gaps.",
+      "name": "inspect_sales_comparison",
+      "parameters": {
+        "additionalProperties": false,
+        "properties": {
+          "cutoff": {
+            "description": "Information cutoff: ISO date or timezone-aware timestamp.",
+            "type": "string"
+          },
+          "entity": {
+            "description": "Ticker/name resolved by discover_company, or SEC CIK digits.",
+            "type": "string"
+          },
+          "fiscal_quarter": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "entity",
+          "fiscal_quarter"
+        ],
+        "type": "object"
+      }
+    },
+    {
+      "description": "Reconcile quarterly year-over-year changes in operating profit and operating margin from visible consolidated income-statement cells. Returns signed money and percentage-point contributions for gross profit, expenses and reconciled other operating income, each quarter's gross-to-operating-income check, and missing rows. Reuse previously retrieved cells, or search the original table if they are missing.",
+      "name": "reconcile_operating_margin",
+      "parameters": {
+        "additionalProperties": false,
+        "properties": {
+          "document_id": {
+            "type": "string"
+          },
+          "entity": {
+            "description": "Ticker/name resolved by discover_company, or SEC CIK digits.",
+            "type": "string"
+          },
+          "period_end": {
+            "description": "Exact YYYY-MM-DD; do not guess fiscal-calendar dates.",
+            "type": "string"
+          },
+          "period_start": {
+            "description": "Exact YYYY-MM-DD; do not guess fiscal-calendar dates.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "entity",
+          "period_end"
+        ],
+        "type": "object"
+      }
+    },
+    {
+      "description": "Locate the issuer's original quarterly income statement and reconcile the change from operating profit to net income against the year-ago quarter. Finds dates, rows and signed amounts itself. Returns saved cells, calculations and any missing evidence. Not for adjusted earnings, margins, cash flow or sequential comparisons.",
+      "name": "reconcile_net_income",
+      "parameters": {
+        "additionalProperties": false,
+        "properties": {
+          "entity": {
+            "description": "Ticker/name resolved by discover_company, or SEC CIK digits.",
+            "type": "string"
+          },
+          "period_end": {
+            "description": "Exact YYYY-MM-DD; do not guess fiscal-calendar dates.",
+            "type": "string"
+          },
+          "period_start": {
+            "description": "Exact YYYY-MM-DD; do not guess fiscal-calendar dates.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "entity"
+        ],
+        "type": "object"
+      }
+    },
+    {
+      "description": "Find dated percentage cells in original replay HTML tables. Supply an issuer and English metric keywords, optionally an exact period or document ID. Returns alternative row labels, period headers, raw values and saved cell IDs. Check issuer, row, dates, accounting basis and table scope; select the matching ID(s) yourself for calculate. Covers explicit calendar-month duration/date headers and values carrying a percent sign.",
+      "name": "find_percentage_cells",
+      "parameters": {
+        "additionalProperties": false,
+        "properties": {
+          "cutoff": {
+            "description": "Information cutoff: ISO date or timezone-aware timestamp.",
+            "type": "string"
+          },
+          "document_id": {
+            "type": "string"
+          },
+          "entity": {
+            "description": "Ticker/name resolved by discover_company, or SEC CIK digits.",
+            "type": "string"
+          },
+          "limit": {
+            "maximum": 12,
+            "minimum": 1,
+            "type": "integer"
+          },
+          "offset": {
+            "maximum": 10000,
+            "minimum": 0,
+            "type": "integer"
+          },
+          "period_end": {
+            "description": "Exact YYYY-MM-DD; do not guess fiscal-calendar dates.",
+            "type": "string"
+          },
+          "period_start": {
+            "description": "Exact YYYY-MM-DD; do not guess fiscal-calendar dates.",
+            "type": "string"
+          },
+          "query": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "entity",
+          "query"
+        ],
+        "type": "object"
+      }
+    },
+    {
+      "description": "Use two saved IDs: numerator/denominator for ratio or margin, current/prior for growth or difference, later/prior cumulative for derive_quarter, end/start for price_return. Difference can also subtract identified same-period flows. exclude_tax_expense_item adds a signed monetary tax-reconciliation valuation-allowance change to reported basic common earnings, with all other allocations fixed. Check attribution in the filing. Compare that scenario to earlier reported common earnings using growth or difference.",
+      "name": "calculate",
+      "parameters": {
+        "additionalProperties": false,
+        "properties": {
+          "operand_ids": {
+            "items": {
+              "type": "string"
+            },
+            "maxItems": 2,
+            "minItems": 2,
+            "type": "array"
+          },
+          "operation": {
+            "enum": [
+              "ratio",
+              "margin",
+              "growth",
+              "difference",
+              "percentage_point_change",
+              "derive_quarter",
+              "price_return",
+              "exclude_tax_expense_item"
+            ],
+            "type": "string"
+          }
+        },
+        "required": [
+          "operation",
+          "operand_ids"
+        ],
+        "type": "object"
+      }
+    },
+    {
+      "description": "Run only the selected methods with specialized statement analyzers (see method enum); omit method to run all selected supported ones. Other methods use search_documents, read_document and calculate. Returns located cells, arithmetic and disclosure gaps.",
+      "name": "analyze_disclosures",
+      "parameters": {
+        "additionalProperties": false,
+        "properties": {
+          "entity": {
+            "description": "Ticker/name resolved by discover_company, or SEC CIK digits.",
+            "type": "string"
+          },
+          "method": {
+            "enum": [
+              "cash-flow-bridge",
+              "implied-period-guidance",
+              "unit-profit-reconciliation",
+              "reconcile-segment-totals",
+              "incremental-profit-margin",
+              "isolate-discrete-tax-item"
+            ],
+            "type": "string"
+          }
+        },
+        "required": [
+          "entity"
+        ],
+        "type": "object"
+      }
+    }
+  ]
+}

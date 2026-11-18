@@ -1,0 +1,152 @@
+[
+  {
+    "k": 1,
+    "budget_chars": 3000,
+    "mean_chars": {
+      "dense": 555,
+      "hybrid": 550,
+      "bm25": 359
+    },
+    "positive_expressions": 30,
+    "hits": {
+      "dense": 15,
+      "hybrid": 16,
+      "bm25": 11
+    },
+    "hybrid_recovers": [
+      "msft-operating-expenses",
+      "nvda-gaming-supply",
+      "nvda-dividend",
+      "nvda-datacenter-year--english_paraphrase"
+    ],
+    "hybrid_loses": [
+      "msft-shareholder-return--english_paraphrase",
+      "msft-azure-growth--english_paraphrase",
+      "msft-constant-currency"
+    ],
+    "all_three_variants": {
+      "dense": 4,
+      "hybrid": 1,
+      "bm25": 0
+    }
+  },
+  {
+    "k": 3,
+    "budget_chars": 3000,
+    "mean_chars": {
+      "dense": 1644,
+      "hybrid": 1647,
+      "bm25": 1055
+    },
+    "positive_expressions": 30,
+    "hits": {
+      "dense": 19,
+      "hybrid": 22,
+      "bm25": 14
+    },
+    "hybrid_recovers": [
+      "msft-operating-expenses",
+      "nvda-datacenter-year",
+      "nvda-datacenter-year--english_paraphrase"
+    ],
+    "hybrid_loses": [],
+    "all_three_variants": {
+      "dense": 4,
+      "hybrid": 5,
+      "bm25": 0
+    }
+  },
+  {
+    "k": 5,
+    "budget_chars": 3000,
+    "mean_chars": {
+      "dense": 2751,
+      "hybrid": 2750,
+      "bm25": 1776
+    },
+    "positive_expressions": 30,
+    "hits": {
+      "dense": 24,
+      "hybrid": 24,
+      "bm25": 15
+    },
+    "hybrid_recovers": [],
+    "hybrid_loses": [],
+    "all_three_variants": {
+      "dense": 7,
+      "hybrid": 7,
+      "bm25": 0
+    }
+  },
+  {
+    "k": 8,
+    "budget_chars": 3000,
+    "mean_chars": {
+      "dense": 2852,
+      "hybrid": 2870,
+      "bm25": 1888
+    },
+    "positive_expressions": 30,
+    "hits": {
+      "dense": 24,
+      "hybrid": 24,
+      "bm25": 15
+    },
+    "hybrid_recovers": [],
+    "hybrid_loses": [],
+    "all_three_variants": {
+      "dense": 7,
+      "hybrid": 7,
+      "bm25": 0
+    }
+  },
+  {
+    "k": 8,
+    "budget_chars": 4800,
+    "mean_chars": {
+      "dense": 4452,
+      "hybrid": 4407,
+      "bm25": 2852
+    },
+    "positive_expressions": 30,
+    "hits": {
+      "dense": 25,
+      "hybrid": 26,
+      "bm25": 16
+    },
+    "hybrid_recovers": [
+      "nvda-blackwell--english_paraphrase"
+    ],
+    "hybrid_loses": [],
+    "all_three_variants": {
+      "dense": 7,
+      "hybrid": 8,
+      "bm25": 0
+    }
+  },
+  {
+    "k": 12,
+    "budget_chars": 7200,
+    "mean_chars": {
+      "dense": 6645,
+      "hybrid": 6555,
+      "bm25": 4307
+    },
+    "positive_expressions": 30,
+    "hits": {
+      "dense": 26,
+      "hybrid": 28,
+      "bm25": 18
+    },
+    "hybrid_recovers": [
+      "nvda-blackwell--english_paraphrase",
+      "nvda-gross-margin"
+    ],
+    "hybrid_loses": [],
+    "all_three_variants": {
+      "dense": 8,
+      "hybrid": 9,
+      "bm25": 0
+    }
+  }
+]

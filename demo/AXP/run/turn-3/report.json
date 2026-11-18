@@ -1,0 +1,816 @@
+{
+  "episode_id": "episode_0ca004d161414843826f7eea58bdb18c",
+  "request": "你刚提到准备金释放。那持卡人的还款情况真的变好了吗，还是只是账上少提了？",
+  "status": "complete",
+  "stop_reason": "completed",
+  "scope": {
+    "cutoff": "2026-11-16",
+    "entities": [
+      "AXP"
+    ],
+    "requirements": [
+      {
+        "id": "request:episode_0ca004d161414843826f7eea58bdb18c",
+        "text": "核查美国运通2026年第三季度持卡人还款及信用质量是否实际改善：对比逾期、净核销金额和比率等已披露指标，区分实际信用表现与准备金释放对信用损失费用的影响，并说明口径和证据限制。"
+      }
+    ]
+  },
+  "scope_version": 8,
+  "summary": "信用质量同比确有温和改善，但不是坏账金额全面下降：逾期率和净核销率略降，卡余额净核销金额仍增加。信用损失费用下降主要受准备由增提转为释放影响，公司称季度释放主要源于预期信用损失模型改进；不宜把费用降幅当作实际还款改善幅度。",
+  "summary_kind": "unverified_researcher_draft",
+  "model_mode": "configured_model",
+  "claims": [
+    {
+      "id": "claim:credit-quality-assessment",
+      "text": "不是纯粹“账上少提了”，但也不能把准备费用大降理解为还款情况同幅改善。美国运通2026年第三季度的逾期率和净核销率同比温和改善；与此同时，卡余额净核销金额仍增加，准备释放则对信用损失费用下降起了重要作用。",
+      "evidence_ids": [
+        "span_b21f75af80e96caabb6b6935",
+        "chunk_0cc4f8ec81ab82245c7c9ab2"
+      ],
+      "calculation_ids": [],
+      "requirement_ids": [
+        "request:episode_0ca004d161414843826f7eea58bdb18c"
+      ],
+      "constraints": {
+        "entity": "AXP",
+        "period_start": "2026-07-01",
+        "period_end": "2026-09-30",
+        "comparison_period_start": "2025-07-01",
+        "comparison_period_end": "2025-09-30",
+        "basis": "原始10-Q披露的同比数据；综合分析判断"
+      },
+      "status": "Supported",
+      "scope_version": 8,
+      "evidence_versions": {
+        "span_b21f75af80e96caabb6b6935": 1,
+        "chunk_0cc4f8ec81ab82245c7c9ab2": 1
+      },
+      "calculation_versions": {},
+      "critic_verdict": {
+        "claim_id": "claim:credit-quality-assessment",
+        "status": "Supported",
+        "evidence_refs": [
+          "span_b21f75af80e96caabb6b6935",
+          "chunk_0cc4f8ec81ab82245c7c9ab2"
+        ],
+        "basis": "10-Q表1显示本季净核销率及期末逾期率较上年同期略降；表3同时显示卡余额净核销金额上升、准备由增提转为释放。综合判断保留了指标改善与费用下降之间的区别，没有把准备释放等同于实际还款改善。"
+      },
+      "version": 2,
+      "created_at": "2026-11-16T16:27:22.774921+00:00",
+      "stale": false,
+      "display_check": {
+        "method": "source_review",
+        "label": "核验方式为原文审读，数字与期间、指标的对应关系需结合引文判断。"
+      }
+    },
+    {
+      "id": "claim:delinquency-comparison",
+      "text": "看逾期指标，截至2026年9月末，消费及小企业卡余额的30天以上逾期率为1.2%，低于上年同期的1.3%；企业卡余额的90天以上逾账单日比率为0.3%，低于上年同期的0.4%。这支持信用质量同比有所改善，但两类客户使用的逾期定义不同，不能直接横向比较。",
+      "evidence_ids": [
+        "span_b21f75af80e96caabb6b6935",
+        "chunk_5ebad3058c63ee247f781cea"
+      ],
+      "calculation_ids": [],
+      "requirement_ids": [
+        "request:episode_0ca004d161414843826f7eea58bdb18c"
+      ],
+      "constraints": {
+        "entity": "AXP",
+        "period_end": "2026-09-30",
+        "comparison_period_end": "2025-09-30",
+        "unit": "%",
+        "basis": "消费及小企业为30+ days past due；企业为90+ days past billing",
+        "business_scope": "分别为消费及小企业卡余额、企业卡余额"
+      },
+      "status": "Supported",
+      "scope_version": 8,
+      "evidence_versions": {
+        "span_b21f75af80e96caabb6b6935": 1,
+        "chunk_5ebad3058c63ee247f781cea": 1
+      },
+      "calculation_versions": {},
+      "critic_verdict": {
+        "claim_id": "claim:delinquency-comparison",
+        "status": "Supported",
+        "evidence_refs": [
+          "span_b21f75af80e96caabb6b6935",
+          "chunk_5ebad3058c63ee247f781cea"
+        ],
+        "basis": "表1的2026年及2025年9月末数据分别为：消费及小企业30天以上逾期率1.2%、1.3%，企业90天以上逾账单日比率0.3%、0.4%。脚注说明企业按账单日而非到期日追踪，并有提前启动催收的分类规定；草稿正确提示两类指标定义不同，未作直接横向比较。"
+      },
+      "version": 2,
+      "created_at": "2026-11-16T16:27:22.784703+00:00",
+      "stale": false,
+      "display_check": {
+        "method": "source_review",
+        "label": "核验方式为原文审读，数字与期间、指标的对应关系需结合引文判断。"
+      }
+    },
+    {
+      "id": "claim:writeoff-rate-comparison",
+      "text": "净核销率也略有下降，但要分清口径：消费及小企业卡余额的仅本金净核销率，由2025年第三季度的1.9%降至2026年第三季度的1.8%；卡余额含本金、利息及费用的净核销率，由2.2%降至2.1%。公司因系统限制不提供企业卡余额的仅本金净核销率，因此不能把1.8%说成所有持卡人的统一指标。",
+      "evidence_ids": [
+        "span_b21f75af80e96caabb6b6935",
+        "chunk_5ebad3058c63ee247f781cea"
+      ],
+      "calculation_ids": [],
+      "requirement_ids": [
+        "request:episode_0ca004d161414843826f7eea58bdb18c"
+      ],
+      "constraints": {
+        "entity": "AXP",
+        "period_start": "2026-07-01",
+        "period_end": "2026-09-30",
+        "comparison_period_start": "2025-07-01",
+        "comparison_period_end": "2025-09-30",
+        "unit": "%",
+        "basis": "分别为principal only与principal, interest and fees；不得混用",
+        "business_scope": "仅本金口径限消费及小企业；含利息费用口径为卡余额"
+      },
+      "status": "Supported",
+      "scope_version": 8,
+      "evidence_versions": {
+        "span_b21f75af80e96caabb6b6935": 1,
+        "chunk_5ebad3058c63ee247f781cea": 1
+      },
+      "calculation_versions": {},
+      "critic_verdict": {
+        "claim_id": "claim:writeoff-rate-comparison",
+        "status": "Supported",
+        "evidence_refs": [
+          "span_b21f75af80e96caabb6b6935",
+          "chunk_5ebad3058c63ee247f781cea"
+        ],
+        "basis": "表1季度栏列示消费及小企业仅本金净核销率从1.9%降至1.8%，卡余额含本金、利息及费用的净核销率从2.2%降至2.1%。脚注明确企业卡仅本金净核销率因系统限制不可得，因此草稿对1.8%适用范围的限定正确。"
+      },
+      "version": 2,
+      "created_at": "2026-11-16T16:27:22.785760+00:00",
+      "stale": false,
+      "display_check": {
+        "method": "source_review",
+        "label": "核验方式为原文审读，数字与期间、指标的对应关系需结合引文判断。"
+      }
+    },
+    {
+      "id": "claim:card-credit-provision-components",
+      "text": "但实际核销的金额没有下降。卡余额净核销金额由上年同期的11.11亿美元升至本季11.30亿美元；与此同时，卡余额准备由增提1.09亿美元变为释放2.35亿美元，卡余额信用损失费用因此从12.20亿美元降至8.95亿美元。原表显示：费用下降主要反映准备由增提转为释放，净核销金额增加则构成抵消，而不是坏账金额同步下降。",
+      "evidence_ids": [
+        "chunk_0cc4f8ec81ab82245c7c9ab2"
+      ],
+      "calculation_ids": [],
+      "requirement_ids": [
+        "request:episode_0ca004d161414843826f7eea58bdb18c"
+      ],
+      "constraints": {
+        "entity": "AXP",
+        "period_start": "2026-07-01",
+        "period_end": "2026-09-30",
+        "comparison_period_start": "2025-07-01",
+        "comparison_period_end": "2025-09-30",
+        "currency": "USD",
+        "unit": "亿美元",
+        "business_scope": "Card balances，不是合并全部信用损失费用",
+        "basis": "10-Q表3原文金额换算；未计算额外贡献比例"
+      },
+      "status": "Supported",
+      "scope_version": 8,
+      "evidence_versions": {
+        "chunk_0cc4f8ec81ab82245c7c9ab2": 1
+      },
+      "calculation_versions": {},
+      "critic_verdict": {
+        "claim_id": "claim:card-credit-provision-components",
+        "status": "Supported",
+        "evidence_refs": [
+          "chunk_0cc4f8ec81ab82245c7c9ab2"
+        ],
+        "basis": "表3季度卡余额栏以百万美元列示：净核销由1,111升至1,130，准备由增提109变为释放235，费用由1,220降至895；换算为亿美元均正确。两期分别满足1,111＋109＝1,220及1,130－235＝895。正文也将费用下降主要归因于准备释放相对于上年增提，并注明净核销增加构成抵消。"
+      },
+      "version": 2,
+      "created_at": "2026-11-16T16:27:22.786525+00:00",
+      "stale": false,
+      "display_check": {
+        "method": "source_review",
+        "label": "核验方式为原文审读，数字与期间、指标的对应关系需结合引文判断。"
+      }
+    },
+    {
+      "id": "claim:consolidated-credit-provision-scope",
+      "text": "如果看合并口径、包括其他贷款等项目，信用损失费用是由上年同期的12.87亿美元降至本季9.85亿美元；这与上面的卡余额信用损失费用不是同一个范围。",
+      "evidence_ids": [
+        "chunk_0cc4f8ec81ab82245c7c9ab2"
+      ],
+      "calculation_ids": [],
+      "requirement_ids": [
+        "request:episode_0ca004d161414843826f7eea58bdb18c"
+      ],
+      "constraints": {
+        "entity": "AXP",
+        "period_start": "2026-07-01",
+        "period_end": "2026-09-30",
+        "comparison_period_start": "2025-07-01",
+        "comparison_period_end": "2025-09-30",
+        "currency": "USD",
+        "unit": "亿美元",
+        "business_scope": "合并",
+        "basis": "Total provisions for credit losses"
+      },
+      "status": "Supported",
+      "scope_version": 8,
+      "evidence_versions": {
+        "chunk_0cc4f8ec81ab82245c7c9ab2": 1
+      },
+      "calculation_versions": {},
+      "critic_verdict": {
+        "claim_id": "claim:consolidated-credit-provision-scope",
+        "status": "Supported",
+        "evidence_refs": [
+          "chunk_0cc4f8ec81ab82245c7c9ab2"
+        ],
+        "basis": "表3合并信用损失费用季度总额为2026年985百万美元、2025年1,287百万美元，即9.85亿及12.87亿美元；表中另列其他贷款及其他项目，支持其范围不同于卡余额费用895及1,220百万美元。"
+      },
+      "version": 2,
+      "created_at": "2026-11-16T16:27:22.787152+00:00",
+      "stale": false,
+      "display_check": {
+        "method": "source_review",
+        "label": "核验方式为原文审读，数字与期间、指标的对应关系需结合引文判断。"
+      }
+    },
+    {
+      "id": "claim:quarterly-reserve-release-cause",
+      "text": "关键是释放原因：公司在10-Q中称，第三季度卡余额准备释放主要来自定期审查过程中对预期信用损失模型的改进，卡余额环比增加部分抵消了这一影响。不能把公司对前九个月“主要由逾期下降及模型改进驱动”的解释，直接套用到第三季度。",
+      "evidence_ids": [
+        "chunk_0cc4f8ec81ab82245c7c9ab2"
+      ],
+      "calculation_ids": [],
+      "requirement_ids": [
+        "request:episode_0ca004d161414843826f7eea58bdb18c"
+      ],
+      "constraints": {
+        "entity": "AXP",
+        "period_start": "2026-07-01",
+        "period_end": "2026-09-30",
+        "business_scope": "Card balances",
+        "basis": "管理层对季度准备释放原因的解释，非独立因果验证"
+      },
+      "status": "Supported",
+      "scope_version": 8,
+      "evidence_versions": {
+        "chunk_0cc4f8ec81ab82245c7c9ab2": 1
+      },
+      "calculation_versions": {},
+      "critic_verdict": {
+        "claim_id": "claim:quarterly-reserve-release-cause",
+        "status": "Supported",
+        "evidence_refs": [
+          "chunk_0cc4f8ec81ab82245c7c9ab2"
+        ],
+        "basis": "原文明确将本季度卡余额准备释放主要归因于定期审查中的预期信用损失模型改进，卡余额环比增加部分抵消；九个月的解释则同时包括逾期下降和模型改进。草稿正确区分季度与累计期间，并将原因归属于公司说明。"
+      },
+      "version": 2,
+      "created_at": "2026-11-16T16:27:22.787998+00:00",
+      "stale": false,
+      "display_check": {
+        "method": "source_review",
+        "label": "核验方式为原文审读，数字与期间、指标的对应关系需结合引文判断。"
+      }
+    },
+    {
+      "id": "claim:reserve-interpretation-and-limits",
+      "text": "准备释放属于对预期信用损失估计的调整，并不是当季收回了一笔现金；仅凭释放准备也不能断言公司操纵利润。更稳妥的结论是：信用质量同比温和改善，但本季准备费用下降还显著受模型估计调整影响。现有同比指标不能证明环比持续改善，更不能证明每位持卡人的还款都改善；这些材料也不足以独立验证模型调整是否恰当。",
+      "evidence_ids": [
+        "chunk_f6625f7bd94d294c623a5532",
+        "chunk_0cc4f8ec81ab82245c7c9ab2",
+        "span_b21f75af80e96caabb6b6935"
+      ],
+      "calculation_ids": [],
+      "requirement_ids": [
+        "request:episode_0ca004d161414843826f7eea58bdb18c"
+      ],
+      "constraints": {
+        "entity": "AXP",
+        "period_start": "2026-07-01",
+        "period_end": "2026-09-30",
+        "cutoff": "2026-11-16",
+        "basis": "准备定义及已披露信用指标的会计解释和证据边界；有限本地原始披露",
+        "missing_evidence": [
+          "用于判断环比持续趋势的连续季度同口径信用指标",
+          "用于判断个体还款变化的账户级或客户群迁徙数据",
+          "用于独立评估模型调整合理性的具体参数、验证及回测资料"
+        ]
+      },
+      "status": "Supported",
+      "scope_version": 8,
+      "evidence_versions": {
+        "chunk_f6625f7bd94d294c623a5532": 1,
+        "chunk_0cc4f8ec81ab82245c7c9ab2": 1,
+        "span_b21f75af80e96caabb6b6935": 1
+      },
+      "calculation_versions": {},
+      "critic_verdict": {
+        "claim_id": "claim:reserve-interpretation-and-limits",
+        "status": "Supported",
+        "evidence_refs": [
+          "chunk_f6625f7bd94d294c623a5532",
+          "chunk_0cc4f8ec81ab82245c7c9ab2",
+          "span_b21f75af80e96caabb6b6935"
+        ],
+        "basis": "术语表将准备释放定义为信用损失准备的减少，以及净核销超过费用的部分，而非现金回收；表3又明确本季释放主要涉及模型估计改进。同比逾期和核销率支持温和改善，但不能证明连续环比或个体还款改善。所引材料未提供独立验证模型合理性或认定利润操纵所需的证据，草稿对此保持了适当限制。"
+      },
+      "version": 2,
+      "created_at": "2026-11-16T16:27:22.788621+00:00",
+      "stale": false
+    }
+  ],
+  "evidence": [
+    {
+      "id": "metadata_286185e77f063ec7f55fd4c8",
+      "kind": "source_metadata",
+      "entity": "AXP",
+      "text": "Finite local replay catalog for AXP: 4 eligible document(s) at cutoff 2026-11-16, newest publication first. Catalog metadata only.\n10-Q | document report date 2026-09-30 | published_at 2026-10-23T16:26:51.000Z (SEC EDGAR acceptance 0000004962-26-000409) | https://www.sec.gov/Archives/edgar/data/4962/000000496226000409/axp-20260930.htm\n8-K Exhibit 99.1 | document report date 2026-09-30 | published_at 2026-10-23T11:00:36.000Z (SEC EDGAR acceptance 0000004962-26-000405) | https://www.sec.gov/Archives/edgar/data/4962/000000496226000405/q326exhibit991.htm\n10-Q | document report date 2026-06-30 | published_at 2026-07-24T16:00:43.000Z (SEC EDGAR acceptance 0000004962-26-000322) | https://www.sec.gov/Archives/edgar/data/4962/000000496226000322/axp-20260630.htm\n10-K | document report date 2025-12-31 | published_at 2026-02-06T17:31:47.000Z (SEC EDGAR acceptance 0000004962-26-000080) | https://www.sec.gov/Archives/edgar/data/4962/000000496226000080/axp-20251231.htm",
+      "source_url": "manifest.json",
+      "snapshot_hash": "794232138fd621b28aeebb63d1b7c5b4c6cc5ba59533af7e631ca281132b19a3",
+      "snapshot_path": "manifest.json",
+      "locator": "documents[0], documents[3], documents[1], documents[2]",
+      "published_at": "2026-11-16",
+      "publication_basis": "effective availability of filtered metadata preview",
+      "coverage_cutoff": "2026-11-16",
+      "retrieved_at": null,
+      "mode": "replay",
+      "version": 1,
+      "created_at": "2026-11-16T16:22:44.350225+00:00",
+      "stale": false
+    },
+    {
+      "id": "span_3b74985e92f2fa70a68c88af",
+      "text": "EX-99.1\n2\nq326exhibit991.htm\nEX-99.1\nDocument\nEXHIBIT 99.1\nNew York | October 23, 2026\nAMERICAN EXPRESS\nQ3 2026 RESULTS\nAMERICAN EXPRESS RAISES FY 2026 EARNINGS PER SHARE GUIDANCE\nCOMPANY DELIVERED RECORD Q3 REVENUE OF $20.1 BILLION, UP 9% YOY\nQ3 EPS ROSE 31% TO $5.42, OR 13% TO $4.68 ON AN ADJUSTED BASIS1\n(Millions, except per share amounts, and where indicated)\nQuarters Ended\nSeptember 30,\nYoY%\nInc/(Dec)\nNine Months Ended\nSeptember 30,\nYoY%\nInc/(Dec)\n2026\n2025\n2026\n2025\nBilled Business (Billions)\nFX-adjusted2\n$454.0\n$421.0\n$420.8\n8%\n8%\n$1,337.7\n$1,224.7\n$1,231.3\n9%\n9%\nTotal Revenues Net of Interest Expense\nFX-adjusted2\n$20,062\n$18,426\n$18,413\n9%\n9%\n$58,606\n$53,249\n$53,503\n10%\n10%\nPretax Income\n$4,531\n$3,825\n18%\n$12,380\n$10,705\n16%\nNet Income\n$3,712\n$2,902\n28%\n$9,794\n$8,371\n17%\nDiluted Earnings Per Common Share (EPS)3\n$5.42\n$4.14\n31%\n$14.22\n$11.85\n20%\nAdjusted EPS1\n$4.68\n$4.14\n13%\n$13.49\n$11.85\n14%\nAverage Diluted Common Shares Outstanding\n674\n693\n(3)%\n680\n698\n(3)%\nAmerican Express Company (NYSE: AXP) today reported third-quarter 2026 net income of $3.7 billion, compared with net income of $2.9 billion a year ago. Earnings per share was $5.42, up 31 percent from $4.14 a year ago. Adjusted net income was $3.2 billion, or $4.68 per share, which excludes the $982 million pre-tax gain ($751 million after-tax) from the previously-announced sale of the company's equity interest in Global Business Travel Group, Inc. (GBTG), net of the portion of the gain used to fund restructuring related to efficiency initiatives.1\nStephen J. Squeri | Chairman and Chief Executive Officer\n“We had another strong quarter, delivering 9 percent revenue growth and EPS of $5.42, or $4.68 adjusted, up 13 percent year-over-year.1 Our business momentum continues, with strength in billings, new acquisitions and Card Member retention, and excellent credit quality.\n“Given our performance year-to-date, we are raising our full-year EPS guidance to between $18.30 and $18.60 ($17.60-$17.90 adjusted),4 and we're on track to deliver another year of 10 percent revenue growth.\n“The progress we’re making across the business and ongoing innovations to enhance our Membership Model give me great confidence in our ability to deliver differentiated value for our customers and strong returns for our shareholders over the long term.”\n1\nAMERICAN EXPRESS Q3 2026 RESULTS\nThird-Quarter 2026 Results\nBusiness Highlights\nThird-quarter consolidated total revenues net of interest expense were $20.1 billion, up 9 percent year-over-year. The increase was primarily driven by higher Card Member spending, increased net interest income supported by growth in card balances, and strong card fee growth.\nConsolidated provisions for credit losses were $1.0 billion, compared with $1.3 billion a year ago. The decrease reflected a reserve release during the quarter compared to a reserve build in the prior year, partially offset by higher net write-offs. The third-quarter net write-off rate was 1.8 percent, down from 1.9 percent a year ago.5\nConsolidated expenses were $14.5 billion, up 9 percent year-over-year. The increase was primarily driven by higher variable customer engagement costs due to increased Card Member spending and the U.S. Platinum Card® refresh, partially offset by lower operating expenses. The decrease in operating expenses was primarily driven by the GBTG sale gain, partially offset by an increase in legal reserves for previously-disclosed matters, and restructuring costs.\nThe consolidated effective tax rate was 18.1 percent, down from 24.1 percent a year ago, primarily reflecting discrete tax benefits in the current year related to the resolution of certain prior-period tax items.\n•American Express launched the next generation of Amex Corporate™, with new integrated Expense Management software and Amex Expense mobile app, along with new Corporate Cashback® Cards.\n•The company introduced a new American Express Business Savings account, expanding its banking offerings for businesses.\n•American Express extended its long-term strategic partnership with Marriott International, including the U.S. cobrand cards.\n•American Express launched an exclusive partnership with Airbnb, bringing over one million listings globally to Amex Travel and expanding travel benefits for eligible U.S. Card Members.\n•The company announced Resy integrations, including with OpenAI, and released the Intent Intelligence framework for trusted agentic commerce.\n•Card acceptance reached more than 190 million merchant locations worldwide, with acceptance outside the U.S. more than doubling over the past four years.6\n•The company opened its newest Centurion Lounge at Amsterdam Airport Schiphol to bring the total to 33 locations, and announced expansions in four locations, including a new 30,000-sq.ft. lounge at Newark Liberty International Airport, its largest to date.\n•The company ranked #1 issuer in the JD Power 2026 U.S. Credit Card Satisfaction Study℠ for the seventh consecutive year.\n# # #\nThis earnings release should be read in conjunction with the supplemental financial data for the third quarter 2026 (the statistical tables), which include information regarding our reportable operating segments and certain defined terms used in this release, available on the American Express Investor Relations website at http://ir.americanexpress.com and in a Form 8-K furnished today with the Securities and Exchange Commission.\nAn investor conference call will be held at 8:30 a.m. (ET) today to discuss third-quarter 2026 results. Live audio and presentation slides for the investor conference call will be available to the general public on the above-mentioned American Express Investor Relations website. A replay of the conference call will be available at the same website address following the call.\n2\nAMERICAN EXPRESS Q3 2026 RESULTS\n1\nAdjusted Net Income and adjusted diluted earnings per common share are non-GAAP measures and exclude the impact of the gain from the sale of the company's ",
+      "entity": "AXP",
+      "document_report_date": "2026-09-30",
+      "document_period_start": "2026-07-01",
+      "form": "8-K Exhibit 99.1",
+      "published_at": "2026-10-23T11:00:36.000Z",
+      "publication_precision": "timestamp",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/4962/000000496226000405/q326exhibit991.htm",
+      "snapshot_hash": "19053fbfc0e231460d39f697ac44c76e16acf71d71108d8dfba0380f47bbef38",
+      "snapshot_path": "snapshots/q326exhibit991.htm",
+      "text_snapshot_path": "snapshots/q326exhibit991.htm.txt",
+      "text_snapshot_hash": "c55763d494ac2b1ad5a4c2f8e5502cf5801454c64cce2a2abbcbfa217140637a",
+      "retrieved_at": "2026-11-16T16:21:18.730518+00:00",
+      "extraction_method": "All visible HTML tables and body in source order.",
+      "mode": "replay",
+      "document_id": "source_doc_dcbdedf0ae2a1c1306b321fb",
+      "kind": "document",
+      "start": 0,
+      "end": 6000,
+      "period_start": null,
+      "period_end": null,
+      "locator": "snapshots/q326exhibit991.htm.txt:characters[0:6000] (zero-based Unicode offsets)",
+      "version": 1,
+      "created_at": "2026-11-16T16:22:54.130784+00:00",
+      "stale": false
+    },
+    {
+      "id": "span_4657ec4247a3a904927c380a",
+      "text": " website. A replay of the conference call will be available at the same website address following the call.\n2\nAMERICAN EXPRESS Q3 2026 RESULTS\n1\nAdjusted Net Income and adjusted diluted earnings per common share are non-GAAP measures and exclude the impact of the gain from the sale of the company's equity investment in GBTG, net of a restructuring charge. See Appendix I for a reconciliation to Net Income and EPS on a GAAP basis. Management believes adjusted Net Income and adjusted EPS are useful in evaluating the ongoing operating performance of the company.\n2\nAs used in this release, FX-adjusted information assumes a constant exchange rate between the periods being compared for purposes of currency translations into U.S. dollars (i.e., assumes the foreign exchange rates used to determine results for current period apply to the corresponding prior-year period against which such results are being compared). FX-adjusted revenues is a non-GAAP measure. The company believes the presentation of information on an FX-adjusted basis is helpful to investors by making it easier to compare the company’s performance in one period to that of another period without the variability caused by fluctuations in currency exchange rates.\n3\nAttributable to common shareholders. Represents net income less earnings allocated to participating share awards, dividends on preferred shares and other items. Refer to the statistical tables for more information.\n4\nThe company’s adjusted EPS outlook, a non-GAAP measure, excludes the impact of the gain from the sale of the company's equity investment in GBTG, net of a restructuring charge. See Appendix I for a reconciliation to EPS outlook on a GAAP basis. Management believes the presentation of adjusted EPS guidance is useful in evaluating the ongoing operating performance of the company.\n5\nNet write-off rates are based on principal losses only (i.e., excluding interest and/or fees) and represent consumer and small business card balances (unavailable for corporate). Refer to the statistical tables for more information and net write-off rates including interest and fees.\n6\nLocations in force (LIF) estimate as of July 2026, including an estimated 80 million Merchants that accept American Express in China and Brazil (including through digital wallets). LIF represents proprietary and partner acquired Merchant locations where the Merchant is enabled to accept American Express. LIF estimates incorporate data provided to us by certain third parties and include Merchants that accept American Express through payment facilitators and digital wallets.\n# # #\nMedia Contacts:\nAmanda Miller, Amanda.C.Miller@aexp.com, +1.408.219.0563\nDeniz Yigin, Deniz.Yigin@aexp.com, +1.332.999.0836\nInvestors/Analysts Contacts:\nKartik Ramachandran, Kartik.Ramachandran@aexp.com, +1.212.640.5574\nDanielle Gilmartin, Danielle.Gilmartin@aexp.com, +1.212.640.5574\nABOUT AMERICAN EXPRESS\nAmerican Express (NYSE: AXP) is a global payments and premium lifestyle brand powered by technology. Our colleagues around the world back our customers with differentiated products, services, and experiences that enrich lives and build business success.\nFounded in 1850 and headquartered in New York, American Express’ brand is built on trust, security, service, and a rich history of delivering innovation and Membership value for our customers. We seek to provide the world’s best customer experience every day to a broad range of consumers, small and medium-sized businesses, and large corporations, and we build and manage relationships with millions of merchants across our global network.\nFor more information about American Express, visit americanexpress.com, americanexpress.com/en-us/newsroom/, and ir.americanexpress.com.\n3\nAMERICAN EXPRESS Q3 2026 RESULTS\nCAUTIONARY NOTE REGARDING FORWARD-LOOKING STATEMENTS\nThis release includes forward-looking statements within the meaning of the Private Securities Litigation Reform Act of 1995, which are subject to risks and uncertainties. The forward-looking statements, which address American Express Company’s current expectations regarding business and financial performance, including management’s guidance for 2026, among other matters, contain words such as “believe,” “expect,” “anticipate,” “intend,” “plan,” “aim,” “will,” “may,” “should,” “could,” “would,” “likely,” “continue” and similar expressions. Readers are cautioned not to place undue reliance on these forward-looking statements, which speak only as of the date on which they are made. The company undertakes no obligation to update or revise any forward-looking statements. Factors that could cause actual results to differ materially from these forward-looking statements include, but are not limited to, those that are set forth under the caption “Cautionary Note Regarding Forward-Looking Statements” in the company’s current report on Form 8-K filed with the Securities and Exchange Commission (SEC) on October 23, 2026 (the Form 8-K Cautionary Note), which are incorporated by reference into this release. Those factors include, but are not limited to, the following:\n•the company’s ability to achieve its 2026 earnings per common share (EPS) guidance and grow EPS in the future, which will depend in part on revenue growth, credit performance, credit reserve and expense levels and the effective tax rate remaining consistent with current expectations and the company’s ability to continue investing in growth initiatives (such as its brand, value propositions, coverage, marketing, technology, partnerships and talent), controlling operating expenses, effectively managing risk and executing its share repurchase program, any of which could be impacted by, among other things, the factors identified in the subsequent paragraph and the Form 8-K Cautionary Note, as well as the following: macroeconomic and geopolitical conditions, including a slowdown in U.S. or global economic growth, changes to consumer and business confidence, higher rates of unem",
+      "entity": "AXP",
+      "document_report_date": "2026-09-30",
+      "document_period_start": "2026-07-01",
+      "form": "8-K Exhibit 99.1",
+      "published_at": "2026-10-23T11:00:36.000Z",
+      "publication_precision": "timestamp",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/4962/000000496226000405/q326exhibit991.htm",
+      "snapshot_hash": "19053fbfc0e231460d39f697ac44c76e16acf71d71108d8dfba0380f47bbef38",
+      "snapshot_path": "snapshots/q326exhibit991.htm",
+      "text_snapshot_path": "snapshots/q326exhibit991.htm.txt",
+      "text_snapshot_hash": "c55763d494ac2b1ad5a4c2f8e5502cf5801454c64cce2a2abbcbfa217140637a",
+      "retrieved_at": "2026-11-16T16:21:18.730518+00:00",
+      "extraction_method": "All visible HTML tables and body in source order.",
+      "mode": "replay",
+      "document_id": "source_doc_dcbdedf0ae2a1c1306b321fb",
+      "kind": "document",
+      "start": 5700,
+      "end": 11700,
+      "period_start": null,
+      "period_end": null,
+      "locator": "snapshots/q326exhibit991.htm.txt:characters[5700:11700] (zero-based Unicode offsets)",
+      "version": 1,
+      "created_at": "2026-11-16T16:24:35.987078+00:00",
+      "stale": false
+    },
+    {
+      "id": "chunk_09bf3a35fd22eaf7ac9789ae",
+      "text": "2\nAMERICAN EXPRESS Q3 2026 RESULTS\n1\nAdjusted Net Income and adjusted diluted earnings per common share are non-GAAP measures and exclude the impact of the gain from the sale of the company's equity investment in GBTG, net of a restructuring charge. See Appendix I for a reconciliation to Net Income and EPS on a GAAP basis. Management believes adjusted Net Income and adjusted EPS are useful in evaluating the ongoing operating performance of the company.\n2\nAs used in this release, FX-adjusted information assumes a constant exchange rate between the periods being compared for purposes of currency translations into U.S. dollars (i.e., assumes the foreign exchange rates used to determine results for current period apply to the corresponding prior-year period against which such results are being compared). FX-adjusted revenues is a non-GAAP measure. The company believes the presentation of information on an FX-adjusted basis is helpful to investors by making it easier to compare the company’s performance in one period to that of another period without the variability caused by fluctuations in currency exchange rates.\n3\nAttributable to common shareholders. Represents net income less earnings allocated to participating share awards, dividends on preferred shares and other items. Refer to the statistical tables for more information.\n4\nThe company’s adjusted EPS outlook, a non-GAAP measure, excludes the impact of the gain from the sale of the company's equity investment in GBTG, net of a restructuring charge. See Appendix I for a reconciliation to EPS outlook on a GAAP basis. Management believes the presentation of adjusted EPS guidance is useful in evaluating the ongoing operating performance of the company.\n",
+      "entity": "AXP",
+      "document_report_date": "2026-09-30",
+      "document_period_start": "2026-07-01",
+      "form": "8-K Exhibit 99.1",
+      "published_at": "2026-10-23T11:00:36.000Z",
+      "publication_precision": "timestamp",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/4962/000000496226000405/q326exhibit991.htm",
+      "snapshot_hash": "19053fbfc0e231460d39f697ac44c76e16acf71d71108d8dfba0380f47bbef38",
+      "snapshot_path": "snapshots/q326exhibit991.htm",
+      "text_snapshot_path": "snapshots/q326exhibit991.htm.txt",
+      "text_snapshot_hash": "c55763d494ac2b1ad5a4c2f8e5502cf5801454c64cce2a2abbcbfa217140637a",
+      "retrieved_at": "2026-11-16T16:21:18.730518+00:00",
+      "extraction_method": "All visible HTML tables and body in source order.",
+      "mode": "replay",
+      "document_id": "source_doc_dcbdedf0ae2a1c1306b321fb",
+      "start": 5808,
+      "end": 7537,
+      "retrieval_score": 11.034122953188419,
+      "retrieval_method": "bm25",
+      "kind": "document",
+      "period_start": null,
+      "period_end": null,
+      "locator": "snapshots/q326exhibit991.htm.txt:characters[5808:7537] (zero-based Unicode offsets)",
+      "version": 1,
+      "created_at": "2026-11-16T16:24:44.241522+00:00",
+      "stale": false
+    },
+    {
+      "id": "chunk_5a255fbc933ca3e7241888f6",
+      "text": "increased surcharging, steering, suppression or other differential acceptance practices with respect to the company’s products; merchant discount rates changing from the company’s expectations; and changes in foreign currency exchange rates.\nA further description of these uncertainties and other risks can be found in American Express Company’s Annual Report on Form 10-K for the year ended December 31, 2025, Quarterly Reports on Form 10-Q for the quarters ended March 31 and June 30, 2026 and the company’s other reports filed with the SEC, including in the Form 8-K Cautionary Note.\n4\nAMERICAN EXPRESS Q3 2026 RESULTS\nAmerican Express Company\nAppendix I\nReconciliation of Adjusted EPS\nQuarters Ended\nSeptember 30,\nYoY%\nInc/(Dec)\nNine Months Ended\nSeptember 30,\nYoY%\nInc/(Dec)\n2026\n2025\n2026\n2025\nGAAP Diluted EPS\n$5.42\n$4.14\n31%\n$14.22\n$11.85\n20%\nGBTG Gain on Sale (pretax)\n$(1.45)\n$(1.44)\nTax Impact of GBTG Gain on Sale\n$0.34\n$0.34\nGBTG Gain on Sale (after tax)\n$(1.11)\n$(1.10)\nRestructuring Charge (pretax)\n$0.49\n$0.49\nTax Impact of Restructuring Charge\n$(0.12)\n$(0.12)\nRestructuring Charge (after tax)\n$0.37\n$0.37\nAdjusted Diluted EPS\n$4.68\n$4.14\n13%\n$13.49\n$11.85\n14%\nReconciliation of Adjusted Net Income\n$ in millions - amounts may not sum due to rounding\nQuarters Ended\nSeptember 30,\nYoY%\nInc/(Dec)\nNine Months Ended\nSeptember 30,\nYoY%\nInc/(Dec)\n2026\n2025\n2026\n2025\nGAAP Net Income\n$3,712\n$2,902\n28%\n$9,794\n$8,371\n17%\nGBTG Gain on Sale (pretax)\n$(982)\n$(982)\nTax Impact of GBTG Gain on Sale\n$230\n$230\nGBTG Gain on Sale (after tax)\n$(751)\n$(751)\nRestructuring Charge (pretax)\n$336\n$336\nTax Impact of Restructuring Charge\n$(84)\n$(84)\nRestructuring Charge (after tax)\n$253\n$253\nAdjusted Net Income\n$3,214\n$2,902\n11%\n$9,296\n$8,371\n11%\nReconciliation of Adjusted EPS Guidance\nAmounts may not ",
+      "entity": "AXP",
+      "document_report_date": "2026-09-30",
+      "document_period_start": "2026-07-01",
+      "form": "8-K Exhibit 99.1",
+      "published_at": "2026-10-23T11:00:36.000Z",
+      "publication_precision": "timestamp",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/4962/000000496226000405/q326exhibit991.htm",
+      "snapshot_hash": "19053fbfc0e231460d39f697ac44c76e16acf71d71108d8dfba0380f47bbef38",
+      "snapshot_path": "snapshots/q326exhibit991.htm",
+      "text_snapshot_path": "snapshots/q326exhibit991.htm.txt",
+      "text_snapshot_hash": "c55763d494ac2b1ad5a4c2f8e5502cf5801454c64cce2a2abbcbfa217140637a",
+      "retrieved_at": "2026-11-16T16:21:18.730518+00:00",
+      "extraction_method": "All visible HTML tables and body in source order.",
+      "mode": "replay",
+      "document_id": "source_doc_dcbdedf0ae2a1c1306b321fb",
+      "start": 14373,
+      "end": 16172,
+      "retrieval_score": 9.413778731893,
+      "retrieval_method": "bm25",
+      "kind": "document",
+      "period_start": null,
+      "period_end": null,
+      "locator": "snapshots/q326exhibit991.htm.txt:characters[14373:16172] (zero-based Unicode offsets)",
+      "version": 1,
+      "created_at": "2026-11-16T16:24:44.241939+00:00",
+      "stale": false
+    },
+    {
+      "id": "chunk_75110ca1960387a6d1147821",
+      "text": "\n$(751)\nRestructuring Charge (pretax)\n$336\n$336\nTax Impact of Restructuring Charge\n$(84)\n$(84)\nRestructuring Charge (after tax)\n$253\n$253\nAdjusted Net Income\n$3,214\n$2,902\n11%\n$9,296\n$8,371\n11%\nReconciliation of Adjusted EPS Guidance\nAmounts may not sum due to rounding\nFY’25\nFY’26 Guidance Range\nYoY%\nInc/(Dec)\nGAAP Diluted EPS\n$15.38\n$18.30\n$18.60\n19%\n21%\nGBTG Gain on Sale (after tax)\n$(1.10)\n$(1.10)\nRestructuring Charge (after tax)\n$0.37\n$0.37\nAdjusted Diluted EPS\n$15.38\n$17.60\n$17.90\n14%\n16%\n5\n",
+      "entity": "AXP",
+      "document_report_date": "2026-09-30",
+      "document_period_start": "2026-07-01",
+      "form": "8-K Exhibit 99.1",
+      "published_at": "2026-10-23T11:00:36.000Z",
+      "publication_precision": "timestamp",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/4962/000000496226000405/q326exhibit991.htm",
+      "snapshot_hash": "19053fbfc0e231460d39f697ac44c76e16acf71d71108d8dfba0380f47bbef38",
+      "snapshot_path": "snapshots/q326exhibit991.htm",
+      "text_snapshot_path": "snapshots/q326exhibit991.htm.txt",
+      "text_snapshot_hash": "c55763d494ac2b1ad5a4c2f8e5502cf5801454c64cce2a2abbcbfa217140637a",
+      "retrieved_at": "2026-11-16T16:21:18.730518+00:00",
+      "extraction_method": "All visible HTML tables and body in source order.",
+      "mode": "replay",
+      "document_id": "source_doc_dcbdedf0ae2a1c1306b321fb",
+      "start": 15922,
+      "end": 16423,
+      "retrieval_score": 7.219417332772837,
+      "retrieval_method": "bm25",
+      "kind": "document",
+      "period_start": null,
+      "period_end": null,
+      "locator": "snapshots/q326exhibit991.htm.txt:characters[15922:16423] (zero-based Unicode offsets)",
+      "version": 1,
+      "created_at": "2026-11-16T16:24:44.242261+00:00",
+      "stale": false
+    },
+    {
+      "id": "chunk_0cc4f8ec81ab82245c7c9ab2",
+      "text": "rates paid on customer deposits, partially offset by growth in customer deposits.\n4\nTable of Contents\nTable 3: Provisions for Credit Losses Summary\nThree Months Ended\nSeptember 30,\nChange\n2026 vs. 2025\nNine Months Ended\nSeptember 30,\nChange\n2026 vs. 2025\n(Millions, except percentages) 2026 2025 2026 2025\nCard balances\nNet write-offs\n$ 1,130 $ 1,111 $ 19 2 % $ 3,550 $ 3,397 $ 153 5 %\nReserve build (release) (a)\n(235) 109 (344) # (451) 190 (641) #\nTotal\n895 1,220 (325) (27) 3,099 3,587 (488) (14)\nOther\nNet write-offs — Other loans\n61 47 14 30 182 153 29 19\nNet write-offs — Other\n5 3 2 67 14 16 (2) (13)\nReserve build (release) — Other loans (a)\n23 15 8 53 12 92 (80) (87)\nReserve build (release) — Other (a)\n2 2 — — 13 (6) 19 #\nTotal\n90 67 23 34 221 255 (34) (13)\nTotal provisions for credit losses $ 985 $ 1,287 $ (302) (23) % $ 3,320 $ 3,842 $ (522) (14) %\n# Denotes a variance of 100 percent or more\n(a)Refer to the “Glossary of Selected Terminology” for a definition of reserve build (release).\nProvisions for Credit Losses\nProvision for Card balance credit losses decreased for both the three and nine month periods, primarily due to reserve releases in the current periods versus reserve builds in the prior periods, partially offset by higher net write-offs. The reserve release in the current three month period was primarily driven by enhancements to the models that estimate expected credit losses resulting from our periodic review process, partially offset by a sequential increase in Card balances. The reserve release in the current nine month period was primarily driven by lower delinquencies and the previously-mentioned enhancements to the models that estimate expected credit losses, partially offset by a sequential increase in Card balances. ",
+      "entity": "AXP",
+      "document_report_date": "2026-09-30",
+      "document_period_start": "2026-07-01",
+      "form": "10-Q",
+      "published_at": "2026-10-23T16:26:51.000Z",
+      "publication_precision": "timestamp",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/4962/000000496226000409/axp-20260930.htm",
+      "snapshot_hash": "5b92b6270a3af3b993c334bc65d30bfd0484164c98075803d2198bed6853211a",
+      "snapshot_path": "snapshots/axp-20260930.htm",
+      "text_snapshot_path": "snapshots/axp-20260930.htm.txt",
+      "text_snapshot_hash": "ef693507486ba203d8840f2a5a45b68756b60f3a5b0ffa4214d35255921ca4b3",
+      "retrieved_at": "2026-11-16T16:20:53.736479+00:00",
+      "extraction_method": "All visible HTML tables and body in source order.",
+      "mode": "replay",
+      "document_id": "source_doc_e753f139bb38d7480d4b861d",
+      "start": 23446,
+      "end": 25214,
+      "retrieval_score": 17.654278997695286,
+      "retrieval_method": "bm25",
+      "kind": "document",
+      "period_start": null,
+      "period_end": null,
+      "locator": "snapshots/axp-20260930.htm.txt:characters[23446:25214] (zero-based Unicode offsets)",
+      "version": 1,
+      "created_at": "2026-11-16T16:26:17.426702+00:00",
+      "stale": false
+    },
+    {
+      "id": "chunk_0d5b2222830bc9f85af37d2f",
+      "text": "momentum in spending by Millennial and Gen-Z Card Members, our largest and fastest-growing cohort. Commercial Services billed business grew 3 percent, and reflected the previously-mentioned exits from small business cobrand held-for-sale portfolios. Billed business for International Card Services, our fastest-growing segment, grew 11 percent on both a reported and FX-adjusted basis.1\nTotal revenues net of interest expense increased 9 percent on both a reported and FX-adjusted basis.1 Growth in billed business drove an 8 percent increase in Discount revenue, our largest revenue line. Net card fees grew 16 percent, reflecting our ongoing cycle of product refreshes, including the U.S. Platinum refresh last year. Net interest income grew 10 percent, primarily reflecting growth in balances and net yield expansion, partially offset by the impact from the exits of the small business cobrand held-for-sale portfolios, as mentioned above.\nCard balances and Other loans increased 8 percent, in line with billed business. Provisions for credit losses decreased, primarily driven by a reserve release in the current period compared to a reserve build in the prior period, partially offset by higher net write-offs. Net write-off rates declined and delinquency rates remained stable, supported by our premium customer base and reflecting our strategy to invest in the value propositions of our premium products that attract customers with high credit quality.\nGrowth in Card Member rewards, Card Member services and Business development expenses (collectively, variable customer engagement expenses) were driven by Card Member spending, usage of Card Member benefits and enhancements we made to the value propositions of our refreshed U.S. Platinum cards last year. ",
+      "entity": "AXP",
+      "document_report_date": "2026-09-30",
+      "document_period_start": "2026-07-01",
+      "form": "10-Q",
+      "published_at": "2026-10-23T16:26:51.000Z",
+      "publication_precision": "timestamp",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/4962/000000496226000409/axp-20260930.htm",
+      "snapshot_hash": "5b92b6270a3af3b993c334bc65d30bfd0484164c98075803d2198bed6853211a",
+      "snapshot_path": "snapshots/axp-20260930.htm",
+      "text_snapshot_path": "snapshots/axp-20260930.htm.txt",
+      "text_snapshot_hash": "ef693507486ba203d8840f2a5a45b68756b60f3a5b0ffa4214d35255921ca4b3",
+      "retrieved_at": "2026-11-16T16:20:53.736479+00:00",
+      "extraction_method": "All visible HTML tables and body in source order.",
+      "mode": "replay",
+      "document_id": "source_doc_e753f139bb38d7480d4b861d",
+      "start": 15880,
+      "end": 17646,
+      "retrieval_score": 17.02078637104732,
+      "retrieval_method": "bm25",
+      "kind": "document",
+      "period_start": null,
+      "period_end": null,
+      "locator": "snapshots/axp-20260930.htm.txt:characters[15880:17646] (zero-based Unicode offsets)",
+      "version": 1,
+      "created_at": "2026-11-16T16:26:17.428606+00:00",
+      "stale": false
+    },
+    {
+      "id": "chunk_f6625f7bd94d294c623a5532",
+      "text": "cards acquired — Represents the number of new cards issued by American Express during the referenced period, net of replacement cards. Proprietary new cards acquired is useful as a measure of the effectiveness of our customer acquisition strategy.\nReserve build (release) — Represents the portion of the provisions for credit losses for the period related to increasing or decreasing reserves for credit losses as a result of, among other things, changes in volumes, macroeconomic outlook, portfolio composition and credit quality of portfolios. Reserve build represents the amount by which the provision for credit losses exceeds net write-offs, while reserve release represents the amount by which net write-offs exceed the provision for credit losses.\nT&E spend — Represents spend on travel and entertainment, which primarily includes airline, cruise, lodging and dining merchant categories.\nSee “Consolidated Capital Resources and Liquidity — Capital” for definitions of our regulatory risk-based capital and leverage ratios.\n34\nTable of Contents\nCAUTIONARY NOTE REGARDING FORWARD-LOOKING STATEMENTS\nThis report includes forward-looking statements within the meaning of the Private Securities Litigation Reform Act of 1995, which are subject to risks and uncertainties. The forward-looking statements, which address our current expectations regarding business and financial performance, among other matters, contain words such as “believe,” “expect,” “anticipate,” “intend,” “plan,” “aim,” “will,” “may,” “should,” “could,” “would,” “likely,” “estimate,” “potential,” “continue” and similar expressions. Readers are cautioned not to place undue reliance on these forward-looking statements, which speak only as of the date on which they are made. ",
+      "entity": "AXP",
+      "document_report_date": "2026-09-30",
+      "document_period_start": "2026-07-01",
+      "form": "10-Q",
+      "published_at": "2026-10-23T16:26:51.000Z",
+      "publication_precision": "timestamp",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/4962/000000496226000409/axp-20260930.htm",
+      "snapshot_hash": "5b92b6270a3af3b993c334bc65d30bfd0484164c98075803d2198bed6853211a",
+      "snapshot_path": "snapshots/axp-20260930.htm",
+      "text_snapshot_path": "snapshots/axp-20260930.htm.txt",
+      "text_snapshot_hash": "ef693507486ba203d8840f2a5a45b68756b60f3a5b0ffa4214d35255921ca4b3",
+      "retrieved_at": "2026-11-16T16:20:53.736479+00:00",
+      "extraction_method": "All visible HTML tables and body in source order.",
+      "mode": "replay",
+      "document_id": "source_doc_e753f139bb38d7480d4b861d",
+      "start": 110755,
+      "end": 112506,
+      "retrieval_score": 16.992935280945378,
+      "retrieval_method": "bm25",
+      "kind": "document",
+      "period_start": null,
+      "period_end": null,
+      "locator": "snapshots/axp-20260930.htm.txt:characters[110755:112506] (zero-based Unicode offsets)",
+      "version": 1,
+      "created_at": "2026-11-16T16:26:17.429948+00:00",
+      "stale": false
+    },
+    {
+      "id": "chunk_5ebad3058c63ee247f781cea",
+      "text": "basis, divided by average Card balances, Card balances held for sale (HFS) and Other loans.\n(d)We present a net write-off rate based on principal losses only (i.e., excluding interest and/or fees) to be consistent with industry convention. In addition, as our practice is to include uncollectible interest and/or fees as part of our total provision for credit losses, a net write-off rate including principal, interest and/or fees is also presented.\n(e)A net write-off rate based on principal losses only is not available for corporate Card balances due to system constraints.\n(f)For corporate Card balances, delinquency data is tracked based on days past billing status rather than days past due. A Card Member account is considered 90 days past billing if payment has not been received within 90 days of the Card Member’s billing statement date. In addition, if we initiate collection procedures on an account prior to the account becoming 90 days past billing, the associated Card balance is classified as 90 days past billing. Corporate Card balances delinquency data for periods other than 90+ days past billing and the net write-off rate based on principal losses only are not available due to system constraints.\n(g)Return on average equity (ROE) is calculated by dividing (i) annualized net income for the period by (ii) average shareholders’ equity for the period.\n2\nTable of Contents\nBusiness Performance\nWe delivered strong results for the third quarter of 2026, reflecting the strength of our premium customer base, success of our product refresh strategy and power of our differentiated Membership Model. We continued to see strong Card Member spend, new card acquisitions and customer retention, and excellent credit performance. ",
+      "entity": "AXP",
+      "document_report_date": "2026-09-30",
+      "document_period_start": "2026-07-01",
+      "form": "10-Q",
+      "published_at": "2026-10-23T16:26:51.000Z",
+      "publication_precision": "timestamp",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/4962/000000496226000409/axp-20260930.htm",
+      "snapshot_hash": "5b92b6270a3af3b993c334bc65d30bfd0484164c98075803d2198bed6853211a",
+      "snapshot_path": "snapshots/axp-20260930.htm",
+      "text_snapshot_path": "snapshots/axp-20260930.htm.txt",
+      "text_snapshot_hash": "ef693507486ba203d8840f2a5a45b68756b60f3a5b0ffa4214d35255921ca4b3",
+      "retrieved_at": "2026-11-16T16:20:53.736479+00:00",
+      "extraction_method": "All visible HTML tables and body in source order.",
+      "mode": "replay",
+      "document_id": "source_doc_e753f139bb38d7480d4b861d",
+      "start": 13078,
+      "end": 14822,
+      "retrieval_score": 16.803436429832885,
+      "retrieval_method": "bm25",
+      "kind": "document",
+      "period_start": null,
+      "period_end": null,
+      "locator": "snapshots/axp-20260930.htm.txt:characters[13078:14822] (zero-based Unicode offsets)",
+      "version": 1,
+      "created_at": "2026-11-16T16:26:17.430385+00:00",
+      "stale": false
+    },
+    {
+      "id": "chunk_8ffbe7ea37b6eb0858848bef",
+      "text": "higher net write-offs. Provision for Card balance credit losses increased for the nine month period, primarily driven by higher net write-offs, partially offset by a reserve release in the current period versus a reserve build in the prior period. The reserve releases in the current periods were primarily driven by lower delinquencies, partially offset by sequential increases in Card balances. The reserve builds in the prior periods were primarily driven by sequential increases in Card balances, partially offset by the release of a reserve upon the reclassification of a small business cobrand portfolio to Card balances HFS. The reserve build in the prior nine month period also reflected the macroeconomic outlook.\nProvision for other credit losses increased for the three month period, primarily due to higher net write-offs and a reserve release in the prior period. Provision for other credit losses decreased for the nine month period, primarily due to a reserve release in the current period versus a reserve build in the prior period. The reserve release in the current nine month period was primarily driven by the performance of small business loans. The reserve builds in the prior periods were primarily driven by sequential increases in Other loans.\nExpenses\nTotal expenses increased for both the three and nine month periods, primarily driven by higher Card Member rewards, Card Member services, Business development and Marketing expenses.\nCard Member rewards expense increased for both the three and nine month periods, primarily driven by increases in Membership Rewards expense due to changes to the Membership Rewards program for U.S. Business Platinum cards and higher billed business.\n",
+      "entity": "AXP",
+      "document_report_date": "2026-09-30",
+      "document_period_start": "2026-07-01",
+      "form": "10-Q",
+      "published_at": "2026-10-23T16:26:51.000Z",
+      "publication_precision": "timestamp",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/4962/000000496226000409/axp-20260930.htm",
+      "snapshot_hash": "5b92b6270a3af3b993c334bc65d30bfd0484164c98075803d2198bed6853211a",
+      "snapshot_path": "snapshots/axp-20260930.htm",
+      "text_snapshot_path": "snapshots/axp-20260930.htm.txt",
+      "text_snapshot_hash": "ef693507486ba203d8840f2a5a45b68756b60f3a5b0ffa4214d35255921ca4b3",
+      "retrieved_at": "2026-11-16T16:20:53.736479+00:00",
+      "extraction_method": "All visible HTML tables and body in source order.",
+      "mode": "replay",
+      "document_id": "source_doc_e753f139bb38d7480d4b861d",
+      "start": 43448,
+      "end": 45160,
+      "retrieval_score": 16.787820211681925,
+      "retrieval_method": "bm25",
+      "kind": "document",
+      "period_start": null,
+      "period_end": null,
+      "locator": "snapshots/axp-20260930.htm.txt:characters[43448:45160] (zero-based Unicode offsets)",
+      "version": 1,
+      "created_at": "2026-11-16T16:26:17.430787+00:00",
+      "stale": false
+    },
+    {
+      "id": "chunk_672726df128e0888e2db0ac2",
+      "text": "cards and provides services to select global corporate clients.\nTotal Revenues Net of Interest Expense\nNon-interest revenues increased for both the three and nine month periods, primarily driven by higher Discount revenue and Net card fees.\nDiscount revenue increased 4 percent for both the three and nine month periods, primarily driven by increases in commercial billed business. See Tables 5, 6 and 11 for more details on billed business performance.\nNet card fees increased 16 percent and 13 percent for the three and nine month periods, respectively, primarily driven by increases in the average fee per card of our premium card products, reflecting the impact of our product refreshes, and growth in our premium card portfolios.\nService fees and other revenue was relatively flat for the three month period and increased 4 percent for the nine month period. The increase for the nine month period was primarily driven by higher travel commissions and fees.\nInterest income increased for both the three and nine month periods, primarily driven by growth in revolving Card balances and higher interest rates.\nInterest expense decreased for both the three and nine month periods, primarily driven by lower interest rates, partially offset by a higher cost of funds due to segment net asset growth.\n12\nTable of Contents\nProvisions for Credit Losses\nProvision for Card balance credit losses decreased for the three month period, primarily due to a reserve release in the current period versus a reserve build in the prior period, partially offset by higher net write-offs. Provision for Card balance credit losses increased for the nine month period, primarily driven by higher net write-offs, partially offset by a reserve release in the current period versus a reserve build in the prior period. ",
+      "entity": "AXP",
+      "document_report_date": "2026-09-30",
+      "document_period_start": "2026-07-01",
+      "form": "10-Q",
+      "published_at": "2026-10-23T16:26:51.000Z",
+      "publication_precision": "timestamp",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/4962/000000496226000409/axp-20260930.htm",
+      "snapshot_hash": "5b92b6270a3af3b993c334bc65d30bfd0484164c98075803d2198bed6853211a",
+      "snapshot_path": "snapshots/axp-20260930.htm",
+      "text_snapshot_path": "snapshots/axp-20260930.htm.txt",
+      "text_snapshot_hash": "ef693507486ba203d8840f2a5a45b68756b60f3a5b0ffa4214d35255921ca4b3",
+      "retrieved_at": "2026-11-16T16:20:53.736479+00:00",
+      "extraction_method": "All visible HTML tables and body in source order.",
+      "mode": "replay",
+      "document_id": "source_doc_e753f139bb38d7480d4b861d",
+      "start": 41897,
+      "end": 43696,
+      "retrieval_score": 16.412166455428288,
+      "retrieval_method": "bm25",
+      "kind": "document",
+      "period_start": null,
+      "period_end": null,
+      "locator": "snapshots/axp-20260930.htm.txt:characters[41897:43696] (zero-based Unicode offsets)",
+      "version": 1,
+      "created_at": "2026-11-16T16:26:17.431185+00:00",
+      "stale": false
+    },
+    {
+      "id": "span_b21f75af80e96caabb6b6935",
+      "text": "lances on our credit card products and revolve-eligible balances on our charge card products, which included balances that Card Members paid in full as well as balances that Card Members paid over time with interest, and Card Member receivables represented balances on our charge card products that need to be paid in full on or before the Card Member’s payment due date. The updated Card balances presentation includes both revolve-eligible balances and balances that need to be paid in full, reflecting the evolution of our card products over time, primarily due to the expansion of lending features on our charge card portfolio, and is more consistent with industry convention. This presentation change has no impact on the recognition or measurement of outstanding Card balances and associated reserves for credit losses.\nForward-Looking Statements and Non-GAAP Measures\nCertain of the statements in this Form 10-Q are forward-looking statements within the meaning of the Private Securities Litigation Reform Act of 1995. Refer to the “Cautionary Note Regarding Forward-Looking Statements” section. We prepare our Consolidated Financial Statements in accordance with accounting principles generally accepted in the United States of America (GAAP). However, certain information included within this Form 10-Q constitutes non-GAAP financial measures. Our calculations of non-GAAP financial measures may differ from the calculations of similarly titled measures by other companies.\nBank Holding Company\nAmerican Express is a bank holding company under the Bank Holding Company Act of 1956 and the Board of Governors of the Federal Reserve System (the Federal Reserve) is our primary federal regulator. As such, we are subject to the Federal Reserve’s regulations, policies and minimum capital standards. We are also subject to evolving and extensive government regulation and supervision in jurisdictions around the world. See “Certain Legislative, Regulatory and Other Developments” for further information.\n1\nTable of Contents\nTable 1: Summary of Financial Performance\nAs of or for the Three Months Ended\nSeptember 30,\nChange\n2026 vs. 2025\nAs of or for the Nine Months Ended\nSeptember 30,\nChange\n2026 vs. 2025\n(Millions, except percentages, per share amounts and where indicated) 2026 2025 2026 2025\nSelected Income Statement Data\nTotal revenues net of interest expense $ 20,062 $ 18,426 $ 1,636 9 % $ 58,606 $ 53,249 $ 5,357 10 %\nTotal revenues net of interest expense (FX-adjusted) (a)\n18,413 1,649 9 53,503 5,103 10\nProvisions for credit losses 985 1,287 (302) (23) 3,320 3,842 (522) (14)\nTotal expenses 14,546 13,314 1,232 9 42,906 38,702 4,204 11\nPretax income 4,531 3,825 706 18 12,380 10,705 1,675 16\nIncome tax provision 819 923 (104) (11) 2,586 2,334 252 11\nNet income 3,712 2,902 810 28 9,794 8,371 1,423 17\nEarnings per common share — diluted (b)\n$ 5.42 $ 4.14 $ 1.28 31 % $ 14.22 $ 11.85 $ 2.37 20 %\nSelected Balance Sheet and Common Share Data\nCash and cash equivalents $ 43,203 $ 54,706 $ (11,503) (21) % $ 43,203 $ 54,706 $ (11,503) (21) %\nTotal Card balances and Other loans 233,153 216,355 16,798 8 233,153 216,355 16,798 8\nTotal Card balances and Other loans (FX-adjusted) (a)\n216,091 17,062 8 216,091 17,062 8\nAverage Card balances and Other loans 230,587 214,470 16,117 8 227,121 210,197 16,924 8\nCustomer deposits 155,019 149,883 5,136 3 155,019 149,883 5,136 3\nLong-term debt $ 58,538 $ 57,787 $ 751 1 $ 58,538 $ 57,787 $ 751 1\nAverage common shares outstanding — diluted 674 693 (19) (3) 680 698 (18) (3)\nCash dividends declared per common share $ 0.95 $ 0.82 $ 0.13 16 % $ 2.85 $ 2.46 $ 0.39 16 %\nSelected Metrics and Ratios\nNetwork volumes (billions)\n$ 517.9 $ 479.2 $ 39 8 % $ 1,521.0 $ 1,390.8 $ 130 9 %\nBilled business (billions)\n$ 454.0 421.0 33 8 $ 1,337.7 1,224.7 113 9\nBilled business (billions) (FX-adjusted) (a)\n$ 420.8 $ 33 8 % $ 1,231.3 $ 106 9 %\nNet interest yield (c)\n8.5 % 8.2 % 8.3 % 8.1 %\nCard balances\nNet write-off rate — principal, interest and fees (d)\n2.1 % 2.2 % 2.2 % 2.3 %\nNet write-off rate — principal only — consumer and small business (d)(e)\n1.8 % 1.9 % 1.9 % 2.0 %\n30+ days past due as a % of total — consumer and small business\n1.2 % 1.3 % 1.2 % 1.3 %\n90+ days past billing as a % of total — corporate (f)\n0.3 % 0.4 % 0.3 % 0.4 %\nEffective tax rate 18.1 % 24.1 % 20.9 % 21.8 %\nReturn on average equity (g)\n42.4 % 35.9 % 38.0 % 35.4 %\nCommon Equity Tier 1 10.9 % 10.5 % 10.9 % 10.5 %\n(a)The foreign currency adjusted information assumes a constant exchange rate between the periods being compared for purposes of currency conversion into U.S. dollars (i.e., assumes the foreign exchange rates used to determine results for the current period apply to the corresponding prior year period against which such results are being compared). FX-adjusted Total revenues net of interest expense and Total Card balances and Other loans are non-GAAP measures. We believe the presentation of information on a foreign currency adjusted basis is helpful to investors by making it easier to compare our performance in one period to that of another period without the variability caused by fluctuations in currency exchange rates.\n(b)Reflects net income, less (i) earnings allocated to participating share awards of $23 million and $20 million for the three months ended September 30, 2026 and 2025, respectively, and $62 million and $56 million for the nine months ended September 30, 2026 and 2025, respectively, (ii) dividends on preferred shares of $24 million and $14 million for the three months ended September 30, 2026 and 2025, respectively, and $53 million and $43 million for the nine months ended September 30, 2026 and 2025, respectively, and (iii) an equity-related adjustment of $16 million related to the redemption of preferred shares for both the three and nine months ended September 30, 2026. Refer to Note 13 and Note 14 to the “Consolidated Financial Statements” for further details on earnings per common share (EPS) and preferred share",
+      "entity": "AXP",
+      "document_report_date": "2026-09-30",
+      "document_period_start": "2026-07-01",
+      "form": "10-Q",
+      "published_at": "2026-10-23T16:26:51.000Z",
+      "publication_precision": "timestamp",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/4962/000000496226000409/axp-20260930.htm",
+      "snapshot_hash": "5b92b6270a3af3b993c334bc65d30bfd0484164c98075803d2198bed6853211a",
+      "snapshot_path": "snapshots/axp-20260930.htm",
+      "text_snapshot_path": "snapshots/axp-20260930.htm.txt",
+      "text_snapshot_hash": "ef693507486ba203d8840f2a5a45b68756b60f3a5b0ffa4214d35255921ca4b3",
+      "retrieved_at": "2026-11-16T16:20:53.736479+00:00",
+      "extraction_method": "All visible HTML tables and body in source order.",
+      "mode": "replay",
+      "document_id": "source_doc_e753f139bb38d7480d4b861d",
+      "kind": "document",
+      "start": 7000,
+      "end": 13000,
+      "period_start": null,
+      "period_end": null,
+      "locator": "snapshots/axp-20260930.htm.txt:characters[7000:13000] (zero-based Unicode offsets)",
+      "version": 1,
+      "created_at": "2026-11-16T16:26:22.307818+00:00",
+      "stale": false
+    }
+  ],
+  "calculations": [],
+  "issues": [],
+  "unanswered": [],
+  "verification_available": true,
+  "usage": {
+    "model_calls": 5,
+    "tool_calls": 2,
+    "planner_steps": 3,
+    "active_seconds": 77.51854229101446,
+    "total_tokens": 132801,
+    "total_tokens_reported_calls": 5,
+    "prompt_tokens": 128401,
+    "prompt_tokens_reported_calls": 5,
+    "completion_tokens": 4400,
+    "completion_tokens_reported_calls": 5,
+    "cached_input_tokens": 75756,
+    "cached_input_tokens_reported_calls": 5,
+    "cache_write_tokens": 29068,
+    "cache_write_tokens_reported_calls": 5,
+    "cache_write_30m_tokens": 29068,
+    "cache_write_30m_tokens_reported_calls": 5,
+    "cache_write_12h_tokens": 0,
+    "cache_write_12h_tokens_reported_calls": 5,
+    "reasoning_tokens": 39,
+    "reasoning_tokens_reported_calls": 5
+  },
+  "created_at": "2026-11-16T16:27:22.816136+00:00",
+  "research_skills": [],
+  "skill_selection_source": "planner",
+  "request_parts": {
+    "part-1": "你刚提到准备金释放。那持卡人的还款情况真的变好了吗，还是只是账上少提了？"
+  },
+  "request_coverage": [
+    {
+      "part": "part-1",
+      "status": "answered",
+      "claim_id": "claim:credit-quality-assessment",
+      "answer_sentence": "美国运通2026年第三季度的逾期率和净核销率同比温和改善；与此同时，卡余额净核销金额仍增加，准备释放则对信用损失费用下降起了重要作用。",
+      "supporting_claim_ids": [
+        "claim:credit-quality-assessment",
+        "claim:delinquency-comparison",
+        "claim:writeoff-rate-comparison",
+        "claim:card-credit-provision-components",
+        "claim:consolidated-credit-provision-scope",
+        "claim:quarterly-reserve-release-cause",
+        "claim:reserve-interpretation-and-limits"
+      ]
+    }
+  ],
+  "skill_fiscal_quarter": {
+    "entity": "AXP",
+    "quarter": "2026Q3",
+    "period_start": "2026-07-01",
+    "period_end": "2026-09-30",
+    "evidence_ids": [
+      "chunk_0cc4f8ec81ab82245c7c9ab2",
+      "chunk_f6625f7bd94d294c623a5532",
+      "span_b21f75af80e96caabb6b6935"
+    ]
+  },
+  "delivery_stage": "reviewed",
+  "episode_material_ids": {
+    "evidence": [
+      "chunk_0cc4f8ec81ab82245c7c9ab2",
+      "chunk_0d5b2222830bc9f85af37d2f",
+      "chunk_f6625f7bd94d294c623a5532",
+      "chunk_5ebad3058c63ee247f781cea",
+      "chunk_8ffbe7ea37b6eb0858848bef",
+      "chunk_672726df128e0888e2db0ac2",
+      "span_b21f75af80e96caabb6b6935"
+    ],
+    "calculations": []
+  },
+  "id": "44464c2f492c4793ad509e23507b01a4",
+  "version": 3,
+  "record_versions": {
+    "evidence": {
+      "metadata_286185e77f063ec7f55fd4c8": 1,
+      "span_3b74985e92f2fa70a68c88af": 1,
+      "span_4657ec4247a3a904927c380a": 1,
+      "chunk_09bf3a35fd22eaf7ac9789ae": 1,
+      "chunk_5a255fbc933ca3e7241888f6": 1,
+      "chunk_75110ca1960387a6d1147821": 1,
+      "chunk_0cc4f8ec81ab82245c7c9ab2": 1,
+      "chunk_0d5b2222830bc9f85af37d2f": 1,
+      "chunk_f6625f7bd94d294c623a5532": 1,
+      "chunk_5ebad3058c63ee247f781cea": 1,
+      "chunk_8ffbe7ea37b6eb0858848bef": 1,
+      "chunk_672726df128e0888e2db0ac2": 1,
+      "span_b21f75af80e96caabb6b6935": 1
+    },
+    "calculation": {},
+    "claim": {
+      "claim:latest-quarter": 2,
+      "claim:revenue": 2,
+      "claim:net-income": 2,
+      "claim:eps": 2,
+      "claim:adjustment": 2,
+      "claim:business-drivers": 2,
+      "claim:credit": 2,
+      "claim:expenses": 2,
+      "claim:tax": 2,
+      "claim:outlook": 2,
+      "claim:assessment": 2,
+      "claim:eps-comparison-basis": 2,
+      "claim:eps-adjustment-bridge": 2,
+      "claim:adjusted-growth-interpretation": 2,
+      "claim:credit-quality-assessment": 2,
+      "claim:delinquency-comparison": 2,
+      "claim:writeoff-rate-comparison": 2,
+      "claim:card-credit-provision-components": 2,
+      "claim:consolidated-credit-provision-scope": 2,
+      "claim:quarterly-reserve-release-cause": 2,
+      "claim:reserve-interpretation-and-limits": 2
+    }
+  }
+}

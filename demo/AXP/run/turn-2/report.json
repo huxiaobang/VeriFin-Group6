@@ -1,0 +1,410 @@
+{
+  "episode_id": "episode_1bc8ee25e95f42c8b8787968a2868c04",
+  "request": "你说每股盈利涨了 31%，调整后却只涨 13%。这两个数为什么差这么远？",
+  "status": "complete",
+  "stop_reason": "completed",
+  "scope": {
+    "cutoff": "2026-11-16",
+    "entities": [
+      "AXP"
+    ],
+    "requirements": [
+      {
+        "id": "request:episode_1bc8ee25e95f42c8b8787968a2868c04",
+        "text": "解释美国运通2026年第三季度报告EPS同比增长31%、调整后EPS增长13%的差异，核对两期比较基数及公司非GAAP调整项目，区分出售收益、相关重组成本与其他利润影响因素。"
+      }
+    ]
+  },
+  "scope_version": 6,
+  "summary": "核心是本季报告盈利包含了GBTG股权出售收益，而调整后口径剔除了这笔收益，同时加回相关重组费用。公司附录的调节为：5.42－1.11＋0.37＝4.68美元/股；去年同期两种口径都是4.14美元，所以不是比较基数不同。13%比31%少了这组特定项目的影响，但仍不能视为剔除所有非持续因素后的经营增速。",
+  "summary_kind": "unverified_researcher_draft",
+  "model_mode": "configured_model",
+  "claims": [
+    {
+      "id": "claim:eps-comparison-basis",
+      "text": "美国运通2026年第三季度报告摊薄EPS为5.42美元，同比增长31%；公司非GAAP调整后EPS为4.68美元，同比增长13%。2025年第三季度两种口径均为4.14美元，因此增速差异不是比较基数不同，而是本季是否剔除特定项目。",
+      "evidence_ids": [
+        "chunk_5a255fbc933ca3e7241888f6"
+      ],
+      "calculation_ids": [],
+      "requirement_ids": [
+        "request:episode_1bc8ee25e95f42c8b8787968a2868c04"
+      ],
+      "constraints": {
+        "entity": "AXP",
+        "period_start": "2026-07-01",
+        "period_end": "2026-09-30",
+        "comparison_period_start": "2025-07-01",
+        "comparison_period_end": "2025-09-30",
+        "basis": "GAAP摊薄EPS与公司非GAAP调整后摊薄EPS",
+        "currency": "USD",
+        "unit": "美元/股",
+        "business_scope": "合并"
+      },
+      "status": "Supported",
+      "scope_version": 6,
+      "evidence_versions": {
+        "chunk_5a255fbc933ca3e7241888f6": 1
+      },
+      "calculation_versions": {},
+      "critic_verdict": {
+        "claim_id": "claim:eps-comparison-basis",
+        "status": "Supported",
+        "evidence_refs": [
+          "chunk_5a255fbc933ca3e7241888f6"
+        ],
+        "basis": "附录I截至9月30日的季度栏明确列示：2026年GAAP摊薄EPS为5.42美元、同比增长31%，调整后为4.68美元、同比增长13%；2025年两种口径均为4.14美元。因此比较基数相同，差异来自本期调整项目。草稿使用的是季度数据，而非相邻的九个月累计数据，期间、美元每股单位及公司整体口径一致。"
+      },
+      "version": 2,
+      "created_at": "2026-11-16T16:25:40.909300+00:00",
+      "stale": false,
+      "display_check": {
+        "method": "source_review",
+        "label": "核验方式为原文审读，数字与期间、指标的对应关系需结合引文判断。"
+      }
+    },
+    {
+      "id": "claim:eps-adjustment-bridge",
+      "text": "差距主要来自出售GBTG股权带来的收益，但还要同时处理相关重组费用。公司附录列示的税后每股调节关系为：报告EPS 5.42美元－GBTG出售收益1.11美元＋重组费用0.37美元＝调整后EPS 4.68美元。也就是说，调整时既剔除出售收益，也加回重组费用，不能把出售收益全额当作两种EPS的差额；上述为公司披露的每股调节数。",
+      "evidence_ids": [
+        "chunk_5a255fbc933ca3e7241888f6"
+      ],
+      "calculation_ids": [],
+      "requirement_ids": [
+        "request:episode_1bc8ee25e95f42c8b8787968a2868c04"
+      ],
+      "constraints": {
+        "entity": "AXP",
+        "period_start": "2026-07-01",
+        "period_end": "2026-09-30",
+        "basis": "公司附录I披露的GAAP至非GAAP税后每股调节",
+        "currency": "USD",
+        "unit": "美元/股",
+        "business_scope": "合并"
+      },
+      "status": "Supported",
+      "scope_version": 6,
+      "evidence_versions": {
+        "chunk_5a255fbc933ca3e7241888f6": 1
+      },
+      "calculation_versions": {},
+      "critic_verdict": {
+        "claim_id": "claim:eps-adjustment-bridge",
+        "status": "Supported",
+        "evidence_refs": [
+          "chunk_5a255fbc933ca3e7241888f6"
+        ],
+        "basis": "附录I季度EPS调节表将GBTG出售收益的税后调整列为负1.11美元，将重组费用的税后调整列为正0.37美元，最终调整后EPS为4.68美元。草稿所列5.42－1.11＋0.37＝4.68与原表及算术一致，正确区分剔除收益与加回费用，没有将全部出售收益误作两种EPS的净差额。"
+      },
+      "version": 2,
+      "created_at": "2026-11-16T16:25:40.910078+00:00",
+      "stale": false,
+      "display_check": {
+        "method": "source_review",
+        "label": "核验方式为原文审读，数字与期间、指标的对应关系需结合引文判断。"
+      }
+    },
+    {
+      "id": "claim:adjusted-growth-interpretation",
+      "text": "13%也不等于“完全剔除所有非持续因素后的经营增速”。本次公司非GAAP调节仅针对GBTG出售收益及相关重组费用；较低有效税率、准备金释放和平均摊薄股数下降并未作为单独项目剔除。公告另称，本季税率下降主要反映解决以前期间税务事项带来的离散税收利益，信用损失准备费用下降则反映本季释放准备金、上年同期增提准备金等因素。因此，13%应理解为公司特定调整口径下的EPS增速，而不是纯粹的基础经营增长率。",
+      "evidence_ids": [
+        "chunk_5a255fbc933ca3e7241888f6",
+        "span_3b74985e92f2fa70a68c88af"
+      ],
+      "calculation_ids": [],
+      "requirement_ids": [
+        "request:episode_1bc8ee25e95f42c8b8787968a2868c04"
+      ],
+      "constraints": {
+        "entity": "AXP",
+        "period_start": "2026-07-01",
+        "period_end": "2026-09-30",
+        "basis": "公司非GAAP调整范围；其他因素的说明来自公告，未量化各自增长贡献",
+        "business_scope": "合并",
+        "interpretation": "对调整口径局限的分析，不将管理层解释视为独立因果验证"
+      },
+      "status": "Supported",
+      "scope_version": 6,
+      "evidence_versions": {
+        "chunk_5a255fbc933ca3e7241888f6": 1,
+        "span_3b74985e92f2fa70a68c88af": 1
+      },
+      "calculation_versions": {},
+      "critic_verdict": {
+        "claim_id": "claim:adjusted-growth-interpretation",
+        "status": "Supported",
+        "evidence_refs": [
+          "chunk_5a255fbc933ca3e7241888f6",
+          "span_3b74985e92f2fa70a68c88af"
+        ],
+        "basis": "附录I的非GAAP调节仅列GBTG出售收益、重组费用及各自税项，未另行剔除有效税率变化、准备金释放或股数变化。公告季度表显示平均摊薄股数由693百万股降至674百万股；正文将有效税率下降主要归于解决以前期间税务事项产生的离散税收利益，并说明信用损失准备费用下降反映本期释放准备金、上年同期增提准备金，且较高净核销构成部分抵消。草稿以“等因素”保留解释的非穷尽性，未虚构贡献金额；据此提示13%并非完全排除所有非持续因素后的基础经营增速，边界恰当。"
+      },
+      "version": 2,
+      "created_at": "2026-11-16T16:25:40.910877+00:00",
+      "stale": false,
+      "display_check": {
+        "method": "source_review",
+        "label": "核验方式为原文审读，数字与期间、指标的对应关系需结合引文判断。"
+      }
+    }
+  ],
+  "evidence": [
+    {
+      "id": "metadata_286185e77f063ec7f55fd4c8",
+      "kind": "source_metadata",
+      "entity": "AXP",
+      "text": "Finite local replay catalog for AXP: 4 eligible document(s) at cutoff 2026-11-16, newest publication first. Catalog metadata only.\n10-Q | document report date 2026-09-30 | published_at 2026-10-23T16:26:51.000Z (SEC EDGAR acceptance 0000004962-26-000409) | https://www.sec.gov/Archives/edgar/data/4962/000000496226000409/axp-20260930.htm\n8-K Exhibit 99.1 | document report date 2026-09-30 | published_at 2026-10-23T11:00:36.000Z (SEC EDGAR acceptance 0000004962-26-000405) | https://www.sec.gov/Archives/edgar/data/4962/000000496226000405/q326exhibit991.htm\n10-Q | document report date 2026-06-30 | published_at 2026-07-24T16:00:43.000Z (SEC EDGAR acceptance 0000004962-26-000322) | https://www.sec.gov/Archives/edgar/data/4962/000000496226000322/axp-20260630.htm\n10-K | document report date 2025-12-31 | published_at 2026-02-06T17:31:47.000Z (SEC EDGAR acceptance 0000004962-26-000080) | https://www.sec.gov/Archives/edgar/data/4962/000000496226000080/axp-20251231.htm",
+      "source_url": "manifest.json",
+      "snapshot_hash": "794232138fd621b28aeebb63d1b7c5b4c6cc5ba59533af7e631ca281132b19a3",
+      "snapshot_path": "manifest.json",
+      "locator": "documents[0], documents[3], documents[1], documents[2]",
+      "published_at": "2026-11-16",
+      "publication_basis": "effective availability of filtered metadata preview",
+      "coverage_cutoff": "2026-11-16",
+      "retrieved_at": null,
+      "mode": "replay",
+      "version": 1,
+      "created_at": "2026-11-16T16:22:44.350225+00:00",
+      "stale": false
+    },
+    {
+      "id": "span_3b74985e92f2fa70a68c88af",
+      "text": "EX-99.1\n2\nq326exhibit991.htm\nEX-99.1\nDocument\nEXHIBIT 99.1\nNew York | October 23, 2026\nAMERICAN EXPRESS\nQ3 2026 RESULTS\nAMERICAN EXPRESS RAISES FY 2026 EARNINGS PER SHARE GUIDANCE\nCOMPANY DELIVERED RECORD Q3 REVENUE OF $20.1 BILLION, UP 9% YOY\nQ3 EPS ROSE 31% TO $5.42, OR 13% TO $4.68 ON AN ADJUSTED BASIS1\n(Millions, except per share amounts, and where indicated)\nQuarters Ended\nSeptember 30,\nYoY%\nInc/(Dec)\nNine Months Ended\nSeptember 30,\nYoY%\nInc/(Dec)\n2026\n2025\n2026\n2025\nBilled Business (Billions)\nFX-adjusted2\n$454.0\n$421.0\n$420.8\n8%\n8%\n$1,337.7\n$1,224.7\n$1,231.3\n9%\n9%\nTotal Revenues Net of Interest Expense\nFX-adjusted2\n$20,062\n$18,426\n$18,413\n9%\n9%\n$58,606\n$53,249\n$53,503\n10%\n10%\nPretax Income\n$4,531\n$3,825\n18%\n$12,380\n$10,705\n16%\nNet Income\n$3,712\n$2,902\n28%\n$9,794\n$8,371\n17%\nDiluted Earnings Per Common Share (EPS)3\n$5.42\n$4.14\n31%\n$14.22\n$11.85\n20%\nAdjusted EPS1\n$4.68\n$4.14\n13%\n$13.49\n$11.85\n14%\nAverage Diluted Common Shares Outstanding\n674\n693\n(3)%\n680\n698\n(3)%\nAmerican Express Company (NYSE: AXP) today reported third-quarter 2026 net income of $3.7 billion, compared with net income of $2.9 billion a year ago. Earnings per share was $5.42, up 31 percent from $4.14 a year ago. Adjusted net income was $3.2 billion, or $4.68 per share, which excludes the $982 million pre-tax gain ($751 million after-tax) from the previously-announced sale of the company's equity interest in Global Business Travel Group, Inc. (GBTG), net of the portion of the gain used to fund restructuring related to efficiency initiatives.1\nStephen J. Squeri | Chairman and Chief Executive Officer\n“We had another strong quarter, delivering 9 percent revenue growth and EPS of $5.42, or $4.68 adjusted, up 13 percent year-over-year.1 Our business momentum continues, with strength in billings, new acquisitions and Card Member retention, and excellent credit quality.\n“Given our performance year-to-date, we are raising our full-year EPS guidance to between $18.30 and $18.60 ($17.60-$17.90 adjusted),4 and we're on track to deliver another year of 10 percent revenue growth.\n“The progress we’re making across the business and ongoing innovations to enhance our Membership Model give me great confidence in our ability to deliver differentiated value for our customers and strong returns for our shareholders over the long term.”\n1\nAMERICAN EXPRESS Q3 2026 RESULTS\nThird-Quarter 2026 Results\nBusiness Highlights\nThird-quarter consolidated total revenues net of interest expense were $20.1 billion, up 9 percent year-over-year. The increase was primarily driven by higher Card Member spending, increased net interest income supported by growth in card balances, and strong card fee growth.\nConsolidated provisions for credit losses were $1.0 billion, compared with $1.3 billion a year ago. The decrease reflected a reserve release during the quarter compared to a reserve build in the prior year, partially offset by higher net write-offs. The third-quarter net write-off rate was 1.8 percent, down from 1.9 percent a year ago.5\nConsolidated expenses were $14.5 billion, up 9 percent year-over-year. The increase was primarily driven by higher variable customer engagement costs due to increased Card Member spending and the U.S. Platinum Card® refresh, partially offset by lower operating expenses. The decrease in operating expenses was primarily driven by the GBTG sale gain, partially offset by an increase in legal reserves for previously-disclosed matters, and restructuring costs.\nThe consolidated effective tax rate was 18.1 percent, down from 24.1 percent a year ago, primarily reflecting discrete tax benefits in the current year related to the resolution of certain prior-period tax items.\n•American Express launched the next generation of Amex Corporate™, with new integrated Expense Management software and Amex Expense mobile app, along with new Corporate Cashback® Cards.\n•The company introduced a new American Express Business Savings account, expanding its banking offerings for businesses.\n•American Express extended its long-term strategic partnership with Marriott International, including the U.S. cobrand cards.\n•American Express launched an exclusive partnership with Airbnb, bringing over one million listings globally to Amex Travel and expanding travel benefits for eligible U.S. Card Members.\n•The company announced Resy integrations, including with OpenAI, and released the Intent Intelligence framework for trusted agentic commerce.\n•Card acceptance reached more than 190 million merchant locations worldwide, with acceptance outside the U.S. more than doubling over the past four years.6\n•The company opened its newest Centurion Lounge at Amsterdam Airport Schiphol to bring the total to 33 locations, and announced expansions in four locations, including a new 30,000-sq.ft. lounge at Newark Liberty International Airport, its largest to date.\n•The company ranked #1 issuer in the JD Power 2026 U.S. Credit Card Satisfaction Study℠ for the seventh consecutive year.\n# # #\nThis earnings release should be read in conjunction with the supplemental financial data for the third quarter 2026 (the statistical tables), which include information regarding our reportable operating segments and certain defined terms used in this release, available on the American Express Investor Relations website at http://ir.americanexpress.com and in a Form 8-K furnished today with the Securities and Exchange Commission.\nAn investor conference call will be held at 8:30 a.m. (ET) today to discuss third-quarter 2026 results. Live audio and presentation slides for the investor conference call will be available to the general public on the above-mentioned American Express Investor Relations website. A replay of the conference call will be available at the same website address following the call.\n2\nAMERICAN EXPRESS Q3 2026 RESULTS\n1\nAdjusted Net Income and adjusted diluted earnings per common share are non-GAAP measures and exclude the impact of the gain from the sale of the company's ",
+      "entity": "AXP",
+      "document_report_date": "2026-09-30",
+      "document_period_start": "2026-07-01",
+      "form": "8-K Exhibit 99.1",
+      "published_at": "2026-10-23T11:00:36.000Z",
+      "publication_precision": "timestamp",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/4962/000000496226000405/q326exhibit991.htm",
+      "snapshot_hash": "19053fbfc0e231460d39f697ac44c76e16acf71d71108d8dfba0380f47bbef38",
+      "snapshot_path": "snapshots/q326exhibit991.htm",
+      "text_snapshot_path": "snapshots/q326exhibit991.htm.txt",
+      "text_snapshot_hash": "c55763d494ac2b1ad5a4c2f8e5502cf5801454c64cce2a2abbcbfa217140637a",
+      "retrieved_at": "2026-11-16T16:21:18.730518+00:00",
+      "extraction_method": "All visible HTML tables and body in source order.",
+      "mode": "replay",
+      "document_id": "source_doc_dcbdedf0ae2a1c1306b321fb",
+      "kind": "document",
+      "start": 0,
+      "end": 6000,
+      "period_start": null,
+      "period_end": null,
+      "locator": "snapshots/q326exhibit991.htm.txt:characters[0:6000] (zero-based Unicode offsets)",
+      "version": 1,
+      "created_at": "2026-11-16T16:22:54.130784+00:00",
+      "stale": false
+    },
+    {
+      "id": "span_4657ec4247a3a904927c380a",
+      "text": " website. A replay of the conference call will be available at the same website address following the call.\n2\nAMERICAN EXPRESS Q3 2026 RESULTS\n1\nAdjusted Net Income and adjusted diluted earnings per common share are non-GAAP measures and exclude the impact of the gain from the sale of the company's equity investment in GBTG, net of a restructuring charge. See Appendix I for a reconciliation to Net Income and EPS on a GAAP basis. Management believes adjusted Net Income and adjusted EPS are useful in evaluating the ongoing operating performance of the company.\n2\nAs used in this release, FX-adjusted information assumes a constant exchange rate between the periods being compared for purposes of currency translations into U.S. dollars (i.e., assumes the foreign exchange rates used to determine results for current period apply to the corresponding prior-year period against which such results are being compared). FX-adjusted revenues is a non-GAAP measure. The company believes the presentation of information on an FX-adjusted basis is helpful to investors by making it easier to compare the company’s performance in one period to that of another period without the variability caused by fluctuations in currency exchange rates.\n3\nAttributable to common shareholders. Represents net income less earnings allocated to participating share awards, dividends on preferred shares and other items. Refer to the statistical tables for more information.\n4\nThe company’s adjusted EPS outlook, a non-GAAP measure, excludes the impact of the gain from the sale of the company's equity investment in GBTG, net of a restructuring charge. See Appendix I for a reconciliation to EPS outlook on a GAAP basis. Management believes the presentation of adjusted EPS guidance is useful in evaluating the ongoing operating performance of the company.\n5\nNet write-off rates are based on principal losses only (i.e., excluding interest and/or fees) and represent consumer and small business card balances (unavailable for corporate). Refer to the statistical tables for more information and net write-off rates including interest and fees.\n6\nLocations in force (LIF) estimate as of July 2026, including an estimated 80 million Merchants that accept American Express in China and Brazil (including through digital wallets). LIF represents proprietary and partner acquired Merchant locations where the Merchant is enabled to accept American Express. LIF estimates incorporate data provided to us by certain third parties and include Merchants that accept American Express through payment facilitators and digital wallets.\n# # #\nMedia Contacts:\nAmanda Miller, Amanda.C.Miller@aexp.com, +1.408.219.0563\nDeniz Yigin, Deniz.Yigin@aexp.com, +1.332.999.0836\nInvestors/Analysts Contacts:\nKartik Ramachandran, Kartik.Ramachandran@aexp.com, +1.212.640.5574\nDanielle Gilmartin, Danielle.Gilmartin@aexp.com, +1.212.640.5574\nABOUT AMERICAN EXPRESS\nAmerican Express (NYSE: AXP) is a global payments and premium lifestyle brand powered by technology. Our colleagues around the world back our customers with differentiated products, services, and experiences that enrich lives and build business success.\nFounded in 1850 and headquartered in New York, American Express’ brand is built on trust, security, service, and a rich history of delivering innovation and Membership value for our customers. We seek to provide the world’s best customer experience every day to a broad range of consumers, small and medium-sized businesses, and large corporations, and we build and manage relationships with millions of merchants across our global network.\nFor more information about American Express, visit americanexpress.com, americanexpress.com/en-us/newsroom/, and ir.americanexpress.com.\n3\nAMERICAN EXPRESS Q3 2026 RESULTS\nCAUTIONARY NOTE REGARDING FORWARD-LOOKING STATEMENTS\nThis release includes forward-looking statements within the meaning of the Private Securities Litigation Reform Act of 1995, which are subject to risks and uncertainties. The forward-looking statements, which address American Express Company’s current expectations regarding business and financial performance, including management’s guidance for 2026, among other matters, contain words such as “believe,” “expect,” “anticipate,” “intend,” “plan,” “aim,” “will,” “may,” “should,” “could,” “would,” “likely,” “continue” and similar expressions. Readers are cautioned not to place undue reliance on these forward-looking statements, which speak only as of the date on which they are made. The company undertakes no obligation to update or revise any forward-looking statements. Factors that could cause actual results to differ materially from these forward-looking statements include, but are not limited to, those that are set forth under the caption “Cautionary Note Regarding Forward-Looking Statements” in the company’s current report on Form 8-K filed with the Securities and Exchange Commission (SEC) on October 23, 2026 (the Form 8-K Cautionary Note), which are incorporated by reference into this release. Those factors include, but are not limited to, the following:\n•the company’s ability to achieve its 2026 earnings per common share (EPS) guidance and grow EPS in the future, which will depend in part on revenue growth, credit performance, credit reserve and expense levels and the effective tax rate remaining consistent with current expectations and the company’s ability to continue investing in growth initiatives (such as its brand, value propositions, coverage, marketing, technology, partnerships and talent), controlling operating expenses, effectively managing risk and executing its share repurchase program, any of which could be impacted by, among other things, the factors identified in the subsequent paragraph and the Form 8-K Cautionary Note, as well as the following: macroeconomic and geopolitical conditions, including a slowdown in U.S. or global economic growth, changes to consumer and business confidence, higher rates of unem",
+      "entity": "AXP",
+      "document_report_date": "2026-09-30",
+      "document_period_start": "2026-07-01",
+      "form": "8-K Exhibit 99.1",
+      "published_at": "2026-10-23T11:00:36.000Z",
+      "publication_precision": "timestamp",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/4962/000000496226000405/q326exhibit991.htm",
+      "snapshot_hash": "19053fbfc0e231460d39f697ac44c76e16acf71d71108d8dfba0380f47bbef38",
+      "snapshot_path": "snapshots/q326exhibit991.htm",
+      "text_snapshot_path": "snapshots/q326exhibit991.htm.txt",
+      "text_snapshot_hash": "c55763d494ac2b1ad5a4c2f8e5502cf5801454c64cce2a2abbcbfa217140637a",
+      "retrieved_at": "2026-11-16T16:21:18.730518+00:00",
+      "extraction_method": "All visible HTML tables and body in source order.",
+      "mode": "replay",
+      "document_id": "source_doc_dcbdedf0ae2a1c1306b321fb",
+      "kind": "document",
+      "start": 5700,
+      "end": 11700,
+      "period_start": null,
+      "period_end": null,
+      "locator": "snapshots/q326exhibit991.htm.txt:characters[5700:11700] (zero-based Unicode offsets)",
+      "version": 1,
+      "created_at": "2026-11-16T16:24:35.987078+00:00",
+      "stale": false
+    },
+    {
+      "id": "chunk_09bf3a35fd22eaf7ac9789ae",
+      "text": "2\nAMERICAN EXPRESS Q3 2026 RESULTS\n1\nAdjusted Net Income and adjusted diluted earnings per common share are non-GAAP measures and exclude the impact of the gain from the sale of the company's equity investment in GBTG, net of a restructuring charge. See Appendix I for a reconciliation to Net Income and EPS on a GAAP basis. Management believes adjusted Net Income and adjusted EPS are useful in evaluating the ongoing operating performance of the company.\n2\nAs used in this release, FX-adjusted information assumes a constant exchange rate between the periods being compared for purposes of currency translations into U.S. dollars (i.e., assumes the foreign exchange rates used to determine results for current period apply to the corresponding prior-year period against which such results are being compared). FX-adjusted revenues is a non-GAAP measure. The company believes the presentation of information on an FX-adjusted basis is helpful to investors by making it easier to compare the company’s performance in one period to that of another period without the variability caused by fluctuations in currency exchange rates.\n3\nAttributable to common shareholders. Represents net income less earnings allocated to participating share awards, dividends on preferred shares and other items. Refer to the statistical tables for more information.\n4\nThe company’s adjusted EPS outlook, a non-GAAP measure, excludes the impact of the gain from the sale of the company's equity investment in GBTG, net of a restructuring charge. See Appendix I for a reconciliation to EPS outlook on a GAAP basis. Management believes the presentation of adjusted EPS guidance is useful in evaluating the ongoing operating performance of the company.\n",
+      "entity": "AXP",
+      "document_report_date": "2026-09-30",
+      "document_period_start": "2026-07-01",
+      "form": "8-K Exhibit 99.1",
+      "published_at": "2026-10-23T11:00:36.000Z",
+      "publication_precision": "timestamp",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/4962/000000496226000405/q326exhibit991.htm",
+      "snapshot_hash": "19053fbfc0e231460d39f697ac44c76e16acf71d71108d8dfba0380f47bbef38",
+      "snapshot_path": "snapshots/q326exhibit991.htm",
+      "text_snapshot_path": "snapshots/q326exhibit991.htm.txt",
+      "text_snapshot_hash": "c55763d494ac2b1ad5a4c2f8e5502cf5801454c64cce2a2abbcbfa217140637a",
+      "retrieved_at": "2026-11-16T16:21:18.730518+00:00",
+      "extraction_method": "All visible HTML tables and body in source order.",
+      "mode": "replay",
+      "document_id": "source_doc_dcbdedf0ae2a1c1306b321fb",
+      "start": 5808,
+      "end": 7537,
+      "retrieval_score": 11.034122953188419,
+      "retrieval_method": "bm25",
+      "kind": "document",
+      "period_start": null,
+      "period_end": null,
+      "locator": "snapshots/q326exhibit991.htm.txt:characters[5808:7537] (zero-based Unicode offsets)",
+      "version": 1,
+      "created_at": "2026-11-16T16:24:44.241522+00:00",
+      "stale": false
+    },
+    {
+      "id": "chunk_5a255fbc933ca3e7241888f6",
+      "text": "increased surcharging, steering, suppression or other differential acceptance practices with respect to the company’s products; merchant discount rates changing from the company’s expectations; and changes in foreign currency exchange rates.\nA further description of these uncertainties and other risks can be found in American Express Company’s Annual Report on Form 10-K for the year ended December 31, 2025, Quarterly Reports on Form 10-Q for the quarters ended March 31 and June 30, 2026 and the company’s other reports filed with the SEC, including in the Form 8-K Cautionary Note.\n4\nAMERICAN EXPRESS Q3 2026 RESULTS\nAmerican Express Company\nAppendix I\nReconciliation of Adjusted EPS\nQuarters Ended\nSeptember 30,\nYoY%\nInc/(Dec)\nNine Months Ended\nSeptember 30,\nYoY%\nInc/(Dec)\n2026\n2025\n2026\n2025\nGAAP Diluted EPS\n$5.42\n$4.14\n31%\n$14.22\n$11.85\n20%\nGBTG Gain on Sale (pretax)\n$(1.45)\n$(1.44)\nTax Impact of GBTG Gain on Sale\n$0.34\n$0.34\nGBTG Gain on Sale (after tax)\n$(1.11)\n$(1.10)\nRestructuring Charge (pretax)\n$0.49\n$0.49\nTax Impact of Restructuring Charge\n$(0.12)\n$(0.12)\nRestructuring Charge (after tax)\n$0.37\n$0.37\nAdjusted Diluted EPS\n$4.68\n$4.14\n13%\n$13.49\n$11.85\n14%\nReconciliation of Adjusted Net Income\n$ in millions - amounts may not sum due to rounding\nQuarters Ended\nSeptember 30,\nYoY%\nInc/(Dec)\nNine Months Ended\nSeptember 30,\nYoY%\nInc/(Dec)\n2026\n2025\n2026\n2025\nGAAP Net Income\n$3,712\n$2,902\n28%\n$9,794\n$8,371\n17%\nGBTG Gain on Sale (pretax)\n$(982)\n$(982)\nTax Impact of GBTG Gain on Sale\n$230\n$230\nGBTG Gain on Sale (after tax)\n$(751)\n$(751)\nRestructuring Charge (pretax)\n$336\n$336\nTax Impact of Restructuring Charge\n$(84)\n$(84)\nRestructuring Charge (after tax)\n$253\n$253\nAdjusted Net Income\n$3,214\n$2,902\n11%\n$9,296\n$8,371\n11%\nReconciliation of Adjusted EPS Guidance\nAmounts may not ",
+      "entity": "AXP",
+      "document_report_date": "2026-09-30",
+      "document_period_start": "2026-07-01",
+      "form": "8-K Exhibit 99.1",
+      "published_at": "2026-10-23T11:00:36.000Z",
+      "publication_precision": "timestamp",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/4962/000000496226000405/q326exhibit991.htm",
+      "snapshot_hash": "19053fbfc0e231460d39f697ac44c76e16acf71d71108d8dfba0380f47bbef38",
+      "snapshot_path": "snapshots/q326exhibit991.htm",
+      "text_snapshot_path": "snapshots/q326exhibit991.htm.txt",
+      "text_snapshot_hash": "c55763d494ac2b1ad5a4c2f8e5502cf5801454c64cce2a2abbcbfa217140637a",
+      "retrieved_at": "2026-11-16T16:21:18.730518+00:00",
+      "extraction_method": "All visible HTML tables and body in source order.",
+      "mode": "replay",
+      "document_id": "source_doc_dcbdedf0ae2a1c1306b321fb",
+      "start": 14373,
+      "end": 16172,
+      "retrieval_score": 9.413778731893,
+      "retrieval_method": "bm25",
+      "kind": "document",
+      "period_start": null,
+      "period_end": null,
+      "locator": "snapshots/q326exhibit991.htm.txt:characters[14373:16172] (zero-based Unicode offsets)",
+      "version": 1,
+      "created_at": "2026-11-16T16:24:44.241939+00:00",
+      "stale": false
+    },
+    {
+      "id": "chunk_75110ca1960387a6d1147821",
+      "text": "\n$(751)\nRestructuring Charge (pretax)\n$336\n$336\nTax Impact of Restructuring Charge\n$(84)\n$(84)\nRestructuring Charge (after tax)\n$253\n$253\nAdjusted Net Income\n$3,214\n$2,902\n11%\n$9,296\n$8,371\n11%\nReconciliation of Adjusted EPS Guidance\nAmounts may not sum due to rounding\nFY’25\nFY’26 Guidance Range\nYoY%\nInc/(Dec)\nGAAP Diluted EPS\n$15.38\n$18.30\n$18.60\n19%\n21%\nGBTG Gain on Sale (after tax)\n$(1.10)\n$(1.10)\nRestructuring Charge (after tax)\n$0.37\n$0.37\nAdjusted Diluted EPS\n$15.38\n$17.60\n$17.90\n14%\n16%\n5\n",
+      "entity": "AXP",
+      "document_report_date": "2026-09-30",
+      "document_period_start": "2026-07-01",
+      "form": "8-K Exhibit 99.1",
+      "published_at": "2026-10-23T11:00:36.000Z",
+      "publication_precision": "timestamp",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/4962/000000496226000405/q326exhibit991.htm",
+      "snapshot_hash": "19053fbfc0e231460d39f697ac44c76e16acf71d71108d8dfba0380f47bbef38",
+      "snapshot_path": "snapshots/q326exhibit991.htm",
+      "text_snapshot_path": "snapshots/q326exhibit991.htm.txt",
+      "text_snapshot_hash": "c55763d494ac2b1ad5a4c2f8e5502cf5801454c64cce2a2abbcbfa217140637a",
+      "retrieved_at": "2026-11-16T16:21:18.730518+00:00",
+      "extraction_method": "All visible HTML tables and body in source order.",
+      "mode": "replay",
+      "document_id": "source_doc_dcbdedf0ae2a1c1306b321fb",
+      "start": 15922,
+      "end": 16423,
+      "retrieval_score": 7.219417332772837,
+      "retrieval_method": "bm25",
+      "kind": "document",
+      "period_start": null,
+      "period_end": null,
+      "locator": "snapshots/q326exhibit991.htm.txt:characters[15922:16423] (zero-based Unicode offsets)",
+      "version": 1,
+      "created_at": "2026-11-16T16:24:44.242261+00:00",
+      "stale": false
+    }
+  ],
+  "calculations": [],
+  "issues": [],
+  "unanswered": [],
+  "verification_available": true,
+  "usage": {
+    "model_calls": 5,
+    "tool_calls": 2,
+    "planner_steps": 3,
+    "active_seconds": 71.3339393340284,
+    "total_tokens": 89612,
+    "total_tokens_reported_calls": 5,
+    "prompt_tokens": 86583,
+    "prompt_tokens_reported_calls": 5,
+    "completion_tokens": 3029,
+    "completion_tokens_reported_calls": 5,
+    "cached_input_tokens": 46478,
+    "cached_input_tokens_reported_calls": 5,
+    "cache_write_tokens": 19063,
+    "cache_write_tokens_reported_calls": 5,
+    "cache_write_30m_tokens": 19063,
+    "cache_write_30m_tokens_reported_calls": 5,
+    "cache_write_12h_tokens": 0,
+    "cache_write_12h_tokens_reported_calls": 5,
+    "reasoning_tokens": 276,
+    "reasoning_tokens_reported_calls": 5
+  },
+  "created_at": "2026-11-16T16:25:40.928374+00:00",
+  "research_skills": [],
+  "skill_selection_source": "planner",
+  "request_parts": {
+    "part-1": "你说每股盈利涨了 31%，调整后却只涨 13%。这两个数为什么差这么远？"
+  },
+  "request_coverage": [
+    {
+      "part": "part-1",
+      "status": "answered",
+      "claim_id": "claim:eps-adjustment-bridge",
+      "answer_sentence": "公司附录列示的税后每股调节关系为：报告EPS 5.42美元－GBTG出售收益1.11美元＋重组费用0.37美元＝调整后EPS 4.68美元。",
+      "supporting_claim_ids": [
+        "claim:eps-comparison-basis",
+        "claim:eps-adjustment-bridge",
+        "claim:adjusted-growth-interpretation"
+      ]
+    }
+  ],
+  "skill_fiscal_quarter": {
+    "entity": "AXP",
+    "quarter": "2026Q3",
+    "period_start": "2026-07-01",
+    "period_end": "2026-09-30",
+    "evidence_ids": [
+      "chunk_5a255fbc933ca3e7241888f6"
+    ]
+  },
+  "delivery_stage": "reviewed",
+  "episode_material_ids": {
+    "evidence": [
+      "span_4657ec4247a3a904927c380a",
+      "chunk_09bf3a35fd22eaf7ac9789ae",
+      "chunk_5a255fbc933ca3e7241888f6",
+      "chunk_75110ca1960387a6d1147821"
+    ],
+    "calculations": []
+  },
+  "id": "bd379e92499b4fa38efbc70fb0dafeb3",
+  "version": 2,
+  "record_versions": {
+    "evidence": {
+      "metadata_286185e77f063ec7f55fd4c8": 1,
+      "span_3b74985e92f2fa70a68c88af": 1,
+      "span_4657ec4247a3a904927c380a": 1,
+      "chunk_09bf3a35fd22eaf7ac9789ae": 1,
+      "chunk_5a255fbc933ca3e7241888f6": 1,
+      "chunk_75110ca1960387a6d1147821": 1
+    },
+    "calculation": {},
+    "claim": {
+      "claim:latest-quarter": 2,
+      "claim:revenue": 2,
+      "claim:net-income": 2,
+      "claim:eps": 2,
+      "claim:adjustment": 2,
+      "claim:business-drivers": 2,
+      "claim:credit": 2,
+      "claim:expenses": 2,
+      "claim:tax": 2,
+      "claim:outlook": 2,
+      "claim:assessment": 2,
+      "claim:eps-comparison-basis": 2,
+      "claim:eps-adjustment-bridge": 2,
+      "claim:adjusted-growth-interpretation": 2
+    }
+  }
+}

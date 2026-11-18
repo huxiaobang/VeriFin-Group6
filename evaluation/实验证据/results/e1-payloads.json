@@ -1,0 +1,632 @@
+{
+  "01": {
+    "production_focus": {
+      "matched": true,
+      "wire": [
+        {
+          "user_sha256": "8ea9fe0006b1d4da2cf687735a02121e00f8d0899e95fc0e1a4fb79790c8839f",
+          "user_chars": 68444,
+          "controls": {
+            "model": "gpt-6.1-sol",
+            "reasoning": {
+              "effort": "medium"
+            },
+            "service_tier": "default",
+            "max_output_tokens": 8192
+          }
+        },
+        {
+          "user_sha256": "8ea9fe0006b1d4da2cf687735a02121e00f8d0899e95fc0e1a4fb79790c8839f",
+          "user_chars": 68444,
+          "controls": {
+            "model": "gpt-6.1-sol",
+            "reasoning": {
+              "effort": "medium"
+            },
+            "service_tier": "default",
+            "max_output_tokens": 8192
+          }
+        }
+      ],
+      "role_order": [
+        "generic_review",
+        "structured_critic"
+      ],
+      "rule_findings": []
+    },
+    "same_full_evidence": {
+      "matched": true,
+      "wire": [
+        {
+          "user_sha256": "8ea9fe0006b1d4da2cf687735a02121e00f8d0899e95fc0e1a4fb79790c8839f",
+          "user_chars": 68444,
+          "controls": {
+            "model": "gpt-6.1-sol",
+            "reasoning": {
+              "effort": "medium"
+            },
+            "service_tier": "default",
+            "max_output_tokens": 8192
+          }
+        },
+        {
+          "user_sha256": "8ea9fe0006b1d4da2cf687735a02121e00f8d0899e95fc0e1a4fb79790c8839f",
+          "user_chars": 68444,
+          "controls": {
+            "model": "gpt-6.1-sol",
+            "reasoning": {
+              "effort": "medium"
+            },
+            "service_tier": "default",
+            "max_output_tokens": 8192
+          }
+        }
+      ],
+      "role_order": [
+        "generic_review",
+        "structured_critic"
+      ],
+      "rule_findings": []
+    }
+  },
+  "02": {
+    "production_focus": {
+      "matched": true,
+      "wire": [
+        {
+          "user_sha256": "106efec40fd6c38c35e5a26ce31580f058e4b6faba4e42e2b016549e4066be87",
+          "user_chars": 52973,
+          "controls": {
+            "model": "gpt-6.1-sol",
+            "reasoning": {
+              "effort": "medium"
+            },
+            "service_tier": "default",
+            "max_output_tokens": 8192
+          }
+        },
+        {
+          "user_sha256": "106efec40fd6c38c35e5a26ce31580f058e4b6faba4e42e2b016549e4066be87",
+          "user_chars": 52973,
+          "controls": {
+            "model": "gpt-6.1-sol",
+            "reasoning": {
+              "effort": "medium"
+            },
+            "service_tier": "default",
+            "max_output_tokens": 8192
+          }
+        }
+      ],
+      "role_order": [
+        "generic_review",
+        "structured_critic"
+      ],
+      "rule_findings": []
+    },
+    "same_full_evidence": {
+      "matched": true,
+      "wire": [
+        {
+          "user_sha256": "106efec40fd6c38c35e5a26ce31580f058e4b6faba4e42e2b016549e4066be87",
+          "user_chars": 52973,
+          "controls": {
+            "model": "gpt-6.1-sol",
+            "reasoning": {
+              "effort": "medium"
+            },
+            "service_tier": "default",
+            "max_output_tokens": 8192
+          }
+        },
+        {
+          "user_sha256": "106efec40fd6c38c35e5a26ce31580f058e4b6faba4e42e2b016549e4066be87",
+          "user_chars": 52973,
+          "controls": {
+            "model": "gpt-6.1-sol",
+            "reasoning": {
+              "effort": "medium"
+            },
+            "service_tier": "default",
+            "max_output_tokens": 8192
+          }
+        }
+      ],
+      "role_order": [
+        "generic_review",
+        "structured_critic"
+      ],
+      "rule_findings": []
+    }
+  },
+  "03": {
+    "production_focus": {
+      "matched": true,
+      "wire": [
+        {
+          "user_sha256": "f89d148766453db4cc51ad11f091c46d46b204ef7121587764657a8c00a2bb98",
+          "user_chars": 31245,
+          "controls": {
+            "model": "gpt-6.1-sol",
+            "reasoning": {
+              "effort": "medium"
+            },
+            "service_tier": "default",
+            "max_output_tokens": 8192
+          }
+        },
+        {
+          "user_sha256": "f89d148766453db4cc51ad11f091c46d46b204ef7121587764657a8c00a2bb98",
+          "user_chars": 31245,
+          "controls": {
+            "model": "gpt-6.1-sol",
+            "reasoning": {
+              "effort": "medium"
+            },
+            "service_tier": "default",
+            "max_output_tokens": 8192
+          }
+        }
+      ],
+      "role_order": [
+        "generic_review",
+        "structured_critic"
+      ],
+      "rule_findings": []
+    },
+    "same_full_evidence": {
+      "matched": true,
+      "wire": [
+        {
+          "user_sha256": "f89d148766453db4cc51ad11f091c46d46b204ef7121587764657a8c00a2bb98",
+          "user_chars": 31245,
+          "controls": {
+            "model": "gpt-6.1-sol",
+            "reasoning": {
+              "effort": "medium"
+            },
+            "service_tier": "default",
+            "max_output_tokens": 8192
+          }
+        },
+        {
+          "user_sha256": "f89d148766453db4cc51ad11f091c46d46b204ef7121587764657a8c00a2bb98",
+          "user_chars": 31245,
+          "controls": {
+            "model": "gpt-6.1-sol",
+            "reasoning": {
+              "effort": "medium"
+            },
+            "service_tier": "default",
+            "max_output_tokens": 8192
+          }
+        }
+      ],
+      "role_order": [
+        "generic_review",
+        "structured_critic"
+      ],
+      "rule_findings": []
+    }
+  },
+  "04": {
+    "production_focus": {
+      "matched": true,
+      "wire": [
+        {
+          "user_sha256": "e7a74f7820cdb8745330f127aed3d1e91af5cc668966c952c6cbafdaa5a185ce",
+          "user_chars": 54207,
+          "controls": {
+            "model": "gpt-6.1-sol",
+            "reasoning": {
+              "effort": "medium"
+            },
+            "service_tier": "default",
+            "max_output_tokens": 8192
+          }
+        },
+        {
+          "user_sha256": "e7a74f7820cdb8745330f127aed3d1e91af5cc668966c952c6cbafdaa5a185ce",
+          "user_chars": 54207,
+          "controls": {
+            "model": "gpt-6.1-sol",
+            "reasoning": {
+              "effort": "medium"
+            },
+            "service_tier": "default",
+            "max_output_tokens": 8192
+          }
+        }
+      ],
+      "role_order": [
+        "generic_review",
+        "structured_critic"
+      ],
+      "rule_findings": []
+    },
+    "same_full_evidence": {
+      "matched": true,
+      "wire": [
+        {
+          "user_sha256": "e7a74f7820cdb8745330f127aed3d1e91af5cc668966c952c6cbafdaa5a185ce",
+          "user_chars": 54207,
+          "controls": {
+            "model": "gpt-6.1-sol",
+            "reasoning": {
+              "effort": "medium"
+            },
+            "service_tier": "default",
+            "max_output_tokens": 8192
+          }
+        },
+        {
+          "user_sha256": "e7a74f7820cdb8745330f127aed3d1e91af5cc668966c952c6cbafdaa5a185ce",
+          "user_chars": 54207,
+          "controls": {
+            "model": "gpt-6.1-sol",
+            "reasoning": {
+              "effort": "medium"
+            },
+            "service_tier": "default",
+            "max_output_tokens": 8192
+          }
+        }
+      ],
+      "role_order": [
+        "generic_review",
+        "structured_critic"
+      ],
+      "rule_findings": []
+    }
+  },
+  "05": {
+    "production_focus": {
+      "matched": true,
+      "wire": [
+        {
+          "user_sha256": "9e5b9d67d0520764a61cccbc1dc8930492b937300a169eec40d646ce2ae5fdbd",
+          "user_chars": 37583,
+          "controls": {
+            "model": "gpt-6.1-sol",
+            "reasoning": {
+              "effort": "medium"
+            },
+            "service_tier": "default",
+            "max_output_tokens": 8192
+          }
+        },
+        {
+          "user_sha256": "9e5b9d67d0520764a61cccbc1dc8930492b937300a169eec40d646ce2ae5fdbd",
+          "user_chars": 37583,
+          "controls": {
+            "model": "gpt-6.1-sol",
+            "reasoning": {
+              "effort": "medium"
+            },
+            "service_tier": "default",
+            "max_output_tokens": 8192
+          }
+        }
+      ],
+      "role_order": [
+        "generic_review",
+        "structured_critic"
+      ],
+      "rule_findings": []
+    },
+    "same_full_evidence": {
+      "matched": true,
+      "wire": [
+        {
+          "user_sha256": "9e5b9d67d0520764a61cccbc1dc8930492b937300a169eec40d646ce2ae5fdbd",
+          "user_chars": 37583,
+          "controls": {
+            "model": "gpt-6.1-sol",
+            "reasoning": {
+              "effort": "medium"
+            },
+            "service_tier": "default",
+            "max_output_tokens": 8192
+          }
+        },
+        {
+          "user_sha256": "9e5b9d67d0520764a61cccbc1dc8930492b937300a169eec40d646ce2ae5fdbd",
+          "user_chars": 37583,
+          "controls": {
+            "model": "gpt-6.1-sol",
+            "reasoning": {
+              "effort": "medium"
+            },
+            "service_tier": "default",
+            "max_output_tokens": 8192
+          }
+        }
+      ],
+      "role_order": [
+        "generic_review",
+        "structured_critic"
+      ],
+      "rule_findings": []
+    }
+  },
+  "06": {
+    "production_focus": {
+      "matched": true,
+      "wire": [
+        {
+          "user_sha256": "704ee878810890c648459c73fa8efa00d98dc3065bb2d5e9ddc27f9922a7bbf0",
+          "user_chars": 24635,
+          "controls": {
+            "model": "gpt-6.1-sol",
+            "reasoning": {
+              "effort": "medium"
+            },
+            "service_tier": "default",
+            "max_output_tokens": 8192
+          }
+        },
+        {
+          "user_sha256": "704ee878810890c648459c73fa8efa00d98dc3065bb2d5e9ddc27f9922a7bbf0",
+          "user_chars": 24635,
+          "controls": {
+            "model": "gpt-6.1-sol",
+            "reasoning": {
+              "effort": "medium"
+            },
+            "service_tier": "default",
+            "max_output_tokens": 8192
+          }
+        }
+      ],
+      "role_order": [
+        "generic_review",
+        "structured_critic"
+      ],
+      "rule_findings": []
+    },
+    "same_full_evidence": {
+      "matched": true,
+      "wire": [
+        {
+          "user_sha256": "704ee878810890c648459c73fa8efa00d98dc3065bb2d5e9ddc27f9922a7bbf0",
+          "user_chars": 24635,
+          "controls": {
+            "model": "gpt-6.1-sol",
+            "reasoning": {
+              "effort": "medium"
+            },
+            "service_tier": "default",
+            "max_output_tokens": 8192
+          }
+        },
+        {
+          "user_sha256": "704ee878810890c648459c73fa8efa00d98dc3065bb2d5e9ddc27f9922a7bbf0",
+          "user_chars": 24635,
+          "controls": {
+            "model": "gpt-6.1-sol",
+            "reasoning": {
+              "effort": "medium"
+            },
+            "service_tier": "default",
+            "max_output_tokens": 8192
+          }
+        }
+      ],
+      "role_order": [
+        "generic_review",
+        "structured_critic"
+      ],
+      "rule_findings": []
+    }
+  },
+  "V1": {
+    "production_focus": {
+      "matched": true,
+      "wire": [
+        {
+          "user_sha256": "8ea9fe0006b1d4da2cf687735a02121e00f8d0899e95fc0e1a4fb79790c8839f",
+          "user_chars": 68444,
+          "controls": {
+            "model": "gpt-6.1-sol",
+            "reasoning": {
+              "effort": "medium"
+            },
+            "service_tier": "default",
+            "max_output_tokens": 8192
+          }
+        },
+        {
+          "user_sha256": "8ea9fe0006b1d4da2cf687735a02121e00f8d0899e95fc0e1a4fb79790c8839f",
+          "user_chars": 68444,
+          "controls": {
+            "model": "gpt-6.1-sol",
+            "reasoning": {
+              "effort": "medium"
+            },
+            "service_tier": "default",
+            "max_output_tokens": 8192
+          }
+        }
+      ],
+      "role_order": [
+        "generic_review",
+        "structured_critic"
+      ],
+      "rule_findings": []
+    },
+    "same_full_evidence": {
+      "matched": true,
+      "wire": [
+        {
+          "user_sha256": "8ea9fe0006b1d4da2cf687735a02121e00f8d0899e95fc0e1a4fb79790c8839f",
+          "user_chars": 68444,
+          "controls": {
+            "model": "gpt-6.1-sol",
+            "reasoning": {
+              "effort": "medium"
+            },
+            "service_tier": "default",
+            "max_output_tokens": 8192
+          }
+        },
+        {
+          "user_sha256": "8ea9fe0006b1d4da2cf687735a02121e00f8d0899e95fc0e1a4fb79790c8839f",
+          "user_chars": 68444,
+          "controls": {
+            "model": "gpt-6.1-sol",
+            "reasoning": {
+              "effort": "medium"
+            },
+            "service_tier": "default",
+            "max_output_tokens": 8192
+          }
+        }
+      ],
+      "role_order": [
+        "generic_review",
+        "structured_critic"
+      ],
+      "rule_findings": []
+    }
+  },
+  "V2": {
+    "production_focus": {
+      "matched": true,
+      "wire": [
+        {
+          "user_sha256": "6c6bf35b5e7ee084b5effcc633943d94b3c7be911fb4d8e7b87028c94087a0e0",
+          "user_chars": 68499,
+          "controls": {
+            "model": "gpt-6.1-sol",
+            "reasoning": {
+              "effort": "medium"
+            },
+            "service_tier": "default",
+            "max_output_tokens": 8192
+          }
+        },
+        {
+          "user_sha256": "6c6bf35b5e7ee084b5effcc633943d94b3c7be911fb4d8e7b87028c94087a0e0",
+          "user_chars": 68499,
+          "controls": {
+            "model": "gpt-6.1-sol",
+            "reasoning": {
+              "effort": "medium"
+            },
+            "service_tier": "default",
+            "max_output_tokens": 8192
+          }
+        }
+      ],
+      "role_order": [
+        "generic_review",
+        "structured_critic"
+      ],
+      "rule_findings": []
+    },
+    "same_full_evidence": {
+      "matched": true,
+      "wire": [
+        {
+          "user_sha256": "6c6bf35b5e7ee084b5effcc633943d94b3c7be911fb4d8e7b87028c94087a0e0",
+          "user_chars": 68499,
+          "controls": {
+            "model": "gpt-6.1-sol",
+            "reasoning": {
+              "effort": "medium"
+            },
+            "service_tier": "default",
+            "max_output_tokens": 8192
+          }
+        },
+        {
+          "user_sha256": "6c6bf35b5e7ee084b5effcc633943d94b3c7be911fb4d8e7b87028c94087a0e0",
+          "user_chars": 68499,
+          "controls": {
+            "model": "gpt-6.1-sol",
+            "reasoning": {
+              "effort": "medium"
+            },
+            "service_tier": "default",
+            "max_output_tokens": 8192
+          }
+        }
+      ],
+      "role_order": [
+        "generic_review",
+        "structured_critic"
+      ],
+      "rule_findings": []
+    }
+  },
+  "V3": {
+    "production_focus": {
+      "matched": true,
+      "wire": [
+        {
+          "user_sha256": "eb692a81be37418badd61419a3d6fbd130497e5ed6289ee67a4f3371272e76b8",
+          "user_chars": 68499,
+          "controls": {
+            "model": "gpt-6.1-sol",
+            "reasoning": {
+              "effort": "medium"
+            },
+            "service_tier": "default",
+            "max_output_tokens": 8192
+          }
+        },
+        {
+          "user_sha256": "eb692a81be37418badd61419a3d6fbd130497e5ed6289ee67a4f3371272e76b8",
+          "user_chars": 68499,
+          "controls": {
+            "model": "gpt-6.1-sol",
+            "reasoning": {
+              "effort": "medium"
+            },
+            "service_tier": "default",
+            "max_output_tokens": 8192
+          }
+        }
+      ],
+      "role_order": [
+        "generic_review",
+        "structured_critic"
+      ],
+      "rule_findings": []
+    },
+    "same_full_evidence": {
+      "matched": true,
+      "wire": [
+        {
+          "user_sha256": "eb692a81be37418badd61419a3d6fbd130497e5ed6289ee67a4f3371272e76b8",
+          "user_chars": 68499,
+          "controls": {
+            "model": "gpt-6.1-sol",
+            "reasoning": {
+              "effort": "medium"
+            },
+            "service_tier": "default",
+            "max_output_tokens": 8192
+          }
+        },
+        {
+          "user_sha256": "eb692a81be37418badd61419a3d6fbd130497e5ed6289ee67a4f3371272e76b8",
+          "user_chars": 68499,
+          "controls": {
+            "model": "gpt-6.1-sol",
+            "reasoning": {
+              "effort": "medium"
+            },
+            "service_tier": "default",
+            "max_output_tokens": 8192
+          }
+        }
+      ],
+      "role_order": [
+        "generic_review",
+        "structured_critic"
+      ],
+      "rule_findings": []
+    }
+  }
+}

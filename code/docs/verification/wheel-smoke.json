@@ -1,0 +1,19 @@
+{
+  "passed": true,
+  "version": "0.4.0",
+  "isolated_python": true,
+  "source_checkout_on_sys_path": false,
+  "source_module_hashes_match": true,
+  "packaged_snapshots": 14,
+  "real_replay_revenue": 69632000000,
+  "network_requests": 0,
+  "real_llm_calls": 0,
+  "openai_configuration_only": true,
+  "new_modules_imported": [
+    "pilot",
+    "annotation_form",
+    "costs",
+    "runtime_embeddings"
+  ],
+  "web_assets": true
+}

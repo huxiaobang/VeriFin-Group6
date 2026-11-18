@@ -1,0 +1,212 @@
+{
+  "episode_id": "episode_d1c78979f1ad4dcf8c70014bf20399bc",
+  "request": "Explain that calculation using the saved sources.",
+  "status": "complete",
+  "stop_reason": "completed",
+  "scope": {
+    "entities": [
+      "MSFT"
+    ],
+    "period_start": "2024-10-01",
+    "period_end": "2024-12-31",
+    "cutoff": "2025-01-31",
+    "requirements": [
+      {
+        "id": "req:revenue",
+        "text": "Quarterly revenue"
+      },
+      {
+        "id": "req:margin",
+        "text": "Quarterly operating margin with source operands"
+      }
+    ]
+  },
+  "scope_version": 2,
+  "summary": "SCRIPTED FIXTURE: source and arithmetic integration only.",
+  "summary_kind": "unverified_researcher_draft",
+  "model_mode": "scripted_fixture",
+  "claims": [
+    {
+      "id": "claim:revenue",
+      "text": "MSFT revenue for 2024-10-01 through 2024-12-31 was USD 69,632,000,000.",
+      "evidence_ids": [
+        "fact_2860b7548f941f6d50f9c0cb"
+      ],
+      "calculation_ids": [],
+      "requirement_ids": [
+        "req:revenue"
+      ],
+      "constraints": {
+        "entity": "MSFT",
+        "metric": "revenue",
+        "period_start": "2024-10-01",
+        "period_end": "2024-12-31",
+        "unit": "USD"
+      },
+      "asserted_value": 69632000000,
+      "asserted_unit": "USD",
+      "status": "Supported",
+      "scope_version": 2,
+      "evidence_versions": {
+        "fact_2860b7548f941f6d50f9c0cb": 1
+      },
+      "calculation_versions": {},
+      "version": 4,
+      "created_at": "2026-10-13T03:43:49.366003+00:00",
+      "stale": false
+    },
+    {
+      "id": "claim:margin",
+      "text": "Operating margin for the same quarter was 45.4575%, calculated from saved operating income and revenue.",
+      "evidence_ids": [],
+      "calculation_ids": [
+        "calc_3ccb043ef67741477c068267"
+      ],
+      "requirement_ids": [
+        "req:margin"
+      ],
+      "constraints": {
+        "entity": "MSFT",
+        "metric": "operating_income_margin",
+        "period_start": "2024-10-01",
+        "period_end": "2024-12-31",
+        "unit": "%"
+      },
+      "asserted_value": 45.45754825367647,
+      "asserted_unit": "%",
+      "status": "Supported",
+      "scope_version": 2,
+      "evidence_versions": {},
+      "calculation_versions": {
+        "calc_3ccb043ef67741477c068267": 1
+      },
+      "version": 4,
+      "created_at": "2026-10-13T03:43:49.366232+00:00",
+      "stale": false
+    }
+  ],
+  "evidence": [
+    {
+      "id": "fact_2860b7548f941f6d50f9c0cb",
+      "kind": "financial_fact",
+      "entity": "MSFT",
+      "cik": "0000789019",
+      "metric": "revenue",
+      "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+      "period_start": "2024-10-01",
+      "period_end": "2024-12-31",
+      "unit": "USD",
+      "currency": "USD",
+      "value": 69632000000,
+      "scale": 1,
+      "basis": "US-GAAP",
+      "business_scope": "consolidated",
+      "published_at": "2025-01-29T21:11:54.000Z",
+      "publication_precision": "timestamp",
+      "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0000789019.json",
+      "locator": "facts.us-gaap.RevenueFromContractWithCustomerExcludingAssessedTax.units.USD[120]; accession=0000950170-25-010491; start=2024-10-01; end=2024-12-31",
+      "snapshot_hash": "f8aae2965b20ad0df44bdf7ccbedf797d275b6b8dc030154a7a311361bb7246f",
+      "snapshot_path": "snapshots/sec_msft_companyfacts.json",
+      "retrieved_at": "2026-10-08T09:07:07.265947+00:00",
+      "accession": "0000950170-25-010491",
+      "form": "10-Q",
+      "mode": "replay",
+      "duration_days": 92,
+      "version": 1,
+      "created_at": "2026-10-13T03:43:49.313894+00:00",
+      "stale": false
+    },
+    {
+      "id": "fact_0a40932ea188ec1576e5171f",
+      "kind": "financial_fact",
+      "entity": "MSFT",
+      "cik": "0000789019",
+      "metric": "operating_income",
+      "concept": "us-gaap:OperatingIncomeLoss",
+      "period_start": "2024-10-01",
+      "period_end": "2024-12-31",
+      "unit": "USD",
+      "currency": "USD",
+      "value": 31653000000,
+      "scale": 1,
+      "basis": "US-GAAP",
+      "business_scope": "consolidated",
+      "published_at": "2025-01-29T21:11:54.000Z",
+      "publication_precision": "timestamp",
+      "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0000789019.json",
+      "locator": "facts.us-gaap.OperatingIncomeLoss.units.USD[264]; accession=0000950170-25-010491; start=2024-10-01; end=2024-12-31",
+      "snapshot_hash": "f8aae2965b20ad0df44bdf7ccbedf797d275b6b8dc030154a7a311361bb7246f",
+      "snapshot_path": "snapshots/sec_msft_companyfacts.json",
+      "retrieved_at": "2026-10-08T09:07:07.265947+00:00",
+      "accession": "0000950170-25-010491",
+      "form": "10-Q",
+      "mode": "replay",
+      "duration_days": 92,
+      "version": 1,
+      "created_at": "2026-10-13T03:43:49.349206+00:00",
+      "stale": false
+    }
+  ],
+  "calculations": [
+    {
+      "id": "calc_3ccb043ef67741477c068267",
+      "operation": "margin",
+      "operand_ids": [
+        "fact_0a40932ea188ec1576e5171f",
+        "fact_2860b7548f941f6d50f9c0cb"
+      ],
+      "operand_versions": {
+        "fact_0a40932ea188ec1576e5171f": 1,
+        "fact_2860b7548f941f6d50f9c0cb": 1
+      },
+      "value": 45.45754825367647,
+      "unit": "%",
+      "formula": "fact_0a40932ea188ec1576e5171f / fact_2860b7548f941f6d50f9c0cb * 100",
+      "entity": "MSFT",
+      "entities": [
+        "MSFT"
+      ],
+      "metric": "operating_income_margin",
+      "period_start": "2024-10-01",
+      "period_end": "2024-12-31",
+      "basis": "US-GAAP",
+      "business_scope": "consolidated",
+      "currency": null,
+      "operand_currencies": [
+        "USD",
+        "USD"
+      ],
+      "concept": null,
+      "published_at": "2025-01-29T21:11:54.000Z",
+      "scope_version": 2,
+      "warnings": [],
+      "version": 1,
+      "created_at": "2026-10-13T03:43:49.352009+00:00",
+      "stale": false
+    }
+  ],
+  "issues": [],
+  "unanswered": [],
+  "verification_available": true,
+  "usage": {
+    "model_calls": 4,
+    "tool_calls": 0,
+    "active_seconds": 0.005951875005848706
+  },
+  "created_at": "2026-10-13T03:43:49.368264+00:00",
+  "id": "2f67cbf2f5fc466488ccf75a87431565",
+  "version": 2,
+  "record_versions": {
+    "evidence": {
+      "fact_2860b7548f941f6d50f9c0cb": 1,
+      "fact_0a40932ea188ec1576e5171f": 1
+    },
+    "calculation": {
+      "calc_3ccb043ef67741477c068267": 1
+    },
+    "claim": {
+      "claim:revenue": 4,
+      "claim:margin": 4
+    }
+  }
+}

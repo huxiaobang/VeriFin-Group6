@@ -1,0 +1,76 @@
+{
+  "issues": [],
+  "reviewed_claim_ids": [
+    "claim:pfna-volume-pricing",
+    "claim:pfna-profit-pressure",
+    "claim:pbna-volume-pricing",
+    "claim:pbna-acquisition-bridge",
+    "claim:volume-definition-limits"
+  ],
+  "reviewed_requirement_ids": [
+    "request:episode_66d039dd17404a7ab46b26c725992e32"
+  ],
+  "claim_verdicts": [
+    {
+      "claim_id": "claim:pfna-volume-pricing",
+      "status": "Supported",
+      "evidence_refs": [
+        "chunk_ae5bdbdc960fbb64f4203c72",
+        "span_e15075b0f56ab75de1fba9f1",
+        "span_8c9a2825bb1288d3bfc9eebe"
+      ],
+      "basis": "截至2026年9月5日的12周有机收入桥中，PFNA有机收入增幅为横线，销量贡献为+0.5、有效净定价为-1，支持收入端主要受负向定价贡献抵消的判断。季度讨论另明确归因于咸味零食销量及份额改善、较低有效净定价抵消，并称收入趋势环比改善。脚注注明数字可能因四舍五入不能加总；这里的销量判断是分部汇总判断，不代表所有品牌或产品均增长。"
+    },
+    {
+      "claim_id": "claim:pfna-profit-pressure",
+      "status": "Supported",
+      "evidence_refs": [
+        "span_8c9a2825bb1288d3bfc9eebe"
+      ],
+      "basis": "12周分部表的Core Operating Profit % Change行直接列示PFNA下降12%，并非年初至今数据，也不必以固定汇率指标替代。该表支持盈利仍承压；草稿没有把收入定价贡献误写为完整利润归因，并明确保留不能仅凭收入桥解释全部利润降幅的限制。"
+    },
+    {
+      "claim_id": "claim:pbna-volume-pricing",
+      "status": "Supported",
+      "evidence_refs": [
+        "chunk_ae5bdbdc960fbb64f4203c72"
+      ],
+      "basis": "同一12周有机收入桥的PBNA列依次列示有机收入基本持平、有机销量贡献-3、有效净定价贡献+3。草稿按收入增速贡献的百分点口径说明量弱与正向定价抵消，没有将-3个百分点误当作实物销量同比降幅，也没有推断提价导致销量下降。"
+    },
+    {
+      "claim_id": "claim:pbna-acquisition-bridge",
+      "status": "Supported",
+      "evidence_refs": [
+        "span_e15075b0f56ab75de1fba9f1",
+        "chunk_ae5bdbdc960fbb64f4203c72",
+        "span_8c9a2825bb1288d3bfc9eebe"
+      ],
+      "basis": "季度讨论明确称北美饮料收入增长5%，主要反映2025年收购的贡献。12周收入桥列示PBNA汇率调整为横线、收购剥离调整为-6，且金额行从报告收入7,706百万美元扣除收购及结构调整428百万美元等项目后得到有机收入7,289百万美元，证实负号是剔除方向而非收购拖累。原文四舍五入说明支持不机械加总显示增速的处理。"
+    },
+    {
+      "claim_id": "claim:volume-definition-limits",
+      "status": "Supported",
+      "evidence_refs": [
+        "span_866e7defb63fa38a7cf48e44",
+        "chunk_ae5bdbdc960fbb64f4203c72",
+        "span_8c9a2825bb1288d3bfc9eebe"
+      ],
+      "basis": "季度汇总表PBNA饮料销量为-2%，脚注明确剔除收购及剥离；有机收入桥另列销量收入贡献-3个百分点。两处脚注说明单位销量与收入贡献可因产品组合、非合并合营企业销量及特许饮料业务的发货时点等因素不同，但未逐项分配PBNA的差异。草稿保留特许业务限定，未把一般脚注直接认定为PBNA差异的具体原因。现有分部汇总桥也不支持单品标价、全面降价或具体品牌与终端需求原因的推断。"
+    }
+  ],
+  "request_coverage": [
+    {
+      "part": "part-1",
+      "status": "answered",
+      "claim_id": "claim:pfna-volume-pricing",
+      "answer_sentence": "在有机收入增长桥中，有机销量贡献约+0.5个百分点，有效净定价贡献约-1个百分点。",
+      "supporting_claim_ids": [
+        "claim:pfna-volume-pricing",
+        "claim:pfna-profit-pressure",
+        "claim:pbna-volume-pricing",
+        "claim:pbna-acquisition-bridge",
+        "claim:volume-definition-limits"
+      ]
+    }
+  ]
+}

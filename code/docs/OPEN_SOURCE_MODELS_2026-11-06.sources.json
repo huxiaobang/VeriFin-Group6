@@ -1,0 +1,292 @@
+{
+  "accessed_on": "2026-11-06",
+  "scope": "official public repositories; no model quality inferred from metadata",
+  "note": "repository created_at is not necessarily public release date; file bytes are not measured RAM",
+  "models": [
+    {
+      "model_id": "perplexity-ai/pplx-embed-v2-late-0.6b",
+      "revision": "7bba8e7cf2075dec747fa8557f41eb90e70361ed",
+      "license": "mit",
+      "created_at": "2026-08-03 10:37:26+00:00",
+      "last_modified": "2026-10-22 15:35:46+00:00",
+      "safetensors": {
+        "parameters": {
+          "F32": 594321600
+        },
+        "total": 594321600
+      },
+      "url": "https://huggingface.co/perplexity-ai/pplx-embed-v2-late-0.6b",
+      "revision_url": "https://huggingface.co/perplexity-ai/pplx-embed-v2-late-0.6b/tree/7bba8e7cf2075dec747fa8557f41eb90e70361ed",
+      "weight_files": [
+        {
+          "path": "1_Dense/model.safetensors",
+          "size": 524376
+        },
+        {
+          "path": "model.safetensors",
+          "size": 2377321184
+        }
+      ],
+      "total_safetensors_bytes": 2377845560
+    },
+    {
+      "model_id": "perplexity-ai/pplx-embed-v2-context-0.6b",
+      "revision": "6d1fddab0a18478acc0a51edd1e81333fe441095",
+      "license": null,
+      "created_at": "2026-10-21 12:42:50+00:00",
+      "last_modified": "2026-10-30 10:00:18+00:00",
+      "safetensors": {
+        "parameters": {
+          "F32": 595370176
+        },
+        "total": 595370176
+      },
+      "url": "https://huggingface.co/perplexity-ai/pplx-embed-v2-context-0.6b",
+      "revision_url": "https://huggingface.co/perplexity-ai/pplx-embed-v2-context-0.6b/tree/6d1fddab0a18478acc0a51edd1e81333fe441095",
+      "weight_files": [
+        {
+          "path": "contextual_head.safetensors",
+          "size": 4194408
+        },
+        {
+          "path": "model-00001-of-00001.safetensors",
+          "size": 2377321184
+        }
+      ],
+      "total_safetensors_bytes": 2381515592
+    },
+    {
+      "model_id": "jinaai/jina-embeddings-v5-text-small",
+      "revision": "dd76d535f5447ca3897a9c893fb1e612ead98192",
+      "license": "cc-by-nc-4.0",
+      "created_at": "2026-01-22 09:42:41+00:00",
+      "last_modified": "2026-04-15 09:14:28+00:00",
+      "safetensors": {
+        "parameters": {
+          "BF16": 596049920
+        },
+        "total": 596049920
+      },
+      "url": "https://huggingface.co/jinaai/jina-embeddings-v5-text-small",
+      "revision_url": "https://huggingface.co/jinaai/jina-embeddings-v5-text-small/tree/dd76d535f5447ca3897a9c893fb1e612ead98192",
+      "weight_files": [
+        {
+          "path": "adapters/classification/adapter_model.safetensors",
+          "size": 40420208
+        },
+        {
+          "path": "adapters/clustering/adapter_model.safetensors",
+          "size": 40420208
+        },
+        {
+          "path": "adapters/retrieval/adapter_model.safetensors",
+          "size": 40420176
+        },
+        {
+          "path": "adapters/text-matching/adapter_model.safetensors",
+          "size": 40420208
+        },
+        {
+          "path": "model.safetensors",
+          "size": 1192133208
+        }
+      ],
+      "total_safetensors_bytes": 1353814008
+    },
+    {
+      "model_id": "Qwen/Qwen3-Embedding-4B",
+      "revision": "5cf2132abc99cad020ac570b19d031efec650f2b",
+      "license": "apache-2.0",
+      "created_at": "2025-06-03 14:31:33+00:00",
+      "last_modified": "2025-06-20 09:30:56+00:00",
+      "safetensors": {
+        "parameters": {
+          "BF16": 4021774336
+        },
+        "total": 4021774336
+      },
+      "url": "https://huggingface.co/Qwen/Qwen3-Embedding-4B",
+      "revision_url": "https://huggingface.co/Qwen/Qwen3-Embedding-4B/tree/5cf2132abc99cad020ac570b19d031efec650f2b",
+      "weight_files": [
+        {
+          "path": "model-00001-of-00002.safetensors",
+          "size": 4965826464
+        },
+        {
+          "path": "model-00002-of-00002.safetensors",
+          "size": 3077765624
+        }
+      ],
+      "total_safetensors_bytes": 8043592088
+    },
+    {
+      "model_id": "Qwen/Qwen3-Embedding-8B",
+      "revision": "1d8ad4ca9b3dd8059ad90a75d4983776a23d44af",
+      "license": "apache-2.0",
+      "created_at": "2025-06-03 14:39:10+00:00",
+      "last_modified": "2025-07-07 09:02:21+00:00",
+      "safetensors": {
+        "parameters": {
+          "BF16": 7567295488
+        },
+        "total": 7567295488
+      },
+      "url": "https://huggingface.co/Qwen/Qwen3-Embedding-8B",
+      "revision_url": "https://huggingface.co/Qwen/Qwen3-Embedding-8B/tree/1d8ad4ca9b3dd8059ad90a75d4983776a23d44af",
+      "weight_files": [
+        {
+          "path": "model-00001-of-00004.safetensors",
+          "size": 4900037024
+        },
+        {
+          "path": "model-00002-of-00004.safetensors",
+          "size": 4915959512
+        },
+        {
+          "path": "model-00003-of-00004.safetensors",
+          "size": 4983067656
+        },
+        {
+          "path": "model-00004-of-00004.safetensors",
+          "size": 335570376
+        }
+      ],
+      "total_safetensors_bytes": 15134634568
+    },
+    {
+      "model_id": "perplexity-ai/pplx-embed-v1-4b",
+      "revision": "06456497a00540a582918fe8dcd3a5eabb207772",
+      "license": "mit",
+      "created_at": "2026-01-20 13:15:23+00:00",
+      "last_modified": "2026-06-02 12:28:13+00:00",
+      "safetensors": {
+        "parameters": {
+          "F32": 4022468096
+        },
+        "total": 4022468096
+      },
+      "url": "https://huggingface.co/perplexity-ai/pplx-embed-v1-4b",
+      "revision_url": "https://huggingface.co/perplexity-ai/pplx-embed-v1-4b/tree/06456497a00540a582918fe8dcd3a5eabb207772",
+      "weight_files": [
+        {
+          "path": "model.safetensors",
+          "size": 16089915848
+        }
+      ],
+      "total_safetensors_bytes": 16089915848
+    },
+    {
+      "model_id": "jinaai/jina-reranker-v3.5",
+      "revision": "e8a93f33f0b22108f8c2364f8484ce3422552fbc",
+      "license": "cc-by-nc-4.0",
+      "created_at": "2026-07-14 10:01:14+00:00",
+      "last_modified": "2026-07-30 11:35:06+00:00",
+      "safetensors": {
+        "parameters": {
+          "BF16": 596836352
+        },
+        "total": 596836352
+      },
+      "url": "https://huggingface.co/jinaai/jina-reranker-v3.5",
+      "revision_url": "https://huggingface.co/jinaai/jina-reranker-v3.5/tree/e8a93f33f0b22108f8c2364f8484ce3422552fbc",
+      "weight_files": [
+        {
+          "path": "model.safetensors",
+          "size": 1193708152
+        }
+      ],
+      "total_safetensors_bytes": 1193708152
+    },
+    {
+      "model_id": "cross-encoder/ettin-reranker-400m-v1",
+      "revision": "5dca36282a5d85f368d2544002513a29159b4c9e",
+      "license": "apache-2.0",
+      "created_at": "2026-05-15 09:09:22+00:00",
+      "last_modified": "2026-05-19 13:59:49+00:00",
+      "safetensors": {
+        "parameters": {
+          "F32": 394781696
+        },
+        "total": 394781696
+      },
+      "url": "https://huggingface.co/cross-encoder/ettin-reranker-400m-v1",
+      "revision_url": "https://huggingface.co/cross-encoder/ettin-reranker-400m-v1/tree/5dca36282a5d85f368d2544002513a29159b4c9e",
+      "weight_files": [
+        {
+          "path": "2_Dense/model.safetensors",
+          "size": 4194392
+        },
+        {
+          "path": "3_LayerNorm/model.safetensors",
+          "size": 8344
+        },
+        {
+          "path": "4_Dense/model.safetensors",
+          "size": 4252
+        },
+        {
+          "path": "model.safetensors",
+          "size": 1579143688
+        }
+      ],
+      "total_safetensors_bytes": 1583350676
+    },
+    {
+      "model_id": "google/embeddinggemma-2",
+      "revision": "f9972ac22e696a105c482202646979e33e4b5a1e",
+      "license": "apache-2.0",
+      "created_at": "2026-09-14 14:53:42+00:00",
+      "last_modified": "2026-10-28 07:19:46+00:00",
+      "safetensors": {
+        "parameters": {
+          "BF16": 744371512
+        },
+        "total": 744371512
+      },
+      "url": "https://huggingface.co/google/embeddinggemma-2",
+      "revision_url": "https://huggingface.co/google/embeddinggemma-2/tree/f9972ac22e696a105c482202646979e33e4b5a1e",
+      "weight_files": [
+        {
+          "path": "model.safetensors",
+          "size": 1488915288
+        }
+      ],
+      "total_safetensors_bytes": 1488915288
+    },
+    {
+      "model_id": "Qwen/Qwen3-Embedding-4B-GGUF",
+      "revision": "f4602530db1d980e16da9d7d3a70294cf5c190be",
+      "license": "apache-2.0",
+      "url": "https://huggingface.co/Qwen/Qwen3-Embedding-4B-GGUF",
+      "weight_files": [
+        {
+          "path": "Qwen3-Embedding-4B-Q4_K_M.gguf",
+          "size": 2496703776
+        },
+        {
+          "path": "Qwen3-Embedding-4B-Q8_0.gguf",
+          "size": 4279660224
+        }
+      ],
+      "tested_locally": false
+    },
+    {
+      "model_id": "Qwen/Qwen3-Reranker-0.6B",
+      "revision": "e61197ed45024b0ed8a2d74b80b4d909f1255473",
+      "license": "apache-2.0",
+      "url": "https://huggingface.co/Qwen/Qwen3-Reranker-0.6B",
+      "experiment_owner": "main task; results stored separately under open_source_results"
+    }
+  ],
+  "download_verification": {
+    "model_id": "perplexity-ai/pplx-embed-v2-late-0.6b",
+    "path": "model.safetensors",
+    "bytes": 2377321184,
+    "official_lfs_sha256": "107eaae48d026ea20458b30dd755a0f1475b34fcf5a1895123ad67a2385b9d6b",
+    "verification_status": "complete; official LFS SHA256 matched",
+    "complete_parts_retained": 567,
+    "complete_bytes_retained": 2377321184,
+    "recorded_at": "2026-11-06T10:19:45.043031+00:00",
+    "official_sha256_verified": true
+  }
+}

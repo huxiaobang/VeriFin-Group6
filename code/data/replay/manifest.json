@@ -1,0 +1,156 @@
+{
+  "format_version": 1,
+  "description": "Frozen source snapshots copied without alteration. Finite replay coverage is not a supported-issuer allowlist. No prewritten answers or gold annotations are shipped.",
+  "source_bundle": "VeriFin_Handoff_2026-10-08/\u6750\u6599/outputs/verifin-research/data",
+  "copied_at": "2026-10-13",
+  "companies": [
+    {
+      "ticker": "MSFT",
+      "cik": "0000789019",
+      "name": "MICROSOFT CORP",
+      "facts": "snapshots/sec_msft_companyfacts.json",
+      "submissions": "snapshots/sec_msft_submissions.json",
+      "prices": "snapshots/yahoo_msft_history.json"
+    },
+    {
+      "ticker": "NVDA",
+      "cik": "0001045810",
+      "name": "NVIDIA CORP",
+      "facts": "snapshots/sec_nvda_companyfacts.json",
+      "submissions": "snapshots/sec_nvda_submissions.json",
+      "prices": "snapshots/yahoo_nvda_history.json"
+    }
+  ],
+  "documents": [
+    {
+      "entity": "MSFT",
+      "source": "snapshots/msft_fy25q2_ir.html",
+      "text": "snapshots/msft_fy25q2_ir.html.text.txt",
+      "period_start": "2024-10-01",
+      "period_end": "2024-12-31",
+      "published_at": "2025-01-29",
+      "publication_precision": "date_only",
+      "publication_basis": "Issuer earnings-release date; exact publication time unavailable in frozen metadata",
+      "extraction_method": "stdlib HTMLParser, scripts/styles excluded, whitespace normalized"
+    },
+    {
+      "entity": "MSFT",
+      "source": "snapshots/msft_fy25q2_performance.html",
+      "text": "snapshots/msft_fy25q2_performance.html.text.txt",
+      "period_start": "2024-10-01",
+      "period_end": "2024-12-31",
+      "published_at": "2025-01-29",
+      "publication_precision": "date_only",
+      "publication_basis": "Issuer earnings-release date; exact publication time unavailable in frozen metadata",
+      "extraction_method": "stdlib HTMLParser, scripts/styles excluded, whitespace normalized"
+    },
+    {
+      "entity": "NVDA",
+      "source": "snapshots/nvda_fy25q4_ir.html",
+      "text": "snapshots/nvda_fy25q4_ir.html.text.txt",
+      "period_start": "2024-10-28",
+      "period_end": "2025-01-26",
+      "published_at": "2025-02-26",
+      "publication_precision": "date_only",
+      "publication_basis": "Issuer earnings-release date; exact publication time unavailable in frozen metadata",
+      "extraction_method": "stdlib HTMLParser, scripts/styles excluded, whitespace normalized"
+    },
+    {
+      "entity": "NVDA",
+      "source": "snapshots/nvda_fy25q4_cfo.pdf",
+      "text": "snapshots/nvda_fy25q4_cfo.pdf.text.txt",
+      "period_start": "2024-10-28",
+      "period_end": "2025-01-26",
+      "published_at": "2025-02-26",
+      "publication_precision": "date_only",
+      "publication_basis": "Issuer earnings-release date; exact publication time unavailable in frozen metadata",
+      "extraction_method": "pypdf page text with page labels"
+    }
+  ],
+  "files": {
+    "snapshots/sec_msft_companyfacts.json": {
+      "sha256": "f8aae2965b20ad0df44bdf7ccbedf797d275b6b8dc030154a7a311361bb7246f",
+      "url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0000789019.json",
+      "retrieved_at": "2026-10-08T09:07:07.265947+00:00",
+      "bytes": 4881196
+    },
+    "snapshots/sec_msft_submissions.json": {
+      "sha256": "2484a2a3b5677d892a1b25af573ce4eda7b6f449f5eda41bac6b3f106dc3139c",
+      "url": "https://data.sec.gov/submissions/CIK0000789019.json",
+      "retrieved_at": "2026-10-08T09:07:15.719208+00:00",
+      "bytes": 185250
+    },
+    "snapshots/yahoo_msft_history.json": {
+      "sha256": "f5de26b72ca865c1ceeb26bf388c3e4d849b648126246aeb672743ff38c405a4",
+      "url": "https://query1.finance.yahoo.com/v8/finance/chart/MSFT?period1=1737936000&period2=1738627200&interval=1d",
+      "retrieved_at": "2026-10-08T09:07:32.640812+00:00",
+      "bytes": 1859
+    },
+    "snapshots/sec_nvda_companyfacts.json": {
+      "sha256": "19ef503a5770f5660964b3c3aea6937579d9b359da344afe6a9adf59c63d26ff",
+      "url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0001045810.json",
+      "retrieved_at": "2026-10-08T09:07:16.542272+00:00",
+      "bytes": 4092966
+    },
+    "snapshots/sec_nvda_submissions.json": {
+      "sha256": "0b3ce6a0cd78c43d69b19b7efb9effcd79d0c6bd4c43606aac84d0f872cc9c73",
+      "url": "https://data.sec.gov/submissions/CIK0001045810.json",
+      "retrieved_at": "2026-10-08T09:07:20.457939+00:00",
+      "bytes": 159785
+    },
+    "snapshots/yahoo_nvda_history.json": {
+      "sha256": "14472153796b8ffb19cd112b41d6dd5545b1c515e32f23a1641993246dfd5a40",
+      "url": "https://query1.finance.yahoo.com/v8/finance/chart/NVDA?period1=1740355200&period2=1741046400&interval=1d",
+      "retrieved_at": "2026-10-08T09:07:33.524383+00:00",
+      "bytes": 1877
+    },
+    "snapshots/msft_fy25q2_ir.html": {
+      "sha256": "05021a6625c2e46e9db19f0e321b4f70f891f67568d6318fb363d1a8d1ee884c",
+      "url": "https://www.microsoft.com/en-us/Investor/earnings/FY-2025-Q2/press-release-webcast",
+      "retrieved_at": "2026-10-08T09:07:21.336884+00:00",
+      "bytes": 572816
+    },
+    "snapshots/msft_fy25q2_ir.html.text.txt": {
+      "sha256": "8f26127cbb297ac9e69cbff09ce48e416674456f17e0509c8f345d6e1fbb9122",
+      "url": "https://www.microsoft.com/en-us/Investor/earnings/FY-2025-Q2/press-release-webcast",
+      "retrieved_at": "2026-10-08T09:07:21.336884+00:00",
+      "bytes": 21802
+    },
+    "snapshots/msft_fy25q2_performance.html": {
+      "sha256": "788be62c34ec14b38cbe3e261170fe4a6ae734dc828d794cd81dde4d2b8d45e2",
+      "url": "https://www.microsoft.com/en-us/Investor/earnings/FY-2025-Q2/performance",
+      "retrieved_at": "2026-10-08T09:08:54.662500+00:00",
+      "bytes": 164452
+    },
+    "snapshots/msft_fy25q2_performance.html.text.txt": {
+      "sha256": "abe1b87ff1fbbdb906247f65ef3185d7678d17d97b3079a3fe46aa9e86bc3f5b",
+      "url": "https://www.microsoft.com/en-us/Investor/earnings/FY-2025-Q2/performance",
+      "retrieved_at": "2026-10-08T09:08:54.662500+00:00",
+      "bytes": 4700
+    },
+    "snapshots/nvda_fy25q4_ir.html": {
+      "sha256": "121af64027c06714de561b9888ceebd604856d214248a3ad187f5715a9de863d",
+      "url": "https://nvidianews.nvidia.com/news/nvidia-announces-financial-results-for-fourth-quarter-and-fiscal-2025",
+      "retrieved_at": "2026-10-08T09:07:23.200991+00:00",
+      "bytes": 400279
+    },
+    "snapshots/nvda_fy25q4_ir.html.text.txt": {
+      "sha256": "23341099cc8928f96798b35ebc7bd8af25cfb6a0ede0f6d2bd7eb40fd5d990e4",
+      "url": "https://nvidianews.nvidia.com/news/nvidia-announces-financial-results-for-fourth-quarter-and-fiscal-2025",
+      "retrieved_at": "2026-10-08T09:07:23.200991+00:00",
+      "bytes": 28371
+    },
+    "snapshots/nvda_fy25q4_cfo.pdf": {
+      "sha256": "842a50961f0466d50584f8017200ab72c5a86c7438f0560cefb0506442149ce7",
+      "url": "https://investor.nvidia.com/files/doc_financials/2025/Q425/Q4FY25-CFO-Commentary.pdf",
+      "retrieved_at": "2026-10-08T09:07:24.475488+00:00",
+      "bytes": 82336
+    },
+    "snapshots/nvda_fy25q4_cfo.pdf.text.txt": {
+      "sha256": "59f91ac2d0f244ae3c291012b03e0cd493f9b77918dbf511241a6298bef23919",
+      "url": "https://investor.nvidia.com/files/doc_financials/2025/Q425/Q4FY25-CFO-Commentary.pdf",
+      "retrieved_at": "2026-10-08T09:07:24.475488+00:00",
+      "bytes": 19121
+    }
+  }
+}

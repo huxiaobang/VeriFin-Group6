@@ -1,0 +1,278 @@
+{
+  "ticker": "AXP",
+  "turn": "2",
+  "model_state": "complete",
+  "stop": "completed",
+  "q": "你说每股盈利涨了 31%，调整后却只涨 13%。这两个数为什么差这么远？",
+  "user_answers": [
+    {
+      "part": "part-1",
+      "status": "answered",
+      "claim_id": "claim:eps-adjustment-bridge",
+      "answer_sentence": "公司附录列示的税后每股调节关系为：报告EPS 5.42美元－GBTG出售收益1.11美元＋重组费用0.37美元＝调整后EPS 4.68美元。",
+      "supporting_claim_ids": [
+        "claim:eps-comparison-basis",
+        "claim:eps-adjustment-bridge",
+        "claim:adjusted-growth-interpretation"
+      ],
+      "question": "你说每股盈利涨了 31%，调整后却只涨 13%。这两个数为什么差这么远？",
+      "answer_fragments": [
+        {
+          "claim_ids": [
+            "claim:eps-adjustment-bridge"
+          ],
+          "text": "差距主要来自出售GBTG股权带来的收益，但还要同时处理相关重组费用。公司附录列示的税后每股调节关系为：报告EPS 5.42美元－GBTG出售收益1.11美元＋重组费用0.37美元＝调整后EPS 4.68美元。也就是说，调整时既剔除出售收益，也加回重组费用，不能把出售收益全额当作两种EPS的差额；上述为公司披露的每股调节数。"
+        },
+        {
+          "claim_ids": [
+            "claim:eps-comparison-basis"
+          ],
+          "text": "美国运通2026年第三季度报告摊薄EPS为5.42美元，同比增长31%；公司非GAAP调整后EPS为4.68美元，同比增长13%。2025年第三季度两种口径均为4.14美元，因此增速差异不是比较基数不同，而是本季是否剔除特定项目。"
+        },
+        {
+          "claim_ids": [
+            "claim:adjusted-growth-interpretation"
+          ],
+          "text": "13%也不等于“完全剔除所有非持续因素后的经营增速”。本次公司非GAAP调节仅针对GBTG出售收益及相关重组费用；较低有效税率、准备金释放和平均摊薄股数下降并未作为单独项目剔除。公告另称，本季税率下降主要反映解决以前期间税务事项带来的离散税收利益，信用损失准备费用下降则反映本季释放准备金、上年同期增提准备金等因素。因此，13%应理解为公司特定调整口径下的EPS增速，而不是纯粹的基础经营增长率。"
+        }
+      ],
+      "answer_text": "差距主要来自出售GBTG股权带来的收益，但还要同时处理相关重组费用。公司附录列示的税后每股调节关系为：报告EPS 5.42美元－GBTG出售收益1.11美元＋重组费用0.37美元＝调整后EPS 4.68美元。也就是说，调整时既剔除出售收益，也加回重组费用，不能把出售收益全额当作两种EPS的差额；上述为公司披露的每股调节数。 美国运通2026年第三季度报告摊薄EPS为5.42美元，同比增长31%；公司非GAAP调整后EPS为4.68美元，同比增长13%。2025年第三季度两种口径均为4.14美元，因此增速差异不是比较基数不同，而是本季是否剔除特定项目。 13%也不等于“完全剔除所有非持续因素后的经营增速”。本次公司非GAAP调节仅针对GBTG出售收益及相关重组费用；较低有效税率、准备金释放和平均摊薄股数下降并未作为单独项目剔除。公告另称，本季税率下降主要反映解决以前期间税务事项带来的离散税收利益，信用损失准备费用下降则反映本季释放准备金、上年同期增提准备金等因素。因此，13%应理解为公司特定调整口径下的EPS增速，而不是纯粹的基础经营增长率。"
+    }
+  ],
+  "draft_method": {
+    "skills": [],
+    "source": "planner"
+  },
+  "tool_count": 2,
+  "steps": [
+    {
+      "n": 1,
+      "role": "planner",
+      "action": "tool",
+      "tool": "read_document",
+      "arguments": {
+        "entity": "AXP",
+        "document_id": "source_doc_dcbdedf0ae2a1c1306b321fb",
+        "offset": 5700,
+        "limit_chars": 6000,
+        "cutoff": "2026-11-16"
+      },
+      "skills": [],
+      "reason": "本轮聚焦两种EPS口径差异，无需套用其他专项方法。已有公告给出EPS及出售收益，但需续读非GAAP调节表，确认扣除相关重组成本后的净影响，避免将全部出售收益误当作调整额。",
+      "issues": null
+    },
+    {
+      "n": 2,
+      "role": "planner",
+      "action": "tool",
+      "tool": "search_documents",
+      "arguments": {
+        "entity": "AXP",
+        "document_ids": [
+          "source_doc_dcbdedf0ae2a1c1306b321fb"
+        ],
+        "query": "Appendix I reconciliation adjusted net income diluted EPS restructuring GBTG",
+        "cutoff": "2026-11-16",
+        "limit": 3,
+        "max_context_chars": 12000
+      },
+      "skills": [],
+      "reason": "确认本轮只解释两种EPS增速的差异；检索公告附录的GAAP至非GAAP对账，核实出售收益与重组成本的净调整及同期基数。无需套用其他专题方法。",
+      "issues": null
+    },
+    {
+      "n": 3,
+      "role": "planner",
+      "action": "research",
+      "tool": null,
+      "arguments": null,
+      "skills": [],
+      "reason": "现有原始公告附录已足以解释差异，无需重复检索。请按当前要求用中文简明说明：2026年第三季度报告摊薄EPS为5.42美元、同比增长31%，调整后为4.68美元、增长13%；2025年同期两种口径均为4.14美元，因此不是比较基数不同。引用附录列示的每股税后调整：剔除GBTG出售收益1.11美元、加回相关重组费用0.37美元，展示公司披露的5.42－1.11＋0.37＝4.68调节关系，不把出售收益全额当作两种EPS的差额。可补充税后出售收益7.51亿美元和重组费用2.53亿美元，并注明披露金额存在四舍五入。区分其他因素：较低有效税率、准备金释放和股数变化不是本次公司非GAAP调节所剔除的项目，不能将13%等同于完全剔除所有非持续因素后的经营增速。避免新增未经工具计算的净调整额或增长贡献分拆。当前为直接核对GAAP与非GAAP披露，无需专项研究方法。",
+      "issues": null
+    },
+    {
+      "n": 4,
+      "role": "researcher",
+      "action": null,
+      "tool": null,
+      "arguments": null,
+      "skills": null,
+      "reason": null,
+      "issues": null
+    },
+    {
+      "n": 5,
+      "role": "critic",
+      "action": null,
+      "tool": null,
+      "arguments": null,
+      "skills": null,
+      "reason": null,
+      "issues": []
+    }
+  ],
+  "refs": [
+    {
+      "id": "span_3b74985e92f2fa70a68c88af",
+      "url": "https://www.sec.gov/Archives/edgar/data/4962/000000496226000405/q326exhibit991.htm",
+      "locator": "snapshots/q326exhibit991.htm.txt:characters[0:6000] (zero-based Unicode offsets)",
+      "kind": "document",
+      "range": [
+        0,
+        6000
+      ],
+      "evidence": "EX-99.1\n2\nq326exhibit991.htm\nEX-99.1\nDocument\nEXHIBIT 99.1\nNew York | October 23, 2026\nAMERICAN EXPRESS\nQ3 2026 RESULTS\nAMERICAN EXPRESS RAISES FY 2026 EARNINGS PER SHARE GUIDANCE\nCOMPANY DELIVERED RECORD Q3 REVENUE OF $20.1 BILLION, UP 9% YOY\nQ3 EPS ROSE 31% TO $5.42, OR 13% TO $4.68 ON AN ADJUSTED BASIS1\n(Millions, except per share amounts, and where indicated)\nQuarters Ended\nSeptember 30,\nYoY%\nInc/(Dec)\nNine Months Ended\nSeptember 30,\nYoY%\nInc/(Dec)\n2026\n2025\n2026\n2025\nBilled Business (Billions)\nFX-adjusted2\n$454.0\n$421.0\n$420.8\n8%\n8%\n$1,337.7\n$1,224.7\n$1,231.3\n9%\n9%\nTotal Revenues Net of Interest Expense\nFX-adjusted2\n$20,062\n$18,426\n$18,413\n9%\n9%\n$58,606\n$53,249\n$53,503\n10%\n10%\nPretax Income\n$4,531\n$3,825\n18%\n$12,380\n$10,705\n16%\nNet Income\n$3,712\n$2,902\n28%\n$9,794\n$8,371\n17%\nDiluted Earnings Per Common Share (EPS)3\n$5.42\n$4.14\n31%\n$14.22\n$11.85\n20%\nAdjusted EPS1\n$4.68\n$4.14\n13%\n$13.49\n$11.85\n14%\nAverage Diluted Common Shares Outstanding\n674\n693\n(3)%\n680\n698\n(3)%\nAmerican Express Company (NYSE: AXP) today reported third-quarter 2026 net income of $3.7 billion, compared with net income of $2.9 billion a year ago. Earnings per share was $5.42, up 31 percent from $4.14 a year ago. Adjusted net income was $3.2 billion, or $4.68 per share, which excludes the $982 million pre-tax gain ($751 million after-tax) from the previously-announced sale of the company's equity interest in Global Business Travel Group, Inc. (GBTG), net of the portion of the gain used to fund restructuring related to efficiency initiatives.1\nStephen J. Squeri | Chairman and Chief Executive Officer\n“We had another strong quarter, delivering 9 percent revenue growth and EPS of $5.42, or $4.68 adjusted, up 13 percent year-over-year.1 Our business momentum continues, with strength in billings, new acquisitions and Card Member retention, and excellent credit quality.\n“Given our performance year-to-date, we are raising our full-year EPS guidance to between $18.30 and $18.60 ($17.60-$17.90 adjusted),4 and we're on track to deliver another year of 10 percent revenue growth.\n“The progress we’re making across the business and ongoing innovations to enhance our Membership Model give me great confidence in our ability to deliver differentiated value for our customers and strong returns for our shareholders over the long term.”\n1\nAMERICAN EXPRESS Q3 2026 RESULTS\nThird-Quarter 2026 Results\nBusiness Highlights\nThird-quarter consolidated total revenues net of interest expense were $20.1 billion, up 9 percent year-over-year. The increase was primarily driven by higher Card Member spending, increased net interest income supported by growth in card balances, and strong card fee growth.\nConsolidated provisions for credit losses were $1.0 billion, compared with $1.3 billion a year ago. The decrease reflected a reserve release during the quarter compared to a reserve build in the prior year, partially offset by higher net write-offs. The third-quarter net write-off rate was 1.8 percent, down from 1.9 percent a year ago.5\nConsolidated expenses were $14.5 billion, up 9 percent year-over-year. The increase was primarily driven by higher variable customer engagement costs due to increased Card Member spending and the U.S. Platinum Card® refresh, partially offset by lower operating expenses. The decrease in operating expenses was primarily driven by the GBTG sale gain, partially offset by an increase in legal reserves for previously-disclosed matters, and restructuring costs.\nThe consolidated effective tax rate was 18.1 percent, down from 24.1 percent a year ago, primarily reflecting discrete tax benefits in the current year related to the resolution of certain prior-period tax items.\n•American Express launched the next generation of Amex Corporate™, with new integrated Expense Management software and Amex Expense mobile app, along with new Corporate Cashback® Cards.\n•The company introduced a new American Express Business Savings account, expanding its banking offerings for businesses.\n•American Express extended its long-term strategic partnership with Marriott International, including the U.S. cobrand cards.\n•American Express launched an exclusive partnership with Airbnb, bringing over one million listings globally to Amex Travel and expanding travel benefits for eligible U.S. Card Members.\n•The company announced Resy integrations, including with OpenAI, and released the Intent Intelligence framework for trusted agentic commerce.\n•Card acceptance reached more than 190 million merchant locations worldwide, with acceptance outside the U.S. more than doubling over the past four years.6\n•The company opened its newest Centurion Lounge at Amsterdam Airport Schiphol to bring the total to 33 locations, and announced expansions in four locations, including a new 30,000-sq.ft. lounge at Newark Liberty International Airport, its largest to date.\n•The company ranked #1 issuer in the JD Power 2026 U.S. Credit Card Satisfaction Study℠ for the seventh consecutive year.\n# # #\nThis earnings release should be read in conjunction with the supplemental financial data for the third quarter 2026 (the statistical tables), which include information regarding our reportable operating segments and certain defined terms used in this release, available on the American Express Investor Relations website at http://ir.americanexpress.com and in a Form 8-K furnished today with the Securities and Exchange Commission.\nAn investor conference call will be held at 8:30 a.m. (ET) today to discuss third-quarter 2026 results. Live audio and presentation slides for the investor conference call will be available to the general public on the above-mentioned American Express Investor Relations website. A replay of the conference call will be available at the same website address following the call.\n2\nAMERICAN EXPRESS Q3 2026 RESULTS\n1\nAdjusted Net Income and adjusted diluted earnings per common share are non-GAAP measures and exclude the impact of the gain from the sale of the company's ",
+      "lineno": 1,
+      "matches": true,
+      "file": "snapshots/q326exhibit991.htm.txt",
+      "period_start": null,
+      "period_end": null
+    },
+    {
+      "id": "chunk_5a255fbc933ca3e7241888f6",
+      "url": "https://www.sec.gov/Archives/edgar/data/4962/000000496226000405/q326exhibit991.htm",
+      "locator": "snapshots/q326exhibit991.htm.txt:characters[14373:16172] (zero-based Unicode offsets)",
+      "kind": "document",
+      "range": [
+        14373,
+        16172
+      ],
+      "evidence": "increased surcharging, steering, suppression or other differential acceptance practices with respect to the company’s products; merchant discount rates changing from the company’s expectations; and changes in foreign currency exchange rates.\nA further description of these uncertainties and other risks can be found in American Express Company’s Annual Report on Form 10-K for the year ended December 31, 2025, Quarterly Reports on Form 10-Q for the quarters ended March 31 and June 30, 2026 and the company’s other reports filed with the SEC, including in the Form 8-K Cautionary Note.\n4\nAMERICAN EXPRESS Q3 2026 RESULTS\nAmerican Express Company\nAppendix I\nReconciliation of Adjusted EPS\nQuarters Ended\nSeptember 30,\nYoY%\nInc/(Dec)\nNine Months Ended\nSeptember 30,\nYoY%\nInc/(Dec)\n2026\n2025\n2026\n2025\nGAAP Diluted EPS\n$5.42\n$4.14\n31%\n$14.22\n$11.85\n20%\nGBTG Gain on Sale (pretax)\n$(1.45)\n$(1.44)\nTax Impact of GBTG Gain on Sale\n$0.34\n$0.34\nGBTG Gain on Sale (after tax)\n$(1.11)\n$(1.10)\nRestructuring Charge (pretax)\n$0.49\n$0.49\nTax Impact of Restructuring Charge\n$(0.12)\n$(0.12)\nRestructuring Charge (after tax)\n$0.37\n$0.37\nAdjusted Diluted EPS\n$4.68\n$4.14\n13%\n$13.49\n$11.85\n14%\nReconciliation of Adjusted Net Income\n$ in millions - amounts may not sum due to rounding\nQuarters Ended\nSeptember 30,\nYoY%\nInc/(Dec)\nNine Months Ended\nSeptember 30,\nYoY%\nInc/(Dec)\n2026\n2025\n2026\n2025\nGAAP Net Income\n$3,712\n$2,902\n28%\n$9,794\n$8,371\n17%\nGBTG Gain on Sale (pretax)\n$(982)\n$(982)\nTax Impact of GBTG Gain on Sale\n$230\n$230\nGBTG Gain on Sale (after tax)\n$(751)\n$(751)\nRestructuring Charge (pretax)\n$336\n$336\nTax Impact of Restructuring Charge\n$(84)\n$(84)\nRestructuring Charge (after tax)\n$253\n$253\nAdjusted Net Income\n$3,214\n$2,902\n11%\n$9,296\n$8,371\n11%\nReconciliation of Adjusted EPS Guidance\nAmounts may not ",
+      "lineno": 139,
+      "matches": true,
+      "file": "snapshots/q326exhibit991.htm.txt",
+      "period_start": null,
+      "period_end": null
+    }
+  ],
+  "claims": [
+    {
+      "id": "claim:eps-comparison-basis",
+      "text": "美国运通2026年第三季度报告摊薄EPS为5.42美元，同比增长31%；公司非GAAP调整后EPS为4.68美元，同比增长13%。2025年第三季度两种口径均为4.14美元，因此增速差异不是比较基数不同，而是本季是否剔除特定项目。",
+      "evidence_ids": [
+        "chunk_5a255fbc933ca3e7241888f6"
+      ],
+      "calculation_ids": [],
+      "requirement_ids": [
+        "request:episode_1bc8ee25e95f42c8b8787968a2868c04"
+      ],
+      "constraints": {
+        "entity": "AXP",
+        "period_start": "2026-07-01",
+        "period_end": "2026-09-30",
+        "comparison_period_start": "2025-07-01",
+        "comparison_period_end": "2025-09-30",
+        "basis": "GAAP摊薄EPS与公司非GAAP调整后摊薄EPS",
+        "currency": "USD",
+        "unit": "美元/股",
+        "business_scope": "合并"
+      },
+      "status": "Supported",
+      "scope_version": 6,
+      "evidence_versions": {
+        "chunk_5a255fbc933ca3e7241888f6": 1
+      },
+      "calculation_versions": {},
+      "critic_verdict": {
+        "claim_id": "claim:eps-comparison-basis",
+        "status": "Supported",
+        "evidence_refs": [
+          "chunk_5a255fbc933ca3e7241888f6"
+        ],
+        "basis": "附录I截至9月30日的季度栏明确列示：2026年GAAP摊薄EPS为5.42美元、同比增长31%，调整后为4.68美元、同比增长13%；2025年两种口径均为4.14美元。因此比较基数相同，差异来自本期调整项目。草稿使用的是季度数据，而非相邻的九个月累计数据，期间、美元每股单位及公司整体口径一致。"
+      },
+      "version": 2,
+      "created_at": "2026-11-16T16:25:40.909300+00:00",
+      "stale": false,
+      "display_check": {
+        "method": "source_review",
+        "label": "核验方式为原文审读，数字与期间、指标的对应关系需结合引文判断。"
+      }
+    },
+    {
+      "id": "claim:eps-adjustment-bridge",
+      "text": "差距主要来自出售GBTG股权带来的收益，但还要同时处理相关重组费用。公司附录列示的税后每股调节关系为：报告EPS 5.42美元－GBTG出售收益1.11美元＋重组费用0.37美元＝调整后EPS 4.68美元。也就是说，调整时既剔除出售收益，也加回重组费用，不能把出售收益全额当作两种EPS的差额；上述为公司披露的每股调节数。",
+      "evidence_ids": [
+        "chunk_5a255fbc933ca3e7241888f6"
+      ],
+      "calculation_ids": [],
+      "requirement_ids": [
+        "request:episode_1bc8ee25e95f42c8b8787968a2868c04"
+      ],
+      "constraints": {
+        "entity": "AXP",
+        "period_start": "2026-07-01",
+        "period_end": "2026-09-30",
+        "basis": "公司附录I披露的GAAP至非GAAP税后每股调节",
+        "currency": "USD",
+        "unit": "美元/股",
+        "business_scope": "合并"
+      },
+      "status": "Supported",
+      "scope_version": 6,
+      "evidence_versions": {
+        "chunk_5a255fbc933ca3e7241888f6": 1
+      },
+      "calculation_versions": {},
+      "critic_verdict": {
+        "claim_id": "claim:eps-adjustment-bridge",
+        "status": "Supported",
+        "evidence_refs": [
+          "chunk_5a255fbc933ca3e7241888f6"
+        ],
+        "basis": "附录I季度EPS调节表将GBTG出售收益的税后调整列为负1.11美元，将重组费用的税后调整列为正0.37美元，最终调整后EPS为4.68美元。草稿所列5.42－1.11＋0.37＝4.68与原表及算术一致，正确区分剔除收益与加回费用，没有将全部出售收益误作两种EPS的净差额。"
+      },
+      "version": 2,
+      "created_at": "2026-11-16T16:25:40.910078+00:00",
+      "stale": false,
+      "display_check": {
+        "method": "source_review",
+        "label": "核验方式为原文审读，数字与期间、指标的对应关系需结合引文判断。"
+      }
+    },
+    {
+      "id": "claim:adjusted-growth-interpretation",
+      "text": "13%也不等于“完全剔除所有非持续因素后的经营增速”。本次公司非GAAP调节仅针对GBTG出售收益及相关重组费用；较低有效税率、准备金释放和平均摊薄股数下降并未作为单独项目剔除。公告另称，本季税率下降主要反映解决以前期间税务事项带来的离散税收利益，信用损失准备费用下降则反映本季释放准备金、上年同期增提准备金等因素。因此，13%应理解为公司特定调整口径下的EPS增速，而不是纯粹的基础经营增长率。",
+      "evidence_ids": [
+        "chunk_5a255fbc933ca3e7241888f6",
+        "span_3b74985e92f2fa70a68c88af"
+      ],
+      "calculation_ids": [],
+      "requirement_ids": [
+        "request:episode_1bc8ee25e95f42c8b8787968a2868c04"
+      ],
+      "constraints": {
+        "entity": "AXP",
+        "period_start": "2026-07-01",
+        "period_end": "2026-09-30",
+        "basis": "公司非GAAP调整范围；其他因素的说明来自公告，未量化各自增长贡献",
+        "business_scope": "合并",
+        "interpretation": "对调整口径局限的分析，不将管理层解释视为独立因果验证"
+      },
+      "status": "Supported",
+      "scope_version": 6,
+      "evidence_versions": {
+        "chunk_5a255fbc933ca3e7241888f6": 1,
+        "span_3b74985e92f2fa70a68c88af": 1
+      },
+      "calculation_versions": {},
+      "critic_verdict": {
+        "claim_id": "claim:adjusted-growth-interpretation",
+        "status": "Supported",
+        "evidence_refs": [
+          "chunk_5a255fbc933ca3e7241888f6",
+          "span_3b74985e92f2fa70a68c88af"
+        ],
+        "basis": "附录I的非GAAP调节仅列GBTG出售收益、重组费用及各自税项，未另行剔除有效税率变化、准备金释放或股数变化。公告季度表显示平均摊薄股数由693百万股降至674百万股；正文将有效税率下降主要归于解决以前期间税务事项产生的离散税收利益，并说明信用损失准备费用下降反映本期释放准备金、上年同期增提准备金，且较高净核销构成部分抵消。草稿以“等因素”保留解释的非穷尽性，未虚构贡献金额；据此提示13%并非完全排除所有非持续因素后的基础经营增速，边界恰当。"
+      },
+      "version": 2,
+      "created_at": "2026-11-16T16:25:40.910877+00:00",
+      "stale": false,
+      "display_check": {
+        "method": "source_review",
+        "label": "核验方式为原文审读，数字与期间、指标的对应关系需结合引文判断。"
+      }
+    }
+  ],
+  "calc": []
+}

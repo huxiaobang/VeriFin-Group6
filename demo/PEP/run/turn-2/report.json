@@ -1,0 +1,628 @@
+{
+  "episode_id": "episode_66d039dd17404a7ab46b26c725992e32",
+  "request": "你说国际业务较强、北美还在修复。北美具体是哪块拖了后腿，卖得少了还是价格变了？",
+  "status": "complete",
+  "stop_reason": "completed",
+  "scope": {
+    "cutoff": "2026-11-16",
+    "requirements": [
+      {
+        "id": "request:episode_66d039dd17404a7ab46b26c725992e32",
+        "text": "说明百事2026年第三季度北美食品与北美饮料分别在哪些方面拖累表现，依据同季度披露区分销量、有效净定价、有机收入与收购贡献，并明确量价口径及证据限制。"
+      }
+    ],
+    "entities": [
+      "PEP"
+    ],
+    "period_start": "2026-06-14",
+    "period_end": "2026-09-05"
+  },
+  "scope_version": 5,
+  "summary": "对用户原问part-1的直接回答：北美食品主要是有效净定价偏弱、盈利承压；北美饮料主要是销量偏弱，定价抵消，报告收入增长主要靠收购。具体看百事2026年第三季度、截至9月5日的12周同比披露：食品（PFNA）的有机销量对收入增长贡献约+0.5个百分点，有效净定价贡献约-1个百分点，有机收入基本持平，核心营业利润下降12%；饮料（PBNA）的相应贡献为-3个百分点和+3个百分点，有机收入同样基本持平，报告收入增长5%主要来自2025年收购，而非原有业务销量转强。[chunk_ae5bdbdc960fbb64f4203c72；span_8c9a2825bb1288d3bfc9eebe；span_e15075b0f56ab75de1fba9f1] 这里的有机口径剔除汇率及收购剥离影响，量价数字是收入增速贡献，不是单品价格或单位销量的直接变动；饮料另行披露的单位销量下降2%，不能与收入桥的-3个百分点混用。公司说明两种销量口径可能因产品组合等因素不同，但未逐项解释PBNA的差异。数字存在四舍五入，有效净定价不等于单品标价，现有资料也不足以归因到具体品牌，或把食品全部利润降幅归因于定价。[span_866e7defb63fa38a7cf48e44；span_8c9a2825bb1288d3bfc9eebe] 本回答及五项候选结论均对应part-1和现有requirement：request:episode_66d039dd17404a7ab46b26c725992e32。",
+  "summary_kind": "unverified_researcher_draft",
+  "model_mode": "configured_model",
+  "claims": [
+    {
+      "id": "claim:pfna-volume-pricing",
+      "text": "北美食品（PFNA）主要是有效净定价偏弱，不是分部整体销量下降。百事披露，2026年第三季度（截至9月5日的12周）有机收入基本持平；在有机收入增长桥中，有机销量贡献约+0.5个百分点，有效净定价贡献约-1个百分点。管理层同时称，北美方便食品收入趋势环比改善，咸味零食销量和销量份额改善，但较低的有效净定价形成抵消。桥中数字经过四舍五入，不能要求其机械加总为零。",
+      "evidence_ids": [
+        "chunk_ae5bdbdc960fbb64f4203c72",
+        "span_e15075b0f56ab75de1fba9f1",
+        "span_8c9a2825bb1288d3bfc9eebe"
+      ],
+      "calculation_ids": [],
+      "requirement_ids": [
+        "request:episode_66d039dd17404a7ab46b26c725992e32"
+      ],
+      "constraints": {
+        "request_part": "part-1",
+        "entity": "PEP",
+        "business_scope": "PFNA",
+        "period_start": "2026-06-14",
+        "period_end": "2026-09-05",
+        "basis": "Organic Revenue Performance；非GAAP，剔除外汇折算及收购、剥离影响",
+        "metric": "Organic Revenue % Change; Organic volume change; Effective net pricing",
+        "unit": "percent; percentage points",
+        "attribution": "增长桥为百事公司披露；环比趋势和业务解释来自管理层"
+      },
+      "status": "Supported",
+      "scope_version": 5,
+      "evidence_versions": {
+        "chunk_ae5bdbdc960fbb64f4203c72": 1,
+        "span_e15075b0f56ab75de1fba9f1": 1,
+        "span_8c9a2825bb1288d3bfc9eebe": 1
+      },
+      "calculation_versions": {},
+      "critic_verdict": {
+        "claim_id": "claim:pfna-volume-pricing",
+        "status": "Supported",
+        "evidence_refs": [
+          "chunk_ae5bdbdc960fbb64f4203c72",
+          "span_e15075b0f56ab75de1fba9f1",
+          "span_866e7defb63fa38a7cf48e44",
+          "span_8c9a2825bb1288d3bfc9eebe"
+        ],
+        "basis": "截至2026年9月5日的12周有机收入表中，PFNA有机收入增速为横线，有机销量对增速的影响为+0.5、有效净定价为-1；季度汇总表另列分部单位销量基本持平，支持并非分部整体销量下降的判断。季度讨论明确将北美方便食品趋势环比改善归于咸味零食销量及份额改善，并指出较低有效净定价形成抵消。脚注注明四舍五入，不能要求显示值精确闭合。这里的量价数字正确表述为收入增速贡献，而非单位销量或单品价格变化率。"
+      },
+      "version": 4,
+      "created_at": "2026-11-16T16:27:13.069719+00:00",
+      "stale": false,
+      "display_check": {
+        "method": "source_review",
+        "label": "核验方式为原文审读，数字与期间、指标的对应关系需结合引文判断。"
+      }
+    },
+    {
+      "id": "claim:pfna-profit-pressure",
+      "text": "从盈利看，北美食品也是明显的薄弱点：同期核心营业利润同比下降12%。因此，销量有所改善并不意味着盈利已经修复；但这项利润降幅不能仅凭收入量价桥全部归因于定价。",
+      "evidence_ids": [
+        "span_8c9a2825bb1288d3bfc9eebe"
+      ],
+      "calculation_ids": [],
+      "requirement_ids": [
+        "request:episode_66d039dd17404a7ab46b26c725992e32"
+      ],
+      "constraints": {
+        "request_part": "part-1",
+        "entity": "PEP",
+        "business_scope": "PFNA",
+        "period_start": "2026-06-14",
+        "period_end": "2026-09-05",
+        "basis": "Core；非GAAP",
+        "metric": "Core Operating Profit % Change",
+        "unit": "percent",
+        "missing_evidence": [
+          "若要将核心营业利润降幅逐项归因，需要PFNA定价、成本、费用等因素的完整利润变动桥"
+        ]
+      },
+      "status": "Supported",
+      "scope_version": 5,
+      "evidence_versions": {
+        "span_8c9a2825bb1288d3bfc9eebe": 1
+      },
+      "calculation_versions": {},
+      "critic_verdict": {
+        "claim_id": "claim:pfna-profit-pressure",
+        "status": "Supported",
+        "evidence_refs": [
+          "span_8c9a2825bb1288d3bfc9eebe"
+        ],
+        "basis": "12周分部表的Core Operating Profit % Change行明确列示PFNA为-12%，属于核心营业利润同比变化，并非误用报告利润或年初至今口径。销量改善不代表利润恢复是有据的比较；同时保留不能用收入量价桥解释全部利润降幅的限制，没有把定价直接认定为完整利润原因。"
+      },
+      "version": 4,
+      "created_at": "2026-11-16T16:27:13.070990+00:00",
+      "stale": false,
+      "display_check": {
+        "method": "source_review",
+        "label": "核验方式为原文审读，数字与期间、指标的对应关系需结合引文判断。"
+      }
+    },
+    {
+      "id": "claim:pbna-volume-pricing",
+      "text": "北美饮料（PBNA）则主要是量弱、定价抵消：同季度有机收入基本持平，其中有机销量对收入增速的贡献约为-3个百分点，有效净定价贡献约为+3个百分点。也就是说，内生收入没有增长，并不是有效净定价下滑，而是正向定价贡献被负向销量贡献抵消。",
+      "evidence_ids": [
+        "chunk_ae5bdbdc960fbb64f4203c72"
+      ],
+      "calculation_ids": [],
+      "requirement_ids": [
+        "request:episode_66d039dd17404a7ab46b26c725992e32"
+      ],
+      "constraints": {
+        "request_part": "part-1",
+        "entity": "PEP",
+        "business_scope": "PBNA",
+        "period_start": "2026-06-14",
+        "period_end": "2026-09-05",
+        "basis": "Organic Revenue Performance；非GAAP，剔除外汇折算及收购、剥离影响",
+        "metric": "Organic Revenue % Change; Organic volume change; Effective net pricing",
+        "unit": "percent; percentage points",
+        "attribution": "百事公司披露的有机收入增长桥"
+      },
+      "status": "Supported",
+      "scope_version": 5,
+      "evidence_versions": {
+        "chunk_ae5bdbdc960fbb64f4203c72": 1
+      },
+      "calculation_versions": {},
+      "critic_verdict": {
+        "claim_id": "claim:pbna-volume-pricing",
+        "status": "Supported",
+        "evidence_refs": [
+          "chunk_ae5bdbdc960fbb64f4203c72"
+        ],
+        "basis": "同一12周有机收入增长桥中，PBNA有机收入增速为横线，有机销量贡献为-3、有效净定价贡献为+3。草稿据此解释为负向销量贡献抵消正向定价贡献，方向、分部和期间均匹配，也没有将-3个百分点误称为单位销量下降3%。"
+      },
+      "version": 4,
+      "created_at": "2026-11-16T16:27:13.078736+00:00",
+      "stale": false,
+      "display_check": {
+        "method": "source_review",
+        "label": "核验方式为原文审读，数字与期间、指标的对应关系需结合引文判断。"
+      }
+    },
+    {
+      "id": "claim:pbna-acquisition-bridge",
+      "text": "北美饮料报告收入同比增长5%，管理层称主要来自2025年收购的贡献，不能把它理解成原有业务销量转强。收入桥列示的汇率调整约为零，“收购及剥离影响”为-6个百分点；这里的负号表示从报告增速调整至有机增速时剔除该影响，并非收购拖累收入。表内增速和调整项经过四舍五入，不应把显示的5%与-6个百分点机械相加，取代公司披露的有机收入基本持平。",
+      "evidence_ids": [
+        "span_e15075b0f56ab75de1fba9f1",
+        "chunk_ae5bdbdc960fbb64f4203c72",
+        "span_8c9a2825bb1288d3bfc9eebe"
+      ],
+      "calculation_ids": [],
+      "requirement_ids": [
+        "request:episode_66d039dd17404a7ab46b26c725992e32"
+      ],
+      "constraints": {
+        "request_part": "part-1",
+        "entity": "PEP",
+        "business_scope": "PBNA",
+        "period_start": "2026-06-14",
+        "period_end": "2026-09-05",
+        "basis": "Reported Net Revenue为GAAP，包含并购及汇率；Organic Revenue为非GAAP",
+        "metric": "Reported Net Revenue % Change; Impact of foreign exchange translation; Impact of acquisitions and divestitures",
+        "unit": "percent; percentage points",
+        "attribution": "收购为报告收入增长主要来源的解释来自管理层"
+      },
+      "status": "Supported",
+      "scope_version": 5,
+      "evidence_versions": {
+        "span_e15075b0f56ab75de1fba9f1": 1,
+        "chunk_ae5bdbdc960fbb64f4203c72": 1,
+        "span_8c9a2825bb1288d3bfc9eebe": 1
+      },
+      "calculation_versions": {},
+      "critic_verdict": {
+        "claim_id": "claim:pbna-acquisition-bridge",
+        "status": "Supported",
+        "evidence_refs": [
+          "span_e15075b0f56ab75de1fba9f1",
+          "chunk_ae5bdbdc960fbb64f4203c72",
+          "span_8c9a2825bb1288d3bfc9eebe"
+        ],
+        "basis": "季度讨论列示北美饮料报告收入增长5%，并明确主要反映2025年收购的贡献。有机收入表的PBNA列将汇率影响显示为横线、收购及剥离调整显示为-6，且列出从报告收入中扣除收购相关收入及调整上年剥离影响的金额，支持负号属于剔除调整而非收购拖累的解释。脚注注明四舍五入；草稿采用公司披露的有机收入基本持平，没有自行构造闭合结果。"
+      },
+      "version": 4,
+      "created_at": "2026-11-16T16:27:13.081853+00:00",
+      "stale": false,
+      "display_check": {
+        "method": "source_review",
+        "label": "核验方式为原文审读，数字与期间、指标的对应关系需结合引文判断。"
+      }
+    },
+    {
+      "id": "claim:volume-definition-limits",
+      "text": "量价口径要分清：北美饮料另行披露的单位销量同比下降2%，已剔除收购及剥离影响；它不等于有机收入桥中的销量贡献-3个百分点。公司脚注说明，单位销量变化与销量对收入增速的影响，可能因产品组合、非合并合营企业销量等因素而不同；脚注还对特许饮料业务列举了装瓶商销量与浓缩液发货的时点差异，但没有把北美饮料这两个数字的差别逐项量化。有效净定价也不能直接当成某个单品的标价变化，因此不能据这些汇总数字断言全面降价、终端需求变化的具体原因，或某个品牌拖累。",
+      "evidence_ids": [
+        "span_866e7defb63fa38a7cf48e44",
+        "chunk_ae5bdbdc960fbb64f4203c72",
+        "span_8c9a2825bb1288d3bfc9eebe"
+      ],
+      "calculation_ids": [],
+      "requirement_ids": [
+        "request:episode_66d039dd17404a7ab46b26c725992e32"
+      ],
+      "constraints": {
+        "request_part": "part-1",
+        "entity": "PEP",
+        "business_scope": "PBNA；量价解释同时适用于本次北美两分部比较",
+        "period_start": "2026-06-14",
+        "period_end": "2026-09-05",
+        "basis": "单位销量剔除收购及剥离；有机销量收入贡献采用公司Organic Revenue Performance口径",
+        "metric": "Volume; Organic volume change; Effective net pricing",
+        "unit": "percent; percentage points",
+        "missing_evidence": [
+          "PBNA单位销量变动与有机销量收入贡献差异的逐项量化说明",
+          "北美各品牌、单品、渠道的售价、促销、组合及终端销量明细"
+        ]
+      },
+      "status": "Supported",
+      "scope_version": 5,
+      "evidence_versions": {
+        "span_866e7defb63fa38a7cf48e44": 1,
+        "chunk_ae5bdbdc960fbb64f4203c72": 1,
+        "span_8c9a2825bb1288d3bfc9eebe": 1
+      },
+      "calculation_versions": {},
+      "critic_verdict": {
+        "claim_id": "claim:volume-definition-limits",
+        "status": "Supported",
+        "evidence_refs": [
+          "span_866e7defb63fa38a7cf48e44",
+          "chunk_ae5bdbdc960fbb64f4203c72",
+          "span_8c9a2825bb1288d3bfc9eebe"
+        ],
+        "basis": "季度汇总表列示PBNA饮料销量下降2%，脚注明确剔除收购及剥离影响；有机收入桥另列销量贡献-3个百分点。两处脚注明确两种口径可能因产品组合、非合并合营企业销量及特许饮料业务的发货时点差异而不同。草稿未将特许业务时点因素直接归因为PBNA差异，也未宣称已有逐项量化解释。分部汇总有效净定价并不提供具体单品标价、品牌或终端需求原因，保留这些推断限制合理。"
+      },
+      "version": 4,
+      "created_at": "2026-11-16T16:27:13.083472+00:00",
+      "stale": false,
+      "display_check": {
+        "method": "source_review",
+        "label": "核验方式为原文审读，数字与期间、指标的对应关系需结合引文判断。"
+      }
+    }
+  ],
+  "evidence": [
+    {
+      "id": "metadata_ad760c6692f956a4d6a61c1a",
+      "kind": "source_metadata",
+      "entity": "PEP",
+      "text": "Finite local replay catalog for PEP: 4 eligible document(s) at cutoff 2026-11-16, newest publication first. Catalog metadata only.\n8-K Exhibit 99.1 | document report date 2026-09-05 | published_at 2026-10-07T21:57:44.000Z (SEC EDGAR acceptance 0000077476-26-000050) | https://www.sec.gov/Archives/edgar/data/77476/000007747626000050/q320268-kxexhibit991.htm\n10-Q | document report date 2026-09-05 | published_at 2026-10-07T21:52:53.000Z (SEC EDGAR acceptance 0000077476-26-000048) | https://www.sec.gov/Archives/edgar/data/77476/000007747626000048/pep-20260905.htm\n10-Q | document report date 2026-06-13 | published_at 2026-07-08T21:52:18.000Z (SEC EDGAR acceptance 0000077476-26-000035) | https://www.sec.gov/Archives/edgar/data/77476/000007747626000035/pep-20260613.htm\n10-K | document report date 2025-12-27 | published_at 2026-02-02T23:07:04.000Z (SEC EDGAR acceptance 0000077476-26-000007) | https://www.sec.gov/Archives/edgar/data/77476/000007747626000007/pep-20251227.htm",
+      "source_url": "manifest.json",
+      "snapshot_hash": "dbf78f320aca77b3e4dfaa055e02f216fab9a11fcfa79426fb195da46f9d64f5",
+      "snapshot_path": "manifest.json",
+      "locator": "documents[3], documents[0], documents[1], documents[2]",
+      "published_at": "2026-11-16",
+      "publication_basis": "effective availability of filtered metadata preview",
+      "coverage_cutoff": "2026-11-16",
+      "retrieved_at": null,
+      "mode": "replay",
+      "version": 1,
+      "created_at": "2026-11-16T16:22:52.739037+00:00",
+      "stale": false
+    },
+    {
+      "id": "span_e15075b0f56ab75de1fba9f1",
+      "text": "EX-99.1\n2\nq320268-kxexhibit991.htm\nEX-99.1\nDocument\nExhibit 99.1\nPepsiCo Reports Third-Quarter 2026 Results\nThird-Quarter and Year-to-Date Results1\n•Net revenue increased 5.6% and 6.7%, respectively\n•Organic revenue2 increased 3.1% and 2.7%, respectively\n•Earnings per share (EPS) increased 17% and 47%, respectively\n•Core2 EPS increased 2% and 5%, respectively\n•Core constant currency2 EPS increased 1.5% and 2%, respectively\nGuidance\n•Company updates fiscal 2026 financial guidance2\nPURCHASE, N.Y. - October 8, 2026 - PepsiCo, Inc. (NASDAQ: PEP) today reported results for third-quarter 2026.\n“Our third-quarter results featured strong net revenue growth, an acceleration in organic revenue growth with organic volume growth across both global beverages and convenient foods. The results reflect the scale and resilience of the international business, the ongoing evolution of the global portfolio and an improved presence in underpenetrated channels and occasions,” said Chairman and CEO Ramon Laguarta.\nLaguarta continued, “Looking ahead, we remain focused on building upon the strength of the International business while acting with urgency to sustainably improve our performance in North America through more investments in innovation, effective brand building, and sharper marketplace execution by channel. Additional structural cost reduction actions are being identified and will be implemented in the coming months to help fund investments that aim to accelerate organic revenue growth and mitigate the impacts of rising input cost inflation.”\nThird-Quarter Year-to-Date\n($ in millions, except EPS) Q3 2026 Q3 2025 Change Q3 2026 Q3 2025 Change\nNet revenue $25,274 $23,937 5.6% $68,898 $64,582 6.7%\nOrganic revenue performance 3.1% 2.7%\nOperating profit $4,260 $3,569 19% $11,496 $7,941 45%\nOperating margin 16.9% 14.9% 195 bps 16.7% 12.3% 440 bps\nCore operating profit $4,277 $4,137 3% $11,394 $10,837 5%\nCore operating margin 16.9% 17.3% (35) bps 16.5% 16.8% (25) bps\nEPS $2.23 $1.90 17% $6.10 $4.15 47%\nCore EPS $2.34 $2.29 2% $6.15 $5.88 5%\nCore constant currency EPS 1.5% 2%\n1 Versus the prior year.\n2 Please refer to the reconciliation of generally accepted accounting principles (GAAP) and non-GAAP information in the attached exhibits and to the Glossary for the definitions of non-GAAP financial measures, including “Organic revenue performance,” “Core” and “Constant currency,” and to “Guidance and Outlook” for additional information regarding PepsiCo’s full-year 2026 financial guidance. PepsiCo provides guidance on a non-GAAP basis as we cannot predict certain elements which are included in reported GAAP results, including the impact of foreign exchange and commodity mark-to-market net impacts. Please refer to PepsiCo’s Quarterly Report on Form 10-Q for the 12 and 36 weeks ended September 5, 2026 (Q3 2026 Form 10-Q) filed with the Securities and Exchange Commission (SEC) for additional information regarding PepsiCo’s financial results.\n1\nThird-Quarter Results Discussion\n•Net revenue increased 5.6% due to 3.1% organic revenue growth, a 1.7-percentage-point net benefit from acquisitions and divestitures and a 0.7-percentage-point benefit from foreign exchange translation. Organic revenue growth reflects the benefits associated with effective net pricing and a contribution from organic volume growth.\n◦In North America, convenient foods net revenue trends improved sequentially, reflecting savory snacks volume growth and volume market share improvement, offset by lower effective net pricing. The beverages business delivered 5 percent net revenue growth, primarily reflecting the benefits of acquisitions made in 2025.\n◦The international businesses performed well with each segment delivering strong net revenue growth - aided by organic volume growth within Asia Pacific Foods, International Beverages Franchise and Latin America Foods.\n•Operating profit increased 19% and operating margin expanded 195 basis points, primarily reflecting a favorable net impact of acquisition and divestiture-related charges/credits and a favorable impact of net mark-to-market gains on commodity derivatives. Core operating profit increased 3%, with core operating margin contracting 35 basis points. The core operating profit performance reflects productivity savings, effective net pricing and a 4-percentage-point favorable impact of tariff refunds. These impacts were partially offset by certain operating cost increases and higher advertising and marketing expenses.\n•EPS increased 17% and core EPS increased 2%, primarily driven by operating profit growth.\nYear-to-Date Results Discussion\n•Net revenue increased 6.7% due to 2.7% organic revenue growth, a 2.0-percentage-point benefit from foreign exchange translation and a 2.0-percentage-point net benefit from acquisitions and divestitures. Organic revenue growth reflects the benefits associated with effective net pricing and a contribution from organic volume growth.\n◦In North America convenient foods, organic volume and volume market share increased aided by innovation and affordability initiatives. Convenient foods net revenue reflects organic volume growth and the benefits of an acquisition, offset by lower effective net pricing. The beverages business delivered 7 percent net revenue growth, primarily reflecting the benefits of acquisitions made in 2025 with organic revenue growth increasing 1 percent.\n◦The international businesses performed well with each segment delivering strong net revenue growth - aided by organic volume growth within Asia Pacific Foods, International Beverages Franchise and EMEA.\n•Operating profit increased 45% and operating margin expanded 440 basis points, primarily reflecting prior-year impairment charges related to the Rockstar and Be & Cheery brands and a favorable net impact of acquisition and divestiture-related charges/credits. Core operating profit increased 5%, with core operating margin contracting 25 basis points. The core operating profit performance was p",
+      "entity": "PEP",
+      "document_report_date": "2026-09-05",
+      "document_period_start": "2026-06-14",
+      "form": "8-K Exhibit 99.1",
+      "published_at": "2026-10-07T21:57:44.000Z",
+      "publication_precision": "timestamp",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/77476/000007747626000050/q320268-kxexhibit991.htm",
+      "snapshot_hash": "6669dac8002dacf42b74325b81221b20e6975d573da2427a62d7968e29bc7899",
+      "snapshot_path": "snapshots/q320268-kxexhibit991.htm",
+      "text_snapshot_path": "snapshots/q320268-kxexhibit991.htm.txt",
+      "text_snapshot_hash": "a664b6e4c0e9f7ef89f60e790d806ec2b0021e2600bc9879531f4d4b68b2f92d",
+      "retrieved_at": "2026-11-16T16:21:19.083804+00:00",
+      "extraction_method": "All visible HTML tables and body in source order.",
+      "mode": "replay",
+      "document_id": "source_doc_10051e485ae3e4f6272a9b32",
+      "kind": "document",
+      "start": 0,
+      "end": 6000,
+      "period_start": null,
+      "period_end": null,
+      "locator": "snapshots/q320268-kxexhibit991.htm.txt:characters[0:6000] (zero-based Unicode offsets)",
+      "version": 1,
+      "created_at": "2026-11-16T16:22:56.824656+00:00",
+      "stale": false
+    },
+    {
+      "id": "span_866e7defb63fa38a7cf48e44",
+      "text": "rimarily driven by productivity savings and effective net pricing, partially offset by certain operating cost increases.\n•EPS increased 47% and core EPS increased 5%, primarily driven by operating profit growth.\n2\nSummary Third-Quarter 2026 Performance\nRevenue\nVolume(a)\nGAAP Reported\n% Change Percentage Point Impact Organic\n% Change % Change\nForeign Exchange Translation Acquisitions and Divestitures Convenient Foods Beverages\nPepsiCo Foods North America (PFNA) — — — — —\nPepsiCo Beverages North America (PBNA) 5 — (6) — (2)\nInternational Beverages Franchise (IB Franchise) 8 (1) — 7 5\nEurope, Middle East and Africa (EMEA) 8 1 — 9 (1) 4\nLatin America Foods (LatAm Foods) 14 (8) — 6 3\nAsia Pacific Foods 10 (1) — 9 11\nTotal 6 (1) (2) 3 1 3\nOperating Profit and EPS\nGAAP Reported % Change Percentage Point Impact Core Constant Currency\n% Change\nItems Affecting Comparability Foreign Exchange Translation\nPFNA (13) 1 — (12)\nPBNA 45 (41) — 4\nIB Franchise 29 (19) (1.5) 9\nEMEA 25 (8) 2 19\nLatAm Foods 47 (27) (9) 10\nAsia Pacific Foods 15 (1) (2) 12\nCorporate unallocated expenses (10) 15 — 5\nTotal 19 (16) (1) 2.5\nEPS 17 (15) (1) 1.5\n(a)Excludes the impact of acquisitions and divestitures. In certain instances, the volume change shown here differs from the impact of organic volume change on net revenue performance disclosed in the Organic Revenue Performance table on page A-7, due to the impacts of product mix, nonconsolidated joint venture volume, and, for our franchise beverage businesses, temporary timing differences between bottler case sales (BCS) and concentrate shipments and equivalents (CSE). We report net revenue from our franchise beverage businesses based on CSE. The volume sold by our nonconsolidated joint ventures has no direct impact on our net revenue.\nNote: Amounts may not sum due to rounding.\nOrganic revenue and core constant currency results are non-GAAP financial measures. Please refer to the reconciliation of GAAP and non-GAAP information in the attached exhibits and to the Glossary for definitions of “Organic revenue performance,” “Core” and “Constant currency.”\n3\nSummary Year-to-Date 2026 Performance\nRevenue\nVolume(a)\nGAAP Reported\n% Change Percentage Point Impact Organic\n% Change % Change\nForeign Exchange Translation Acquisitions and Divestitures Convenient Foods Beverages\nPFNA — — — — 1\nPBNA 7 — (6) 1 (3)\nIB Franchise 10 (2) — 8 4\nEMEA 11 (3) — 7 3 2\nLatAm Foods 15 (11) — 4.5 —\nAsia Pacific Foods 11 (3) — 9 10\nTotal 7 (2) (2) 3 3 2\nOperating Profit and EPS\nGAAP Reported\n% Change Percentage Point Impact Core Constant Currency\n% Change\nItems Affecting Comparability Foreign Exchange Translation\nPFNA (8) — — (8)\nPBNA 416 (413) — 3\nIB Franchise 22 (7) (2) 13\nEMEA 47 (29) (2) 17\nLatAm Foods 28 (10) (12) 6\nAsia Pacific Foods 62 (32) (4) 25\nCorporate unallocated expenses (13) 16 — 3\nTotal 45 (40) (2) 3\nEPS 47 (42) (2.5) 2\n(a)Excludes the impact of acquisitions and divestitures. In certain instances, the volume change shown here differs from the impact of organic volume change on net revenue performance disclosed in the Organic Revenue Performance table on page A-7, due to the impacts of product mix, nonconsolidated joint venture volume, and, for our franchise beverage businesses, temporary timing differences between BCS and CSE. We report net revenue from our franchise beverage businesses based on CSE. The volume sold by our nonconsolidated joint ventures has no direct impact on our net revenue.\nNote: Amounts may not sum due to rounding.\nOrganic revenue and core constant currency results are non-GAAP financial measures. Please refer to the reconciliation of GAAP and non-GAAP information in the attached exhibits and to the Glossary for definitions of “Organic revenue performance,” “Core” and “Constant currency.”\n4\nGuidance and Outlook\nThe Company provides guidance on a non-GAAP basis as we cannot predict certain elements which are included in reported GAAP results, including the impact of foreign exchange translation and commodity mark-to-market net impacts. PepsiCo’s current and previous fiscal 2026 outlook is summarized below.\nFiscal 2026 Guidance (changes are bolded & italicized below)\nCurrent Previous\nOrganic Revenue Approximately +3% +2% to +4%\nForeign Exchange Translation (a)\nApproximately +1.5% to net revenue and core EPS growth Approximately +1% to net revenue and core EPS growth\nAcquisitions, net of Divestitures (b)\nApproximately +1.5% to net revenue growth Approximately +1% to net revenue growth\nNet Revenue Approximately +6% +4% to +6%\nCore Annual Effective Tax Rate (c)\nApproximately 21% Approximately 22%\nCore Constant Currency EPS +1% to +2% Low-end of +4% to +6%\nCore EPS +2.5% to +3.5% Low-end of +5% to +7%\nCapital Spending Below 5% of net revenue Below 5% of net revenue\nFree Cash Flow Conversion Ratio At least 80 percent At least 80 percent\nCash Returns to Shareholders (d)\n$8.9 billion $8.9 billion\n(a)Assumptions are based on current foreign exchange rates, as we are unable to predict the impact of exchange translation rates.\n(b)Refers to acquisitions, net of divestitures, that occurred in 2025.\n(c)Includes the anticipated impact of global minimum tax regulations.\n(d)Comprised of dividends of $7.9 billion and share repurchases of $1.0 billion.\nPrepared Management Remarks and Live Question and Answer Webcast\nAt approximately 6:00 a.m. (Eastern time) on October 8, 2026, the Company will post prepared management remarks (in pdf format) regarding its third quarter results and business update, including its outlook for 2026, at https://www.pepsico.com/investors. At 8:15 a.m. (Eastern time) on October 8, 2026, the Company will host a live question and answer session with investors and financial analysts. Further details will be accessible on the Company’s website at https://www.pepsico.com/investors.\nContacts: Investor Relations Communications\ninvestor@pepsico.com pepsicomediarelations@pepsico.com\n5\nPepsiCo, Inc. and Subsidiaries\nCondensed Consolidated Statement of Income\n(in millions",
+      "entity": "PEP",
+      "document_report_date": "2026-09-05",
+      "document_period_start": "2026-06-14",
+      "form": "8-K Exhibit 99.1",
+      "published_at": "2026-10-07T21:57:44.000Z",
+      "publication_precision": "timestamp",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/77476/000007747626000050/q320268-kxexhibit991.htm",
+      "snapshot_hash": "6669dac8002dacf42b74325b81221b20e6975d573da2427a62d7968e29bc7899",
+      "snapshot_path": "snapshots/q320268-kxexhibit991.htm",
+      "text_snapshot_path": "snapshots/q320268-kxexhibit991.htm.txt",
+      "text_snapshot_hash": "a664b6e4c0e9f7ef89f60e790d806ec2b0021e2600bc9879531f4d4b68b2f92d",
+      "retrieved_at": "2026-11-16T16:21:19.083804+00:00",
+      "extraction_method": "All visible HTML tables and body in source order.",
+      "mode": "replay",
+      "document_id": "source_doc_10051e485ae3e4f6272a9b32",
+      "kind": "document",
+      "start": 6000,
+      "end": 12000,
+      "period_start": null,
+      "period_end": null,
+      "locator": "snapshots/q320268-kxexhibit991.htm.txt:characters[6000:12000] (zero-based Unicode offsets)",
+      "version": 1,
+      "created_at": "2026-11-16T16:23:02.046905+00:00",
+      "stale": false
+    },
+    {
+      "id": "chunk_2daf7bb6c7a896a72ec40dc6",
+      "text": "organic revenue growth increasing 1 percent.\n◦The international businesses performed well with each segment delivering strong net revenue growth - aided by organic volume growth within Asia Pacific Foods, International Beverages Franchise and EMEA.\n•Operating profit increased 45% and operating margin expanded 440 basis points, primarily reflecting prior-year impairment charges related to the Rockstar and Be & Cheery brands and a favorable net impact of acquisition and divestiture-related charges/credits. Core operating profit increased 5%, with core operating margin contracting 25 basis points. The core operating profit performance was primarily driven by productivity savings and effective net pricing, partially offset by certain operating cost increases.\n•EPS increased 47% and core EPS increased 5%, primarily driven by operating profit growth.\n2\nSummary Third-Quarter 2026 Performance\nRevenue\nVolume(a)\nGAAP Reported\n% Change Percentage Point Impact Organic\n% Change % Change\nForeign Exchange Translation Acquisitions and Divestitures Convenient Foods Beverages\nPepsiCo Foods North America (PFNA) — — — — —\nPepsiCo Beverages North America (PBNA) 5 — (6) — (2)\nInternational Beverages Franchise (IB Franchise) 8 (1) — 7 5\nEurope, Middle East and Africa (EMEA) 8 1 — 9 (1) 4\nLatin America Foods (LatAm Foods) 14 (8) — 6 3\nAsia Pacific Foods 10 (1) — 9 11\nTotal 6 (1) (2) 3 1 3\nOperating Profit and EPS\nGAAP Reported % Change Percentage Point Impact Core Constant Currency\n% Change\nItems Affecting Comparability Foreign Exchange Translation\nPFNA (13) 1 — (12)\nPBNA 45 (41) — 4\nIB Franchise 29 (19) (1.5) 9\nEMEA 25 (8) 2 19\nLatAm Foods 47 (27) (9) 10\nAsia Pacific Foods 15 (1) (2) 12\nCorporate unallocated expenses (10) 15 — 5\nTotal 19 (16) (1) 2.5\nEPS 17 (15) (1) 1.5\n(a)Excludes the ",
+      "entity": "PEP",
+      "document_report_date": "2026-09-05",
+      "document_period_start": "2026-06-14",
+      "form": "8-K Exhibit 99.1",
+      "published_at": "2026-10-07T21:57:44.000Z",
+      "publication_precision": "timestamp",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/77476/000007747626000050/q320268-kxexhibit991.htm",
+      "snapshot_hash": "6669dac8002dacf42b74325b81221b20e6975d573da2427a62d7968e29bc7899",
+      "snapshot_path": "snapshots/q320268-kxexhibit991.htm",
+      "text_snapshot_path": "snapshots/q320268-kxexhibit991.htm.txt",
+      "text_snapshot_hash": "a664b6e4c0e9f7ef89f60e790d806ec2b0021e2600bc9879531f4d4b68b2f92d",
+      "retrieved_at": "2026-11-16T16:21:19.083804+00:00",
+      "extraction_method": "All visible HTML tables and body in source order.",
+      "mode": "replay",
+      "document_id": "source_doc_10051e485ae3e4f6272a9b32",
+      "start": 5355,
+      "end": 7149,
+      "retrieval_score": 15.288698411831616,
+      "retrieval_method": "bm25",
+      "kind": "document",
+      "period_start": null,
+      "period_end": null,
+      "locator": "snapshots/q320268-kxexhibit991.htm.txt:characters[5355:7149] (zero-based Unicode offsets)",
+      "version": 1,
+      "created_at": "2026-11-16T16:25:02.541085+00:00",
+      "stale": false
+    },
+    {
+      "id": "chunk_b0832db85ae6eb61c6f2a5a8",
+      "text": "full-year 2026 financial guidance. PepsiCo provides guidance on a non-GAAP basis as we cannot predict certain elements which are included in reported GAAP results, including the impact of foreign exchange and commodity mark-to-market net impacts. Please refer to PepsiCo’s Quarterly Report on Form 10-Q for the 12 and 36 weeks ended September 5, 2026 (Q3 2026 Form 10-Q) filed with the Securities and Exchange Commission (SEC) for additional information regarding PepsiCo’s financial results.\n1\nThird-Quarter Results Discussion\n•Net revenue increased 5.6% due to 3.1% organic revenue growth, a 1.7-percentage-point net benefit from acquisitions and divestitures and a 0.7-percentage-point benefit from foreign exchange translation. Organic revenue growth reflects the benefits associated with effective net pricing and a contribution from organic volume growth.\n◦In North America, convenient foods net revenue trends improved sequentially, reflecting savory snacks volume growth and volume market share improvement, offset by lower effective net pricing. The beverages business delivered 5 percent net revenue growth, primarily reflecting the benefits of acquisitions made in 2025.\n◦The international businesses performed well with each segment delivering strong net revenue growth - aided by organic volume growth within Asia Pacific Foods, International Beverages Franchise and Latin America Foods.\n•Operating profit increased 19% and operating margin expanded 195 basis points, primarily reflecting a favorable net impact of acquisition and divestiture-related charges/credits and a favorable impact of net mark-to-market gains on commodity derivatives. Core operating profit increased 3%, with core operating margin contracting 35 basis points. ",
+      "entity": "PEP",
+      "document_report_date": "2026-09-05",
+      "document_period_start": "2026-06-14",
+      "form": "8-K Exhibit 99.1",
+      "published_at": "2026-10-07T21:57:44.000Z",
+      "publication_precision": "timestamp",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/77476/000007747626000050/q320268-kxexhibit991.htm",
+      "snapshot_hash": "6669dac8002dacf42b74325b81221b20e6975d573da2427a62d7968e29bc7899",
+      "snapshot_path": "snapshots/q320268-kxexhibit991.htm",
+      "text_snapshot_path": "snapshots/q320268-kxexhibit991.htm.txt",
+      "text_snapshot_hash": "a664b6e4c0e9f7ef89f60e790d806ec2b0021e2600bc9879531f4d4b68b2f92d",
+      "retrieved_at": "2026-11-16T16:21:19.083804+00:00",
+      "extraction_method": "All visible HTML tables and body in source order.",
+      "mode": "replay",
+      "document_id": "source_doc_10051e485ae3e4f6272a9b32",
+      "start": 2476,
+      "end": 4225,
+      "retrieval_score": 12.57456448132028,
+      "retrieval_method": "bm25",
+      "kind": "document",
+      "period_start": null,
+      "period_end": null,
+      "locator": "snapshots/q320268-kxexhibit991.htm.txt:characters[2476:4225] (zero-based Unicode offsets)",
+      "version": 1,
+      "created_at": "2026-11-16T16:25:02.541497+00:00",
+      "stale": false
+    },
+    {
+      "id": "chunk_95d83fe58fc0d574467eed76",
+      "text": "EX-99.1\n2\nq320268-kxexhibit991.htm\nEX-99.1\nDocument\nExhibit 99.1\nPepsiCo Reports Third-Quarter 2026 Results\nThird-Quarter and Year-to-Date Results1\n•Net revenue increased 5.6% and 6.7%, respectively\n•Organic revenue2 increased 3.1% and 2.7%, respectively\n•Earnings per share (EPS) increased 17% and 47%, respectively\n•Core2 EPS increased 2% and 5%, respectively\n•Core constant currency2 EPS increased 1.5% and 2%, respectively\nGuidance\n•Company updates fiscal 2026 financial guidance2\nPURCHASE, N.Y. - October 8, 2026 - PepsiCo, Inc. (NASDAQ: PEP) today reported results for third-quarter 2026.\n“Our third-quarter results featured strong net revenue growth, an acceleration in organic revenue growth with organic volume growth across both global beverages and convenient foods. The results reflect the scale and resilience of the international business, the ongoing evolution of the global portfolio and an improved presence in underpenetrated channels and occasions,” said Chairman and CEO Ramon Laguarta.\nLaguarta continued, “Looking ahead, we remain focused on building upon the strength of the International business while acting with urgency to sustainably improve our performance in North America through more investments in innovation, effective brand building, and sharper marketplace execution by channel. ",
+      "entity": "PEP",
+      "document_report_date": "2026-09-05",
+      "document_period_start": "2026-06-14",
+      "form": "8-K Exhibit 99.1",
+      "published_at": "2026-10-07T21:57:44.000Z",
+      "publication_precision": "timestamp",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/77476/000007747626000050/q320268-kxexhibit991.htm",
+      "snapshot_hash": "6669dac8002dacf42b74325b81221b20e6975d573da2427a62d7968e29bc7899",
+      "snapshot_path": "snapshots/q320268-kxexhibit991.htm",
+      "text_snapshot_path": "snapshots/q320268-kxexhibit991.htm.txt",
+      "text_snapshot_hash": "a664b6e4c0e9f7ef89f60e790d806ec2b0021e2600bc9879531f4d4b68b2f92d",
+      "retrieved_at": "2026-11-16T16:21:19.083804+00:00",
+      "extraction_method": "All visible HTML tables and body in source order.",
+      "mode": "replay",
+      "document_id": "source_doc_10051e485ae3e4f6272a9b32",
+      "start": 0,
+      "end": 1315,
+      "retrieval_score": 12.43667465609828,
+      "retrieval_method": "bm25",
+      "kind": "document",
+      "period_start": null,
+      "period_end": null,
+      "locator": "snapshots/q320268-kxexhibit991.htm.txt:characters[0:1315] (zero-based Unicode offsets)",
+      "version": 1,
+      "created_at": "2026-11-16T16:25:02.541916+00:00",
+      "stale": false
+    },
+    {
+      "id": "chunk_ae5bdbdc960fbb64f4203c72",
+      "text": "impact on commodity derivatives due to the unpredictability of future changes in foreign exchange rates and commodity prices. Therefore, we are unable to provide a reconciliation of these measures, without unreasonable effort.\nA - 6\nPepsiCo, Inc. and Subsidiaries\nReconciliation of GAAP and Non-GAAP Information\nOrganic Revenue Performance\n12 and 36 Weeks Ended September 5, 2026\n(dollars in millions, unaudited)\n12 Weeks Ended 9/5/2026\nPFNA PBNA IB Franchise EMEA LatAm Foods Asia Pacific Foods Total\nReported Net Revenue, GAAP measure $ 6,504 $ 7,706 $ 1,401 $ 5,413 $ 3,021 $ 1,229 $ 25,274\nImpact of foreign exchange translation (a)\n10 11 (14) 42 (214) (13) (178)\nImpact of acquisitions and structural changes — (428) — — — — (428)\nOrganic Revenue, non-GAAP measure (b)\n$ 6,514 $ 7,289 $ 1,387 $ 5,455 $ 2,807 $ 1,216 $ 24,668\nPrior Year Reported Net Revenue, GAAP measure $ 6,526 $ 7,327 $ 1,291 $ 5,022 $ 2,656 $ 1,115 $ 23,937\nImpact of divestitures — (15) — — — — (15)\nPrior Year Organic Revenue, non-GAAP measure (b)\n$ 6,526 $ 7,312 $ 1,291 $ 5,022 $ 2,656 $ 1,115 $ 23,922\nReported Net Revenue % Change, GAAP measure — 5 8 8 14 10 6\nImpact of foreign exchange translation — — (1) 1 (8) (1) (1)\nImpact of acquisitions and divestitures — (6) — — — — (2)\nOrganic Revenue % Change, non-GAAP measure (c)\n— — 7 9 6 9 3\nImpact on % Change of:\nOrganic volume change (d)\n0.5 (3) 5.5 1 2.5 11 0.5\nEffective net pricing (1) 3 2 7 3 (2) 3\n36 Weeks Ended 9/5/2026\nPFNA PBNA IB Franchise EMEA LatAm Foods Asia Pacific Foods Total\nReported Net Revenue, GAAP measure $ 19,204 $ 21,340 $ 3,748 $ 13,219 $ 7,895 $ 3,492 $ 68,898\nImpact of foreign exchange translation (a)\n(13) (11) (71) (390) (721) (83) (1,289)\nImpact of acquisitions and structural changes (54) (1,245) — — — — (1,299)\nOrganic Revenue, ",
+      "entity": "PEP",
+      "document_report_date": "2026-09-05",
+      "document_period_start": "2026-06-14",
+      "form": "8-K Exhibit 99.1",
+      "published_at": "2026-10-07T21:57:44.000Z",
+      "publication_precision": "timestamp",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/77476/000007747626000050/q320268-kxexhibit991.htm",
+      "snapshot_hash": "6669dac8002dacf42b74325b81221b20e6975d573da2427a62d7968e29bc7899",
+      "snapshot_path": "snapshots/q320268-kxexhibit991.htm",
+      "text_snapshot_path": "snapshots/q320268-kxexhibit991.htm.txt",
+      "text_snapshot_hash": "a664b6e4c0e9f7ef89f60e790d806ec2b0021e2600bc9879531f4d4b68b2f92d",
+      "retrieved_at": "2026-11-16T16:21:19.083804+00:00",
+      "extraction_method": "All visible HTML tables and body in source order.",
+      "mode": "replay",
+      "document_id": "source_doc_10051e485ae3e4f6272a9b32",
+      "start": 27029,
+      "end": 28825,
+      "retrieval_score": 11.5435057626627,
+      "retrieval_method": "bm25",
+      "kind": "document",
+      "period_start": null,
+      "period_end": null,
+      "locator": "snapshots/q320268-kxexhibit991.htm.txt:characters[27029:28825] (zero-based Unicode offsets)",
+      "version": 1,
+      "created_at": "2026-11-16T16:25:02.542300+00:00",
+      "stale": false
+    },
+    {
+      "id": "chunk_f33322f4a274b72c73b45362",
+      "text": "a favorable net impact of acquisition and divestiture-related charges/credits and a favorable impact of net mark-to-market gains on commodity derivatives. Core operating profit increased 3%, with core operating margin contracting 35 basis points. The core operating profit performance reflects productivity savings, effective net pricing and a 4-percentage-point favorable impact of tariff refunds. These impacts were partially offset by certain operating cost increases and higher advertising and marketing expenses.\n•EPS increased 17% and core EPS increased 2%, primarily driven by operating profit growth.\nYear-to-Date Results Discussion\n•Net revenue increased 6.7% due to 2.7% organic revenue growth, a 2.0-percentage-point benefit from foreign exchange translation and a 2.0-percentage-point net benefit from acquisitions and divestitures. Organic revenue growth reflects the benefits associated with effective net pricing and a contribution from organic volume growth.\n◦In North America convenient foods, organic volume and volume market share increased aided by innovation and affordability initiatives. Convenient foods net revenue reflects organic volume growth and the benefits of an acquisition, offset by lower effective net pricing. The beverages business delivered 7 percent net revenue growth, primarily reflecting the benefits of acquisitions made in 2025 with organic revenue growth increasing 1 percent.\n◦The international businesses performed well with each segment delivering strong net revenue growth - aided by organic volume growth within Asia Pacific Foods, International Beverages Franchise and EMEA.\n",
+      "entity": "PEP",
+      "document_report_date": "2026-09-05",
+      "document_period_start": "2026-06-14",
+      "form": "8-K Exhibit 99.1",
+      "published_at": "2026-10-07T21:57:44.000Z",
+      "publication_precision": "timestamp",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/77476/000007747626000050/q320268-kxexhibit991.htm",
+      "snapshot_hash": "6669dac8002dacf42b74325b81221b20e6975d573da2427a62d7968e29bc7899",
+      "snapshot_path": "snapshots/q320268-kxexhibit991.htm",
+      "text_snapshot_path": "snapshots/q320268-kxexhibit991.htm.txt",
+      "text_snapshot_hash": "a664b6e4c0e9f7ef89f60e790d806ec2b0021e2600bc9879531f4d4b68b2f92d",
+      "retrieved_at": "2026-11-16T16:21:19.083804+00:00",
+      "extraction_method": "All visible HTML tables and body in source order.",
+      "mode": "replay",
+      "document_id": "source_doc_10051e485ae3e4f6272a9b32",
+      "start": 3978,
+      "end": 5604,
+      "retrieval_score": 11.273515347336062,
+      "retrieval_method": "bm25",
+      "kind": "document",
+      "period_start": null,
+      "period_end": null,
+      "locator": "snapshots/q320268-kxexhibit991.htm.txt:characters[3978:5604] (zero-based Unicode offsets)",
+      "version": 1,
+      "created_at": "2026-11-16T16:25:02.542653+00:00",
+      "stale": false
+    },
+    {
+      "id": "span_8c9a2825bb1288d3bfc9eebe",
+      "text": "non-GAAP measure (b)\n$ 19,137 $ 20,084 $ 3,677 $ 12,829 $ 7,174 $ 3,409 $ 66,310\nPrior Year Reported Net Revenue, GAAP measure $ 19,215 $ 19,999 $ 3,418 $ 11,946 $ 6,865 $ 3,139 $ 64,582\nImpact of divestitures — (37) — — — — (37)\nPrior Year Organic Revenue, non-GAAP measure (b)\n$ 19,215 $ 19,962 $ 3,418 $ 11,946 $ 6,865 $ 3,139 $ 64,545\nReported Net Revenue % Change, GAAP measure — 7 10 11 15 11 7\nImpact of foreign exchange translation — — (2) (3) (11) (3) (2)\nImpact of acquisitions and divestitures — (6) — — — — (2)\nOrganic Revenue % Change, non-GAAP measure (c)\n— 1 8 7 4.5 9 3\nImpact on % Change of:\nOrganic volume change (d)\n1 (3) 4 3 — 10 0.5\nEffective net pricing (1) 4 4 4 4 (2) 2\n(a)Represents the adjustment needed to reflect translation of revenue using prior-year period foreign currency exchange rates.\n(b)Represents underlying amount, not in accordance with GAAP, used in the calculation of Organic Revenue Performance, which is a financial measure that is not in accordance with GAAP. See pages A-5 through A-6 for further discussion.\n(c)A financial measure that is not in accordance with GAAP. See pages A-5 through A-6 for further discussion.\n(d)Excludes the impact of acquisitions and divestitures. In certain instances, the impact of organic volume change on net revenue performance differs from the unit volume change disclosed in the Summary Third-Quarter 2026 Performance table and Summary Year-to-Date 2026 Performance table on pages 3 and 4 respectively, due to the impacts of product mix, nonconsolidated joint venture volume, and, for our franchise beverage businesses, temporary timing differences between BCS and CSE. We report net revenue from our franchise beverage businesses based on CSE. The volume sold by our nonconsolidated joint ventures has no direct impact on our net revenue.\nNote – Amounts may not sum due to rounding.\nA - 7\nPepsiCo, Inc. and Subsidiaries\nReconciliation of GAAP and Non-GAAP Information (continued)\nCertain Line Items by Segment\n12 Weeks Ended September 5, 2026\n(dollars in millions, unaudited)\nPFNA PBNA IB Franchise EMEA LatAm Foods Asia Pacific Foods Corporate Unallocated Expenses Total\nReported Cost of Sales, GAAP measure $ 2,578 $ 3,540 $ 409 $ 3,044 $ 1,233 $ 731 $ (15) $ 11,520\nMark-to-market net impact — — — — — — 15 15\nRestructuring and impairment charges (2) (5) — (3) 1 — — (9)\nCore Cost of Sales, non-GAAP measure (a)\n$ 2,576 $ 3,535 $ 409 $ 3,041 $ 1,234 $ 731 $ — $ 11,526\nGross Margin\nReported Gross Profit, GAAP measure $ 3,926 $ 4,166 $ 992 $ 2,369 $ 1,788 $ 498 $ 15 $ 13,754 54.4 %\nMark-to-market net impact — — — — — — (15) (15) (0.1)\nRestructuring and impairment charges 2 5 — 3 (1) — — 9 —\nCore Gross Profit, non-GAAP measure (a)\n$ 3,928 $ 4,171 $ 992 $ 2,372 $ 1,787 $ 498 $ — $ 13,748 54.4 %\nReported Selling, General and Administrative Expenses, GAAP measure $ 2,593 $ 3,110 $ 430 $ 1,472 $ 1,164 $ 324 $ 401 $ 9,494\nMark-to-market net impact — — — — — — 64 64\nRestructuring and impairment charges (46) (48) (2) (40) (3) (5) (39) (183)\nAcquisition and divestiture-related charges/credits (1) 97 — — — — — 96\nCore Selling, General and Administrative Expenses, non-GAAP measure (a)\n$ 2,546 $ 3,159 $ 428 $ 1,432 $ 1,161 $ 319 $ 426 $ 9,471\nOperating Margin\nReported Operating Profit, GAAP measure $ 1,333 $ 1,056 $ 562 $ 897 $ 624 $ 174 $ (386) $ 4,260 16.9 %\nMark-to-market net impact — — — — — — (79) (79) (0.3)\nRestructuring and impairment charges 48 53 2 43 2 5 39 192 0.8\nAcquisition and divestiture-related charges/credits 1 (97) — — — — — (96) (0.4)\nCore Operating Profit, non-GAAP measure (a)\n1,382 1,012 564 940 626 179 (426) 4,277 16.9 %\nImpact of foreign exchange translation (b)\n2 3 (8) 18 (49) (4) — (38)\nCore Constant Currency Operating Profit, non-GAAP measure (a)\n$ 1,384 $ 1,015 $ 556 $ 958 $ 577 $ 175 $ (426) $ 4,239\nReported Operating Profit % Change, GAAP measure (13) 45 29 25 47 15 (10) 19\nCore Operating Profit % Change, non-GAAP measure (a)\n(12) 4 10 16 20 14 5 3\nCore Constant Currency Operating Profit % Change, non-GAAP measure (a)\n(12) 4 9 19 10 12 5 2.5\n(a)A financial measure that is not in accordance with GAAP. See pages A-5 through A-6 for further discussion.\n(b)Represents the adjustment needed to reflect translation of operating profit using prior-year period foreign currency exchange rates.\nNote – Amounts may not sum due to rounding.\nA - 8\nPepsiCo, Inc. and Subsidiaries\nReconciliation of GAAP and Non-GAAP Information (continued)\nCertain Line Items by Segment (continued)\n12 Weeks Ended September 6, 2025\n(dollars in millions, unaudited)\nPFNA PBNA IB Franchise EMEA LatAm Foods Asia Pacific Foods Corporate Unallocated Expenses Total\nReported Cost of Sales, GAAP measure $ 2,567 $ 3,452 $ 405 $ 2,871 $ 1,134 $ 666 $ 18 $ 11,113\nMark-to-market net impact — — — — — — (18) (18)\nRestructuring and impairment charges (10) 1 — (7) — — — (16)\nAcquisition and divestiture-related charges/credits — (46) — — — — — (46)\nCore Cost of Sales, non-GAAP measure (a)\n$ 2,557 $ 3,407 ",
+      "entity": "PEP",
+      "document_report_date": "2026-09-05",
+      "document_period_start": "2026-06-14",
+      "form": "8-K Exhibit 99.1",
+      "published_at": "2026-10-07T21:57:44.000Z",
+      "publication_precision": "timestamp",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/77476/000007747626000050/q320268-kxexhibit991.htm",
+      "snapshot_hash": "6669dac8002dacf42b74325b81221b20e6975d573da2427a62d7968e29bc7899",
+      "snapshot_path": "snapshots/q320268-kxexhibit991.htm",
+      "text_snapshot_path": "snapshots/q320268-kxexhibit991.htm.txt",
+      "text_snapshot_hash": "a664b6e4c0e9f7ef89f60e790d806ec2b0021e2600bc9879531f4d4b68b2f92d",
+      "retrieved_at": "2026-11-16T16:21:19.083804+00:00",
+      "extraction_method": "All visible HTML tables and body in source order.",
+      "mode": "replay",
+      "document_id": "source_doc_10051e485ae3e4f6272a9b32",
+      "kind": "document",
+      "start": 28825,
+      "end": 33825,
+      "period_start": null,
+      "period_end": null,
+      "locator": "snapshots/q320268-kxexhibit991.htm.txt:characters[28825:33825] (zero-based Unicode offsets)",
+      "version": 1,
+      "created_at": "2026-11-16T16:25:11.526535+00:00",
+      "stale": false
+    }
+  ],
+  "calculations": [],
+  "issues": [],
+  "unanswered": [],
+  "verification_available": true,
+  "usage": {
+    "model_calls": 8,
+    "tool_calls": 2,
+    "planner_steps": 4,
+    "active_seconds": 138.47541629197076,
+    "total_tokens": 194687,
+    "total_tokens_reported_calls": 8,
+    "prompt_tokens": 186554,
+    "prompt_tokens_reported_calls": 8,
+    "completion_tokens": 8133,
+    "completion_tokens_reported_calls": 8,
+    "cached_input_tokens": 115067,
+    "cached_input_tokens_reported_calls": 8,
+    "cache_write_tokens": 23775,
+    "cache_write_tokens_reported_calls": 8,
+    "cache_write_30m_tokens": 23775,
+    "cache_write_30m_tokens_reported_calls": 8,
+    "cache_write_12h_tokens": 0,
+    "cache_write_12h_tokens_reported_calls": 8,
+    "reasoning_tokens": 246,
+    "reasoning_tokens_reported_calls": 8
+  },
+  "created_at": "2026-11-16T16:27:13.108166+00:00",
+  "research_skills": [
+    "reconcile-comparable-growth"
+  ],
+  "skill_selection_source": "planner",
+  "request_parts": {
+    "part-1": "你说国际业务较强、北美还在修复。北美具体是哪块拖了后腿，卖得少了还是价格变了？"
+  },
+  "request_coverage": [
+    {
+      "part": "part-1",
+      "status": "answered",
+      "claim_id": "claim:pfna-volume-pricing",
+      "answer_sentence": "北美食品（PFNA）主要是有效净定价偏弱，不是分部整体销量下降。",
+      "supporting_claim_ids": [
+        "claim:pfna-volume-pricing",
+        "claim:pfna-profit-pressure",
+        "claim:pbna-volume-pricing",
+        "claim:pbna-acquisition-bridge",
+        "claim:volume-definition-limits"
+      ]
+    }
+  ],
+  "skill_fiscal_quarter": {
+    "entity": "PEP",
+    "quarter": "2026Q3",
+    "period_start": "2026-06-14",
+    "period_end": "2026-09-05",
+    "evidence_ids": [
+      "chunk_ae5bdbdc960fbb64f4203c72",
+      "span_866e7defb63fa38a7cf48e44",
+      "span_8c9a2825bb1288d3bfc9eebe",
+      "span_e15075b0f56ab75de1fba9f1"
+    ]
+  },
+  "delivery_stage": "reviewed",
+  "episode_material_ids": {
+    "evidence": [
+      "chunk_2daf7bb6c7a896a72ec40dc6",
+      "chunk_b0832db85ae6eb61c6f2a5a8",
+      "chunk_95d83fe58fc0d574467eed76",
+      "chunk_ae5bdbdc960fbb64f4203c72",
+      "chunk_f33322f4a274b72c73b45362",
+      "span_8c9a2825bb1288d3bfc9eebe"
+    ],
+    "calculations": []
+  },
+  "id": "6a217cba7d254f65b94d33daabe40dd5",
+  "version": 2,
+  "record_versions": {
+    "evidence": {
+      "metadata_ad760c6692f956a4d6a61c1a": 1,
+      "span_e15075b0f56ab75de1fba9f1": 1,
+      "span_866e7defb63fa38a7cf48e44": 1,
+      "chunk_2daf7bb6c7a896a72ec40dc6": 1,
+      "chunk_b0832db85ae6eb61c6f2a5a8": 1,
+      "chunk_95d83fe58fc0d574467eed76": 1,
+      "chunk_ae5bdbdc960fbb64f4203c72": 1,
+      "chunk_f33322f4a274b72c73b45362": 1,
+      "span_8c9a2825bb1288d3bfc9eebe": 1
+    },
+    "calculation": {},
+    "claim": {
+      "claim:coverage": 2,
+      "claim:revenue": 2,
+      "claim:operating-profit": 2,
+      "claim:margin": 2,
+      "claim:eps": 2,
+      "claim:reported-profit-attribution": 2,
+      "claim:core-profit-attribution": 2,
+      "claim:north-america-foods": 2,
+      "claim:north-america-beverages": 2,
+      "claim:international": 2,
+      "claim:revenue-outlook": 2,
+      "claim:earnings-outlook": 2,
+      "claim:risks": 2,
+      "claim:pfna-volume-pricing": 4,
+      "claim:pfna-profit-pressure": 4,
+      "claim:pbna-volume-pricing": 4,
+      "claim:pbna-acquisition-bridge": 4,
+      "claim:volume-definition-limits": 4
+    }
+  }
+}

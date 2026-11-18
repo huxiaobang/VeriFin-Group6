@@ -1,0 +1,75 @@
+{
+  "request": "Uber 第四季度经营现金流与自由现金流相差多少，按公司披露怎样核对？",
+  "claims": [
+    {
+      "calculation_ids": [],
+      "constraints": {},
+      "evidence_ids": [
+        "src_1"
+      ],
+      "evidence_versions": {
+        "src_1": 1
+      },
+      "id": "c1",
+      "requirement_ids": [
+        "r1"
+      ],
+      "scope_version": 1,
+      "text": "Uber 当季经营现金流为 17.50 亿美元，购置固定资产支付 0.44 亿美元。按公司定义，该季自由现金流为 17.94 亿美元。"
+    }
+  ],
+  "evidence": [
+    {
+      "entity": "UBER",
+      "id": "src_1",
+      "kind": "document",
+      "locator": "15: Free cash flow reconciliation; three months ended December 31, 2024 and 2023",
+      "published_at": "2025-02-05",
+      "snapshot_hash": "87c82ab8def54816da6611b48287c2422db1b8817fd5b972ce448c32d64ea809",
+      "snapshot_hash_kind": "sha256 of public transcribed row and locator, not original document bytes",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1543151/000154315125000004/uberq424earningspressrelea.htm",
+      "text": "{\"currency_unit\": \"USD million\", \"period_order\": [\"2023-Q4\", \"2024-Q4\"], \"rows\": {\"Free cash flow\": [768, 1706], \"Operating cash flow\": [823, 1750], \"Purchases of property and equipment\": [-55, -44]}}",
+      "version": 1
+    }
+  ],
+  "reviews": {
+    "A": {
+      "rule_findings": [],
+      "review": {
+        "issues": [
+          {
+            "target_id": "c1",
+            "issue_type": "numerical_inconsistency",
+            "evidence_refs": [
+              "src_1"
+            ],
+            "missing_support": "2024 年第四季度经营现金流 17.50 亿美元及购置固定资产现金支出 0.44 亿美元与披露一致，但自由现金流 17.94 亿美元错误。证据列示购置固定资产为负 44 百万美元，自由现金流为 1,706 百万美元；应为 1,750 + (-44) = 1,706 百万美元，即 17.06 亿美元，而不是将支出加回。",
+            "proposed_action": "将自由现金流更正为 17.06 亿美元，明确期间为 2024 年第四季度，并展示按披露符号核对的算式：17.50 + (-0.44) = 17.06 亿美元。"
+          },
+          {
+            "target_id": "r1",
+            "issue_type": "omission",
+            "evidence_refs": [
+              "src_1"
+            ],
+            "missing_support": "回答未明确给出用户所问的经营现金流与自由现金流差额，也未正确完成公司披露口径的核对。2024 年第四季度经营现金流高于自由现金流 44 百万美元，即 0.44 亿美元（4,400 万美元），对应购置固定资产现金支出。",
+            "proposed_action": "补充差额及方向：经营现金流比自由现金流高 4,400 万美元；以 1,750 - 44 = 1,706 百万美元核对公司披露，并标明季度和单位。"
+          }
+        ],
+        "reviewed_claim_ids": [
+          "c1"
+        ],
+        "reviewed_requirement_ids": [
+          "r1"
+        ]
+      }
+    },
+    "B": {
+      "rule_findings": [],
+      "review": {
+        "review": "拟答的经营现金流17.50亿美元及购置固定资产现金支出0.44亿美元与src_1一致，但自由现金流17.94亿美元错误，且与所引公司对账表直接矛盾。src_1的单位为百万美元，列顺序为2023年第四季度、2024年第四季度；2024年第四季度经营现金流为1,750，购置固定资产为−44，自由现金流为1,706。拟答显然将现金支出的绝对值加到了经营现金流上，正确核对应为1,750＋（−44）＝1,706百万美元，即17.50−0.44＝17.06亿美元。自由现金流比经营现金流少4,400万美元（0.44亿美元），差额正是购置固定资产的现金支出。拟答不仅将自由现金流高报了8,800万美元，也未明确回答两者相差多少及如何按公司披露核对。应明确标注为2024年第四季度，避免与表中2023年同期数据混淆。该披露发表于2025年2月5日，符合本次信息截止日期；现有证据已足以发现并纠正错误，规则检查无发现并不能证明答案正确。",
+        "suggested_actions": "将自由现金流改为17.06亿美元，并直接回答：『按Uber于2025年2月5日披露的2024年第四季度自由现金流对账表，经营现金流为17.50亿美元，购置固定资产现金支出为0.44亿美元，因此自由现金流＝17.50−0.44＝17.06亿美元，较经营现金流少0.44亿美元（4,400万美元）。』引用src_1，说明原表以百万美元列示、固定资产购置项以负数列示。修订时保留正确的经营现金流和支出金额，不应删除对账内容来回避错误；现有表格数据足够，无须额外检索才能完成这项修正。"
+      }
+    }
+  }
+}

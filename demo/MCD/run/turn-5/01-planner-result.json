@@ -1,0 +1,18 @@
+{
+  "action": "tool",
+  "tool": "analyze_disclosures",
+  "arguments": {
+    "entity": "MCD",
+    "method": "unit-profit-reconciliation"
+  },
+  "research_skills": [
+    "unit-profit-reconciliation"
+  ],
+  "requirements": [
+    {
+      "id": "request:episode_ad223a58ece545b9aa3227556e8c9e64",
+      "text": "解释麦当劳2026年第三季度利润增长快于收入的原因，量化加盟餐厅利润、自营餐厅利润、管理费用及其他营业收支对集团营业利润同比增量的贡献，判断加盟业务是否为主要增量来源，并区分公司归因、报表算术及GAAP与调整后口径。"
+    }
+  ],
+  "reason": "采用门店利润至集团营业利润调节方法，复用已取得的季度证据并补齐可计算的完整利润桥，比较加盟利润增长与其他营业收支等因素，而非仅重复管理层定性归因。"
+}

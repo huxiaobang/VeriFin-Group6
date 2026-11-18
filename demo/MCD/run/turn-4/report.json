@@ -1,0 +1,833 @@
+{
+  "episode_id": "episode_096de31c3a8646cfaee04efee9b63502",
+  "request": "你说国际运营市场不等于全是直营。那加盟店卖得好，麦当劳自己到底赚的是哪部分钱？",
+  "status": "complete",
+  "stop_reason": "completed",
+  "scope": {
+    "cutoff": "2026-11-16",
+    "entities": [
+      "MCD"
+    ],
+    "requirements": [
+      {
+        "id": "request:episode_096de31c3a8646cfaee04efee9b63502",
+        "text": "解释加盟店销售如何转化为麦当劳自身的租金、特许权使用费等收入，区分传统加盟与发展许可或附属公司模式、加盟店销售额与公司确认收入，并结合已有季度披露说明加盟餐厅利润口径及其不等于集团净利润。"
+      }
+    ],
+    "period_start": "2026-07-01",
+    "period_end": "2026-09-30"
+  },
+  "scope_version": 10,
+  "summary": "加盟店销售通过合同约定的租金、特许权使用费等转化为麦当劳收入，并非全额并入公司收入，也非按加盟商净利润分成。传统加盟与发展许可模式的资本责任不同；加盟餐厅利润还需与集团净利润区分。",
+  "summary_kind": "unverified_researcher_draft",
+  "model_mode": "configured_model",
+  "claims": [
+    {
+      "id": "claim:franchise_revenue_not_store_sales",
+      "text": "简单说：加盟店卖得好，麦当劳主要赚的是合同约定的租金、特许权使用费等，而不是把加盟店全部营业额记成自己的收入。相关收费主要与销售额挂钩，也不是按加盟商净利润分成。因此，加盟店销售改善通常有利于麦当劳相关收入，但不能把门店多卖的钱全部算成麦当劳多赚的钱。",
+      "evidence_ids": [
+        "chunk_149bb9c87a7ef7432668eebb",
+        "chunk_f20595b2abb202e49b610e85"
+      ],
+      "calculation_ids": [],
+      "requirement_ids": [
+        "request:episode_096de31c3a8646cfaee04efee9b63502"
+      ],
+      "constraints": {
+        "entity": "MCD",
+        "cutoff": "2026-11-16",
+        "basis": "合同机制及其方向性解释",
+        "business_scope": "franchised restaurants"
+      },
+      "status": "Supported",
+      "scope_version": 10,
+      "evidence_versions": {
+        "chunk_149bb9c87a7ef7432668eebb": 1,
+        "chunk_f20595b2abb202e49b610e85": 1
+      },
+      "calculation_versions": {},
+      "critic_verdict": {
+        "claim_id": "claim:franchise_revenue_not_store_sales",
+        "status": "Supported",
+        "evidence_refs": [
+          "chunk_149bb9c87a7ef7432668eebb",
+          "chunk_f20595b2abb202e49b610e85"
+        ],
+        "basis": "10-Q收入说明将加盟收入界定为租金、按销售额计算的特许权使用费及初始费用，而非加盟店全部销售额；传统加盟段也明确收费以销售额而非加盟商净利润为基础。销售改善通常有利于相关收入是合同机制的方向性解释，草稿未将其表述为固定比例的利润增长。"
+      },
+      "version": 2,
+      "created_at": "2026-11-16T16:28:41.054261+00:00",
+      "stale": false
+    },
+    {
+      "id": "claim:conventional_franchise_economics",
+      "text": "传统加盟模式下，麦当劳通常拥有餐厅土地和建筑，或取得长期租赁权；加盟商承担设备、招牌、座椅及装修等投入。麦当劳主要收取按销售额计算的租金和特许权使用费，其中租金设有最低支付额，并在新店开业或授予新加盟权时收取初始费用。具体费用因场地、公司投入及当地经营条件而异，不能套用一个统一收费比例。",
+      "evidence_ids": [
+        "chunk_99d17792d84508e31fc75b83",
+        "chunk_f20595b2abb202e49b610e85"
+      ],
+      "calculation_ids": [],
+      "requirement_ids": [
+        "request:episode_096de31c3a8646cfaee04efee9b63502"
+      ],
+      "constraints": {
+        "entity": "MCD",
+        "business_scope": "Conventional Franchise",
+        "basis": "10-Q披露的经营及合同模式",
+        "document_report_date": "2026-09-30"
+      },
+      "status": "Supported",
+      "scope_version": 10,
+      "evidence_versions": {
+        "chunk_99d17792d84508e31fc75b83": 1,
+        "chunk_f20595b2abb202e49b610e85": 1
+      },
+      "calculation_versions": {},
+      "critic_verdict": {
+        "claim_id": "claim:conventional_franchise_economics",
+        "status": "Supported",
+        "evidence_refs": [
+          "chunk_99d17792d84508e31fc75b83",
+          "chunk_f20595b2abb202e49b610e85"
+        ],
+        "basis": "传统加盟段明确公司通常拥有或长期租赁土地及建筑，加盟商支付设备、招牌、座椅和装修投入；后续原文列明按销售额收取租金及特许权使用费、最低租金和初始费用。费用因场地、公司投入及当地条件而异，支持不能套用统一收费比例的提醒。"
+      },
+      "version": 2,
+      "created_at": "2026-11-16T16:28:41.056001+00:00",
+      "stale": false
+    },
+    {
+      "id": "claim:developmental_license_economics",
+      "text": "发展许可或附属公司模式下，经营方负责经营管理、提供资本（包括房地产权益），并开发和开设新餐厅；麦当劳通常不投入餐厅资本，主要收取按销售额计算的特许权使用费，通常还会在新店开业或授予新许可时收取初始费用。与传统加盟相比，这一模式的餐厅资本责任更多由经营方承担。",
+      "evidence_ids": [
+        "chunk_f20595b2abb202e49b610e85"
+      ],
+      "calculation_ids": [],
+      "requirement_ids": [
+        "request:episode_096de31c3a8646cfaee04efee9b63502"
+      ],
+      "constraints": {
+        "entity": "MCD",
+        "business_scope": "Developmental License or Affiliate",
+        "basis": "10-Q披露的经营及合同模式",
+        "document_report_date": "2026-09-30"
+      },
+      "status": "Supported",
+      "scope_version": 10,
+      "evidence_versions": {
+        "chunk_f20595b2abb202e49b610e85": 1
+      },
+      "calculation_versions": {},
+      "critic_verdict": {
+        "claim_id": "claim:developmental_license_economics",
+        "status": "Supported",
+        "evidence_refs": [
+          "chunk_f20595b2abb202e49b610e85"
+        ],
+        "basis": "Developmental License or Affiliate标题下原文明确经营方负责管理、资本投入（包括房地产权益）及新店开发，公司通常不投入餐厅资本，收取按销售额计算的特许权使用费及通常的初始费用。草稿保留了“通常”的限定，并正确区分两类模式的资本责任。"
+      },
+      "version": 2,
+      "created_at": "2026-11-16T16:28:41.056867+00:00",
+      "stale": false
+    },
+    {
+      "id": "claim:quarterly_franchised_revenue",
+      "text": "落到2026年第三季度，公司收入表直接披露的加盟收入为44.87亿美元。这是麦当劳确认的加盟收入，不是加盟餐厅向顾客销售食品的全部营业额。",
+      "evidence_ids": [
+        "chunk_6dfa0efaee68fd8342f1524b",
+        "chunk_149bb9c87a7ef7432668eebb"
+      ],
+      "calculation_ids": [],
+      "requirement_ids": [
+        "request:episode_096de31c3a8646cfaee04efee9b63502"
+      ],
+      "constraints": {
+        "entity": "MCD",
+        "metric": "Franchised revenues",
+        "business_scope": "consolidated",
+        "period_start": "2026-07-01",
+        "period_end": "2026-09-30",
+        "currency": "USD",
+        "unit": "亿美元",
+        "basis": "季度收入表原文直接披露，非计算结果"
+      },
+      "status": "Supported",
+      "scope_version": 10,
+      "evidence_versions": {
+        "chunk_6dfa0efaee68fd8342f1524b": 1,
+        "chunk_149bb9c87a7ef7432668eebb": 1
+      },
+      "calculation_versions": {},
+      "critic_verdict": {
+        "claim_id": "claim:quarterly_franchised_revenue",
+        "status": "Supported",
+        "evidence_refs": [
+          "chunk_6dfa0efaee68fd8342f1524b",
+          "chunk_149bb9c87a7ef7432668eebb"
+        ],
+        "basis": "收入表的Quarters Ended September 30、2026列下，Franchised revenues合计为4,487百万美元，换算为44.87亿美元正确，未误用上年或累计期间。收入定义说明该金额为公司收取的加盟费用，而非加盟餐厅全部营业额；这里只进行了单位换算。"
+      },
+      "version": 2,
+      "created_at": "2026-11-16T16:28:41.057608+00:00",
+      "stale": false,
+      "display_check": {
+        "method": "source_review",
+        "label": "核验方式为原文审读，数字与期间、指标的对应关系需结合引文判断。"
+      }
+    },
+    {
+      "id": "claim:franchised_restaurant_margin_definition",
+      "text": "这些加盟收入还不是利润。公司将“加盟餐厅利润”（Franchised restaurant margins）定义为加盟收入减去加盟餐厅物业占用成本；这些成本包括租赁费用和折旧，因为麦当劳通常拥有或长期租赁相关土地及建筑。",
+      "evidence_ids": [
+        "chunk_6d40ed804857fe9823b396ea"
+      ],
+      "calculation_ids": [],
+      "requirement_ids": [
+        "request:episode_096de31c3a8646cfaee04efee9b63502"
+      ],
+      "constraints": {
+        "entity": "MCD",
+        "metric": "Franchised restaurant margins",
+        "business_scope": "consolidated franchised restaurants",
+        "basis": "公司披露的餐厅利润定义",
+        "document_report_date": "2026-09-30"
+      },
+      "status": "Supported",
+      "scope_version": 10,
+      "evidence_versions": {
+        "chunk_6d40ed804857fe9823b396ea": 1
+      },
+      "calculation_versions": {},
+      "critic_verdict": {
+        "claim_id": "claim:franchised_restaurant_margin_definition",
+        "status": "Supported",
+        "evidence_refs": [
+          "chunk_6d40ed804857fe9823b396ea"
+        ],
+        "basis": "Restaurant Margins原文明确将加盟餐厅利润定义为加盟收入减加盟餐厅物业占用成本，并说明成本包括租赁费用和折旧，原因是公司通常拥有或长期租赁餐厅土地及建筑。草稿准确区分收入与该层面的利润。"
+      },
+      "version": 2,
+      "created_at": "2026-11-16T16:28:41.058311+00:00",
+      "stale": false
+    },
+    {
+      "id": "claim:quarterly_franchised_margin_not_net_income",
+      "text": "2026年第三季度，公司餐厅利润表直接披露的加盟餐厅利润为38.00亿美元。它只是扣除上述物业占用成本后的餐厅层面指标，并不等于再扣除集团管理费用、利息、税项等之后的集团净利润。",
+      "evidence_ids": [
+        "chunk_6d40ed804857fe9823b396ea",
+        "span_de69cbdff59e9d164a29cd48"
+      ],
+      "calculation_ids": [],
+      "requirement_ids": [
+        "request:episode_096de31c3a8646cfaee04efee9b63502"
+      ],
+      "constraints": {
+        "entity": "MCD",
+        "metric": "Franchised restaurant margins",
+        "business_scope": "consolidated franchised restaurants",
+        "period_start": "2026-07-01",
+        "period_end": "2026-09-30",
+        "currency": "USD",
+        "unit": "亿美元",
+        "basis": "季度餐厅利润表原文直接披露；与集团净利润的会计口径区分"
+      },
+      "status": "Supported",
+      "scope_version": 10,
+      "evidence_versions": {
+        "chunk_6d40ed804857fe9823b396ea": 1,
+        "span_de69cbdff59e9d164a29cd48": 1
+      },
+      "calculation_versions": {},
+      "critic_verdict": {
+        "claim_id": "claim:quarterly_franchised_margin_not_net_income",
+        "status": "Supported",
+        "evidence_refs": [
+          "chunk_6d40ed804857fe9823b396ea",
+          "span_de69cbdff59e9d164a29cd48"
+        ],
+        "basis": "季度餐厅利润表的2026年Franchised合计为3,800百万美元，即38.00亿美元；同段定义显示它仅扣除加盟物业占用成本，并非集团净利润。公告另列本季集团净利润2,486百万美元，也印证两者指标不同。草稿是在解释尚未涵盖集团管理费用、利息及税项等的口径差异，并未声称从加盟餐厅利润仅靠这些扣项即可完整调节至集团净利润。"
+      },
+      "version": 2,
+      "created_at": "2026-11-16T16:28:41.058963+00:00",
+      "stale": false,
+      "display_check": {
+        "method": "source_review",
+        "label": "核验方式为原文审读，数字与期间、指标的对应关系需结合引文判断。"
+      }
+    },
+    {
+      "id": "claim:international_operated_mixed_ownership",
+      "text": "所以，“国际运营市场”说的是业务分部，而不是全部直营的所有权模式：2026年第三季度的餐厅利润表，在该分部下同时列有加盟餐厅利润和公司自营餐厅利润。看这个分部的表现时，需要区分麦当劳从加盟店收取的费用，与自营店销售扣除餐厅经营成本后留下的利润。",
+      "evidence_ids": [
+        "chunk_6d40ed804857fe9823b396ea"
+      ],
+      "calculation_ids": [],
+      "requirement_ids": [
+        "request:episode_096de31c3a8646cfaee04efee9b63502"
+      ],
+      "constraints": {
+        "entity": "MCD",
+        "business_scope": "International Operated Markets",
+        "period_start": "2026-07-01",
+        "period_end": "2026-09-30",
+        "basis": "季度餐厅利润表及其指标定义"
+      },
+      "status": "Supported",
+      "scope_version": 10,
+      "evidence_versions": {
+        "chunk_6d40ed804857fe9823b396ea": 1
+      },
+      "calculation_versions": {},
+      "critic_verdict": {
+        "claim_id": "claim:international_operated_mixed_ownership",
+        "status": "Supported",
+        "evidence_refs": [
+          "chunk_6d40ed804857fe9823b396ea"
+        ],
+        "basis": "2026年第三季度餐厅利润表在International Operated Markets下分别列有加盟餐厅利润1,645百万美元及自营餐厅利润299百万美元，支持该分部并非全部直营。表前定义还区分加盟费用扣物业成本与自营销售扣餐厅经营成本的口径，支持草稿的经营模式解释。"
+      },
+      "version": 2,
+      "created_at": "2026-11-16T16:28:41.059571+00:00",
+      "stale": false,
+      "display_check": {
+        "method": "source_review",
+        "label": "核验方式为原文审读，数字与期间、指标的对应关系需结合引文判断。"
+      }
+    }
+  ],
+  "evidence": [
+    {
+      "id": "metadata_292ee90e389c62c63a2d1c21",
+      "kind": "source_metadata",
+      "entity": "MCD",
+      "text": "Finite local replay catalog for MCD: 4 eligible document(s) at cutoff 2026-11-16, newest publication first. Catalog metadata only.\n10-Q | document report date 2026-09-30 | published_at 2026-11-06T17:07:09.000Z (SEC EDGAR acceptance 0000063908-26-000083) | https://www.sec.gov/Archives/edgar/data/63908/000006390826000083/mcd-20260930.htm\n8-K Exhibit 99.1 | document report date 2026-09-30 | published_at 2026-11-04T12:01:40.000Z (SEC EDGAR acceptance 0000063908-26-000080) | https://www.sec.gov/Archives/edgar/data/63908/000006390826000080/exhibit991-9302026.htm\n10-Q | document report date 2026-06-30 | published_at 2026-08-07T16:52:32.000Z (SEC EDGAR acceptance 0000063908-26-000073) | https://www.sec.gov/Archives/edgar/data/63908/000006390826000073/mcd-20260630.htm\n10-K | document report date 2025-12-31 | published_at 2026-02-24T16:12:45.000Z (SEC EDGAR acceptance 0000063908-26-000035) | https://www.sec.gov/Archives/edgar/data/63908/000006390826000035/mcd-20251231.htm",
+      "source_url": "manifest.json",
+      "snapshot_hash": "c98ef96e09ba9ea5452972813fe81d0bc5ab0d0a90cbc81905b9e9b7251dd5d2",
+      "snapshot_path": "manifest.json",
+      "locator": "documents[0], documents[3], documents[1], documents[2]",
+      "published_at": "2026-11-16",
+      "publication_basis": "effective availability of filtered metadata preview",
+      "coverage_cutoff": "2026-11-16",
+      "retrieved_at": null,
+      "mode": "replay",
+      "version": 1,
+      "created_at": "2026-11-16T16:22:42.801099+00:00",
+      "stale": false
+    },
+    {
+      "id": "span_de69cbdff59e9d164a29cd48",
+      "text": "EX-99.1\n2\nexhibit991-9302026.htm\nEX-99.1\nDocument\nExhibit 99.1\nFOR IMMEDIATE RELEASE FOR MORE INFORMATION CONTACT:\n11/4/2026 Investors: Dexter Congbalay, investor.relations@us.mcd.com\nMedia: Lauren Altmin, lauren.altmin@us.mcd.com\nMcDONALD'S REPORTS THIRD QUARTER 2026 RESULTS\n•Global Systemwide sales* increased 4% to over $38 billion for the quarter\n•Consolidated operating income increased 7% and adjusted operating income increased 8% for the quarter\n•Systemwide sales to loyalty members across 70 loyalty markets were $41 billion for the trailing twelve-month period and more than $11 billion for the quarter\nCHICAGO, IL - McDonald's Corporation today announced results for the third quarter ended September 30, 2026.\n“McDonald’s delivered another quarter of global growth, with solid performance across much of our international business. In the U.S., we're encouraged by improvement as the quarter progressed following our intervention on value,” said Chris Kempczinski, Chairman and CEO. “We’re focused on building from here, strengthening the business today and investing in the next chapter of growth.”\nThird quarter financial performance:\n•Global comparable sales increased 1.5%:\n•U.S. decreased 0.2%\n•International Operated Markets increased 1.4%\n•International Developmental Licensed Markets increased 4.2%\n•Consolidated revenues increased 1% (1% in constant currencies).\n•Systemwide sales increased 4% (4% in constant currencies).\n•Consolidated operating income increased 7% (7% in constant currencies). Results reflected pre-tax charges of $56 million and $39 million for the current year and prior year, respectively, primarily related to restructuring charges associated with Accelerating the Organization. Excluding these current and prior year charges, consolidated operating income increased 8% (8% in constant currencies).**\n•Diluted earnings per share was $3.51, an increase of 10% (11% in constant currencies). Excluding the current year charges described above of $0.06 per share, diluted earnings per share was $3.57, an increase of 11% (11% in constant currencies) when also excluding prior year charges.**\n•The Company declared a 4% increase in its quarterly cash dividend to $1.93 per share.\n*Refer to page 4 for a definition of Systemwide sales.\n**Refer to pages 2 and 3 for additional details on our results for the third quarter 2026 and 2025.\n1\nCOMPARABLE SALES\nIncrease/(Decrease)\nQuarters Ended September 30,\n2026 2025\nU.S. (0.2) % 2.4 %\nInternational Operated Markets 1.4 4.3\nInternational Developmental Licensed Markets 4.2 4.7\nTotal Company 1.5 % 3.6 %\n•U.S.: Comparable sales declined slightly as negative comparable guest counts were largely offset by positive check growth.\n•International Operated Markets: Most markets reflected positive comparable sales, led by Germany and Australia, partly offset by France.\n•International Developmental Licensed Markets: All geographic regions reflected positive comparable sales. Positive comparable sales were led by Japan, partly offset by negative comparable sales in China.\nKEY FINANCIAL METRICS - CONSOLIDATED\nDollars in millions, except per share data\nQuarters Ended September 30, Nine Months Ended September 30,\n2026 2025 Inc/ (Dec) Inc/ (Dec)\nExcluding\nCurrency\nTranslation 2026 2025 Inc/ (Dec) Inc/ (Dec)\nExcluding\nCurrency\nTranslation\nRevenues $ 7,157 $ 7,078 1 % 1 % $ 20,773 $ 19,876 5 % 2 %\nOperating income 3,595 3,357 7 7 9,887 9,237 7 5\nNet income 2,486 2,278 9 9 6,831 6,399 7 5\nEarnings per share-diluted $ 3.51 $ 3.18 10 % 11 % $ 9.61 $ 8.92 8 % 6 %\nResults for 2026 included the following:\n•Net pre-tax charges of $56 million, or $0.06 per share, for the quarter and $155 million, or $0.17 per share, for the nine months, primarily related to restructuring charges associated with the Company's internal effort to modernize ways of working (Accelerating the Organization)\nResults for 2025 included the following:\n•Net pre-tax charges of $39 million, or $0.04 per share, for the quarter and $148 million, or $0.16 per share, for the nine months, primarily related to restructuring charges associated with Accelerating the Organization\nExcluding the above items, results for the quarter and nine months ended September 30, 2026 were primarily driven by higher Other operating income and higher sales-driven Franchised margins. Results for the nine months were partly offset by higher Selling, general and administrative expenses.\n2\nNET INCOME AND EARNINGS PER SHARE-DILUTED RECONCILIATION\nDollars in millions, except per share data\nQuarters Ended September 30,\nNet Income Earnings per share - diluted\n2026 2025 Inc/ (Dec) Inc/ (Dec)\nExcluding\nCurrency\nTranslation 2026 2025 Inc/ (Dec) Inc/ (Dec)\nExcluding\nCurrency\nTranslation\nGAAP $ 2,486 $ 2,278 9 % 9 % $ 3.51 $ 3.18 10 % 11 %\n(Gains)/Charges, net of tax 43 30 0.06 0.04\nNon-GAAP $ 2,529 $ 2,308 10 % 10 % $ 3.57 $ 3.22 11 % 11 %\nNine Months Ended September 30,\nNet Income Earnings per share - diluted\n2026 2025 Inc/ (Dec) Inc/ (Dec)\nExcluding\nCurrency\nTranslation 2026 2025 Inc/ (Dec) Inc/ (Dec)\nExcluding\nCurrency\nTranslation\nGAAP $ 6,831 $ 6,399 7 % 5 % $ 9.61 $ 8.92 8 % 6 %\n(Gains)/Charges, net of tax 119 114 0.17 0.16\nNon-GAAP $ 6,950 $ 6,513 7 % 5 % $ 9.78 $ 9.08 8 % 6 %\n3\nTHE FOLLOWING DEFINITIONS APPLY TO THESE TERMS AS USED THROUGHOUT THIS RELEASE\nConstant currency results exclude the effects of foreign currency translation and are calculated by translating current year results at prior year average exchange rates. Management reviews and analyzes business results excluding the effect of foreign currency translation, impairment and other charges and gains, as well as material regulatory and other income tax impacts, and bases incentive compensation plans on these results because the Company believes this better represents underlying business trends.\nComparable sales and comparable guest counts are compared to the same period in the prior year and represent sales and transactions, respectively, at all restaurants, whether own",
+      "entity": "MCD",
+      "document_report_date": "2026-09-30",
+      "document_period_start": "2026-07-01",
+      "form": "8-K Exhibit 99.1",
+      "published_at": "2026-11-04T12:01:40.000Z",
+      "publication_precision": "timestamp",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/63908/000006390826000080/exhibit991-9302026.htm",
+      "snapshot_hash": "f772a70440693cc4aa39a2d00eb13472a9f4139dece91f3fac19d52ad7fc2087",
+      "snapshot_path": "snapshots/exhibit991-9302026.htm",
+      "text_snapshot_path": "snapshots/exhibit991-9302026.htm.txt",
+      "text_snapshot_hash": "c619f19fe1bf6beba669c93c771553ba5d11bbe381589ee372b4d03480256584",
+      "retrieved_at": "2026-11-16T16:21:16.405276+00:00",
+      "extraction_method": "All visible HTML tables and body in source order.",
+      "mode": "replay",
+      "document_id": "source_doc_7ed1c5b5b7251626e61b3bdf",
+      "kind": "document",
+      "start": 0,
+      "end": 6000,
+      "period_start": null,
+      "period_end": null,
+      "locator": "snapshots/exhibit991-9302026.htm.txt:characters[0:6000] (zero-based Unicode offsets)",
+      "version": 1,
+      "created_at": "2026-11-16T16:22:47.795587+00:00",
+      "stale": false
+    },
+    {
+      "id": "chunk_20aff608c3e8516e185830d7",
+      "text": "currencies and hedging certain foreign-denominated cash flows. Results excluding the effect of foreign currency translation (referred to as constant currency) are calculated by translating current year results at prior year average exchange rates.\nIMPACT OF FOREIGN CURRENCY TRANSLATION\nDollars in millions, except per share data\nCurrency\nTranslation\nBenefit/ (Cost)\nQuarters Ended September 30, 2026 2025 2026\nRevenues $ 7,157 $ 7,078 $ 1\nFranchised margins 3,800 3,697 (6)\nCompany-owned and operated margins 392 391 1\nSelling, general & administrative expenses 759 785 —\nOperating income 3,595 3,357 (8)\nNet income 2,486 2,278 (8)\nEarnings per share-diluted $ 3.51 $ 3.18 $ (0.01)\nCurrency\nTranslation\nBenefit/ (Cost)\nNine Months Ended September 30, 2026 2025 2026\nRevenues $ 20,773 $ 19,876 $ 429\nFranchised margins 10,844 10,298 192\nCompany-owned and operated margins 1,064 1,044 27\nSelling, general & administrative expenses 2,335 2,167 (21)\nOperating income 9,887 9,237 194\nNet income 6,831 6,399 115\nEarnings per share-diluted $ 9.61 $ 8.92 $ 0.16\n21\nTable of Contents\nNet Income and Diluted Earnings per Share\nFor the quarter, net income increased 9% (9% in constant currencies) to $2,486 million, and diluted earnings per share increased 10% (11% in constant currencies) to $3.51. Foreign currency translation had a negative impact of $0.01 on diluted earnings per share.\nFor the nine months, net income increased 7% (5% in constant currencies) to $6,831 million, and diluted earnings per share increased 8% (6% in constant currencies) to $9.61. Foreign currency translation had a positive impact of $0.16 on diluted earnings per share.\n",
+      "entity": "MCD",
+      "document_report_date": "2026-09-30",
+      "document_period_start": "2026-07-01",
+      "form": "10-Q",
+      "published_at": "2026-11-06T17:07:09.000Z",
+      "publication_precision": "timestamp",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/63908/000006390826000083/mcd-20260930.htm",
+      "snapshot_hash": "c11db334ef38593bda60e8677d7136c71e98e04b7ea2424422949ac79e4ec25b",
+      "snapshot_path": "snapshots/mcd-20260930.htm",
+      "text_snapshot_path": "snapshots/mcd-20260930.htm.txt",
+      "text_snapshot_hash": "b88353e9f4948989085abe70d13e87dd9e723edd2a588539d6515fce7af41775",
+      "retrieved_at": "2026-11-16T16:20:49.234140+00:00",
+      "extraction_method": "All visible HTML tables and body in source order.",
+      "mode": "replay",
+      "document_id": "source_doc_0cdcf4786366028311a04eeb",
+      "start": 58126,
+      "end": 59772,
+      "retrieval_score": 10.606719567159223,
+      "retrieval_method": "bm25",
+      "kind": "document",
+      "period_start": null,
+      "period_end": null,
+      "locator": "snapshots/mcd-20260930.htm.txt:characters[58126:59772] (zero-based Unicode offsets)",
+      "version": 1,
+      "created_at": "2026-11-16T16:22:53.822232+00:00",
+      "stale": false
+    },
+    {
+      "id": "chunk_bf02f4d88a13ecc63477b8ab",
+      "text": "and $39 million for the quarters ended 2026 and 2025, respectively, and $155 million and $148 million for the nine months ended 2026 and 2025, respectively, primarily related to restructuring charges associated with Accelerating the Organization.\nOPERATING INCOME & OPERATING MARGIN RECONCILIATION*\nDollars in millions\nQuarters Ended September 30, Nine Months Ended September 30,\n2026 2025 Inc/ (Dec) Inc/ (Dec)\nExcluding\nCurrency\nTranslation 2026 2025 Inc/ (Dec) Inc/ (Dec)\nExcluding\nCurrency\nTranslation\nGAAP operating income $3,595 $3,357 7 % 7 % $9,887 $9,237 7 % 5 %\n(Gains)/Charges 56 39 155 148\nNon-GAAP operating income $3,651 $3,396 8 % 8 % $10,042 $9,385 7 % 5 %\nNon-GAAP operating margin 48.3 % 47.2 %\n*Refer to the Impairment and other charges (gains), net line within the Other Operating (Income) Expense, Net section on page 27 for details of the charges in this table.\n•Excluding the current and prior year charges shown in the table above, operating income increased 8% (8% in constant currencies) for the quarter and 7% (5% in constant currencies) for the nine months. Results for both periods primarily reflected higher sales-driven Franchised margins and higher Other operating income across all segments. Results for the nine months were partly offset by higher Selling, general, and administrative expenses in International Developmental Licensed Markets & Corporate.\n•Operating margin is defined as operating income as a percent of total revenues. The contributions to operating margin differ by segment due to each segment's ownership structure, primarily due to the relative percentage of franchised versus Company-owned and operated restaurants. ",
+      "entity": "MCD",
+      "document_report_date": "2026-09-30",
+      "document_period_start": "2026-07-01",
+      "form": "10-Q",
+      "published_at": "2026-11-06T17:07:09.000Z",
+      "publication_precision": "timestamp",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/63908/000006390826000083/mcd-20260930.htm",
+      "snapshot_hash": "c11db334ef38593bda60e8677d7136c71e98e04b7ea2424422949ac79e4ec25b",
+      "snapshot_path": "snapshots/mcd-20260930.htm",
+      "text_snapshot_path": "snapshots/mcd-20260930.htm.txt",
+      "text_snapshot_hash": "b88353e9f4948989085abe70d13e87dd9e723edd2a588539d6515fce7af41775",
+      "retrieved_at": "2026-11-16T16:20:49.234140+00:00",
+      "extraction_method": "All visible HTML tables and body in source order.",
+      "mode": "replay",
+      "document_id": "source_doc_0cdcf4786366028311a04eeb",
+      "start": 73848,
+      "end": 75519,
+      "retrieval_score": 10.572864767177258,
+      "retrieval_method": "bm25",
+      "kind": "document",
+      "period_start": null,
+      "period_end": null,
+      "locator": "snapshots/mcd-20260930.htm.txt:characters[73848:75519] (zero-based Unicode offsets)",
+      "version": 1,
+      "created_at": "2026-11-16T16:22:53.822555+00:00",
+      "stale": false
+    },
+    {
+      "id": "chunk_d4b6ec17fa2cd6a1a3d7b0b1",
+      "text": "net income increased 7% (5% in constant currencies) to $6,831 million, and diluted earnings per share increased 8% (6% in constant currencies) to $9.61. Foreign currency translation had a positive impact of $0.16 on diluted earnings per share.\nResults for 2026 included the following:\n•Net pre-tax charges of $56 million, or $0.06 per share, for the quarter and $155 million, or $0.17 per share, for the nine months, primarily related to restructuring charges associated with the Company's internal effort to modernize ways of working (Accelerating the Organization)\nResults for 2025 included the following:\n•Net pre-tax charges of $39 million, or $0.04 per share, for the quarter and $148 million, or $0.16 per share, for the nine months, primarily related to restructuring charges associated with Accelerating the Organization\nExcluding the above items, results for the quarter and nine months ended September 30, 2026 were primarily driven by higher Other operating income and higher sales-driven Franchised margins. Results for the nine months were partly offset by higher Selling, general and administrative expenses.\nDuring the quarter, the Company paid a dividend of $1.86 per share, or $1.3 billion, resulting in total dividends paid for the nine months of $4.0 billion. Additionally, during the quarter, the Company repurchased 1.9 million shares of stock for $519 million, resulting in total purchases for the nine months of 6.2 million shares, or $1.8 billion. In September 2026, the Company declared a 4% increase in its quarterly cash dividend to $1.93 per share, payable on December 15, 2026.\n",
+      "entity": "MCD",
+      "document_report_date": "2026-09-30",
+      "document_period_start": "2026-07-01",
+      "form": "10-Q",
+      "published_at": "2026-11-06T17:07:09.000Z",
+      "publication_precision": "timestamp",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/63908/000006390826000083/mcd-20260930.htm",
+      "snapshot_hash": "c11db334ef38593bda60e8677d7136c71e98e04b7ea2424422949ac79e4ec25b",
+      "snapshot_path": "snapshots/mcd-20260930.htm",
+      "text_snapshot_path": "snapshots/mcd-20260930.htm.txt",
+      "text_snapshot_hash": "b88353e9f4948989085abe70d13e87dd9e723edd2a588539d6515fce7af41775",
+      "retrieved_at": "2026-11-16T16:20:49.234140+00:00",
+      "extraction_method": "All visible HTML tables and body in source order.",
+      "mode": "replay",
+      "document_id": "source_doc_0cdcf4786366028311a04eeb",
+      "start": 59528,
+      "end": 61135,
+      "retrieval_score": 10.042651259987988,
+      "retrieval_method": "bm25",
+      "kind": "document",
+      "period_start": null,
+      "period_end": null,
+      "locator": "snapshots/mcd-20260930.htm.txt:characters[59528:61135] (zero-based Unicode offsets)",
+      "version": 1,
+      "created_at": "2026-11-16T16:22:53.822823+00:00",
+      "stale": false
+    },
+    {
+      "id": "chunk_6d40ed804857fe9823b396ea",
+      "text": "16,486 12 9\nForeign affiliated 10,789 10,123 7 7\nTotal $ 101,994 $ 95,656 7 % 5 %\n25\nTable of Contents\nRestaurant Margins\nFranchised restaurant margins are measured as revenues from franchised restaurants less franchised restaurant occupancy costs. Franchised restaurant occupancy costs include lease expense and depreciation, as the Company generally owns or secures a long-term lease on the land and building for the restaurant location.\nCompany-owned and operated restaurant margins are measured as sales from Company-owned and operated restaurants less costs for food & paper, payroll & employee benefits and occupancy & other operating expenses necessary to run an individual restaurant. Company-owned and operated margins exclude costs that are not allocated to individual restaurants, primarily payroll & employee benefit costs of non-restaurant support staff, which are included in Selling, general and administrative expenses.\nRESTAURANT MARGINS\nDollars in millions\nInc/ (Dec) Inc/ (Dec)\nExcluding\nCurrency\nTranslation\nQuarters Ended September 30, 2026 2025\nFranchised\nU.S. $ 1,619 $ 1,581 2 % 2 %\nInternational Operated Markets 1,645 1,620 2 2\nInternational Developmental Licensed Markets & Corporate 537 496 8 8\nTotal $ 3,800 $ 3,697 3 % 3 %\nCompany-owned and operated\nU.S. $ 75 $ 90 (16) % (16) %\nInternational Operated Markets 299 288 4 4\nInternational Developmental Licensed Markets & Corporate n/m n/m n/m n/m\nTotal $ 392 $ 391 — % — %\nTotal restaurant margins\nU.S. $ 1,694 $ 1,671 1 % 1 %\nInternational Operated Markets 1,943 1,908 2 2\nInternational Developmental Licensed Markets & Corporate n/m n/m n/m n/m\nTotal $ 4,192 $ 4,088 3 % 3 %\nInc/ (Dec) Inc/ (Dec)\nExcluding\nCurrency\nTranslation\nNine Months Ended September 30, 2026 2025\nFranchised\nU.S. ",
+      "entity": "MCD",
+      "document_report_date": "2026-09-30",
+      "document_period_start": "2026-07-01",
+      "form": "10-Q",
+      "published_at": "2026-11-06T17:07:09.000Z",
+      "publication_precision": "timestamp",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/63908/000006390826000083/mcd-20260930.htm",
+      "snapshot_hash": "c11db334ef38593bda60e8677d7136c71e98e04b7ea2424422949ac79e4ec25b",
+      "snapshot_path": "snapshots/mcd-20260930.htm",
+      "text_snapshot_path": "snapshots/mcd-20260930.htm.txt",
+      "text_snapshot_hash": "b88353e9f4948989085abe70d13e87dd9e723edd2a588539d6515fce7af41775",
+      "retrieved_at": "2026-11-16T16:20:49.234140+00:00",
+      "extraction_method": "All visible HTML tables and body in source order.",
+      "mode": "replay",
+      "document_id": "source_doc_0cdcf4786366028311a04eeb",
+      "start": 67691,
+      "end": 69457,
+      "retrieval_score": 8.363403894084527,
+      "retrieval_method": "bm25",
+      "kind": "document",
+      "period_start": null,
+      "period_end": null,
+      "locator": "snapshots/mcd-20260930.htm.txt:characters[67691:69457] (zero-based Unicode offsets)",
+      "version": 1,
+      "created_at": "2026-11-16T16:22:53.823091+00:00",
+      "stale": false
+    },
+    {
+      "id": "chunk_a2157b43fcb6278657ae786d",
+      "text": "through AI, we face new and heightened risks under laws and regulations, including U.S. state-level regulations and the EU AI Act. Non-compliance or misuse of personal data could lead to significant fines, litigation and reputational harm.\nMACROECONOMIC AND MARKET CONDITIONS\nUnfavorable general economic conditions could adversely affect our business and financial results.\nOur results of operations are substantially affected by economic conditions, including inflationary pressures, which can vary significantly by market and can impact consumer disposable income levels and spending habits. Economic conditions can be impacted by a variety of factors, including hostilities, epidemics, pandemics and actions taken by governments to manage national and international economic matters, whether through austerity, stimulus measures or trade measures, and initiatives intended to control wages, unemployment, credit availability, inflation, taxation and other economic drivers. Sustained adverse economic conditions or periodic adverse changes in economic conditions put pressure on our operating performance and business continuity disruption planning, and our business and financial results may suffer as a result.\nOur results of operations are also affected by fluctuations in currency exchange rates, and unfavorable currency fluctuations could adversely affect reported earnings.\nHealth epidemics or pandemics could adversely affect our business and financial results.\nHealth epidemics or pandemics have in the past and may in the future impact macroeconomic conditions, consumer behavior, labor availability and supply chain management, as well as local operations in impacted markets, all of which can adversely affect our business, financial results and outlook. ",
+      "entity": "MCD",
+      "document_report_date": "2026-09-30",
+      "document_period_start": "2026-07-01",
+      "form": "10-Q",
+      "published_at": "2026-11-06T17:07:09.000Z",
+      "publication_precision": "timestamp",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/63908/000006390826000083/mcd-20260930.htm",
+      "snapshot_hash": "c11db334ef38593bda60e8677d7136c71e98e04b7ea2424422949ac79e4ec25b",
+      "snapshot_path": "snapshots/mcd-20260930.htm",
+      "text_snapshot_path": "snapshots/mcd-20260930.htm.txt",
+      "text_snapshot_hash": "b88353e9f4948989085abe70d13e87dd9e723edd2a588539d6515fce7af41775",
+      "retrieved_at": "2026-11-16T16:20:49.234140+00:00",
+      "extraction_method": "All visible HTML tables and body in source order.",
+      "mode": "replay",
+      "document_id": "source_doc_0cdcf4786366028311a04eeb",
+      "start": 119754,
+      "end": 121525,
+      "retrieval_score": 16.346611711300167,
+      "retrieval_method": "bm25",
+      "kind": "document",
+      "period_start": null,
+      "period_end": null,
+      "locator": "snapshots/mcd-20260930.htm.txt:characters[119754:121525] (zero-based Unicode offsets)",
+      "version": 1,
+      "created_at": "2026-11-16T16:23:03.284478+00:00",
+      "stale": false
+    },
+    {
+      "id": "chunk_ca4eaef28c619ddbed9e3319",
+      "text": "and may in the future impact macroeconomic conditions, consumer behavior, labor availability and supply chain management, as well as local operations in impacted markets, all of which can adversely affect our business, financial results and outlook. Governmental responses to health epidemics or pandemics, including operational restrictions and temporary restaurant closures, can also affect the foregoing items and adversely affect our business and financial results. The duration and scope of a health epidemic or pandemic can be difficult to predict and depends on many factors, including the emergence of new variants and the availability, acceptance and effectiveness of preventative measures. A health epidemic or pandemic may also heighten other risks disclosed in these Risk Factors, including, but not limited to, those related to the availability and costs of labor and commodities, supply chain interruptions, consumer behavior and consumer perceptions of our brand and industry.\n37\nTable of Contents\nChanges in commodity and other operating costs could adversely affect our results of operations.\nThe profitability of our Company-owned and operated restaurants depends in part on our ability to anticipate and react to changes in commodity costs, including food, paper, supplies, fuel and utilities, as well as distribution and other operating costs, including labor. Volatility in certain commodity prices and fluctuations in labor costs have adversely affected and in the future could adversely affect our operating results by impacting restaurant profitability. ",
+      "entity": "MCD",
+      "document_report_date": "2026-09-30",
+      "document_period_start": "2026-07-01",
+      "form": "10-Q",
+      "published_at": "2026-11-06T17:07:09.000Z",
+      "publication_precision": "timestamp",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/63908/000006390826000083/mcd-20260930.htm",
+      "snapshot_hash": "c11db334ef38593bda60e8677d7136c71e98e04b7ea2424422949ac79e4ec25b",
+      "snapshot_path": "snapshots/mcd-20260930.htm",
+      "text_snapshot_path": "snapshots/mcd-20260930.htm.txt",
+      "text_snapshot_hash": "b88353e9f4948989085abe70d13e87dd9e723edd2a588539d6515fce7af41775",
+      "retrieved_at": "2026-11-16T16:20:49.234140+00:00",
+      "extraction_method": "All visible HTML tables and body in source order.",
+      "mode": "replay",
+      "document_id": "source_doc_0cdcf4786366028311a04eeb",
+      "start": 121275,
+      "end": 122853,
+      "retrieval_score": 11.284050627037775,
+      "retrieval_method": "bm25",
+      "kind": "document",
+      "period_start": null,
+      "period_end": null,
+      "locator": "snapshots/mcd-20260930.htm.txt:characters[121275:122853] (zero-based Unicode offsets)",
+      "version": 1,
+      "created_at": "2026-11-16T16:23:03.284821+00:00",
+      "stale": false
+    },
+    {
+      "id": "chunk_f0b1d3202995d32310105213",
+      "text": "successes across markets and brand perceptions. Planned initiatives may not have appeal across multiple markets with McDonald’s customers and could drive unanticipated changes in customer perceptions and negatively impact our business results.\nDisruptions in operations or price volatility in a market can also result from governmental actions (whether proposed or realized, unilateral or bilateral), such as price, foreign exchange or trade-related tariffs or controls, trade policies and regulations, sanctions and counter sanctions, government-mandated closure of our, our franchisees’ or our suppliers’ operations and asset seizures. Some or all of the above-referenced disruptions or volatility can also result from acts of war, terrorism or other hostilities. Such governmental actions may have a broader impact on macroeconomic conditions, geopolitical tensions, anti-American sentiment, consumer demand and the ability of us and our franchisees to operate in certain geographic areas, which in turn may have an adverse impact on our business and financial results.\nWhile we may face challenges and uncertainties in any of the markets in which we operate, such challenges and uncertainties are often heightened in developing markets, which may entail a relatively higher risk of political instability, economic volatility, crime, corruption and social and ethnic unrest. In many cases, such challenges may be exacerbated by the lack of an independent and experienced judiciary and uncertainty in how local law is applied and enforced, including in areas most relevant to commercial transactions and foreign investment. An inability to manage effectively the risks associated with our international operations could adversely affect our business and financial results.\n",
+      "entity": "MCD",
+      "document_report_date": "2026-09-30",
+      "document_period_start": "2026-07-01",
+      "form": "10-Q",
+      "published_at": "2026-11-06T17:07:09.000Z",
+      "publication_precision": "timestamp",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/63908/000006390826000083/mcd-20260930.htm",
+      "snapshot_hash": "c11db334ef38593bda60e8677d7136c71e98e04b7ea2424422949ac79e4ec25b",
+      "snapshot_path": "snapshots/mcd-20260930.htm",
+      "text_snapshot_path": "snapshots/mcd-20260930.htm.txt",
+      "text_snapshot_hash": "b88353e9f4948989085abe70d13e87dd9e723edd2a588539d6515fce7af41775",
+      "retrieved_at": "2026-11-16T16:20:49.234140+00:00",
+      "extraction_method": "All visible HTML tables and body in source order.",
+      "mode": "replay",
+      "document_id": "source_doc_0cdcf4786366028311a04eeb",
+      "start": 96661,
+      "end": 98436,
+      "retrieval_score": 10.491823326558727,
+      "retrieval_method": "bm25",
+      "kind": "document",
+      "period_start": null,
+      "period_end": null,
+      "locator": "snapshots/mcd-20260930.htm.txt:characters[96661:98436] (zero-based Unicode offsets)",
+      "version": 1,
+      "created_at": "2026-11-16T16:23:03.285025+00:00",
+      "stale": false
+    },
+    {
+      "id": "chunk_f20595b2abb202e49b610e85",
+      "text": "are responsible for reinvesting capital in their businesses over time. In addition, to accelerate implementation of certain initiatives, the Company may co-invest with franchisees to fund improvements to their restaurants or operating systems. These investments, developed in collaboration with franchisees, are designed to cater to consumer preferences, improve local business performance and increase the value of the McDonald's brand through the development of modernized, more attractive and higher revenue generating restaurants.\nThe Company requires franchisees to meet rigorous standards and generally does not work with passive investors. The business relationship with franchisees is designed to facilitate consistency and high quality at all McDonald’s restaurants. Conventional franchisees contribute to the Company's revenue, primarily through the payment of rent and royalties based upon a percent of sales, with specified minimum rent payments, along with initial fees paid upon the opening of a new restaurant or grant of a new franchise. The Company's heavily franchised business model is designed to generate stable and predictable revenue, which is largely a function of franchisee sales, and resulting cash flow streams.\n16\nTable of Contents\nDevelopmental License or Affiliate\nUnder a developmental license or affiliate arrangement, licensees are responsible for operating and managing their businesses, providing capital (including the real estate interest) and developing and opening new restaurants. The Company generally does not invest any restaurant capital under a developmental license or affiliate arrangement, and it receives a royalty based on a percent of sales, and generally receives initial fees upon the opening of a new restaurant or grant of a new license.\n",
+      "entity": "MCD",
+      "document_report_date": "2026-09-30",
+      "document_period_start": "2026-07-01",
+      "form": "10-Q",
+      "published_at": "2026-11-06T17:07:09.000Z",
+      "publication_precision": "timestamp",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/63908/000006390826000083/mcd-20260930.htm",
+      "snapshot_hash": "c11db334ef38593bda60e8677d7136c71e98e04b7ea2424422949ac79e4ec25b",
+      "snapshot_path": "snapshots/mcd-20260930.htm",
+      "text_snapshot_path": "snapshots/mcd-20260930.htm.txt",
+      "text_snapshot_hash": "b88353e9f4948989085abe70d13e87dd9e723edd2a588539d6515fce7af41775",
+      "retrieved_at": "2026-11-16T16:20:49.234140+00:00",
+      "extraction_method": "All visible HTML tables and body in source order.",
+      "mode": "replay",
+      "document_id": "source_doc_0cdcf4786366028311a04eeb",
+      "start": 41138,
+      "end": 42932,
+      "retrieval_score": 21.467468983116625,
+      "retrieval_method": "bm25",
+      "kind": "document",
+      "period_start": null,
+      "period_end": null,
+      "locator": "snapshots/mcd-20260930.htm.txt:characters[41138:42932] (zero-based Unicode offsets)",
+      "version": 1,
+      "created_at": "2026-11-16T16:27:42.747953+00:00",
+      "stale": false
+    },
+    {
+      "id": "chunk_ca1efc0490579de16a0391e0",
+      "text": "delay new restaurant openings, and/or limit the quality or availability of products, equipment and other materials that are critical to our System’s operations or to restaurant development.\nOur franchise business model presents a number of risks.\nOur success as a heavily franchised business relies to a large degree on the financial success and cooperation of our franchisees, including our developmental licensees and affiliates. Our restaurant margins arise from two sources: fees from franchised restaurants (e.g., rent and royalties based on a percentage of sales) and, to a lesser degree, sales from Company-owned and operated restaurants. Our franchisees manage their businesses independently and therefore are responsible for the day-to-day operation of their restaurants. The revenues we realize from franchised restaurants are largely dependent on the ability of our franchisees to grow their sales. Business risks affecting our operations also affect our franchisees. If franchisee sales trends worsen, or if any of such business risks materialize or intensify, our financial results could be negatively affected, which may be material.\nOur success also relies on the willingness and ability of our franchisees and affiliates to implement major initiatives, such as the restaurant modernization, operational, technological and training initiatives contemplated by our McDonald’s > NEXT strategy, which may include financial investment, and to remain aligned with us on operating, value/promotional and capital-intensive reinvestment plans. ",
+      "entity": "MCD",
+      "document_report_date": "2026-09-30",
+      "document_period_start": "2026-07-01",
+      "form": "10-Q",
+      "published_at": "2026-11-06T17:07:09.000Z",
+      "publication_precision": "timestamp",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/63908/000006390826000083/mcd-20260930.htm",
+      "snapshot_hash": "c11db334ef38593bda60e8677d7136c71e98e04b7ea2424422949ac79e4ec25b",
+      "snapshot_path": "snapshots/mcd-20260930.htm",
+      "text_snapshot_path": "snapshots/mcd-20260930.htm.txt",
+      "text_snapshot_hash": "b88353e9f4948989085abe70d13e87dd9e723edd2a588539d6515fce7af41775",
+      "retrieved_at": "2026-11-16T16:20:49.234140+00:00",
+      "extraction_method": "All visible HTML tables and body in source order.",
+      "mode": "replay",
+      "document_id": "source_doc_0cdcf4786366028311a04eeb",
+      "start": 99643,
+      "end": 101194,
+      "retrieval_score": 21.18272274717921,
+      "retrieval_method": "bm25",
+      "kind": "document",
+      "period_start": null,
+      "period_end": null,
+      "locator": "snapshots/mcd-20260930.htm.txt:characters[99643:101194] (zero-based Unicode offsets)",
+      "version": 1,
+      "created_at": "2026-11-16T16:27:42.750449+00:00",
+      "stale": false
+    },
+    {
+      "id": "chunk_99d17792d84508e31fc75b83",
+      "text": "training experience. In addition, in our Company-owned and operated restaurants, and in collaboration with franchisees, the Company is able to further develop and refine operating standards, marketing concepts and product and pricing strategies.\nThe Company's revenues consist of sales by Company-owned and operated restaurants and fees from franchised restaurants operated by conventional franchisees, developmental licensees and affiliates. Fees vary by type of site, amount of Company investment, if any, and local business conditions. These fees, along with occupancy and operating rights, are stipulated in franchise/license agreements that generally have 20-year terms. The Company's Other revenues are comprised of fees paid by franchisees to recover a portion of costs incurred by the Company for various technology and digital platforms, and revenues from brand licensing arrangements to market and sell consumer packaged goods using the McDonald's brand.\nConventional Franchise\nUnder a conventional franchise arrangement, the Company generally owns or secures a long-term lease on the land and building for the restaurant location and the franchisee pays for equipment, signs, seating and décor. The Company believes that ownership of real estate, combined with the co-investment by franchisees, enables it to achieve restaurant performance levels that are among the highest in the industry.\nFranchisees are responsible for reinvesting capital in their businesses over time. In addition, to accelerate implementation of certain initiatives, the Company may co-invest with franchisees to fund improvements to their restaurants or operating systems. ",
+      "entity": "MCD",
+      "document_report_date": "2026-09-30",
+      "document_period_start": "2026-07-01",
+      "form": "10-Q",
+      "published_at": "2026-11-06T17:07:09.000Z",
+      "publication_precision": "timestamp",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/63908/000006390826000083/mcd-20260930.htm",
+      "snapshot_hash": "c11db334ef38593bda60e8677d7136c71e98e04b7ea2424422949ac79e4ec25b",
+      "snapshot_path": "snapshots/mcd-20260930.htm",
+      "text_snapshot_path": "snapshots/mcd-20260930.htm.txt",
+      "text_snapshot_hash": "b88353e9f4948989085abe70d13e87dd9e723edd2a588539d6515fce7af41775",
+      "retrieved_at": "2026-11-16T16:20:49.234140+00:00",
+      "extraction_method": "All visible HTML tables and body in source order.",
+      "mode": "replay",
+      "document_id": "source_doc_0cdcf4786366028311a04eeb",
+      "start": 39724,
+      "end": 41382,
+      "retrieval_score": 18.34111221186206,
+      "retrieval_method": "bm25",
+      "kind": "document",
+      "period_start": null,
+      "period_end": null,
+      "locator": "snapshots/mcd-20260930.htm.txt:characters[39724:41382] (zero-based Unicode offsets)",
+      "version": 1,
+      "created_at": "2026-11-16T16:27:42.751869+00:00",
+      "stale": false
+    },
+    {
+      "id": "chunk_149bb9c87a7ef7432668eebb",
+      "text": "stock for $519 million, resulting in total purchases for the nine months of 6.2 million shares, or $1.8 billion. In September 2026, the Company declared a 4% increase in its quarterly cash dividend to $1.93 per share, payable on December 15, 2026.\nNET INCOME AND EARNINGS PER SHARE-DILUTED RECONCILIATION\nDollars in millions, except per share data\nQuarters Ended September 30,\nNet Income Earnings per share - diluted\n2026 2025 Inc/ (Dec) Inc/ (Dec)\nExcluding\nCurrency\nTranslation 2026 2025 Inc/ (Dec) Inc/ (Dec)\nExcluding\nCurrency\nTranslation\nGAAP $ 2,486 $ 2,278 9 % 9 % $ 3.51 $ 3.18 10 % 11 %\n(Gains)/Charges, net of tax 43 30 0.06 0.04\nNon-GAAP $ 2,529 $ 2,308 10 % 10 % $ 3.57 $ 3.22 11 % 11 %\nNine Months Ended September 30,\nNet Income Earnings per share - diluted\n2026 2025 Inc/ (Dec) Inc/ (Dec)\nExcluding\nCurrency\nTranslation 2026 2025 Inc/ (Dec) Inc/ (Dec)\nExcluding\nCurrency\nTranslation\nGAAP $ 6,831 $ 6,399 7 % 5 % $ 9.61 $ 8.92 8 % 6 %\n(Gains)/Charges, net of tax 119 114 0.17 0.16\nNon-GAAP $ 6,950 $ 6,513 7 % 5 % $ 9.78 $ 9.08 8 % 6 %\nRevenues\nThe Company's revenues consist of fees from restaurants owned and operated by franchisees, developmental licensees and affiliates and sales by Company-owned and operated restaurants. Revenues from conventional franchised restaurants include rent and royalties based on a percent of sales with minimum rent payments, and initial fees. Revenues from restaurants licensed to developmental licensees and affiliates include a royalty based on a percent of sales, and generally include initial fees. ",
+      "entity": "MCD",
+      "document_report_date": "2026-09-30",
+      "document_period_start": "2026-07-01",
+      "form": "10-Q",
+      "published_at": "2026-11-06T17:07:09.000Z",
+      "publication_precision": "timestamp",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/63908/000006390826000083/mcd-20260930.htm",
+      "snapshot_hash": "c11db334ef38593bda60e8677d7136c71e98e04b7ea2424422949ac79e4ec25b",
+      "snapshot_path": "snapshots/mcd-20260930.htm",
+      "text_snapshot_path": "snapshots/mcd-20260930.htm.txt",
+      "text_snapshot_hash": "b88353e9f4948989085abe70d13e87dd9e723edd2a588539d6515fce7af41775",
+      "retrieved_at": "2026-11-16T16:20:49.234140+00:00",
+      "extraction_method": "All visible HTML tables and body in source order.",
+      "mode": "replay",
+      "document_id": "source_doc_0cdcf4786366028311a04eeb",
+      "start": 60887,
+      "end": 62439,
+      "retrieval_score": 17.90548948114693,
+      "retrieval_method": "bm25",
+      "kind": "document",
+      "period_start": null,
+      "period_end": null,
+      "locator": "snapshots/mcd-20260930.htm.txt:characters[60887:62439] (zero-based Unicode offsets)",
+      "version": 1,
+      "created_at": "2026-11-16T16:27:42.753215+00:00",
+      "stale": false
+    },
+    {
+      "id": "chunk_6dfa0efaee68fd8342f1524b",
+      "text": "and royalties based on a percent of sales with minimum rent payments, and initial fees. Revenues from restaurants licensed to developmental licensees and affiliates include a royalty based on a percent of sales, and generally include initial fees. The Company’s Other revenues are primarily comprised of fees paid by franchisees to recover a portion of costs incurred by the Company for various technology and digital platforms and revenues from brand licensing arrangements to market and sell consumer packaged goods using the McDonald’s brand.\nFranchised restaurants represented approximately 95% of McDonald's restaurants worldwide at September 30, 2026. The Company's heavily franchised business model is designed to generate stable and predictable revenue, which is largely a function of franchisee sales, and resulting cash flow streams.\n22\nTable of Contents\nREVENUES\nDollars in millions\nQuarters Ended September 30, 2026 2025 Inc/ (Dec) Inc/ (Dec)\nExcluding\nCurrency\nTranslation\nFranchised revenues\nU.S. $ 1,943 $ 1,906 2 % 2 %\nInternational Operated Markets 2,007 1,962 2 3\nInternational Developmental Licensed Markets & Corporate 537 496 8 8\nTotal $ 4,487 $ 4,363 3 % 3 %\nCompany-owned and operated sales\nU.S. $ 742 $ 790 (6) % (6) %\nInternational Operated Markets 1,591 1,645 (3) (3)\nInternational Developmental Licensed Markets & Corporate 147 128 15 3\nTotal $ 2,480 $ 2,563 (3) % (4) %\nTotal Franchised revenues and Company-owned and operated sales\nU.S. ",
+      "entity": "MCD",
+      "document_report_date": "2026-09-30",
+      "document_period_start": "2026-07-01",
+      "form": "10-Q",
+      "published_at": "2026-11-06T17:07:09.000Z",
+      "publication_precision": "timestamp",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/63908/000006390826000083/mcd-20260930.htm",
+      "snapshot_hash": "c11db334ef38593bda60e8677d7136c71e98e04b7ea2424422949ac79e4ec25b",
+      "snapshot_path": "snapshots/mcd-20260930.htm",
+      "text_snapshot_path": "snapshots/mcd-20260930.htm.txt",
+      "text_snapshot_hash": "b88353e9f4948989085abe70d13e87dd9e723edd2a588539d6515fce7af41775",
+      "retrieved_at": "2026-11-16T16:20:49.234140+00:00",
+      "extraction_method": "All visible HTML tables and body in source order.",
+      "mode": "replay",
+      "document_id": "source_doc_0cdcf4786366028311a04eeb",
+      "start": 62191,
+      "end": 63657,
+      "retrieval_score": 16.374463818372526,
+      "retrieval_method": "bm25",
+      "kind": "document",
+      "period_start": null,
+      "period_end": null,
+      "locator": "snapshots/mcd-20260930.htm.txt:characters[62191:63657] (zero-based Unicode offsets)",
+      "version": 1,
+      "created_at": "2026-11-16T16:27:42.754377+00:00",
+      "stale": false
+    }
+  ],
+  "calculations": [],
+  "issues": [],
+  "unanswered": [],
+  "verification_available": true,
+  "usage": {
+    "model_calls": 4,
+    "tool_calls": 1,
+    "planner_steps": 2,
+    "active_seconds": 73.23167437501252,
+    "total_tokens": 122840,
+    "total_tokens_reported_calls": 4,
+    "prompt_tokens": 118923,
+    "prompt_tokens_reported_calls": 4,
+    "completion_tokens": 3917,
+    "completion_tokens_reported_calls": 4,
+    "cached_input_tokens": 72846,
+    "cached_input_tokens_reported_calls": 4,
+    "cache_write_tokens": 27373,
+    "cache_write_tokens_reported_calls": 4,
+    "cache_write_30m_tokens": 27373,
+    "cache_write_30m_tokens_reported_calls": 4,
+    "cache_write_12h_tokens": 0,
+    "cache_write_12h_tokens_reported_calls": 4,
+    "reasoning_tokens": 138,
+    "reasoning_tokens_reported_calls": 4
+  },
+  "created_at": "2026-11-16T16:28:41.168656+00:00",
+  "research_skills": [],
+  "skill_selection_source": "planner",
+  "request_parts": {
+    "part-1": "你说国际运营市场不等于全是直营。那加盟店卖得好，麦当劳自己到底赚的是哪部分钱？"
+  },
+  "request_coverage": [
+    {
+      "part": "part-1",
+      "status": "answered",
+      "claim_id": "claim:franchise_revenue_not_store_sales",
+      "answer_sentence": "简单说：加盟店卖得好，麦当劳主要赚的是合同约定的租金、特许权使用费等，而不是把加盟店全部营业额记成自己的收入。",
+      "supporting_claim_ids": [
+        "claim:franchise_revenue_not_store_sales",
+        "claim:conventional_franchise_economics",
+        "claim:developmental_license_economics",
+        "claim:quarterly_franchised_revenue",
+        "claim:franchised_restaurant_margin_definition",
+        "claim:quarterly_franchised_margin_not_net_income",
+        "claim:international_operated_mixed_ownership"
+      ]
+    }
+  ],
+  "skill_fiscal_quarter": {
+    "entity": "MCD",
+    "quarter": "2026Q3",
+    "period_start": "2026-07-01",
+    "period_end": "2026-09-30",
+    "evidence_ids": [
+      "chunk_149bb9c87a7ef7432668eebb",
+      "chunk_6d40ed804857fe9823b396ea",
+      "chunk_6dfa0efaee68fd8342f1524b",
+      "span_de69cbdff59e9d164a29cd48"
+    ]
+  },
+  "delivery_stage": "reviewed",
+  "episode_material_ids": {
+    "evidence": [
+      "chunk_f20595b2abb202e49b610e85",
+      "chunk_ca1efc0490579de16a0391e0",
+      "chunk_99d17792d84508e31fc75b83",
+      "chunk_149bb9c87a7ef7432668eebb",
+      "chunk_6dfa0efaee68fd8342f1524b"
+    ],
+    "calculations": []
+  },
+  "id": "080157d4bfd544df857094f83578f389",
+  "version": 4,
+  "record_versions": {
+    "evidence": {
+      "metadata_292ee90e389c62c63a2d1c21": 1,
+      "span_de69cbdff59e9d164a29cd48": 1,
+      "chunk_20aff608c3e8516e185830d7": 1,
+      "chunk_bf02f4d88a13ecc63477b8ab": 1,
+      "chunk_d4b6ec17fa2cd6a1a3d7b0b1": 1,
+      "chunk_6d40ed804857fe9823b396ea": 1,
+      "chunk_a2157b43fcb6278657ae786d": 1,
+      "chunk_ca4eaef28c619ddbed9e3319": 1,
+      "chunk_f0b1d3202995d32310105213": 1,
+      "chunk_f20595b2abb202e49b610e85": 1,
+      "chunk_ca1efc0490579de16a0391e0": 1,
+      "chunk_99d17792d84508e31fc75b83": 1,
+      "chunk_149bb9c87a7ef7432668eebb": 1,
+      "chunk_6dfa0efaee68fd8342f1524b": 1
+    },
+    "calculation": {},
+    "claim": {
+      "claim:latest_quarter": 2,
+      "claim:coverage_limit": 2,
+      "claim:revenue": 2,
+      "claim:gaap_operating_income": 2,
+      "claim:gaap_net_income": 2,
+      "claim:gaap_eps": 2,
+      "claim:adjusted_operating_income": 2,
+      "claim:adjusted_net_income": 2,
+      "claim:adjusted_eps": 2,
+      "claim:global_comps": 2,
+      "claim:us_comps": 2,
+      "claim:iom_comps": 2,
+      "claim:idlm_comps": 2,
+      "claim:management_profit_drivers": 2,
+      "claim:management_outlook": 2,
+      "claim:forward_risks": 2,
+      "claim:overall_assessment": 2,
+      "claim:us_quarter_traffic_check": 2,
+      "claim:us_intr aquarter_trend": 2,
+      "claim:us_results_trend_compatible": 2,
+      "claim:us_monthly_traffic_limit": 2,
+      "claim:international_support": 2,
+      "claim:international_licensed_performance": 2,
+      "claim:international_operated_performance": 2,
+      "claim:international_contribution_limit": 2,
+      "claim:franchise_revenue_not_store_sales": 2,
+      "claim:conventional_franchise_economics": 2,
+      "claim:developmental_license_economics": 2,
+      "claim:quarterly_franchised_revenue": 2,
+      "claim:franchised_restaurant_margin_definition": 2,
+      "claim:quarterly_franchised_margin_not_net_income": 2,
+      "claim:international_operated_mixed_ownership": 2
+    }
+  }
+}

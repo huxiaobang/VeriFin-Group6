@@ -1,0 +1,127 @@
+{
+  "companies": [
+    {
+      "name": "MCDONALDS CORP",
+      "cik": "0000063908",
+      "ticker": "MCD",
+      "aliases": [
+        "McDonald's",
+        "麦当劳"
+      ],
+      "submissions": "snapshots/submissions.json",
+      "facts": "snapshots/facts.json"
+    }
+  ],
+  "files": {
+    "snapshots/submissions.json": {
+      "bytes": 157388,
+      "url": "https://data.sec.gov/submissions/CIK0000063908.json",
+      "sha256": "2941162be8e24094b0a1d32951e9fd419387d27e6eac8794db2cd4e3840d3963",
+      "retrieved_at": "2026-11-16T16:20:42.760047+00:00"
+    },
+    "snapshots/facts.json": {
+      "bytes": 3634145,
+      "url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0000063908.json",
+      "sha256": "426688e51562a0bf08a4ede782fbaa7ff97eed5c18477bcffab165b3d5743359",
+      "retrieved_at": "2026-11-16T16:20:45.421141+00:00"
+    },
+    "snapshots/mcd-20260930.htm": {
+      "bytes": 1556084,
+      "url": "https://www.sec.gov/Archives/edgar/data/63908/000006390826000083/mcd-20260930.htm",
+      "sha256": "c11db334ef38593bda60e8677d7136c71e98e04b7ea2424422949ac79e4ec25b",
+      "retrieved_at": "2026-11-16T16:20:49.234140+00:00"
+    },
+    "snapshots/mcd-20260930.htm.txt": {
+      "bytes": 138790,
+      "url": "https://www.sec.gov/Archives/edgar/data/63908/000006390826000083/mcd-20260930.htm",
+      "sha256": "b88353e9f4948989085abe70d13e87dd9e723edd2a588539d6515fce7af41775",
+      "retrieved_at": "2026-11-16T16:20:49.332376+00:00"
+    },
+    "snapshots/mcd-20260630.htm": {
+      "bytes": 1522000,
+      "url": "https://www.sec.gov/Archives/edgar/data/63908/000006390826000073/mcd-20260630.htm",
+      "sha256": "ec8c97f2f4bcee38fee31cb044070fc19b4b273eeb858669468269573d664856",
+      "retrieved_at": "2026-11-16T16:21:09.508499+00:00"
+    },
+    "snapshots/mcd-20260630.htm.txt": {
+      "bytes": 130494,
+      "url": "https://www.sec.gov/Archives/edgar/data/63908/000006390826000073/mcd-20260630.htm",
+      "sha256": "dcd9ceffde5655e01579ca6815fd08a6ba68cc0070cc98f4ef4ef113f7fb7ec3",
+      "retrieved_at": "2026-11-16T16:21:09.584809+00:00"
+    },
+    "snapshots/mcd-20251231.htm": {
+      "bytes": 2182384,
+      "url": "https://www.sec.gov/Archives/edgar/data/63908/000006390826000035/mcd-20251231.htm",
+      "sha256": "a2441ff39c276f7e236233648a55b0a082eb78f2cf58dfa3e5d411899f17fcf6",
+      "retrieved_at": "2026-11-16T16:21:15.238153+00:00"
+    },
+    "snapshots/mcd-20251231.htm.txt": {
+      "bytes": 275772,
+      "url": "https://www.sec.gov/Archives/edgar/data/63908/000006390826000035/mcd-20251231.htm",
+      "sha256": "4602e9aa772966ca583c1ed2538bd081215e3031548b07ec1b6c3438e90ec9ab",
+      "retrieved_at": "2026-11-16T16:21:15.369444+00:00"
+    },
+    "snapshots/exhibit991-9302026.htm": {
+      "bytes": 177132,
+      "url": "https://www.sec.gov/Archives/edgar/data/63908/000006390826000080/exhibit991-9302026.htm",
+      "sha256": "f772a70440693cc4aa39a2d00eb13472a9f4139dece91f3fac19d52ad7fc2087",
+      "retrieved_at": "2026-11-16T16:21:16.405276+00:00"
+    },
+    "snapshots/exhibit991-9302026.htm.txt": {
+      "bytes": 12757,
+      "url": "https://www.sec.gov/Archives/edgar/data/63908/000006390826000080/exhibit991-9302026.htm",
+      "sha256": "c619f19fe1bf6beba669c93c771553ba5d11bbe381589ee372b4d03480256584",
+      "retrieved_at": "2026-11-16T16:21:16.421995+00:00"
+    }
+  },
+  "documents": [
+    {
+      "entity": "MCD",
+      "form": "10-Q",
+      "source": "snapshots/mcd-20260930.htm",
+      "text": "snapshots/mcd-20260930.htm.txt",
+      "period_start": "2026-07-01",
+      "period_end": "2026-09-30",
+      "published_at": "2026-11-06T17:07:09.000Z",
+      "publication_precision": "timestamp",
+      "publication_basis": "SEC EDGAR acceptance 0000063908-26-000083",
+      "extraction_method": "All visible HTML tables and body in source order."
+    },
+    {
+      "entity": "MCD",
+      "form": "10-Q",
+      "source": "snapshots/mcd-20260630.htm",
+      "text": "snapshots/mcd-20260630.htm.txt",
+      "period_start": "2026-04-01",
+      "period_end": "2026-06-30",
+      "published_at": "2026-08-07T16:52:32.000Z",
+      "publication_precision": "timestamp",
+      "publication_basis": "SEC EDGAR acceptance 0000063908-26-000073",
+      "extraction_method": "All visible HTML tables and body in source order."
+    },
+    {
+      "entity": "MCD",
+      "form": "10-K",
+      "source": "snapshots/mcd-20251231.htm",
+      "text": "snapshots/mcd-20251231.htm.txt",
+      "period_start": "2025-01-01",
+      "period_end": "2025-12-31",
+      "published_at": "2026-02-24T16:12:45.000Z",
+      "publication_precision": "timestamp",
+      "publication_basis": "SEC EDGAR acceptance 0000063908-26-000035",
+      "extraction_method": "All visible HTML tables and body in source order."
+    },
+    {
+      "entity": "MCD",
+      "form": "8-K Exhibit 99.1",
+      "source": "snapshots/exhibit991-9302026.htm",
+      "text": "snapshots/exhibit991-9302026.htm.txt",
+      "period_start": "2026-07-01",
+      "period_end": "2026-09-30",
+      "published_at": "2026-11-04T12:01:40.000Z",
+      "publication_precision": "timestamp",
+      "publication_basis": "SEC EDGAR acceptance 0000063908-26-000080",
+      "extraction_method": "All visible HTML tables and body in source order."
+    }
+  ]
+}

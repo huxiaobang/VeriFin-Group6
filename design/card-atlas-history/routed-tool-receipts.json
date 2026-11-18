@@ -1,0 +1,162 @@
+[
+  {
+    "id": "GGG2",
+    "actual_local_selection": [
+      "incremental-profit-margin"
+    ],
+    "method_assessments": [
+      {
+        "skill": "incremental-profit-margin",
+        "evidence_count": 0,
+        "calculation_count": 0,
+        "notes": 0,
+        "gaps": [],
+        "status": "not_applicable",
+        "reason": "本问没有明确要求比较利润变化与收入变化。请按用户实际问题比较整季利润率或原表金额。"
+      }
+    ],
+    "notes": [],
+    "net": 0
+  },
+  {
+    "id": "GGG3",
+    "actual_local_selection": [
+      "incremental-profit-margin",
+      "unit-profit-reconciliation",
+      "cash-flow-bridge"
+    ],
+    "method_assessments": [
+      {
+        "skill": "incremental-profit-margin",
+        "evidence_count": 0,
+        "calculation_count": 0,
+        "notes": 0,
+        "gaps": [],
+        "status": "not_applicable",
+        "reason": "本问没有明确要求比较利润变化与收入变化。请按用户实际问题比较整季利润率或原表金额。"
+      },
+      {
+        "skill": "unit-profit-reconciliation",
+        "evidence_count": 0,
+        "calculation_count": 0,
+        "notes": 0,
+        "gaps": [
+          "需要明确的财年及单季或全年。当前口径无法匹配到可复算的同期间表列。"
+        ]
+      },
+      {
+        "skill": "cash-flow-bridge",
+        "evidence_count": 0,
+        "calculation_count": 0,
+        "notes": 0,
+        "gaps": [
+          "没有唯一同财年起点、相隔一个季度的两份累计现金流量表。"
+        ]
+      }
+    ],
+    "notes": [],
+    "net": 0
+  },
+  {
+    "id": "SFM2",
+    "actual_local_selection": [
+      "incremental-profit-margin"
+    ],
+    "method_assessments": [
+      {
+        "skill": "incremental-profit-margin",
+        "evidence_count": 0,
+        "calculation_count": 0,
+        "notes": 0,
+        "gaps": [],
+        "status": "not_applicable",
+        "reason": "本问没有明确要求比较利润变化与收入变化。请按用户实际问题比较整季利润率或原表金额。"
+      }
+    ],
+    "notes": [],
+    "net": 0
+  },
+  {
+    "id": "AZZ2",
+    "actual_local_selection": [
+      "cash-flow-bridge",
+      "reconcile-segment-totals"
+    ],
+    "method_assessments": [
+      {
+        "skill": "cash-flow-bridge",
+        "evidence_count": 26,
+        "calculation_count": 12,
+        "notes": 2,
+        "gaps": []
+      },
+      {
+        "skill": "reconcile-segment-totals",
+        "evidence_count": 0,
+        "calculation_count": 0,
+        "notes": 0,
+        "gaps": [],
+        "status": "not_applicable",
+        "reason": "本问的现金差额没有要求汇总分部并对回集团口径，分部调节表无法解释该差额。"
+      }
+    ],
+    "notes": [
+      {
+        "text": "2026-06-01 至 2026-08-31（USD thousands），用同一财年截至 2026-08-31 减截至 2026-05-31 的累计金额：单季净利润 58,451，经营现金流 102,842，经营现金流比净利润多 4,439.1 万美元。",
+        "evidence_ids": [
+          "cell_c7ec5637444612ddd27e8681",
+          "cell_0c237ca6c340d131a42461ec",
+          "cell_9cac6a2d4b3b22e63f5ad209",
+          "cell_56b0cf44d722b895a877f3f1"
+        ],
+        "calculation_ids": [
+          "calc_3829755d9e765bb691e60249",
+          "calc_f399000cade8e7d74d8d9ca6",
+          "calc_6ded99e08ed51eb90fcd1d38"
+        ],
+        "kind": "cash_bridge",
+        "cash_amount": {
+          "text": "经营现金流为 102,842（USD thousands）。",
+          "evidence_ids": [
+            "cell_9cac6a2d4b3b22e63f5ad209",
+            "cell_56b0cf44d722b895a877f3f1"
+          ],
+          "calculation_ids": [
+            "calc_f399000cade8e7d74d8d9ca6"
+          ]
+        },
+        "period_start": "2026-06-01",
+        "period_end": "2026-08-31",
+        "method": "cash-flow-bridge"
+      },
+      {
+        "text": "2026-06-01 至 2026-08-31（USD thousands）：经营资产负债变动前的调节 +29,798，经营性资产负债变动 +14,593，两组合计 +44,391。可逐项比较的主要调节为 Depreciation and amortization +24,168；Changes in current assets and current liabilities +15,228；Equity in earnings of unconsolidated subsidiary -6,789。两表列示项目不完全相同，单项仅列两表均有的同名行。",
+        "evidence_ids": [
+          "cell_c7ec5637444612ddd27e8681",
+          "cell_0c237ca6c340d131a42461ec",
+          "cell_9cac6a2d4b3b22e63f5ad209",
+          "cell_56b0cf44d722b895a877f3f1",
+          "cell_7fd332a3c46677dc462ac51a",
+          "cell_ca506e0c40ba36f5527b5b5a",
+          "cell_0fe810f8cf108fa35a2f3a8c",
+          "cell_939c8b7eda7f1cf9e83e179a",
+          "cell_bdc537c04ca2c7f1c27e5454",
+          "cell_23ea5833dffc770f57fca8e1"
+        ],
+        "calculation_ids": [
+          "calc_f13519313474c087013e0238",
+          "calc_a51d4970f4710d639b01d0ad",
+          "calc_6ded99e08ed51eb90fcd1d38",
+          "calc_20afea02e47d6a53b09c3c91",
+          "calc_f994b6ed57bd310eecbaa04e",
+          "calc_394cec1aa8bd7004c0ae9989"
+        ],
+        "kind": "cash_drivers",
+        "period_start": "2026-06-01",
+        "period_end": "2026-08-31",
+        "method": "cash-flow-bridge"
+      }
+    ],
+    "net": 0
+  }
+]

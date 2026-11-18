@@ -1,0 +1,12 @@
+{
+  "reason": "repeated_retrieval_without_new_evidence",
+  "details": {
+    "event_sequence": 72,
+    "tool": "read_document",
+    "ok": true,
+    "new_source_characters": 0,
+    "new_records_or_locators": 0,
+    "identical_request_seen": false,
+    "consecutive_no_progress": 1
+  }
+}

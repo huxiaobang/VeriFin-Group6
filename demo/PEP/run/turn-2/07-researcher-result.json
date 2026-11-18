@@ -1,0 +1,130 @@
+{
+  "claims": [
+    {
+      "id": "claim:pfna-volume-pricing",
+      "text": "北美食品（PFNA）主要是有效净定价偏弱，不是分部整体销量下降。百事披露，2026年第三季度（截至9月5日的12周）有机收入基本持平；在有机收入增长桥中，有机销量贡献约+0.5个百分点，有效净定价贡献约-1个百分点。管理层同时称，北美方便食品收入趋势环比改善，咸味零食销量和销量份额改善，但较低的有效净定价形成抵消。桥中数字经过四舍五入，不能要求其机械加总为零。",
+      "evidence_ids": [
+        "chunk_ae5bdbdc960fbb64f4203c72",
+        "span_e15075b0f56ab75de1fba9f1",
+        "span_8c9a2825bb1288d3bfc9eebe"
+      ],
+      "calculation_ids": [],
+      "requirement_ids": [
+        "request:episode_66d039dd17404a7ab46b26c725992e32"
+      ],
+      "constraints": {
+        "request_part": "part-1",
+        "entity": "PEP",
+        "business_scope": "PFNA",
+        "period_start": "2026-06-14",
+        "period_end": "2026-09-05",
+        "basis": "Organic Revenue Performance；非GAAP，剔除外汇折算及收购、剥离影响",
+        "metric": "Organic Revenue % Change; Organic volume change; Effective net pricing",
+        "unit": "percent; percentage points",
+        "attribution": "增长桥为百事公司披露；环比趋势和业务解释来自管理层"
+      }
+    },
+    {
+      "id": "claim:pfna-profit-pressure",
+      "text": "从盈利看，北美食品也是明显的薄弱点：同期核心营业利润同比下降12%。因此，销量有所改善并不意味着盈利已经修复；但这项利润降幅不能仅凭收入量价桥全部归因于定价。",
+      "evidence_ids": [
+        "span_8c9a2825bb1288d3bfc9eebe"
+      ],
+      "calculation_ids": [],
+      "requirement_ids": [
+        "request:episode_66d039dd17404a7ab46b26c725992e32"
+      ],
+      "constraints": {
+        "request_part": "part-1",
+        "entity": "PEP",
+        "business_scope": "PFNA",
+        "period_start": "2026-06-14",
+        "period_end": "2026-09-05",
+        "basis": "Core；非GAAP",
+        "metric": "Core Operating Profit % Change",
+        "unit": "percent",
+        "missing_evidence": [
+          "若要将核心营业利润降幅逐项归因，需要PFNA定价、成本、费用等因素的完整利润变动桥"
+        ]
+      }
+    },
+    {
+      "id": "claim:pbna-volume-pricing",
+      "text": "北美饮料（PBNA）则主要是量弱、定价抵消：同季度有机收入基本持平，其中有机销量对收入增速的贡献约为-3个百分点，有效净定价贡献约为+3个百分点。也就是说，内生收入没有增长，并不是有效净定价下滑，而是正向定价贡献被负向销量贡献抵消。",
+      "evidence_ids": [
+        "chunk_ae5bdbdc960fbb64f4203c72"
+      ],
+      "calculation_ids": [],
+      "requirement_ids": [
+        "request:episode_66d039dd17404a7ab46b26c725992e32"
+      ],
+      "constraints": {
+        "request_part": "part-1",
+        "entity": "PEP",
+        "business_scope": "PBNA",
+        "period_start": "2026-06-14",
+        "period_end": "2026-09-05",
+        "basis": "Organic Revenue Performance；非GAAP，剔除外汇折算及收购、剥离影响",
+        "metric": "Organic Revenue % Change; Organic volume change; Effective net pricing",
+        "unit": "percent; percentage points",
+        "attribution": "百事公司披露的有机收入增长桥"
+      }
+    },
+    {
+      "id": "claim:pbna-acquisition-bridge",
+      "text": "北美饮料报告收入同比增长5%，管理层称主要来自2025年收购的贡献，不能把它理解成原有业务销量转强。收入桥列示的汇率调整约为零，“收购及剥离影响”为-6个百分点；这里的负号表示从报告增速调整至有机增速时剔除该影响，并非收购拖累收入。表内增速和调整项经过四舍五入，不应把显示的5%与-6个百分点机械相加，取代公司披露的有机收入基本持平。",
+      "evidence_ids": [
+        "span_e15075b0f56ab75de1fba9f1",
+        "chunk_ae5bdbdc960fbb64f4203c72",
+        "span_8c9a2825bb1288d3bfc9eebe"
+      ],
+      "calculation_ids": [],
+      "requirement_ids": [
+        "request:episode_66d039dd17404a7ab46b26c725992e32"
+      ],
+      "constraints": {
+        "request_part": "part-1",
+        "entity": "PEP",
+        "business_scope": "PBNA",
+        "period_start": "2026-06-14",
+        "period_end": "2026-09-05",
+        "basis": "Reported Net Revenue为GAAP，包含并购及汇率；Organic Revenue为非GAAP",
+        "metric": "Reported Net Revenue % Change; Impact of foreign exchange translation; Impact of acquisitions and divestitures",
+        "unit": "percent; percentage points",
+        "attribution": "收购为报告收入增长主要来源的解释来自管理层"
+      }
+    },
+    {
+      "id": "claim:volume-definition-limits",
+      "text": "量价口径要分清：北美饮料另行披露的单位销量同比下降2%，已剔除收购及剥离影响；它不等于有机收入桥中的销量贡献-3个百分点。公司脚注说明，单位销量变化与销量对收入增速的影响，可能因产品组合、非合并合营企业销量等因素而不同；脚注还对特许饮料业务列举了装瓶商销量与浓缩液发货的时点差异，但没有把北美饮料这两个数字的差别逐项量化。有效净定价也不能直接当成某个单品的标价变化，因此不能据这些汇总数字断言全面降价、终端需求变化的具体原因，或某个品牌拖累。",
+      "evidence_ids": [
+        "span_866e7defb63fa38a7cf48e44",
+        "chunk_ae5bdbdc960fbb64f4203c72",
+        "span_8c9a2825bb1288d3bfc9eebe"
+      ],
+      "calculation_ids": [],
+      "requirement_ids": [
+        "request:episode_66d039dd17404a7ab46b26c725992e32"
+      ],
+      "constraints": {
+        "request_part": "part-1",
+        "entity": "PEP",
+        "business_scope": "PBNA；量价解释同时适用于本次北美两分部比较",
+        "period_start": "2026-06-14",
+        "period_end": "2026-09-05",
+        "basis": "单位销量剔除收购及剥离；有机销量收入贡献采用公司Organic Revenue Performance口径",
+        "metric": "Volume; Organic volume change; Effective net pricing",
+        "unit": "percent; percentage points",
+        "missing_evidence": [
+          "PBNA单位销量变动与有机销量收入贡献差异的逐项量化说明",
+          "北美各品牌、单品、渠道的售价、促销、组合及终端销量明细"
+        ]
+      }
+    }
+  ],
+  "answered_requirement_ids": [
+    "request:episode_66d039dd17404a7ab46b26c725992e32"
+  ],
+  "unanswered_requirement_ids": [],
+  "summary": "对用户原问part-1的直接回答：北美食品主要是有效净定价偏弱、盈利承压；北美饮料主要是销量偏弱，定价抵消，报告收入增长主要靠收购。具体看百事2026年第三季度、截至9月5日的12周同比披露：食品（PFNA）的有机销量对收入增长贡献约+0.5个百分点，有效净定价贡献约-1个百分点，有机收入基本持平，核心营业利润下降12%；饮料（PBNA）的相应贡献为-3个百分点和+3个百分点，有机收入同样基本持平，报告收入增长5%主要来自2025年收购，而非原有业务销量转强。[chunk_ae5bdbdc960fbb64f4203c72；span_8c9a2825bb1288d3bfc9eebe；span_e15075b0f56ab75de1fba9f1] 这里的有机口径剔除汇率及收购剥离影响，量价数字是收入增速贡献，不是单品价格或单位销量的直接变动；饮料另行披露的单位销量下降2%，不能与收入桥的-3个百分点混用。公司说明两种销量口径可能因产品组合等因素不同，但未逐项解释PBNA的差异。数字存在四舍五入，有效净定价不等于单品标价，现有资料也不足以归因到具体品牌，或把食品全部利润降幅归因于定价。[span_866e7defb63fa38a7cf48e44；span_8c9a2825bb1288d3bfc9eebe] 本回答及五项候选结论均对应part-1和现有requirement：request:episode_66d039dd17404a7ab46b26c725992e32。"
+}

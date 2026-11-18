@@ -1,0 +1,92 @@
+{
+  "claims": [
+    {
+      "id": "claim:us_quarter_traffic_check",
+      "text": "先看全季结果：2026年第三季度，美国同店销售同比下降0.2%；公告说明，同店客流下降，基本被客单金额增长抵消。因此，销售接近持平并不代表来客已经恢复增长。这里的客单金额也不能直接等同于菜单价格：客单增长不必然全由涨价造成，该引文未拆分其来源。",
+      "evidence_ids": [
+        "span_de69cbdff59e9d164a29cd48"
+      ],
+      "calculation_ids": [],
+      "requirement_ids": [
+        "request:episode_465eae543e8440bf8be304e801f37c64"
+      ],
+      "constraints": {
+        "entity": "MCD",
+        "business_scope": "U.S.",
+        "period_start": "2026-07-01",
+        "period_end": "2026-09-30",
+        "basis": "公司公告的同店经营指标；数字直接读取原文",
+        "missing_evidence": [
+          "美国客单金额增长的价格、购买数量及消费组合分解"
+        ]
+      }
+    },
+    {
+      "id": "claim:us_intr aquarter_trend",
+      "text": "再看“好转”的含义：CEO表示，在价值优惠措施推出后，美国业务随季度推进出现改善。这是管理层对季内业务走势的定性描述，并未明确只指客流，也不等于宣布客流同比转正；“措施后改善”这一表述本身也不能独立证明优惠措施造成了改善。",
+      "evidence_ids": [
+        "span_de69cbdff59e9d164a29cd48"
+      ],
+      "calculation_ids": [],
+      "requirement_ids": [
+        "request:episode_465eae543e8440bf8be304e801f37c64"
+      ],
+      "constraints": {
+        "entity": "MCD",
+        "business_scope": "U.S.",
+        "period_start": "2026-07-01",
+        "period_end": "2026-09-30",
+        "attribution": "management commentary",
+        "missing_evidence": [
+          "季内改善具体对应的经营指标及量化幅度",
+          "能够独立识别价值优惠措施效果的因果证据"
+        ]
+      }
+    },
+    {
+      "id": "claim:us_results_trend_compatible",
+      "text": "两句话不矛盾：一个讲全季相对去年同期的结果，一个讲季度内部的变化方向。即使季内表现逐步改善，全季客流仍可能低于去年同期。因此，更准确的理解是“美国业务有改善迹象，但全季同店客流仍同比下降”，而不是“客流已经恢复增长”。",
+      "evidence_ids": [
+        "span_de69cbdff59e9d164a29cd48"
+      ],
+      "calculation_ids": [],
+      "requirement_ids": [
+        "request:episode_465eae543e8440bf8be304e801f37c64"
+      ],
+      "constraints": {
+        "entity": "MCD",
+        "business_scope": "U.S.",
+        "period_start": "2026-07-01",
+        "period_end": "2026-09-30",
+        "basis": "对全季同比披露与管理层季内趋势表述的分析解释"
+      }
+    },
+    {
+      "id": "claim:us_monthly_traffic_limit",
+      "text": "现有公告引文没有提供美国逐月同店客流或改善幅度，所以无法据此判断季度末客流是否已经同比转正，也无法量化恢复了多少。",
+      "evidence_ids": [
+        "span_de69cbdff59e9d164a29cd48"
+      ],
+      "calculation_ids": [],
+      "requirement_ids": [
+        "request:episode_465eae543e8440bf8be304e801f37c64"
+      ],
+      "constraints": {
+        "entity": "MCD",
+        "business_scope": "U.S.",
+        "period_start": "2026-07-01",
+        "period_end": "2026-09-30",
+        "missing_evidence": [
+          "美国逐月同店客流同比数据",
+          "美国季度末同店客流同比数据",
+          "季内改善幅度的量化披露"
+        ]
+      }
+    }
+  ],
+  "answered_requirement_ids": [
+    "request:episode_465eae543e8440bf8be304e801f37c64"
+  ],
+  "unanswered_requirement_ids": [],
+  "summary": "不矛盾：全季客流同比仍下降，和美国业务在季度内逐步改善可以同时成立。管理层并未说客流已转正，现有引文也不足以证明季度末客流转正或优惠措施的因果效果。"
+}

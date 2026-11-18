@@ -1,0 +1,16 @@
+{
+  "action": "tool",
+  "tool": "search_documents",
+  "arguments": {
+    "entity": "MCD",
+    "document_ids": [
+      "source_doc_0cdcf4786366028311a04eeb"
+    ],
+    "cutoff": "2026-11-16",
+    "query": "Outlook consumer sentiment inflation macroeconomic conditions value affordability 2026",
+    "limit": 3,
+    "max_context_chars": 9000
+  },
+  "reason": "现有证据已覆盖最新季度、GAAP与调整后业绩及地区同店销售；补查公司对消费环境和展望的原始表述，以完成R3，避免把管理层信心当成业绩预测。沿用R1–R3；本题为季度概览，无需专门计算方法。",
+  "research_skills": []
+}

@@ -1,0 +1,19 @@
+{
+  "action": "tool",
+  "tool": "read_document",
+  "arguments": {
+    "entity": "AXP",
+    "document_id": "source_doc_dcbdedf0ae2a1c1306b321fb",
+    "offset": 5700,
+    "limit_chars": 6000,
+    "cutoff": "2026-11-16"
+  },
+  "requirements": [
+    {
+      "id": "request:episode_1bc8ee25e95f42c8b8787968a2868c04",
+      "text": "解释美国运通2026年第三季度报告EPS同比增长31%、调整后EPS增长13%的差异，核对两期比较基数及公司非GAAP调整项目，区分出售收益、相关重组成本与其他利润影响因素。"
+    }
+  ],
+  "research_skills": [],
+  "reason": "本轮聚焦两种EPS口径差异，无需套用其他专项方法。已有公告给出EPS及出售收益，但需续读非GAAP调节表，确认扣除相关重组成本后的净影响，避免将全部出售收益误当作调整额。"
+}

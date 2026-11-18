@@ -1,0 +1,162 @@
+[
+  {
+    "branch": "V1",
+    "role": "generic_reviewer",
+    "nanodollars": 62243000,
+    "usd": 0.062243,
+    "usage": {
+      "total_tokens": 25362,
+      "prompt_tokens": 24116,
+      "completion_tokens": 1246,
+      "cached_input_tokens": 0,
+      "cache_write_tokens": 3102,
+      "cache_write_30m_tokens": 3102,
+      "cache_write_12h_tokens": 0,
+      "reasoning_tokens": 135
+    }
+  },
+  {
+    "branch": "V1",
+    "role": "critic",
+    "nanodollars": 66038200,
+    "usd": 0.0660382,
+    "usage": {
+      "total_tokens": 27354,
+      "prompt_tokens": 25201,
+      "completion_tokens": 2153,
+      "cached_input_tokens": 3102,
+      "cache_write_tokens": 0,
+      "cache_write_30m_tokens": 0,
+      "cache_write_12h_tokens": 0,
+      "reasoning_tokens": 233
+    }
+  },
+  {
+    "branch": "V2",
+    "role": "critic",
+    "nanodollars": 67114200,
+    "usd": 0.0671142,
+    "usage": {
+      "total_tokens": 27492,
+      "prompt_tokens": 25239,
+      "completion_tokens": 2253,
+      "cached_input_tokens": 3102,
+      "cache_write_tokens": 0,
+      "cache_write_30m_tokens": 0,
+      "cache_write_12h_tokens": 0,
+      "reasoning_tokens": 295
+    }
+  },
+  {
+    "branch": "V2",
+    "role": "generic_reviewer",
+    "nanodollars": 57744200,
+    "usd": 0.0577442,
+    "usage": {
+      "total_tokens": 25687,
+      "prompt_tokens": 24154,
+      "completion_tokens": 1533,
+      "cached_input_tokens": 3102,
+      "cache_write_tokens": 0,
+      "cache_write_30m_tokens": 0,
+      "cache_write_12h_tokens": 0,
+      "reasoning_tokens": 312
+    }
+  },
+  {
+    "branch": "V3",
+    "role": "generic_reviewer",
+    "nanodollars": 56204200,
+    "usd": 0.0562042,
+    "usage": {
+      "total_tokens": 25533,
+      "prompt_tokens": 24154,
+      "completion_tokens": 1379,
+      "cached_input_tokens": 3102,
+      "cache_write_tokens": 0,
+      "cache_write_30m_tokens": 0,
+      "cache_write_12h_tokens": 0,
+      "reasoning_tokens": 192
+    }
+  },
+  {
+    "branch": "V3",
+    "role": "critic",
+    "nanodollars": 70654200,
+    "usd": 0.0706542,
+    "usage": {
+      "total_tokens": 27846,
+      "prompt_tokens": 25239,
+      "completion_tokens": 2607,
+      "cached_input_tokens": 3102,
+      "cache_write_tokens": 0,
+      "cache_write_30m_tokens": 0,
+      "cache_write_12h_tokens": 0,
+      "reasoning_tokens": 389
+    }
+  },
+  {
+    "branch": "V1-revise-generic_review",
+    "role": "revision_planner",
+    "nanodollars": 41036200,
+    "usd": 0.0410362,
+    "usage": {
+      "total_tokens": 23001,
+      "prompt_tokens": 22885,
+      "completion_tokens": 116,
+      "cached_input_tokens": 3102,
+      "cache_write_tokens": 0,
+      "cache_write_30m_tokens": 0,
+      "cache_write_12h_tokens": 0,
+      "reasoning_tokens": 0
+    }
+  },
+  {
+    "branch": "V1-revise-structured_critic",
+    "role": "revision_planner",
+    "nanodollars": 42390200,
+    "usd": 0.0423902,
+    "usage": {
+      "total_tokens": 23662,
+      "prompt_tokens": 23542,
+      "completion_tokens": 120,
+      "cached_input_tokens": 3102,
+      "cache_write_tokens": 0,
+      "cache_write_30m_tokens": 0,
+      "cache_write_12h_tokens": 0,
+      "reasoning_tokens": 0
+    }
+  },
+  {
+    "branch": "V1-resume-generic_review",
+    "role": "revision_planner",
+    "nanodollars": 42032200,
+    "usd": 0.0420322,
+    "usage": {
+      "total_tokens": 23171,
+      "prompt_tokens": 22973,
+      "completion_tokens": 198,
+      "cached_input_tokens": 3102,
+      "cache_write_tokens": 0,
+      "cache_write_30m_tokens": 0,
+      "cache_write_12h_tokens": 0,
+      "reasoning_tokens": 38
+    }
+  },
+  {
+    "branch": "V1-resume-structured_critic",
+    "role": "revision_planner",
+    "nanodollars": 43032200,
+    "usd": 0.0430322,
+    "usage": {
+      "total_tokens": 23759,
+      "prompt_tokens": 23583,
+      "completion_tokens": 176,
+      "cached_input_tokens": 3102,
+      "cache_write_tokens": 0,
+      "cache_write_30m_tokens": 0,
+      "cache_write_12h_tokens": 0,
+      "reasoning_tokens": 44
+    }
+  }
+]

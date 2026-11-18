@@ -1,0 +1,3378 @@
+{
+  "protocol": "findver-full-report-retrieval-v1",
+  "created_at": "2026-11-06T09:39:35.875853+00:00",
+  "published_gold": true,
+  "scope": "fixed public testmini development subset; evidence-block retrieval only",
+  "no_verification_accuracy_claim": true,
+  "selection": {
+    "protocol": "findver-testmini-stratified-reports-v2",
+    "seed": "verifin-findver-dev-2026-11-06",
+    "selection": "For each published subset choose first 3 unique report names by SHA256(seed+colon+name); union reports; retain every testmini claim for those reports. Frozen before any retrieval metrics.",
+    "supersedes": "v1 first8 report-only selection omitted knowledge subset; revised for declared coverage before evaluation, not based on scores",
+    "revision": "e8bb237def4ce555a606a45edba22666e31df248",
+    "reports": [
+      "BLDE-2024-03-12_10-K.json",
+      "DX-PC-2024-02-26_10-K.json",
+      "HQY-2024-03-22_10-K.json",
+      "LVVR-2024-03-27_10-K.json",
+      "MITI-2024-02-13_10-Q.json",
+      "RCFA-WT-2024-04-23_10-K.json",
+      "SAFT-2024-02-28_10-K.json",
+      "TNET-2024-04-26_10-Q.json",
+      "WWW-2024-02-22_10-K.json"
+    ],
+    "case_ids": [
+      "ie-val-10",
+      "ie-val-17",
+      "ie-val-23",
+      "ie-val-51",
+      "ie-val-57",
+      "ie-val-59",
+      "ie-val-73",
+      "ie-val-95",
+      "ie-val-101",
+      "ie-val-111",
+      "ie-val-178",
+      "ie-val-195",
+      "ie-val-209",
+      "ie-val-234",
+      "ie-val-240",
+      "numeric-val-18",
+      "numeric-val-35",
+      "numeric-val-99",
+      "numeric-val-118",
+      "numeric-val-242",
+      "knowledge-val-63",
+      "knowledge-val-78",
+      "knowledge-val-98",
+      "knowledge-val-198"
+    ],
+    "case_count": 24,
+    "subset_counts": {
+      "ie": 15,
+      "numeric": 5,
+      "knowledge": 4
+    }
+  },
+  "input_hash": "2ce67724783366ee79676a397509251a22c2789a718fb36bbab85bb31d4acc15",
+  "model": {
+    "model_id": "Qwen/Qwen3-Embedding-0.6B",
+    "revision": "97b0c614be4d77ee51c0cef4e5f07c00f9eb65b3",
+    "implementation": "sentence-transformers 6.2.0; CPU float32; cosine normalization",
+    "provenance": "Explicit local safetensors directory; local_files_only=True; trust_remote_code=False; token=False",
+    "query_prefix": "Instruct: Given a financial research question, retrieve relevant passages from company financial reports.\nQuery: ",
+    "passage_prefix": "",
+    "files": [
+      {
+        "path": "1_Pooling/config.json",
+        "sha256": "37bf193fa101f19101bfad9c31d3eb0f786e247b7b1e5cb7f007d730eed1ddbd"
+      },
+      {
+        "path": "README.md",
+        "sha256": "c34d9b7e5a267ad3fdd13227a253686bc90844ff4744a2a6a86c7c905e3d06f3"
+      },
+      {
+        "path": "config.json",
+        "sha256": "b5bf1f51fc45be473a54718cef92448d90a1be001bf9b9a44b8c7f10a19feaa9"
+      },
+      {
+        "path": "config_sentence_transformers.json",
+        "sha256": "10667c72ddb772627bf1780cb7f86af8e2ae0032b8c243c731172064105c6961"
+      },
+      {
+        "path": "merges.txt",
+        "sha256": "8831e4f1a044471340f7c0a83d7bd71306a5b867e95fd870f74d0c5308a904d5"
+      },
+      {
+        "path": "model.safetensors",
+        "sha256": "0437e45c94563b09e13cb7a64478fc406947a93cb34a7e05870fc8dcd48e23fd"
+      },
+      {
+        "path": "modules.json",
+        "sha256": "84e40c8e006c9b1d6c122e02cba9b02458120b5fb0c87b746c41e0207cf642cf"
+      },
+      {
+        "path": "tokenizer.json",
+        "sha256": "def76fb086971c7867b829c23a26261e38d9d74e02139253b38aeb9df8b4b50a"
+      },
+      {
+        "path": "tokenizer_config.json",
+        "sha256": "253153d0738ceb4c668d2eff957714dd2bea0b56de772a9fdccd96cbf517e6a0"
+      },
+      {
+        "path": "vocab.json",
+        "sha256": "ca10d7e9fb3ed18575dd1e277a2579c16d108e32f27439684afa0e10b1440910"
+      }
+    ],
+    "files_fingerprint": "model_6798ccedb72aae55d86e5553"
+  },
+  "blocks": 2971,
+  "claims": 24,
+  "candidate_policy": "Each claim searches ALL blocks of its dataset-assigned full report; all selected reports are encoded; no gold candidate filtering",
+  "ranking_protocol": {
+    "dense": "normalized cosine exact scan",
+    "hybrid": "equal-weight RRF k=60 over full positive BM25 list and full dense list; no candidate cap",
+    "k": [
+      5,
+      10
+    ],
+    "context_budget": null
+  },
+  "encoding": {
+    "tokens_total": 621818,
+    "tokens_median": 147,
+    "tokens_max": 4396,
+    "max_sequence_length": 32768,
+    "truncation": false,
+    "bucket_order": "ascending token length, stable ID",
+    "batch_policy": "8 up to 512 tokens; 4 up to 1024; 2 up to 2048; 1 above 2048; threshold uses first length in contiguous sorted batch",
+    "passage_seconds": 882.1133469763445,
+    "completed_blocks": 2971,
+    "model_load_seconds": 1.3990163749549538,
+    "query_seconds": 3.1031763749197125,
+    "process_peak_rss_bytes": 2600812544
+  },
+  "environment": {
+    "python": "3.12.14",
+    "platform": "macOS-15.6-arm64-64bit",
+    "threads": 4,
+    "dtype": "float32",
+    "device": "cpu",
+    "libraries": {
+      "torch": "2.15.0",
+      "transformers": "5.22.1",
+      "sentence-transformers": "6.2.0",
+      "numpy": "2.5.4"
+    }
+  },
+  "cache": {
+    "manifest": "/Users/apple/Documents/Codex/2026-10-08/san/work/open-source-audit/findver/findver-embedding-cache/findver-vector-manifest.json",
+    "vectors": "/Users/apple/Documents/Codex/2026-10-08/san/work/open-source-audit/findver/findver-embedding-cache/findver-block-vectors.npy",
+    "vectors_sha256": "78ba11031fa227a8e809db79923bb5961925f41ea166805ade876e51b7adca6b"
+  },
+  "script_sha256": "8adda3e018c3febabf85bb8efa57bd2eef4a18658aa7ab485f3fb68ea801dc70",
+  "limits": [
+    "Known source report; discovery is not measured",
+    "Whole blocks vary in size; no common character budget",
+    "Testmini was used for development; not untouched test performance",
+    "No generation, verification verdict, or end-to-end agent score"
+  ],
+  "status": "completed",
+  "summary": {
+    "all": {
+      "count": 24,
+      "methods": {
+        "bm25": {
+          "5": {
+            "macro_evidence_block_recall": 0.5409722222222222,
+            "all_evidence_fraction": 0.16666666666666666,
+            "mrr": 0.7847222222222222,
+            "context_characters_mean": 5425.958333333333,
+            "context_characters_median": 4766.5,
+            "context_characters_max": 12568
+          },
+          "10": {
+            "macro_evidence_block_recall": 0.6743055555555556,
+            "all_evidence_fraction": 0.3333333333333333,
+            "mrr": 0.7906746031746031,
+            "context_characters_mean": 10604.458333333334,
+            "context_characters_median": 9868.0,
+            "context_characters_max": 23879
+          }
+        },
+        "dense": {
+          "5": {
+            "macro_evidence_block_recall": 0.4076388888888889,
+            "all_evidence_fraction": 0.16666666666666666,
+            "mrr": 0.5152777777777777,
+            "context_characters_mean": 4961,
+            "context_characters_median": 4281.0,
+            "context_characters_max": 8331
+          },
+          "10": {
+            "macro_evidence_block_recall": 0.5479166666666666,
+            "all_evidence_fraction": 0.16666666666666666,
+            "mrr": 0.5426421957671957,
+            "context_characters_mean": 10190.041666666666,
+            "context_characters_median": 8917.0,
+            "context_characters_max": 20251
+          }
+        },
+        "hybrid": {
+          "5": {
+            "macro_evidence_block_recall": 0.5131944444444444,
+            "all_evidence_fraction": 0.16666666666666666,
+            "mrr": 0.7861111111111111,
+            "context_characters_mean": 5045.916666666667,
+            "context_characters_median": 4722.0,
+            "context_characters_max": 10209
+          },
+          "10": {
+            "macro_evidence_block_recall": 0.6590277777777778,
+            "all_evidence_fraction": 0.2916666666666667,
+            "mrr": 0.7861111111111111,
+            "context_characters_mean": 10434.458333333334,
+            "context_characters_median": 9234.5,
+            "context_characters_max": 21971
+          }
+        }
+      },
+      "theoretical": {
+        "5": {
+          "all_evidence_upper_bound": 1,
+          "macro_recall_upper_bound": 1.0,
+          "claims_with_more_gold_than_k": 0
+        },
+        "10": {
+          "all_evidence_upper_bound": 1,
+          "macro_recall_upper_bound": 1.0,
+          "claims_with_more_gold_than_k": 0
+        }
+      }
+    },
+    "ie": {
+      "count": 15,
+      "methods": {
+        "bm25": {
+          "5": {
+            "macro_evidence_block_recall": 0.5655555555555556,
+            "all_evidence_fraction": 0.06666666666666667,
+            "mrr": 0.8666666666666667,
+            "context_characters_mean": 4625.466666666666,
+            "context_characters_median": 3923,
+            "context_characters_max": 8466
+          },
+          "10": {
+            "macro_evidence_block_recall": 0.7122222222222222,
+            "all_evidence_fraction": 0.3333333333333333,
+            "mrr": 0.8666666666666667,
+            "context_characters_mean": 9200,
+            "context_characters_median": 8987,
+            "context_characters_max": 12339
+          }
+        },
+        "dense": {
+          "5": {
+            "macro_evidence_block_recall": 0.4022222222222222,
+            "all_evidence_fraction": 0.06666666666666667,
+            "mrr": 0.6555555555555556,
+            "context_characters_mean": 4866.8,
+            "context_characters_median": 3982,
+            "context_characters_max": 8331
+          },
+          "10": {
+            "macro_evidence_block_recall": 0.5266666666666666,
+            "all_evidence_fraction": 0.06666666666666667,
+            "mrr": 0.6712962962962963,
+            "context_characters_mean": 9639.266666666666,
+            "context_characters_median": 8975,
+            "context_characters_max": 14563
+          }
+        },
+        "hybrid": {
+          "5": {
+            "macro_evidence_block_recall": 0.48777777777777775,
+            "all_evidence_fraction": 0.06666666666666667,
+            "mrr": 0.8222222222222222,
+            "context_characters_mean": 4766.4,
+            "context_characters_median": 4494,
+            "context_characters_max": 8976
+          },
+          "10": {
+            "macro_evidence_block_recall": 0.6877777777777778,
+            "all_evidence_fraction": 0.26666666666666666,
+            "mrr": 0.8222222222222222,
+            "context_characters_mean": 9821,
+            "context_characters_median": 9242,
+            "context_characters_max": 14711
+          }
+        }
+      },
+      "theoretical": {
+        "5": {
+          "all_evidence_upper_bound": 1,
+          "macro_recall_upper_bound": 1.0,
+          "claims_with_more_gold_than_k": 0
+        },
+        "10": {
+          "all_evidence_upper_bound": 1,
+          "macro_recall_upper_bound": 1.0,
+          "claims_with_more_gold_than_k": 0
+        }
+      }
+    },
+    "knowledge": {
+      "count": 4,
+      "methods": {
+        "bm25": {
+          "5": {
+            "macro_evidence_block_recall": 0.25,
+            "all_evidence_fraction": 0,
+            "mrr": 0.625,
+            "context_characters_mean": 4685,
+            "context_characters_median": 4833.5,
+            "context_characters_max": 5313
+          },
+          "10": {
+            "macro_evidence_block_recall": 0.5,
+            "all_evidence_fraction": 0,
+            "mrr": 0.6607142857142857,
+            "context_characters_mean": 9370.25,
+            "context_characters_median": 9556.5,
+            "context_characters_max": 10431
+          }
+        },
+        "dense": {
+          "5": {
+            "macro_evidence_block_recall": 0.1875,
+            "all_evidence_fraction": 0,
+            "mrr": 0.13333333333333333,
+            "context_characters_mean": 5000.75,
+            "context_characters_median": 4863.5,
+            "context_characters_max": 6857
+          },
+          "10": {
+            "macro_evidence_block_recall": 0.4375,
+            "all_evidence_fraction": 0,
+            "mrr": 0.20277777777777778,
+            "context_characters_mean": 9796.25,
+            "context_characters_median": 9815.0,
+            "context_characters_max": 11818
+          }
+        },
+        "hybrid": {
+          "5": {
+            "macro_evidence_block_recall": 0.375,
+            "all_evidence_fraction": 0,
+            "mrr": 0.6333333333333333,
+            "context_characters_mean": 4361.25,
+            "context_characters_median": 4322.5,
+            "context_characters_max": 5112
+          },
+          "10": {
+            "macro_evidence_block_recall": 0.5,
+            "all_evidence_fraction": 0,
+            "mrr": 0.6333333333333333,
+            "context_characters_mean": 8473.25,
+            "context_characters_median": 8722.5,
+            "context_characters_max": 9295
+          }
+        }
+      },
+      "theoretical": {
+        "5": {
+          "all_evidence_upper_bound": 1,
+          "macro_recall_upper_bound": 1.0,
+          "claims_with_more_gold_than_k": 0
+        },
+        "10": {
+          "all_evidence_upper_bound": 1,
+          "macro_recall_upper_bound": 1.0,
+          "claims_with_more_gold_than_k": 0
+        }
+      }
+    },
+    "numeric": {
+      "count": 5,
+      "methods": {
+        "bm25": {
+          "5": {
+            "macro_evidence_block_recall": 0.7,
+            "all_evidence_fraction": 0.6,
+            "mrr": 0.6666666666666666,
+            "context_characters_mean": 8420.2,
+            "context_characters_median": 7711,
+            "context_characters_max": 12568
+          },
+          "10": {
+            "macro_evidence_block_recall": 0.7,
+            "all_evidence_fraction": 0.6,
+            "mrr": 0.6666666666666666,
+            "context_characters_mean": 15805.2,
+            "context_characters_median": 11597,
+            "context_characters_max": 23879
+          }
+        },
+        "dense": {
+          "5": {
+            "macro_evidence_block_recall": 0.6,
+            "all_evidence_fraction": 0.6,
+            "mrr": 0.4,
+            "context_characters_mean": 5211.8,
+            "context_characters_median": 4975,
+            "context_characters_max": 7589
+          },
+          "10": {
+            "macro_evidence_block_recall": 0.7,
+            "all_evidence_fraction": 0.6,
+            "mrr": 0.42857142857142855,
+            "context_characters_mean": 12157.4,
+            "context_characters_median": 8491,
+            "context_characters_max": 20251
+          }
+        },
+        "hybrid": {
+          "5": {
+            "macro_evidence_block_recall": 0.7,
+            "all_evidence_fraction": 0.6,
+            "mrr": 0.8,
+            "context_characters_mean": 6432.2,
+            "context_characters_median": 5574,
+            "context_characters_max": 10209
+          },
+          "10": {
+            "macro_evidence_block_recall": 0.7,
+            "all_evidence_fraction": 0.6,
+            "mrr": 0.8,
+            "context_characters_mean": 13843.8,
+            "context_characters_median": 9256,
+            "context_characters_max": 21971
+          }
+        }
+      },
+      "theoretical": {
+        "5": {
+          "all_evidence_upper_bound": 1,
+          "macro_recall_upper_bound": 1.0,
+          "claims_with_more_gold_than_k": 0
+        },
+        "10": {
+          "all_evidence_upper_bound": 1,
+          "macro_recall_upper_bound": 1.0,
+          "claims_with_more_gold_than_k": 0
+        }
+      }
+    }
+  },
+  "cases": [
+    {
+      "case_id": "claim_0ddef11bfbbe83dd8514dfabf12807a7",
+      "official_case_id_scorer_only": "findver:testmini:ie-val-23",
+      "subset": "ie",
+      "report": "TNET-2024-04-26_10-Q.json",
+      "candidate_count": 129,
+      "candidate_characters": 90628,
+      "gold_count": 3,
+      "bm25_positive_candidates": 118,
+      "ranking_ms": {
+        "bm25": 7.944874931126833,
+        "dense": 7.387999910861254,
+        "rrf_fusion": 0.09912496898323298
+      },
+      "methods": {
+        "bm25": {
+          "5": {
+            "evidence_block_recall": 0.6666666666666666,
+            "all_evidence": false,
+            "mrr": 1.0,
+            "context_characters": 8466,
+            "returned_blocks": 5,
+            "passage_ids": [
+              "TNET-2024-04-26_10-Q.json#context-3",
+              "TNET-2024-04-26_10-Q.json#context-54",
+              "TNET-2024-04-26_10-Q.json#context-1",
+              "TNET-2024-04-26_10-Q.json#context-49",
+              "TNET-2024-04-26_10-Q.json#context-104"
+            ]
+          },
+          "10": {
+            "evidence_block_recall": 1.0,
+            "all_evidence": true,
+            "mrr": 1.0,
+            "context_characters": 12339,
+            "returned_blocks": 10,
+            "passage_ids": [
+              "TNET-2024-04-26_10-Q.json#context-3",
+              "TNET-2024-04-26_10-Q.json#context-54",
+              "TNET-2024-04-26_10-Q.json#context-1",
+              "TNET-2024-04-26_10-Q.json#context-49",
+              "TNET-2024-04-26_10-Q.json#context-104",
+              "TNET-2024-04-26_10-Q.json#context-106",
+              "TNET-2024-04-26_10-Q.json#context-115",
+              "TNET-2024-04-26_10-Q.json#context-2",
+              "TNET-2024-04-26_10-Q.json#context-105",
+              "TNET-2024-04-26_10-Q.json#context-66"
+            ]
+          }
+        },
+        "dense": {
+          "5": {
+            "evidence_block_recall": 0.6666666666666666,
+            "all_evidence": false,
+            "mrr": 1.0,
+            "context_characters": 8331,
+            "returned_blocks": 5,
+            "passage_ids": [
+              "TNET-2024-04-26_10-Q.json#context-3",
+              "TNET-2024-04-26_10-Q.json#context-2",
+              "TNET-2024-04-26_10-Q.json#context-123",
+              "TNET-2024-04-26_10-Q.json#context-1",
+              "TNET-2024-04-26_10-Q.json#context-0"
+            ]
+          },
+          "10": {
+            "evidence_block_recall": 0.6666666666666666,
+            "all_evidence": false,
+            "mrr": 1.0,
+            "context_characters": 13117,
+            "returned_blocks": 10,
+            "passage_ids": [
+              "TNET-2024-04-26_10-Q.json#context-3",
+              "TNET-2024-04-26_10-Q.json#context-2",
+              "TNET-2024-04-26_10-Q.json#context-123",
+              "TNET-2024-04-26_10-Q.json#context-1",
+              "TNET-2024-04-26_10-Q.json#context-0",
+              "TNET-2024-04-26_10-Q.json#context-127",
+              "TNET-2024-04-26_10-Q.json#context-102",
+              "TNET-2024-04-26_10-Q.json#context-105",
+              "TNET-2024-04-26_10-Q.json#context-52",
+              "TNET-2024-04-26_10-Q.json#context-4"
+            ]
+          }
+        },
+        "hybrid": {
+          "5": {
+            "evidence_block_recall": 0.6666666666666666,
+            "all_evidence": false,
+            "mrr": 1.0,
+            "context_characters": 8976,
+            "returned_blocks": 5,
+            "passage_ids": [
+              "TNET-2024-04-26_10-Q.json#context-3",
+              "TNET-2024-04-26_10-Q.json#context-1",
+              "TNET-2024-04-26_10-Q.json#context-2",
+              "TNET-2024-04-26_10-Q.json#context-0",
+              "TNET-2024-04-26_10-Q.json#context-54"
+            ]
+          },
+          "10": {
+            "evidence_block_recall": 1.0,
+            "all_evidence": true,
+            "mrr": 1.0,
+            "context_characters": 14667,
+            "returned_blocks": 10,
+            "passage_ids": [
+              "TNET-2024-04-26_10-Q.json#context-3",
+              "TNET-2024-04-26_10-Q.json#context-1",
+              "TNET-2024-04-26_10-Q.json#context-2",
+              "TNET-2024-04-26_10-Q.json#context-0",
+              "TNET-2024-04-26_10-Q.json#context-54",
+              "TNET-2024-04-26_10-Q.json#context-105",
+              "TNET-2024-04-26_10-Q.json#context-104",
+              "TNET-2024-04-26_10-Q.json#context-49",
+              "TNET-2024-04-26_10-Q.json#context-127",
+              "TNET-2024-04-26_10-Q.json#context-106"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "case_id": "claim_134fcadd6aab4ca8218fdbd4929b0340",
+      "official_case_id_scorer_only": "findver:testmini:ie-val-95",
+      "subset": "ie",
+      "report": "DX-PC-2024-02-26_10-K.json",
+      "candidate_count": 333,
+      "candidate_characters": 274161,
+      "gold_count": 4,
+      "bm25_positive_candidates": 290,
+      "ranking_ms": {
+        "bm25": 13.461375026963651,
+        "dense": 10.590916033834219,
+        "rrf_fusion": 0.17720903269946575
+      },
+      "methods": {
+        "bm25": {
+          "5": {
+            "evidence_block_recall": 0.5,
+            "all_evidence": false,
+            "mrr": 1.0,
+            "context_characters": 3827,
+            "returned_blocks": 5,
+            "passage_ids": [
+              "DX-PC-2024-02-26_10-K.json#context-27",
+              "DX-PC-2024-02-26_10-K.json#context-324",
+              "DX-PC-2024-02-26_10-K.json#context-23",
+              "DX-PC-2024-02-26_10-K.json#context-186",
+              "DX-PC-2024-02-26_10-K.json#context-19"
+            ]
+          },
+          "10": {
+            "evidence_block_recall": 0.5,
+            "all_evidence": false,
+            "mrr": 1.0,
+            "context_characters": 7027,
+            "returned_blocks": 10,
+            "passage_ids": [
+              "DX-PC-2024-02-26_10-K.json#context-27",
+              "DX-PC-2024-02-26_10-K.json#context-324",
+              "DX-PC-2024-02-26_10-K.json#context-23",
+              "DX-PC-2024-02-26_10-K.json#context-186",
+              "DX-PC-2024-02-26_10-K.json#context-19",
+              "DX-PC-2024-02-26_10-K.json#context-129",
+              "DX-PC-2024-02-26_10-K.json#context-41",
+              "DX-PC-2024-02-26_10-K.json#context-98",
+              "DX-PC-2024-02-26_10-K.json#context-30",
+              "DX-PC-2024-02-26_10-K.json#context-236"
+            ]
+          }
+        },
+        "dense": {
+          "5": {
+            "evidence_block_recall": 0.5,
+            "all_evidence": false,
+            "mrr": 1.0,
+            "context_characters": 3261,
+            "returned_blocks": 5,
+            "passage_ids": [
+              "DX-PC-2024-02-26_10-K.json#context-27",
+              "DX-PC-2024-02-26_10-K.json#context-23",
+              "DX-PC-2024-02-26_10-K.json#context-41",
+              "DX-PC-2024-02-26_10-K.json#context-25",
+              "DX-PC-2024-02-26_10-K.json#context-24"
+            ]
+          },
+          "10": {
+            "evidence_block_recall": 0.5,
+            "all_evidence": false,
+            "mrr": 1.0,
+            "context_characters": 6614,
+            "returned_blocks": 10,
+            "passage_ids": [
+              "DX-PC-2024-02-26_10-K.json#context-27",
+              "DX-PC-2024-02-26_10-K.json#context-23",
+              "DX-PC-2024-02-26_10-K.json#context-41",
+              "DX-PC-2024-02-26_10-K.json#context-25",
+              "DX-PC-2024-02-26_10-K.json#context-24",
+              "DX-PC-2024-02-26_10-K.json#context-26",
+              "DX-PC-2024-02-26_10-K.json#context-110",
+              "DX-PC-2024-02-26_10-K.json#context-45",
+              "DX-PC-2024-02-26_10-K.json#context-186",
+              "DX-PC-2024-02-26_10-K.json#context-30"
+            ]
+          }
+        },
+        "hybrid": {
+          "5": {
+            "evidence_block_recall": 0.5,
+            "all_evidence": false,
+            "mrr": 1.0,
+            "context_characters": 3290,
+            "returned_blocks": 5,
+            "passage_ids": [
+              "DX-PC-2024-02-26_10-K.json#context-27",
+              "DX-PC-2024-02-26_10-K.json#context-23",
+              "DX-PC-2024-02-26_10-K.json#context-41",
+              "DX-PC-2024-02-26_10-K.json#context-186",
+              "DX-PC-2024-02-26_10-K.json#context-30"
+            ]
+          },
+          "10": {
+            "evidence_block_recall": 0.5,
+            "all_evidence": false,
+            "mrr": 1.0,
+            "context_characters": 6425,
+            "returned_blocks": 10,
+            "passage_ids": [
+              "DX-PC-2024-02-26_10-K.json#context-27",
+              "DX-PC-2024-02-26_10-K.json#context-23",
+              "DX-PC-2024-02-26_10-K.json#context-41",
+              "DX-PC-2024-02-26_10-K.json#context-186",
+              "DX-PC-2024-02-26_10-K.json#context-30",
+              "DX-PC-2024-02-26_10-K.json#context-24",
+              "DX-PC-2024-02-26_10-K.json#context-98",
+              "DX-PC-2024-02-26_10-K.json#context-324",
+              "DX-PC-2024-02-26_10-K.json#context-25",
+              "DX-PC-2024-02-26_10-K.json#context-129"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "case_id": "claim_1add0a3b7a18e6db907f18e068b14405",
+      "official_case_id_scorer_only": "findver:testmini:numeric-val-18",
+      "subset": "numeric",
+      "report": "WWW-2024-02-22_10-K.json",
+      "candidate_count": 411,
+      "candidate_characters": 331071,
+      "gold_count": 2,
+      "bm25_positive_candidates": 253,
+      "ranking_ms": {
+        "bm25": 21.175584057345986,
+        "dense": 8.328082971274853,
+        "rrf_fusion": 0.18245901446789503
+      },
+      "methods": {
+        "bm25": {
+          "5": {
+            "evidence_block_recall": 0.0,
+            "all_evidence": false,
+            "mrr": 0,
+            "context_characters": 4726,
+            "returned_blocks": 5,
+            "passage_ids": [
+              "WWW-2024-02-22_10-K.json#context-136",
+              "WWW-2024-02-22_10-K.json#context-314",
+              "WWW-2024-02-22_10-K.json#context-279",
+              "WWW-2024-02-22_10-K.json#context-313",
+              "WWW-2024-02-22_10-K.json#context-248"
+            ]
+          },
+          "10": {
+            "evidence_block_recall": 0.0,
+            "all_evidence": false,
+            "mrr": 0,
+            "context_characters": 9863,
+            "returned_blocks": 10,
+            "passage_ids": [
+              "WWW-2024-02-22_10-K.json#context-136",
+              "WWW-2024-02-22_10-K.json#context-314",
+              "WWW-2024-02-22_10-K.json#context-279",
+              "WWW-2024-02-22_10-K.json#context-313",
+              "WWW-2024-02-22_10-K.json#context-248",
+              "WWW-2024-02-22_10-K.json#context-360",
+              "WWW-2024-02-22_10-K.json#context-128",
+              "WWW-2024-02-22_10-K.json#context-157",
+              "WWW-2024-02-22_10-K.json#context-126",
+              "WWW-2024-02-22_10-K.json#context-130"
+            ]
+          }
+        },
+        "dense": {
+          "5": {
+            "evidence_block_recall": 0.0,
+            "all_evidence": false,
+            "mrr": 0,
+            "context_characters": 3402,
+            "returned_blocks": 5,
+            "passage_ids": [
+              "WWW-2024-02-22_10-K.json#context-126",
+              "WWW-2024-02-22_10-K.json#context-139",
+              "WWW-2024-02-22_10-K.json#context-141",
+              "WWW-2024-02-22_10-K.json#context-308",
+              "WWW-2024-02-22_10-K.json#context-140"
+            ]
+          },
+          "10": {
+            "evidence_block_recall": 0.0,
+            "all_evidence": false,
+            "mrr": 0,
+            "context_characters": 8491,
+            "returned_blocks": 10,
+            "passage_ids": [
+              "WWW-2024-02-22_10-K.json#context-126",
+              "WWW-2024-02-22_10-K.json#context-139",
+              "WWW-2024-02-22_10-K.json#context-141",
+              "WWW-2024-02-22_10-K.json#context-308",
+              "WWW-2024-02-22_10-K.json#context-140",
+              "WWW-2024-02-22_10-K.json#context-363",
+              "WWW-2024-02-22_10-K.json#context-302",
+              "WWW-2024-02-22_10-K.json#context-132",
+              "WWW-2024-02-22_10-K.json#context-314",
+              "WWW-2024-02-22_10-K.json#context-130"
+            ]
+          }
+        },
+        "hybrid": {
+          "5": {
+            "evidence_block_recall": 0.0,
+            "all_evidence": false,
+            "mrr": 0,
+            "context_characters": 5574,
+            "returned_blocks": 5,
+            "passage_ids": [
+              "WWW-2024-02-22_10-K.json#context-126",
+              "WWW-2024-02-22_10-K.json#context-314",
+              "WWW-2024-02-22_10-K.json#context-308",
+              "WWW-2024-02-22_10-K.json#context-302",
+              "WWW-2024-02-22_10-K.json#context-136"
+            ]
+          },
+          "10": {
+            "evidence_block_recall": 0.0,
+            "all_evidence": false,
+            "mrr": 0,
+            "context_characters": 8672,
+            "returned_blocks": 10,
+            "passage_ids": [
+              "WWW-2024-02-22_10-K.json#context-126",
+              "WWW-2024-02-22_10-K.json#context-314",
+              "WWW-2024-02-22_10-K.json#context-308",
+              "WWW-2024-02-22_10-K.json#context-302",
+              "WWW-2024-02-22_10-K.json#context-136",
+              "WWW-2024-02-22_10-K.json#context-130",
+              "WWW-2024-02-22_10-K.json#context-139",
+              "WWW-2024-02-22_10-K.json#context-355",
+              "WWW-2024-02-22_10-K.json#context-279",
+              "WWW-2024-02-22_10-K.json#context-360"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "case_id": "claim_30a9fc0bd75ba0be244d83f7d260c864",
+      "official_case_id_scorer_only": "findver:testmini:ie-val-240",
+      "subset": "ie",
+      "report": "TNET-2024-04-26_10-Q.json",
+      "candidate_count": 129,
+      "candidate_characters": 90628,
+      "gold_count": 4,
+      "bm25_positive_candidates": 122,
+      "ranking_ms": {
+        "bm25": 4.345291061326861,
+        "dense": 0.18087495118379593,
+        "rrf_fusion": 0.07095898035913706
+      },
+      "methods": {
+        "bm25": {
+          "5": {
+            "evidence_block_recall": 0.5,
+            "all_evidence": false,
+            "mrr": 1.0,
+            "context_characters": 3654,
+            "returned_blocks": 5,
+            "passage_ids": [
+              "TNET-2024-04-26_10-Q.json#context-86",
+              "TNET-2024-04-26_10-Q.json#context-85",
+              "TNET-2024-04-26_10-Q.json#context-82",
+              "TNET-2024-04-26_10-Q.json#context-91",
+              "TNET-2024-04-26_10-Q.json#context-56"
+            ]
+          },
+          "10": {
+            "evidence_block_recall": 1.0,
+            "all_evidence": true,
+            "mrr": 1.0,
+            "context_characters": 8535,
+            "returned_blocks": 10,
+            "passage_ids": [
+              "TNET-2024-04-26_10-Q.json#context-86",
+              "TNET-2024-04-26_10-Q.json#context-85",
+              "TNET-2024-04-26_10-Q.json#context-82",
+              "TNET-2024-04-26_10-Q.json#context-91",
+              "TNET-2024-04-26_10-Q.json#context-56",
+              "TNET-2024-04-26_10-Q.json#context-93",
+              "TNET-2024-04-26_10-Q.json#context-90",
+              "TNET-2024-04-26_10-Q.json#context-55",
+              "TNET-2024-04-26_10-Q.json#context-0",
+              "TNET-2024-04-26_10-Q.json#context-57"
+            ]
+          }
+        },
+        "dense": {
+          "5": {
+            "evidence_block_recall": 0.25,
+            "all_evidence": false,
+            "mrr": 1.0,
+            "context_characters": 4580,
+            "returned_blocks": 5,
+            "passage_ids": [
+              "TNET-2024-04-26_10-Q.json#context-86",
+              "TNET-2024-04-26_10-Q.json#context-0",
+              "TNET-2024-04-26_10-Q.json#context-53",
+              "TNET-2024-04-26_10-Q.json#context-4",
+              "TNET-2024-04-26_10-Q.json#context-56"
+            ]
+          },
+          "10": {
+            "evidence_block_recall": 0.5,
+            "all_evidence": false,
+            "mrr": 1.0,
+            "context_characters": 10699,
+            "returned_blocks": 10,
+            "passage_ids": [
+              "TNET-2024-04-26_10-Q.json#context-86",
+              "TNET-2024-04-26_10-Q.json#context-0",
+              "TNET-2024-04-26_10-Q.json#context-53",
+              "TNET-2024-04-26_10-Q.json#context-4",
+              "TNET-2024-04-26_10-Q.json#context-56",
+              "TNET-2024-04-26_10-Q.json#context-123",
+              "TNET-2024-04-26_10-Q.json#context-3",
+              "TNET-2024-04-26_10-Q.json#context-57",
+              "TNET-2024-04-26_10-Q.json#context-85",
+              "TNET-2024-04-26_10-Q.json#context-82"
+            ]
+          }
+        },
+        "hybrid": {
+          "5": {
+            "evidence_block_recall": 0.5,
+            "all_evidence": false,
+            "mrr": 1.0,
+            "context_characters": 3736,
+            "returned_blocks": 5,
+            "passage_ids": [
+              "TNET-2024-04-26_10-Q.json#context-86",
+              "TNET-2024-04-26_10-Q.json#context-56",
+              "TNET-2024-04-26_10-Q.json#context-0",
+              "TNET-2024-04-26_10-Q.json#context-85",
+              "TNET-2024-04-26_10-Q.json#context-82"
+            ]
+          },
+          "10": {
+            "evidence_block_recall": 0.75,
+            "all_evidence": false,
+            "mrr": 1.0,
+            "context_characters": 8473,
+            "returned_blocks": 10,
+            "passage_ids": [
+              "TNET-2024-04-26_10-Q.json#context-86",
+              "TNET-2024-04-26_10-Q.json#context-56",
+              "TNET-2024-04-26_10-Q.json#context-0",
+              "TNET-2024-04-26_10-Q.json#context-85",
+              "TNET-2024-04-26_10-Q.json#context-82",
+              "TNET-2024-04-26_10-Q.json#context-91",
+              "TNET-2024-04-26_10-Q.json#context-57",
+              "TNET-2024-04-26_10-Q.json#context-55",
+              "TNET-2024-04-26_10-Q.json#context-53",
+              "TNET-2024-04-26_10-Q.json#context-93"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "case_id": "claim_3435f90eb8462302c7af1aa0ab110929",
+      "official_case_id_scorer_only": "findver:testmini:ie-val-10",
+      "subset": "ie",
+      "report": "TNET-2024-04-26_10-Q.json",
+      "candidate_count": 129,
+      "candidate_characters": 90628,
+      "gold_count": 2,
+      "bm25_positive_candidates": 124,
+      "ranking_ms": {
+        "bm25": 4.258583998307586,
+        "dense": 0.11749996338039637,
+        "rrf_fusion": 0.06150000263005495
+      },
+      "methods": {
+        "bm25": {
+          "5": {
+            "evidence_block_recall": 0.5,
+            "all_evidence": false,
+            "mrr": 1.0,
+            "context_characters": 4591,
+            "returned_blocks": 5,
+            "passage_ids": [
+              "TNET-2024-04-26_10-Q.json#context-27",
+              "TNET-2024-04-26_10-Q.json#context-107",
+              "TNET-2024-04-26_10-Q.json#context-25",
+              "TNET-2024-04-26_10-Q.json#context-101",
+              "TNET-2024-04-26_10-Q.json#context-106"
+            ]
+          },
+          "10": {
+            "evidence_block_recall": 1.0,
+            "all_evidence": true,
+            "mrr": 1.0,
+            "context_characters": 10234,
+            "returned_blocks": 10,
+            "passage_ids": [
+              "TNET-2024-04-26_10-Q.json#context-27",
+              "TNET-2024-04-26_10-Q.json#context-107",
+              "TNET-2024-04-26_10-Q.json#context-25",
+              "TNET-2024-04-26_10-Q.json#context-101",
+              "TNET-2024-04-26_10-Q.json#context-106",
+              "TNET-2024-04-26_10-Q.json#context-30",
+              "TNET-2024-04-26_10-Q.json#context-3",
+              "TNET-2024-04-26_10-Q.json#context-26",
+              "TNET-2024-04-26_10-Q.json#context-100",
+              "TNET-2024-04-26_10-Q.json#context-29"
+            ]
+          }
+        },
+        "dense": {
+          "5": {
+            "evidence_block_recall": 0.0,
+            "all_evidence": false,
+            "mrr": 0,
+            "context_characters": 7873,
+            "returned_blocks": 5,
+            "passage_ids": [
+              "TNET-2024-04-26_10-Q.json#context-3",
+              "TNET-2024-04-26_10-Q.json#context-102",
+              "TNET-2024-04-26_10-Q.json#context-1",
+              "TNET-2024-04-26_10-Q.json#context-123",
+              "TNET-2024-04-26_10-Q.json#context-2"
+            ]
+          },
+          "10": {
+            "evidence_block_recall": 0.5,
+            "all_evidence": false,
+            "mrr": 0.125,
+            "context_characters": 12854,
+            "returned_blocks": 10,
+            "passage_ids": [
+              "TNET-2024-04-26_10-Q.json#context-3",
+              "TNET-2024-04-26_10-Q.json#context-102",
+              "TNET-2024-04-26_10-Q.json#context-1",
+              "TNET-2024-04-26_10-Q.json#context-123",
+              "TNET-2024-04-26_10-Q.json#context-2",
+              "TNET-2024-04-26_10-Q.json#context-53",
+              "TNET-2024-04-26_10-Q.json#context-4",
+              "TNET-2024-04-26_10-Q.json#context-27",
+              "TNET-2024-04-26_10-Q.json#context-104",
+              "TNET-2024-04-26_10-Q.json#context-25"
+            ]
+          }
+        },
+        "hybrid": {
+          "5": {
+            "evidence_block_recall": 0.5,
+            "all_evidence": false,
+            "mrr": 0.5,
+            "context_characters": 8218,
+            "returned_blocks": 5,
+            "passage_ids": [
+              "TNET-2024-04-26_10-Q.json#context-3",
+              "TNET-2024-04-26_10-Q.json#context-27",
+              "TNET-2024-04-26_10-Q.json#context-25",
+              "TNET-2024-04-26_10-Q.json#context-106",
+              "TNET-2024-04-26_10-Q.json#context-1"
+            ]
+          },
+          "10": {
+            "evidence_block_recall": 0.5,
+            "all_evidence": false,
+            "mrr": 0.5,
+            "context_characters": 11720,
+            "returned_blocks": 10,
+            "passage_ids": [
+              "TNET-2024-04-26_10-Q.json#context-3",
+              "TNET-2024-04-26_10-Q.json#context-27",
+              "TNET-2024-04-26_10-Q.json#context-25",
+              "TNET-2024-04-26_10-Q.json#context-106",
+              "TNET-2024-04-26_10-Q.json#context-1",
+              "TNET-2024-04-26_10-Q.json#context-101",
+              "TNET-2024-04-26_10-Q.json#context-102",
+              "TNET-2024-04-26_10-Q.json#context-104",
+              "TNET-2024-04-26_10-Q.json#context-108",
+              "TNET-2024-04-26_10-Q.json#context-22"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "case_id": "claim_3b5a0ac32d0fb86cd5260000c7c89dce",
+      "official_case_id_scorer_only": "findver:testmini:knowledge-val-63",
+      "subset": "knowledge",
+      "report": "HQY-2024-03-22_10-K.json",
+      "candidate_count": 448,
+      "candidate_characters": 322083,
+      "gold_count": 4,
+      "bm25_positive_candidates": 393,
+      "ranking_ms": {
+        "bm25": 15.196082997135818,
+        "dense": 18.08466704096645,
+        "rrf_fusion": 0.30833296477794647
+      },
+      "methods": {
+        "bm25": {
+          "5": {
+            "evidence_block_recall": 0.25,
+            "all_evidence": false,
+            "mrr": 1.0,
+            "context_characters": 3760,
+            "returned_blocks": 5,
+            "passage_ids": [
+              "HQY-2024-03-22_10-K.json#context-185",
+              "HQY-2024-03-22_10-K.json#context-277",
+              "HQY-2024-03-22_10-K.json#context-219",
+              "HQY-2024-03-22_10-K.json#context-81",
+              "HQY-2024-03-22_10-K.json#context-220"
+            ]
+          },
+          "10": {
+            "evidence_block_recall": 0.75,
+            "all_evidence": false,
+            "mrr": 1.0,
+            "context_characters": 7937,
+            "returned_blocks": 10,
+            "passage_ids": [
+              "HQY-2024-03-22_10-K.json#context-185",
+              "HQY-2024-03-22_10-K.json#context-277",
+              "HQY-2024-03-22_10-K.json#context-219",
+              "HQY-2024-03-22_10-K.json#context-81",
+              "HQY-2024-03-22_10-K.json#context-220",
+              "HQY-2024-03-22_10-K.json#context-174",
+              "HQY-2024-03-22_10-K.json#context-172",
+              "HQY-2024-03-22_10-K.json#context-132",
+              "HQY-2024-03-22_10-K.json#context-171",
+              "HQY-2024-03-22_10-K.json#context-1"
+            ]
+          }
+        },
+        "dense": {
+          "5": {
+            "evidence_block_recall": 0.5,
+            "all_evidence": false,
+            "mrr": 0.3333333333333333,
+            "context_characters": 3419,
+            "returned_blocks": 5,
+            "passage_ids": [
+              "HQY-2024-03-22_10-K.json#context-37",
+              "HQY-2024-03-22_10-K.json#context-36",
+              "HQY-2024-03-22_10-K.json#context-171",
+              "HQY-2024-03-22_10-K.json#context-221",
+              "HQY-2024-03-22_10-K.json#context-169"
+            ]
+          },
+          "10": {
+            "evidence_block_recall": 0.75,
+            "all_evidence": false,
+            "mrr": 0.3333333333333333,
+            "context_characters": 7737,
+            "returned_blocks": 10,
+            "passage_ids": [
+              "HQY-2024-03-22_10-K.json#context-37",
+              "HQY-2024-03-22_10-K.json#context-36",
+              "HQY-2024-03-22_10-K.json#context-171",
+              "HQY-2024-03-22_10-K.json#context-221",
+              "HQY-2024-03-22_10-K.json#context-169",
+              "HQY-2024-03-22_10-K.json#context-277",
+              "HQY-2024-03-22_10-K.json#context-185",
+              "HQY-2024-03-22_10-K.json#context-154",
+              "HQY-2024-03-22_10-K.json#context-3",
+              "HQY-2024-03-22_10-K.json#context-164"
+            ]
+          }
+        },
+        "hybrid": {
+          "5": {
+            "evidence_block_recall": 0.5,
+            "all_evidence": false,
+            "mrr": 1.0,
+            "context_characters": 3688,
+            "returned_blocks": 5,
+            "passage_ids": [
+              "HQY-2024-03-22_10-K.json#context-185",
+              "HQY-2024-03-22_10-K.json#context-277",
+              "HQY-2024-03-22_10-K.json#context-171",
+              "HQY-2024-03-22_10-K.json#context-220",
+              "HQY-2024-03-22_10-K.json#context-36"
+            ]
+          },
+          "10": {
+            "evidence_block_recall": 0.75,
+            "all_evidence": false,
+            "mrr": 1.0,
+            "context_characters": 7153,
+            "returned_blocks": 10,
+            "passage_ids": [
+              "HQY-2024-03-22_10-K.json#context-185",
+              "HQY-2024-03-22_10-K.json#context-277",
+              "HQY-2024-03-22_10-K.json#context-171",
+              "HQY-2024-03-22_10-K.json#context-220",
+              "HQY-2024-03-22_10-K.json#context-36",
+              "HQY-2024-03-22_10-K.json#context-221",
+              "HQY-2024-03-22_10-K.json#context-81",
+              "HQY-2024-03-22_10-K.json#context-37",
+              "HQY-2024-03-22_10-K.json#context-169",
+              "HQY-2024-03-22_10-K.json#context-132"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "case_id": "claim_4dd8253fb7cac01e5dff24c1511e1f99",
+      "official_case_id_scorer_only": "findver:testmini:ie-val-178",
+      "subset": "ie",
+      "report": "TNET-2024-04-26_10-Q.json",
+      "candidate_count": 129,
+      "candidate_characters": 90628,
+      "gold_count": 4,
+      "bm25_positive_candidates": 120,
+      "ranking_ms": {
+        "bm25": 4.4277909910306334,
+        "dense": 0.13008294627070427,
+        "rrf_fusion": 0.06604194641113281
+      },
+      "methods": {
+        "bm25": {
+          "5": {
+            "evidence_block_recall": 0.5,
+            "all_evidence": false,
+            "mrr": 1.0,
+            "context_characters": 5582,
+            "returned_blocks": 5,
+            "passage_ids": [
+              "TNET-2024-04-26_10-Q.json#context-54",
+              "TNET-2024-04-26_10-Q.json#context-84",
+              "TNET-2024-04-26_10-Q.json#context-55",
+              "TNET-2024-04-26_10-Q.json#context-57",
+              "TNET-2024-04-26_10-Q.json#context-0"
+            ]
+          },
+          "10": {
+            "evidence_block_recall": 0.5,
+            "all_evidence": false,
+            "mrr": 1.0,
+            "context_characters": 8987,
+            "returned_blocks": 10,
+            "passage_ids": [
+              "TNET-2024-04-26_10-Q.json#context-54",
+              "TNET-2024-04-26_10-Q.json#context-84",
+              "TNET-2024-04-26_10-Q.json#context-55",
+              "TNET-2024-04-26_10-Q.json#context-57",
+              "TNET-2024-04-26_10-Q.json#context-0",
+              "TNET-2024-04-26_10-Q.json#context-56",
+              "TNET-2024-04-26_10-Q.json#context-51",
+              "TNET-2024-04-26_10-Q.json#context-68",
+              "TNET-2024-04-26_10-Q.json#context-71",
+              "TNET-2024-04-26_10-Q.json#context-87"
+            ]
+          }
+        },
+        "dense": {
+          "5": {
+            "evidence_block_recall": 0.5,
+            "all_evidence": false,
+            "mrr": 1.0,
+            "context_characters": 3973,
+            "returned_blocks": 5,
+            "passage_ids": [
+              "TNET-2024-04-26_10-Q.json#context-72",
+              "TNET-2024-04-26_10-Q.json#context-55",
+              "TNET-2024-04-26_10-Q.json#context-123",
+              "TNET-2024-04-26_10-Q.json#context-0",
+              "TNET-2024-04-26_10-Q.json#context-84"
+            ]
+          },
+          "10": {
+            "evidence_block_recall": 0.75,
+            "all_evidence": false,
+            "mrr": 1.0,
+            "context_characters": 10350,
+            "returned_blocks": 10,
+            "passage_ids": [
+              "TNET-2024-04-26_10-Q.json#context-72",
+              "TNET-2024-04-26_10-Q.json#context-55",
+              "TNET-2024-04-26_10-Q.json#context-123",
+              "TNET-2024-04-26_10-Q.json#context-0",
+              "TNET-2024-04-26_10-Q.json#context-84",
+              "TNET-2024-04-26_10-Q.json#context-68",
+              "TNET-2024-04-26_10-Q.json#context-54",
+              "TNET-2024-04-26_10-Q.json#context-71",
+              "TNET-2024-04-26_10-Q.json#context-3",
+              "TNET-2024-04-26_10-Q.json#context-76"
+            ]
+          }
+        },
+        "hybrid": {
+          "5": {
+            "evidence_block_recall": 0.5,
+            "all_evidence": false,
+            "mrr": 0.5,
+            "context_characters": 5421,
+            "returned_blocks": 5,
+            "passage_ids": [
+              "TNET-2024-04-26_10-Q.json#context-55",
+              "TNET-2024-04-26_10-Q.json#context-84",
+              "TNET-2024-04-26_10-Q.json#context-54",
+              "TNET-2024-04-26_10-Q.json#context-0",
+              "TNET-2024-04-26_10-Q.json#context-68"
+            ]
+          },
+          "10": {
+            "evidence_block_recall": 1.0,
+            "all_evidence": true,
+            "mrr": 0.5,
+            "context_characters": 10341,
+            "returned_blocks": 10,
+            "passage_ids": [
+              "TNET-2024-04-26_10-Q.json#context-55",
+              "TNET-2024-04-26_10-Q.json#context-84",
+              "TNET-2024-04-26_10-Q.json#context-54",
+              "TNET-2024-04-26_10-Q.json#context-0",
+              "TNET-2024-04-26_10-Q.json#context-68",
+              "TNET-2024-04-26_10-Q.json#context-71",
+              "TNET-2024-04-26_10-Q.json#context-57",
+              "TNET-2024-04-26_10-Q.json#context-72",
+              "TNET-2024-04-26_10-Q.json#context-73",
+              "TNET-2024-04-26_10-Q.json#context-3"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "case_id": "claim_51186fa18d507ab81fe3898378cb680a",
+      "official_case_id_scorer_only": "findver:testmini:knowledge-val-198",
+      "subset": "knowledge",
+      "report": "HQY-2024-03-22_10-K.json",
+      "candidate_count": 448,
+      "candidate_characters": 322083,
+      "gold_count": 4,
+      "bm25_positive_candidates": 354,
+      "ranking_ms": {
+        "bm25": 15.372874913737178,
+        "dense": 0.5534590454772115,
+        "rrf_fusion": 0.20487501751631498
+      },
+      "methods": {
+        "bm25": {
+          "5": {
+            "evidence_block_recall": 0.5,
+            "all_evidence": false,
+            "mrr": 1.0,
+            "context_characters": 5313,
+            "returned_blocks": 5,
+            "passage_ids": [
+              "HQY-2024-03-22_10-K.json#context-70",
+              "HQY-2024-03-22_10-K.json#context-69",
+              "HQY-2024-03-22_10-K.json#context-202",
+              "HQY-2024-03-22_10-K.json#context-72",
+              "HQY-2024-03-22_10-K.json#context-75"
+            ]
+          },
+          "10": {
+            "evidence_block_recall": 0.5,
+            "all_evidence": false,
+            "mrr": 1.0,
+            "context_characters": 10061,
+            "returned_blocks": 10,
+            "passage_ids": [
+              "HQY-2024-03-22_10-K.json#context-70",
+              "HQY-2024-03-22_10-K.json#context-69",
+              "HQY-2024-03-22_10-K.json#context-202",
+              "HQY-2024-03-22_10-K.json#context-72",
+              "HQY-2024-03-22_10-K.json#context-75",
+              "HQY-2024-03-22_10-K.json#context-156",
+              "HQY-2024-03-22_10-K.json#context-277",
+              "HQY-2024-03-22_10-K.json#context-169",
+              "HQY-2024-03-22_10-K.json#context-5",
+              "HQY-2024-03-22_10-K.json#context-319"
+            ]
+          }
+        },
+        "dense": {
+          "5": {
+            "evidence_block_recall": 0.0,
+            "all_evidence": false,
+            "mrr": 0,
+            "context_characters": 5852,
+            "returned_blocks": 5,
+            "passage_ids": [
+              "HQY-2024-03-22_10-K.json#context-295",
+              "HQY-2024-03-22_10-K.json#context-45",
+              "HQY-2024-03-22_10-K.json#context-427",
+              "HQY-2024-03-22_10-K.json#context-297",
+              "HQY-2024-03-22_10-K.json#context-296"
+            ]
+          },
+          "10": {
+            "evidence_block_recall": 0.5,
+            "all_evidence": false,
+            "mrr": 0.16666666666666666,
+            "context_characters": 10771,
+            "returned_blocks": 10,
+            "passage_ids": [
+              "HQY-2024-03-22_10-K.json#context-295",
+              "HQY-2024-03-22_10-K.json#context-45",
+              "HQY-2024-03-22_10-K.json#context-427",
+              "HQY-2024-03-22_10-K.json#context-297",
+              "HQY-2024-03-22_10-K.json#context-296",
+              "HQY-2024-03-22_10-K.json#context-69",
+              "HQY-2024-03-22_10-K.json#context-65",
+              "HQY-2024-03-22_10-K.json#context-70",
+              "HQY-2024-03-22_10-K.json#context-298",
+              "HQY-2024-03-22_10-K.json#context-294"
+            ]
+          }
+        },
+        "hybrid": {
+          "5": {
+            "evidence_block_recall": 0.5,
+            "all_evidence": false,
+            "mrr": 1.0,
+            "context_characters": 4770,
+            "returned_blocks": 5,
+            "passage_ids": [
+              "HQY-2024-03-22_10-K.json#context-69",
+              "HQY-2024-03-22_10-K.json#context-70",
+              "HQY-2024-03-22_10-K.json#context-45",
+              "HQY-2024-03-22_10-K.json#context-72",
+              "HQY-2024-03-22_10-K.json#context-298"
+            ]
+          },
+          "10": {
+            "evidence_block_recall": 0.5,
+            "all_evidence": false,
+            "mrr": 1.0,
+            "context_characters": 8218,
+            "returned_blocks": 10,
+            "passage_ids": [
+              "HQY-2024-03-22_10-K.json#context-69",
+              "HQY-2024-03-22_10-K.json#context-70",
+              "HQY-2024-03-22_10-K.json#context-45",
+              "HQY-2024-03-22_10-K.json#context-72",
+              "HQY-2024-03-22_10-K.json#context-298",
+              "HQY-2024-03-22_10-K.json#context-277",
+              "HQY-2024-03-22_10-K.json#context-186",
+              "HQY-2024-03-22_10-K.json#context-427",
+              "HQY-2024-03-22_10-K.json#context-37",
+              "HQY-2024-03-22_10-K.json#context-36"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "case_id": "claim_6293078a15103796b610e84da1fc99d6",
+      "official_case_id_scorer_only": "findver:testmini:ie-val-195",
+      "subset": "ie",
+      "report": "BLDE-2024-03-12_10-K.json",
+      "candidate_count": 463,
+      "candidate_characters": 373809,
+      "gold_count": 4,
+      "bm25_positive_candidates": 431,
+      "ranking_ms": {
+        "bm25": 18.19383294787258,
+        "dense": 8.951834053732455,
+        "rrf_fusion": 0.2293749712407589
+      },
+      "methods": {
+        "bm25": {
+          "5": {
+            "evidence_block_recall": 0.75,
+            "all_evidence": false,
+            "mrr": 0.5,
+            "context_characters": 3113,
+            "returned_blocks": 5,
+            "passage_ids": [
+              "BLDE-2024-03-12_10-K.json#context-424",
+              "BLDE-2024-03-12_10-K.json#context-425",
+              "BLDE-2024-03-12_10-K.json#context-431",
+              "BLDE-2024-03-12_10-K.json#context-422",
+              "BLDE-2024-03-12_10-K.json#context-430"
+            ]
+          },
+          "10": {
+            "evidence_block_recall": 0.75,
+            "all_evidence": false,
+            "mrr": 0.5,
+            "context_characters": 10914,
+            "returned_blocks": 10,
+            "passage_ids": [
+              "BLDE-2024-03-12_10-K.json#context-424",
+              "BLDE-2024-03-12_10-K.json#context-425",
+              "BLDE-2024-03-12_10-K.json#context-431",
+              "BLDE-2024-03-12_10-K.json#context-422",
+              "BLDE-2024-03-12_10-K.json#context-430",
+              "BLDE-2024-03-12_10-K.json#context-421",
+              "BLDE-2024-03-12_10-K.json#context-318",
+              "BLDE-2024-03-12_10-K.json#context-320",
+              "BLDE-2024-03-12_10-K.json#context-419",
+              "BLDE-2024-03-12_10-K.json#context-319"
+            ]
+          }
+        },
+        "dense": {
+          "5": {
+            "evidence_block_recall": 0.25,
+            "all_evidence": false,
+            "mrr": 0.3333333333333333,
+            "context_characters": 7738,
+            "returned_blocks": 5,
+            "passage_ids": [
+              "BLDE-2024-03-12_10-K.json#context-312",
+              "BLDE-2024-03-12_10-K.json#context-320",
+              "BLDE-2024-03-12_10-K.json#context-430",
+              "BLDE-2024-03-12_10-K.json#context-317",
+              "BLDE-2024-03-12_10-K.json#context-319"
+            ]
+          },
+          "10": {
+            "evidence_block_recall": 0.25,
+            "all_evidence": false,
+            "mrr": 0.3333333333333333,
+            "context_characters": 14563,
+            "returned_blocks": 10,
+            "passage_ids": [
+              "BLDE-2024-03-12_10-K.json#context-312",
+              "BLDE-2024-03-12_10-K.json#context-320",
+              "BLDE-2024-03-12_10-K.json#context-430",
+              "BLDE-2024-03-12_10-K.json#context-317",
+              "BLDE-2024-03-12_10-K.json#context-319",
+              "BLDE-2024-03-12_10-K.json#context-415",
+              "BLDE-2024-03-12_10-K.json#context-318",
+              "BLDE-2024-03-12_10-K.json#context-396",
+              "BLDE-2024-03-12_10-K.json#context-395",
+              "BLDE-2024-03-12_10-K.json#context-457"
+            ]
+          }
+        },
+        "hybrid": {
+          "5": {
+            "evidence_block_recall": 0.25,
+            "all_evidence": false,
+            "mrr": 1.0,
+            "context_characters": 6375,
+            "returned_blocks": 5,
+            "passage_ids": [
+              "BLDE-2024-03-12_10-K.json#context-430",
+              "BLDE-2024-03-12_10-K.json#context-320",
+              "BLDE-2024-03-12_10-K.json#context-424",
+              "BLDE-2024-03-12_10-K.json#context-318",
+              "BLDE-2024-03-12_10-K.json#context-317"
+            ]
+          },
+          "10": {
+            "evidence_block_recall": 0.5,
+            "all_evidence": false,
+            "mrr": 1.0,
+            "context_characters": 14711,
+            "returned_blocks": 10,
+            "passage_ids": [
+              "BLDE-2024-03-12_10-K.json#context-430",
+              "BLDE-2024-03-12_10-K.json#context-320",
+              "BLDE-2024-03-12_10-K.json#context-424",
+              "BLDE-2024-03-12_10-K.json#context-318",
+              "BLDE-2024-03-12_10-K.json#context-317",
+              "BLDE-2024-03-12_10-K.json#context-319",
+              "BLDE-2024-03-12_10-K.json#context-415",
+              "BLDE-2024-03-12_10-K.json#context-431",
+              "BLDE-2024-03-12_10-K.json#context-419",
+              "BLDE-2024-03-12_10-K.json#context-457"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "case_id": "claim_7c137b6ccd5a7d5ad6abc5c4a71dcf5f",
+      "official_case_id_scorer_only": "findver:testmini:ie-val-59",
+      "subset": "ie",
+      "report": "DX-PC-2024-02-26_10-K.json",
+      "candidate_count": 333,
+      "candidate_characters": 274161,
+      "gold_count": 5,
+      "bm25_positive_candidates": 313,
+      "ranking_ms": {
+        "bm25": 13.106583035551012,
+        "dense": 0.23979204706847668,
+        "rrf_fusion": 0.1675839303061366
+      },
+      "methods": {
+        "bm25": {
+          "5": {
+            "evidence_block_recall": 0.4,
+            "all_evidence": false,
+            "mrr": 0.5,
+            "context_characters": 5412,
+            "returned_blocks": 5,
+            "passage_ids": [
+              "DX-PC-2024-02-26_10-K.json#context-87",
+              "DX-PC-2024-02-26_10-K.json#context-42",
+              "DX-PC-2024-02-26_10-K.json#context-19",
+              "DX-PC-2024-02-26_10-K.json#context-125",
+              "DX-PC-2024-02-26_10-K.json#context-41"
+            ]
+          },
+          "10": {
+            "evidence_block_recall": 0.6,
+            "all_evidence": false,
+            "mrr": 0.5,
+            "context_characters": 9395,
+            "returned_blocks": 10,
+            "passage_ids": [
+              "DX-PC-2024-02-26_10-K.json#context-87",
+              "DX-PC-2024-02-26_10-K.json#context-42",
+              "DX-PC-2024-02-26_10-K.json#context-19",
+              "DX-PC-2024-02-26_10-K.json#context-125",
+              "DX-PC-2024-02-26_10-K.json#context-41",
+              "DX-PC-2024-02-26_10-K.json#context-79",
+              "DX-PC-2024-02-26_10-K.json#context-110",
+              "DX-PC-2024-02-26_10-K.json#context-18",
+              "DX-PC-2024-02-26_10-K.json#context-13",
+              "DX-PC-2024-02-26_10-K.json#context-47"
+            ]
+          }
+        },
+        "dense": {
+          "5": {
+            "evidence_block_recall": 0.2,
+            "all_evidence": false,
+            "mrr": 1.0,
+            "context_characters": 3909,
+            "returned_blocks": 5,
+            "passage_ids": [
+              "DX-PC-2024-02-26_10-K.json#context-41",
+              "DX-PC-2024-02-26_10-K.json#context-87",
+              "DX-PC-2024-02-26_10-K.json#context-110",
+              "DX-PC-2024-02-26_10-K.json#context-30",
+              "DX-PC-2024-02-26_10-K.json#context-18"
+            ]
+          },
+          "10": {
+            "evidence_block_recall": 0.4,
+            "all_evidence": false,
+            "mrr": 1.0,
+            "context_characters": 8104,
+            "returned_blocks": 10,
+            "passage_ids": [
+              "DX-PC-2024-02-26_10-K.json#context-41",
+              "DX-PC-2024-02-26_10-K.json#context-87",
+              "DX-PC-2024-02-26_10-K.json#context-110",
+              "DX-PC-2024-02-26_10-K.json#context-30",
+              "DX-PC-2024-02-26_10-K.json#context-18",
+              "DX-PC-2024-02-26_10-K.json#context-42",
+              "DX-PC-2024-02-26_10-K.json#context-99",
+              "DX-PC-2024-02-26_10-K.json#context-102",
+              "DX-PC-2024-02-26_10-K.json#context-109",
+              "DX-PC-2024-02-26_10-K.json#context-97"
+            ]
+          }
+        },
+        "hybrid": {
+          "5": {
+            "evidence_block_recall": 0.4,
+            "all_evidence": false,
+            "mrr": 0.5,
+            "context_characters": 4674,
+            "returned_blocks": 5,
+            "passage_ids": [
+              "DX-PC-2024-02-26_10-K.json#context-87",
+              "DX-PC-2024-02-26_10-K.json#context-41",
+              "DX-PC-2024-02-26_10-K.json#context-42",
+              "DX-PC-2024-02-26_10-K.json#context-110",
+              "DX-PC-2024-02-26_10-K.json#context-18"
+            ]
+          },
+          "10": {
+            "evidence_block_recall": 0.4,
+            "all_evidence": false,
+            "mrr": 0.5,
+            "context_characters": 9242,
+            "returned_blocks": 10,
+            "passage_ids": [
+              "DX-PC-2024-02-26_10-K.json#context-87",
+              "DX-PC-2024-02-26_10-K.json#context-41",
+              "DX-PC-2024-02-26_10-K.json#context-42",
+              "DX-PC-2024-02-26_10-K.json#context-110",
+              "DX-PC-2024-02-26_10-K.json#context-18",
+              "DX-PC-2024-02-26_10-K.json#context-125",
+              "DX-PC-2024-02-26_10-K.json#context-30",
+              "DX-PC-2024-02-26_10-K.json#context-79",
+              "DX-PC-2024-02-26_10-K.json#context-19",
+              "DX-PC-2024-02-26_10-K.json#context-124"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "case_id": "claim_7e6517c4064e2bced6b3aa180670026d",
+      "official_case_id_scorer_only": "findver:testmini:ie-val-234",
+      "subset": "ie",
+      "report": "DX-PC-2024-02-26_10-K.json",
+      "candidate_count": 333,
+      "candidate_characters": 274161,
+      "gold_count": 4,
+      "bm25_positive_candidates": 298,
+      "ranking_ms": {
+        "bm25": 12.64704205095768,
+        "dense": 0.20845804829150438,
+        "rrf_fusion": 0.1587079605087638
+      },
+      "methods": {
+        "bm25": {
+          "5": {
+            "evidence_block_recall": 0.5,
+            "all_evidence": false,
+            "mrr": 1.0,
+            "context_characters": 2902,
+            "returned_blocks": 5,
+            "passage_ids": [
+              "DX-PC-2024-02-26_10-K.json#context-133",
+              "DX-PC-2024-02-26_10-K.json#context-324",
+              "DX-PC-2024-02-26_10-K.json#context-332",
+              "DX-PC-2024-02-26_10-K.json#context-132",
+              "DX-PC-2024-02-26_10-K.json#context-139"
+            ]
+          },
+          "10": {
+            "evidence_block_recall": 0.5,
+            "all_evidence": false,
+            "mrr": 1.0,
+            "context_characters": 7824,
+            "returned_blocks": 10,
+            "passage_ids": [
+              "DX-PC-2024-02-26_10-K.json#context-133",
+              "DX-PC-2024-02-26_10-K.json#context-324",
+              "DX-PC-2024-02-26_10-K.json#context-332",
+              "DX-PC-2024-02-26_10-K.json#context-132",
+              "DX-PC-2024-02-26_10-K.json#context-139",
+              "DX-PC-2024-02-26_10-K.json#context-55",
+              "DX-PC-2024-02-26_10-K.json#context-125",
+              "DX-PC-2024-02-26_10-K.json#context-164",
+              "DX-PC-2024-02-26_10-K.json#context-58",
+              "DX-PC-2024-02-26_10-K.json#context-140"
+            ]
+          }
+        },
+        "dense": {
+          "5": {
+            "evidence_block_recall": 0.5,
+            "all_evidence": false,
+            "mrr": 0.5,
+            "context_characters": 3347,
+            "returned_blocks": 5,
+            "passage_ids": [
+              "DX-PC-2024-02-26_10-K.json#context-332",
+              "DX-PC-2024-02-26_10-K.json#context-133",
+              "DX-PC-2024-02-26_10-K.json#context-162",
+              "DX-PC-2024-02-26_10-K.json#context-150",
+              "DX-PC-2024-02-26_10-K.json#context-286"
+            ]
+          },
+          "10": {
+            "evidence_block_recall": 0.5,
+            "all_evidence": false,
+            "mrr": 0.5,
+            "context_characters": 7501,
+            "returned_blocks": 10,
+            "passage_ids": [
+              "DX-PC-2024-02-26_10-K.json#context-332",
+              "DX-PC-2024-02-26_10-K.json#context-133",
+              "DX-PC-2024-02-26_10-K.json#context-162",
+              "DX-PC-2024-02-26_10-K.json#context-150",
+              "DX-PC-2024-02-26_10-K.json#context-286",
+              "DX-PC-2024-02-26_10-K.json#context-290",
+              "DX-PC-2024-02-26_10-K.json#context-1",
+              "DX-PC-2024-02-26_10-K.json#context-294",
+              "DX-PC-2024-02-26_10-K.json#context-324",
+              "DX-PC-2024-02-26_10-K.json#context-152"
+            ]
+          }
+        },
+        "hybrid": {
+          "5": {
+            "evidence_block_recall": 0.5,
+            "all_evidence": false,
+            "mrr": 1.0,
+            "context_characters": 2722,
+            "returned_blocks": 5,
+            "passage_ids": [
+              "DX-PC-2024-02-26_10-K.json#context-133",
+              "DX-PC-2024-02-26_10-K.json#context-332",
+              "DX-PC-2024-02-26_10-K.json#context-324",
+              "DX-PC-2024-02-26_10-K.json#context-150",
+              "DX-PC-2024-02-26_10-K.json#context-164"
+            ]
+          },
+          "10": {
+            "evidence_block_recall": 0.5,
+            "all_evidence": false,
+            "mrr": 1.0,
+            "context_characters": 6744,
+            "returned_blocks": 10,
+            "passage_ids": [
+              "DX-PC-2024-02-26_10-K.json#context-133",
+              "DX-PC-2024-02-26_10-K.json#context-332",
+              "DX-PC-2024-02-26_10-K.json#context-324",
+              "DX-PC-2024-02-26_10-K.json#context-150",
+              "DX-PC-2024-02-26_10-K.json#context-164",
+              "DX-PC-2024-02-26_10-K.json#context-286",
+              "DX-PC-2024-02-26_10-K.json#context-139",
+              "DX-PC-2024-02-26_10-K.json#context-140",
+              "DX-PC-2024-02-26_10-K.json#context-1",
+              "DX-PC-2024-02-26_10-K.json#context-7"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "case_id": "claim_7fb666b682891a4b1675518e72532c0b",
+      "official_case_id_scorer_only": "findver:testmini:ie-val-209",
+      "subset": "ie",
+      "report": "TNET-2024-04-26_10-Q.json",
+      "candidate_count": 129,
+      "candidate_characters": 90628,
+      "gold_count": 3,
+      "bm25_positive_candidates": 127,
+      "ranking_ms": {
+        "bm25": 3.9825420826673508,
+        "dense": 0.09520910680294037,
+        "rrf_fusion": 0.06125005893409252
+      },
+      "methods": {
+        "bm25": {
+          "5": {
+            "evidence_block_recall": 0.6666666666666666,
+            "all_evidence": false,
+            "mrr": 1.0,
+            "context_characters": 5592,
+            "returned_blocks": 5,
+            "passage_ids": [
+              "TNET-2024-04-26_10-Q.json#context-21",
+              "TNET-2024-04-26_10-Q.json#context-27",
+              "TNET-2024-04-26_10-Q.json#context-1",
+              "TNET-2024-04-26_10-Q.json#context-41",
+              "TNET-2024-04-26_10-Q.json#context-100"
+            ]
+          },
+          "10": {
+            "evidence_block_recall": 0.6666666666666666,
+            "all_evidence": false,
+            "mrr": 1.0,
+            "context_characters": 9873,
+            "returned_blocks": 10,
+            "passage_ids": [
+              "TNET-2024-04-26_10-Q.json#context-21",
+              "TNET-2024-04-26_10-Q.json#context-27",
+              "TNET-2024-04-26_10-Q.json#context-1",
+              "TNET-2024-04-26_10-Q.json#context-41",
+              "TNET-2024-04-26_10-Q.json#context-100",
+              "TNET-2024-04-26_10-Q.json#context-85",
+              "TNET-2024-04-26_10-Q.json#context-106",
+              "TNET-2024-04-26_10-Q.json#context-11",
+              "TNET-2024-04-26_10-Q.json#context-107",
+              "TNET-2024-04-26_10-Q.json#context-102"
+            ]
+          }
+        },
+        "dense": {
+          "5": {
+            "evidence_block_recall": 0.3333333333333333,
+            "all_evidence": false,
+            "mrr": 0.25,
+            "context_characters": 7604,
+            "returned_blocks": 5,
+            "passage_ids": [
+              "TNET-2024-04-26_10-Q.json#context-102",
+              "TNET-2024-04-26_10-Q.json#context-1",
+              "TNET-2024-04-26_10-Q.json#context-3",
+              "TNET-2024-04-26_10-Q.json#context-21",
+              "TNET-2024-04-26_10-Q.json#context-123"
+            ]
+          },
+          "10": {
+            "evidence_block_recall": 0.3333333333333333,
+            "all_evidence": false,
+            "mrr": 0.25,
+            "context_characters": 12501,
+            "returned_blocks": 10,
+            "passage_ids": [
+              "TNET-2024-04-26_10-Q.json#context-102",
+              "TNET-2024-04-26_10-Q.json#context-1",
+              "TNET-2024-04-26_10-Q.json#context-3",
+              "TNET-2024-04-26_10-Q.json#context-21",
+              "TNET-2024-04-26_10-Q.json#context-123",
+              "TNET-2024-04-26_10-Q.json#context-53",
+              "TNET-2024-04-26_10-Q.json#context-2",
+              "TNET-2024-04-26_10-Q.json#context-22",
+              "TNET-2024-04-26_10-Q.json#context-4",
+              "TNET-2024-04-26_10-Q.json#context-0"
+            ]
+          }
+        },
+        "hybrid": {
+          "5": {
+            "evidence_block_recall": 0.3333333333333333,
+            "all_evidence": false,
+            "mrr": 1.0,
+            "context_characters": 6787,
+            "returned_blocks": 5,
+            "passage_ids": [
+              "TNET-2024-04-26_10-Q.json#context-21",
+              "TNET-2024-04-26_10-Q.json#context-1",
+              "TNET-2024-04-26_10-Q.json#context-102",
+              "TNET-2024-04-26_10-Q.json#context-3",
+              "TNET-2024-04-26_10-Q.json#context-41"
+            ]
+          },
+          "10": {
+            "evidence_block_recall": 0.6666666666666666,
+            "all_evidence": false,
+            "mrr": 1.0,
+            "context_characters": 11477,
+            "returned_blocks": 10,
+            "passage_ids": [
+              "TNET-2024-04-26_10-Q.json#context-21",
+              "TNET-2024-04-26_10-Q.json#context-1",
+              "TNET-2024-04-26_10-Q.json#context-102",
+              "TNET-2024-04-26_10-Q.json#context-3",
+              "TNET-2024-04-26_10-Q.json#context-41",
+              "TNET-2024-04-26_10-Q.json#context-27",
+              "TNET-2024-04-26_10-Q.json#context-11",
+              "TNET-2024-04-26_10-Q.json#context-22",
+              "TNET-2024-04-26_10-Q.json#context-106",
+              "TNET-2024-04-26_10-Q.json#context-25"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "case_id": "claim_8e8f75d63b7bd2dc0e3937503d23c2c5",
+      "official_case_id_scorer_only": "findver:testmini:knowledge-val-78",
+      "subset": "knowledge",
+      "report": "RCFA-WT-2024-04-23_10-K.json",
+      "candidate_count": 402,
+      "candidate_characters": 352271,
+      "gold_count": 4,
+      "bm25_positive_candidates": 351,
+      "ranking_ms": {
+        "bm25": 16.40458300244063,
+        "dense": 6.484166020527482,
+        "rrf_fusion": 0.18808303866535425
+      },
+      "methods": {
+        "bm25": {
+          "5": {
+            "evidence_block_recall": 0.25,
+            "all_evidence": false,
+            "mrr": 0.5,
+            "context_characters": 5054,
+            "returned_blocks": 5,
+            "passage_ids": [
+              "RCFA-WT-2024-04-23_10-K.json#context-40",
+              "RCFA-WT-2024-04-23_10-K.json#context-230",
+              "RCFA-WT-2024-04-23_10-K.json#context-232",
+              "RCFA-WT-2024-04-23_10-K.json#context-229",
+              "RCFA-WT-2024-04-23_10-K.json#context-270"
+            ]
+          },
+          "10": {
+            "evidence_block_recall": 0.25,
+            "all_evidence": false,
+            "mrr": 0.5,
+            "context_characters": 10431,
+            "returned_blocks": 10,
+            "passage_ids": [
+              "RCFA-WT-2024-04-23_10-K.json#context-40",
+              "RCFA-WT-2024-04-23_10-K.json#context-230",
+              "RCFA-WT-2024-04-23_10-K.json#context-232",
+              "RCFA-WT-2024-04-23_10-K.json#context-229",
+              "RCFA-WT-2024-04-23_10-K.json#context-270",
+              "RCFA-WT-2024-04-23_10-K.json#context-226",
+              "RCFA-WT-2024-04-23_10-K.json#context-228",
+              "RCFA-WT-2024-04-23_10-K.json#context-188",
+              "RCFA-WT-2024-04-23_10-K.json#context-326",
+              "RCFA-WT-2024-04-23_10-K.json#context-77"
+            ]
+          }
+        },
+        "dense": {
+          "5": {
+            "evidence_block_recall": 0.0,
+            "all_evidence": false,
+            "mrr": 0,
+            "context_characters": 6857,
+            "returned_blocks": 5,
+            "passage_ids": [
+              "RCFA-WT-2024-04-23_10-K.json#context-270",
+              "RCFA-WT-2024-04-23_10-K.json#context-276",
+              "RCFA-WT-2024-04-23_10-K.json#context-277",
+              "RCFA-WT-2024-04-23_10-K.json#context-280",
+              "RCFA-WT-2024-04-23_10-K.json#context-399"
+            ]
+          },
+          "10": {
+            "evidence_block_recall": 0.25,
+            "all_evidence": false,
+            "mrr": 0.1111111111111111,
+            "context_characters": 11818,
+            "returned_blocks": 10,
+            "passage_ids": [
+              "RCFA-WT-2024-04-23_10-K.json#context-270",
+              "RCFA-WT-2024-04-23_10-K.json#context-276",
+              "RCFA-WT-2024-04-23_10-K.json#context-277",
+              "RCFA-WT-2024-04-23_10-K.json#context-280",
+              "RCFA-WT-2024-04-23_10-K.json#context-399",
+              "RCFA-WT-2024-04-23_10-K.json#context-40",
+              "RCFA-WT-2024-04-23_10-K.json#context-281",
+              "RCFA-WT-2024-04-23_10-K.json#context-320",
+              "RCFA-WT-2024-04-23_10-K.json#context-230",
+              "RCFA-WT-2024-04-23_10-K.json#context-278"
+            ]
+          }
+        },
+        "hybrid": {
+          "5": {
+            "evidence_block_recall": 0.25,
+            "all_evidence": false,
+            "mrr": 0.3333333333333333,
+            "context_characters": 5112,
+            "returned_blocks": 5,
+            "passage_ids": [
+              "RCFA-WT-2024-04-23_10-K.json#context-270",
+              "RCFA-WT-2024-04-23_10-K.json#context-40",
+              "RCFA-WT-2024-04-23_10-K.json#context-230",
+              "RCFA-WT-2024-04-23_10-K.json#context-281",
+              "RCFA-WT-2024-04-23_10-K.json#context-232"
+            ]
+          },
+          "10": {
+            "evidence_block_recall": 0.25,
+            "all_evidence": false,
+            "mrr": 0.3333333333333333,
+            "context_characters": 9295,
+            "returned_blocks": 10,
+            "passage_ids": [
+              "RCFA-WT-2024-04-23_10-K.json#context-270",
+              "RCFA-WT-2024-04-23_10-K.json#context-40",
+              "RCFA-WT-2024-04-23_10-K.json#context-230",
+              "RCFA-WT-2024-04-23_10-K.json#context-281",
+              "RCFA-WT-2024-04-23_10-K.json#context-232",
+              "RCFA-WT-2024-04-23_10-K.json#context-226",
+              "RCFA-WT-2024-04-23_10-K.json#context-188",
+              "RCFA-WT-2024-04-23_10-K.json#context-307",
+              "RCFA-WT-2024-04-23_10-K.json#context-320",
+              "RCFA-WT-2024-04-23_10-K.json#context-229"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "case_id": "claim_9559713762a2bb8a73e9d26b10d7a6bc",
+      "official_case_id_scorer_only": "findver:testmini:numeric-val-118",
+      "subset": "numeric",
+      "report": "WWW-2024-02-22_10-K.json",
+      "candidate_count": 411,
+      "candidate_characters": 331071,
+      "gold_count": 1,
+      "bm25_positive_candidates": 293,
+      "ranking_ms": {
+        "bm25": 15.522916917689145,
+        "dense": 0.5083330906927586,
+        "rrf_fusion": 0.18958293367177248
+      },
+      "methods": {
+        "bm25": {
+          "5": {
+            "evidence_block_recall": 1.0,
+            "all_evidence": true,
+            "mrr": 1.0,
+            "context_characters": 7711,
+            "returned_blocks": 5,
+            "passage_ids": [
+              "WWW-2024-02-22_10-K.json#context-409",
+              "WWW-2024-02-22_10-K.json#context-294",
+              "WWW-2024-02-22_10-K.json#context-401",
+              "WWW-2024-02-22_10-K.json#context-314",
+              "WWW-2024-02-22_10-K.json#context-293"
+            ]
+          },
+          "10": {
+            "evidence_block_recall": 1.0,
+            "all_evidence": true,
+            "mrr": 1.0,
+            "context_characters": 11482,
+            "returned_blocks": 10,
+            "passage_ids": [
+              "WWW-2024-02-22_10-K.json#context-409",
+              "WWW-2024-02-22_10-K.json#context-294",
+              "WWW-2024-02-22_10-K.json#context-401",
+              "WWW-2024-02-22_10-K.json#context-314",
+              "WWW-2024-02-22_10-K.json#context-293",
+              "WWW-2024-02-22_10-K.json#context-303",
+              "WWW-2024-02-22_10-K.json#context-254",
+              "WWW-2024-02-22_10-K.json#context-313",
+              "WWW-2024-02-22_10-K.json#context-279",
+              "WWW-2024-02-22_10-K.json#context-305"
+            ]
+          }
+        },
+        "dense": {
+          "5": {
+            "evidence_block_recall": 1.0,
+            "all_evidence": true,
+            "mrr": 0.5,
+            "context_characters": 4975,
+            "returned_blocks": 5,
+            "passage_ids": [
+              "WWW-2024-02-22_10-K.json#context-326",
+              "WWW-2024-02-22_10-K.json#context-409",
+              "WWW-2024-02-22_10-K.json#context-314",
+              "WWW-2024-02-22_10-K.json#context-239",
+              "WWW-2024-02-22_10-K.json#context-302"
+            ]
+          },
+          "10": {
+            "evidence_block_recall": 1.0,
+            "all_evidence": true,
+            "mrr": 0.5,
+            "context_characters": 8277,
+            "returned_blocks": 10,
+            "passage_ids": [
+              "WWW-2024-02-22_10-K.json#context-326",
+              "WWW-2024-02-22_10-K.json#context-409",
+              "WWW-2024-02-22_10-K.json#context-314",
+              "WWW-2024-02-22_10-K.json#context-239",
+              "WWW-2024-02-22_10-K.json#context-302",
+              "WWW-2024-02-22_10-K.json#context-243",
+              "WWW-2024-02-22_10-K.json#context-316",
+              "WWW-2024-02-22_10-K.json#context-303",
+              "WWW-2024-02-22_10-K.json#context-294",
+              "WWW-2024-02-22_10-K.json#context-385"
+            ]
+          }
+        },
+        "hybrid": {
+          "5": {
+            "evidence_block_recall": 1.0,
+            "all_evidence": true,
+            "mrr": 1.0,
+            "context_characters": 5270,
+            "returned_blocks": 5,
+            "passage_ids": [
+              "WWW-2024-02-22_10-K.json#context-409",
+              "WWW-2024-02-22_10-K.json#context-314",
+              "WWW-2024-02-22_10-K.json#context-294",
+              "WWW-2024-02-22_10-K.json#context-303",
+              "WWW-2024-02-22_10-K.json#context-254"
+            ]
+          },
+          "10": {
+            "evidence_block_recall": 1.0,
+            "all_evidence": true,
+            "mrr": 1.0,
+            "context_characters": 9006,
+            "returned_blocks": 10,
+            "passage_ids": [
+              "WWW-2024-02-22_10-K.json#context-409",
+              "WWW-2024-02-22_10-K.json#context-314",
+              "WWW-2024-02-22_10-K.json#context-294",
+              "WWW-2024-02-22_10-K.json#context-303",
+              "WWW-2024-02-22_10-K.json#context-254",
+              "WWW-2024-02-22_10-K.json#context-293",
+              "WWW-2024-02-22_10-K.json#context-297",
+              "WWW-2024-02-22_10-K.json#context-313",
+              "WWW-2024-02-22_10-K.json#context-156",
+              "WWW-2024-02-22_10-K.json#context-385"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "case_id": "claim_be7b65c4d0586b9eed1ba9469385642a",
+      "official_case_id_scorer_only": "findver:testmini:ie-val-17",
+      "subset": "ie",
+      "report": "BLDE-2024-03-12_10-K.json",
+      "candidate_count": 463,
+      "candidate_characters": 373809,
+      "gold_count": 2,
+      "bm25_positive_candidates": 398,
+      "ranking_ms": {
+        "bm25": 39.11866596899927,
+        "dense": 1.1806670809164643,
+        "rrf_fusion": 0.28954201843589544
+      },
+      "methods": {
+        "bm25": {
+          "5": {
+            "evidence_block_recall": 0.5,
+            "all_evidence": false,
+            "mrr": 1.0,
+            "context_characters": 3923,
+            "returned_blocks": 5,
+            "passage_ids": [
+              "BLDE-2024-03-12_10-K.json#context-234",
+              "BLDE-2024-03-12_10-K.json#context-233",
+              "BLDE-2024-03-12_10-K.json#context-232",
+              "BLDE-2024-03-12_10-K.json#context-228",
+              "BLDE-2024-03-12_10-K.json#context-225"
+            ]
+          },
+          "10": {
+            "evidence_block_recall": 0.5,
+            "all_evidence": false,
+            "mrr": 1.0,
+            "context_characters": 7069,
+            "returned_blocks": 10,
+            "passage_ids": [
+              "BLDE-2024-03-12_10-K.json#context-234",
+              "BLDE-2024-03-12_10-K.json#context-233",
+              "BLDE-2024-03-12_10-K.json#context-232",
+              "BLDE-2024-03-12_10-K.json#context-228",
+              "BLDE-2024-03-12_10-K.json#context-225",
+              "BLDE-2024-03-12_10-K.json#context-231",
+              "BLDE-2024-03-12_10-K.json#context-208",
+              "BLDE-2024-03-12_10-K.json#context-230",
+              "BLDE-2024-03-12_10-K.json#context-229",
+              "BLDE-2024-03-12_10-K.json#context-210"
+            ]
+          }
+        },
+        "dense": {
+          "5": {
+            "evidence_block_recall": 0.5,
+            "all_evidence": false,
+            "mrr": 0.25,
+            "context_characters": 3490,
+            "returned_blocks": 5,
+            "passage_ids": [
+              "BLDE-2024-03-12_10-K.json#context-223",
+              "BLDE-2024-03-12_10-K.json#context-227",
+              "BLDE-2024-03-12_10-K.json#context-232",
+              "BLDE-2024-03-12_10-K.json#context-234",
+              "BLDE-2024-03-12_10-K.json#context-233"
+            ]
+          },
+          "10": {
+            "evidence_block_recall": 0.5,
+            "all_evidence": false,
+            "mrr": 0.25,
+            "context_characters": 6141,
+            "returned_blocks": 10,
+            "passage_ids": [
+              "BLDE-2024-03-12_10-K.json#context-223",
+              "BLDE-2024-03-12_10-K.json#context-227",
+              "BLDE-2024-03-12_10-K.json#context-232",
+              "BLDE-2024-03-12_10-K.json#context-234",
+              "BLDE-2024-03-12_10-K.json#context-233",
+              "BLDE-2024-03-12_10-K.json#context-228",
+              "BLDE-2024-03-12_10-K.json#context-239",
+              "BLDE-2024-03-12_10-K.json#context-210",
+              "BLDE-2024-03-12_10-K.json#context-230",
+              "BLDE-2024-03-12_10-K.json#context-208"
+            ]
+          }
+        },
+        "hybrid": {
+          "5": {
+            "evidence_block_recall": 0.5,
+            "all_evidence": false,
+            "mrr": 1.0,
+            "context_characters": 3080,
+            "returned_blocks": 5,
+            "passage_ids": [
+              "BLDE-2024-03-12_10-K.json#context-234",
+              "BLDE-2024-03-12_10-K.json#context-232",
+              "BLDE-2024-03-12_10-K.json#context-233",
+              "BLDE-2024-03-12_10-K.json#context-228",
+              "BLDE-2024-03-12_10-K.json#context-227"
+            ]
+          },
+          "10": {
+            "evidence_block_recall": 0.5,
+            "all_evidence": false,
+            "mrr": 1.0,
+            "context_characters": 6440,
+            "returned_blocks": 10,
+            "passage_ids": [
+              "BLDE-2024-03-12_10-K.json#context-234",
+              "BLDE-2024-03-12_10-K.json#context-232",
+              "BLDE-2024-03-12_10-K.json#context-233",
+              "BLDE-2024-03-12_10-K.json#context-228",
+              "BLDE-2024-03-12_10-K.json#context-227",
+              "BLDE-2024-03-12_10-K.json#context-223",
+              "BLDE-2024-03-12_10-K.json#context-208",
+              "BLDE-2024-03-12_10-K.json#context-230",
+              "BLDE-2024-03-12_10-K.json#context-210",
+              "BLDE-2024-03-12_10-K.json#context-225"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "case_id": "claim_d33255872b0094cb94702a603432e0e2",
+      "official_case_id_scorer_only": "findver:testmini:ie-val-73",
+      "subset": "ie",
+      "report": "HQY-2024-03-22_10-K.json",
+      "candidate_count": 448,
+      "candidate_characters": 322083,
+      "gold_count": 3,
+      "bm25_positive_candidates": 377,
+      "ranking_ms": {
+        "bm25": 19.165582954883575,
+        "dense": 0.3036250127479434,
+        "rrf_fusion": 0.21770794410258532
+      },
+      "methods": {
+        "bm25": {
+          "5": {
+            "evidence_block_recall": 0.3333333333333333,
+            "all_evidence": false,
+            "mrr": 0.5,
+            "context_characters": 3642,
+            "returned_blocks": 5,
+            "passage_ids": [
+              "HQY-2024-03-22_10-K.json#context-392",
+              "HQY-2024-03-22_10-K.json#context-384",
+              "HQY-2024-03-22_10-K.json#context-255",
+              "HQY-2024-03-22_10-K.json#context-386",
+              "HQY-2024-03-22_10-K.json#context-393"
+            ]
+          },
+          "10": {
+            "evidence_block_recall": 0.6666666666666666,
+            "all_evidence": false,
+            "mrr": 0.5,
+            "context_characters": 7782,
+            "returned_blocks": 10,
+            "passage_ids": [
+              "HQY-2024-03-22_10-K.json#context-392",
+              "HQY-2024-03-22_10-K.json#context-384",
+              "HQY-2024-03-22_10-K.json#context-255",
+              "HQY-2024-03-22_10-K.json#context-386",
+              "HQY-2024-03-22_10-K.json#context-393",
+              "HQY-2024-03-22_10-K.json#context-391",
+              "HQY-2024-03-22_10-K.json#context-390",
+              "HQY-2024-03-22_10-K.json#context-256",
+              "HQY-2024-03-22_10-K.json#context-388",
+              "HQY-2024-03-22_10-K.json#context-213"
+            ]
+          }
+        },
+        "dense": {
+          "5": {
+            "evidence_block_recall": 0.6666666666666666,
+            "all_evidence": false,
+            "mrr": 0.5,
+            "context_characters": 5138,
+            "returned_blocks": 5,
+            "passage_ids": [
+              "HQY-2024-03-22_10-K.json#context-387",
+              "HQY-2024-03-22_10-K.json#context-363",
+              "HQY-2024-03-22_10-K.json#context-390",
+              "HQY-2024-03-22_10-K.json#context-392",
+              "HQY-2024-03-22_10-K.json#context-391"
+            ]
+          },
+          "10": {
+            "evidence_block_recall": 0.6666666666666666,
+            "all_evidence": false,
+            "mrr": 0.5,
+            "context_characters": 7611,
+            "returned_blocks": 10,
+            "passage_ids": [
+              "HQY-2024-03-22_10-K.json#context-387",
+              "HQY-2024-03-22_10-K.json#context-363",
+              "HQY-2024-03-22_10-K.json#context-390",
+              "HQY-2024-03-22_10-K.json#context-392",
+              "HQY-2024-03-22_10-K.json#context-391",
+              "HQY-2024-03-22_10-K.json#context-255",
+              "HQY-2024-03-22_10-K.json#context-351",
+              "HQY-2024-03-22_10-K.json#context-393",
+              "HQY-2024-03-22_10-K.json#context-350",
+              "HQY-2024-03-22_10-K.json#context-360"
+            ]
+          }
+        },
+        "hybrid": {
+          "5": {
+            "evidence_block_recall": 0.3333333333333333,
+            "all_evidence": false,
+            "mrr": 0.3333333333333333,
+            "context_characters": 2563,
+            "returned_blocks": 5,
+            "passage_ids": [
+              "HQY-2024-03-22_10-K.json#context-392",
+              "HQY-2024-03-22_10-K.json#context-255",
+              "HQY-2024-03-22_10-K.json#context-390",
+              "HQY-2024-03-22_10-K.json#context-391",
+              "HQY-2024-03-22_10-K.json#context-393"
+            ]
+          },
+          "10": {
+            "evidence_block_recall": 1.0,
+            "all_evidence": true,
+            "mrr": 0.3333333333333333,
+            "context_characters": 9054,
+            "returned_blocks": 10,
+            "passage_ids": [
+              "HQY-2024-03-22_10-K.json#context-392",
+              "HQY-2024-03-22_10-K.json#context-255",
+              "HQY-2024-03-22_10-K.json#context-390",
+              "HQY-2024-03-22_10-K.json#context-391",
+              "HQY-2024-03-22_10-K.json#context-393",
+              "HQY-2024-03-22_10-K.json#context-384",
+              "HQY-2024-03-22_10-K.json#context-387",
+              "HQY-2024-03-22_10-K.json#context-363",
+              "HQY-2024-03-22_10-K.json#context-386",
+              "HQY-2024-03-22_10-K.json#context-256"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "case_id": "claim_d61f6507e47f9a457d389bdb8f6a8599",
+      "official_case_id_scorer_only": "findver:testmini:ie-val-101",
+      "subset": "ie",
+      "report": "HQY-2024-03-22_10-K.json",
+      "candidate_count": 448,
+      "candidate_characters": 322083,
+      "gold_count": 3,
+      "bm25_positive_candidates": 321,
+      "ranking_ms": {
+        "bm25": 16.92479196935892,
+        "dense": 0.5990420468151569,
+        "rrf_fusion": 0.20987505558878183
+      },
+      "methods": {
+        "bm25": {
+          "5": {
+            "evidence_block_recall": 0.6666666666666666,
+            "all_evidence": false,
+            "mrr": 1.0,
+            "context_characters": 2964,
+            "returned_blocks": 5,
+            "passage_ids": [
+              "HQY-2024-03-22_10-K.json#context-7",
+              "HQY-2024-03-22_10-K.json#context-158",
+              "HQY-2024-03-22_10-K.json#context-80",
+              "HQY-2024-03-22_10-K.json#context-39",
+              "HQY-2024-03-22_10-K.json#context-163"
+            ]
+          },
+          "10": {
+            "evidence_block_recall": 1.0,
+            "all_evidence": true,
+            "mrr": 1.0,
+            "context_characters": 7313,
+            "returned_blocks": 10,
+            "passage_ids": [
+              "HQY-2024-03-22_10-K.json#context-7",
+              "HQY-2024-03-22_10-K.json#context-158",
+              "HQY-2024-03-22_10-K.json#context-80",
+              "HQY-2024-03-22_10-K.json#context-39",
+              "HQY-2024-03-22_10-K.json#context-163",
+              "HQY-2024-03-22_10-K.json#context-176",
+              "HQY-2024-03-22_10-K.json#context-246",
+              "HQY-2024-03-22_10-K.json#context-20",
+              "HQY-2024-03-22_10-K.json#context-160",
+              "HQY-2024-03-22_10-K.json#context-45"
+            ]
+          }
+        },
+        "dense": {
+          "5": {
+            "evidence_block_recall": 0.3333333333333333,
+            "all_evidence": false,
+            "mrr": 1.0,
+            "context_characters": 1440,
+            "returned_blocks": 5,
+            "passage_ids": [
+              "HQY-2024-03-22_10-K.json#context-7",
+              "HQY-2024-03-22_10-K.json#context-158",
+              "HQY-2024-03-22_10-K.json#context-427",
+              "HQY-2024-03-22_10-K.json#context-9",
+              "HQY-2024-03-22_10-K.json#context-160"
+            ]
+          },
+          "10": {
+            "evidence_block_recall": 0.3333333333333333,
+            "all_evidence": false,
+            "mrr": 1.0,
+            "context_characters": 8997,
+            "returned_blocks": 10,
+            "passage_ids": [
+              "HQY-2024-03-22_10-K.json#context-7",
+              "HQY-2024-03-22_10-K.json#context-158",
+              "HQY-2024-03-22_10-K.json#context-427",
+              "HQY-2024-03-22_10-K.json#context-9",
+              "HQY-2024-03-22_10-K.json#context-160",
+              "HQY-2024-03-22_10-K.json#context-10",
+              "HQY-2024-03-22_10-K.json#context-161",
+              "HQY-2024-03-22_10-K.json#context-45",
+              "HQY-2024-03-22_10-K.json#context-295",
+              "HQY-2024-03-22_10-K.json#context-296"
+            ]
+          }
+        },
+        "hybrid": {
+          "5": {
+            "evidence_block_recall": 0.3333333333333333,
+            "all_evidence": false,
+            "mrr": 1.0,
+            "context_characters": 1440,
+            "returned_blocks": 5,
+            "passage_ids": [
+              "HQY-2024-03-22_10-K.json#context-7",
+              "HQY-2024-03-22_10-K.json#context-158",
+              "HQY-2024-03-22_10-K.json#context-160",
+              "HQY-2024-03-22_10-K.json#context-427",
+              "HQY-2024-03-22_10-K.json#context-9"
+            ]
+          },
+          "10": {
+            "evidence_block_recall": 0.6666666666666666,
+            "all_evidence": false,
+            "mrr": 1.0,
+            "context_characters": 6428,
+            "returned_blocks": 10,
+            "passage_ids": [
+              "HQY-2024-03-22_10-K.json#context-7",
+              "HQY-2024-03-22_10-K.json#context-158",
+              "HQY-2024-03-22_10-K.json#context-160",
+              "HQY-2024-03-22_10-K.json#context-427",
+              "HQY-2024-03-22_10-K.json#context-9",
+              "HQY-2024-03-22_10-K.json#context-45",
+              "HQY-2024-03-22_10-K.json#context-163",
+              "HQY-2024-03-22_10-K.json#context-10",
+              "HQY-2024-03-22_10-K.json#context-161",
+              "HQY-2024-03-22_10-K.json#context-39"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "case_id": "claim_d65ec82f528c5ec54a6d48433cc7ac33",
+      "official_case_id_scorer_only": "findver:testmini:ie-val-57",
+      "subset": "ie",
+      "report": "DX-PC-2024-02-26_10-K.json",
+      "candidate_count": 333,
+      "candidate_characters": 274161,
+      "gold_count": 3,
+      "bm25_positive_candidates": 303,
+      "ranking_ms": {
+        "bm25": 24.701833026483655,
+        "dense": 1.3241670094430447,
+        "rrf_fusion": 0.18929108045995235
+      },
+      "methods": {
+        "bm25": {
+          "5": {
+            "evidence_block_recall": 0.3333333333333333,
+            "all_evidence": false,
+            "mrr": 1.0,
+            "context_characters": 4807,
+            "returned_blocks": 5,
+            "passage_ids": [
+              "DX-PC-2024-02-26_10-K.json#context-150",
+              "DX-PC-2024-02-26_10-K.json#context-51",
+              "DX-PC-2024-02-26_10-K.json#context-222",
+              "DX-PC-2024-02-26_10-K.json#context-61",
+              "DX-PC-2024-02-26_10-K.json#context-58"
+            ]
+          },
+          "10": {
+            "evidence_block_recall": 0.3333333333333333,
+            "all_evidence": false,
+            "mrr": 1.0,
+            "context_characters": 10820,
+            "returned_blocks": 10,
+            "passage_ids": [
+              "DX-PC-2024-02-26_10-K.json#context-150",
+              "DX-PC-2024-02-26_10-K.json#context-51",
+              "DX-PC-2024-02-26_10-K.json#context-222",
+              "DX-PC-2024-02-26_10-K.json#context-61",
+              "DX-PC-2024-02-26_10-K.json#context-58",
+              "DX-PC-2024-02-26_10-K.json#context-199",
+              "DX-PC-2024-02-26_10-K.json#context-149",
+              "DX-PC-2024-02-26_10-K.json#context-16",
+              "DX-PC-2024-02-26_10-K.json#context-151",
+              "DX-PC-2024-02-26_10-K.json#context-3"
+            ]
+          }
+        },
+        "dense": {
+          "5": {
+            "evidence_block_recall": 0.3333333333333333,
+            "all_evidence": false,
+            "mrr": 1.0,
+            "context_characters": 3982,
+            "returned_blocks": 5,
+            "passage_ids": [
+              "DX-PC-2024-02-26_10-K.json#context-150",
+              "DX-PC-2024-02-26_10-K.json#context-162",
+              "DX-PC-2024-02-26_10-K.json#context-151",
+              "DX-PC-2024-02-26_10-K.json#context-152",
+              "DX-PC-2024-02-26_10-K.json#context-1"
+            ]
+          },
+          "10": {
+            "evidence_block_recall": 0.6666666666666666,
+            "all_evidence": false,
+            "mrr": 1.0,
+            "context_characters": 8432,
+            "returned_blocks": 10,
+            "passage_ids": [
+              "DX-PC-2024-02-26_10-K.json#context-150",
+              "DX-PC-2024-02-26_10-K.json#context-162",
+              "DX-PC-2024-02-26_10-K.json#context-151",
+              "DX-PC-2024-02-26_10-K.json#context-152",
+              "DX-PC-2024-02-26_10-K.json#context-1",
+              "DX-PC-2024-02-26_10-K.json#context-60",
+              "DX-PC-2024-02-26_10-K.json#context-290",
+              "DX-PC-2024-02-26_10-K.json#context-4",
+              "DX-PC-2024-02-26_10-K.json#context-168",
+              "DX-PC-2024-02-26_10-K.json#context-140"
+            ]
+          }
+        },
+        "hybrid": {
+          "5": {
+            "evidence_block_recall": 0.6666666666666666,
+            "all_evidence": false,
+            "mrr": 1.0,
+            "context_characters": 3311,
+            "returned_blocks": 5,
+            "passage_ids": [
+              "DX-PC-2024-02-26_10-K.json#context-150",
+              "DX-PC-2024-02-26_10-K.json#context-151",
+              "DX-PC-2024-02-26_10-K.json#context-60",
+              "DX-PC-2024-02-26_10-K.json#context-16",
+              "DX-PC-2024-02-26_10-K.json#context-1"
+            ]
+          },
+          "10": {
+            "evidence_block_recall": 0.6666666666666666,
+            "all_evidence": false,
+            "mrr": 1.0,
+            "context_characters": 10322,
+            "returned_blocks": 10,
+            "passage_ids": [
+              "DX-PC-2024-02-26_10-K.json#context-150",
+              "DX-PC-2024-02-26_10-K.json#context-151",
+              "DX-PC-2024-02-26_10-K.json#context-60",
+              "DX-PC-2024-02-26_10-K.json#context-16",
+              "DX-PC-2024-02-26_10-K.json#context-1",
+              "DX-PC-2024-02-26_10-K.json#context-51",
+              "DX-PC-2024-02-26_10-K.json#context-3",
+              "DX-PC-2024-02-26_10-K.json#context-140",
+              "DX-PC-2024-02-26_10-K.json#context-199",
+              "DX-PC-2024-02-26_10-K.json#context-149"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "case_id": "claim_d772f2de37f8c9ff41dff4518ff23542",
+      "official_case_id_scorer_only": "findver:testmini:numeric-val-99",
+      "subset": "numeric",
+      "report": "SAFT-2024-02-28_10-K.json",
+      "candidate_count": 127,
+      "candidate_characters": 259856,
+      "gold_count": 1,
+      "bm25_positive_candidates": 106,
+      "ranking_ms": {
+        "bm25": 16.737665981054306,
+        "dense": 0.905750086531043,
+        "rrf_fusion": 0.07404200732707977
+      },
+      "methods": {
+        "bm25": {
+          "5": {
+            "evidence_block_recall": 1.0,
+            "all_evidence": true,
+            "mrr": 0.3333333333333333,
+            "context_characters": 11299,
+            "returned_blocks": 5,
+            "passage_ids": [
+              "SAFT-2024-02-28_10-K.json#context-63",
+              "SAFT-2024-02-28_10-K.json#context-81",
+              "SAFT-2024-02-28_10-K.json#context-19",
+              "SAFT-2024-02-28_10-K.json#context-53",
+              "SAFT-2024-02-28_10-K.json#context-78"
+            ]
+          },
+          "10": {
+            "evidence_block_recall": 1.0,
+            "all_evidence": true,
+            "mrr": 0.3333333333333333,
+            "context_characters": 23879,
+            "returned_blocks": 10,
+            "passage_ids": [
+              "SAFT-2024-02-28_10-K.json#context-63",
+              "SAFT-2024-02-28_10-K.json#context-81",
+              "SAFT-2024-02-28_10-K.json#context-19",
+              "SAFT-2024-02-28_10-K.json#context-53",
+              "SAFT-2024-02-28_10-K.json#context-78",
+              "SAFT-2024-02-28_10-K.json#context-54",
+              "SAFT-2024-02-28_10-K.json#context-64",
+              "SAFT-2024-02-28_10-K.json#context-89",
+              "SAFT-2024-02-28_10-K.json#context-101",
+              "SAFT-2024-02-28_10-K.json#context-65"
+            ]
+          }
+        },
+        "dense": {
+          "5": {
+            "evidence_block_recall": 1.0,
+            "all_evidence": true,
+            "mrr": 0.5,
+            "context_characters": 7589,
+            "returned_blocks": 5,
+            "passage_ids": [
+              "SAFT-2024-02-28_10-K.json#context-89",
+              "SAFT-2024-02-28_10-K.json#context-19",
+              "SAFT-2024-02-28_10-K.json#context-79",
+              "SAFT-2024-02-28_10-K.json#context-54",
+              "SAFT-2024-02-28_10-K.json#context-78"
+            ]
+          },
+          "10": {
+            "evidence_block_recall": 1.0,
+            "all_evidence": true,
+            "mrr": 0.5,
+            "context_characters": 17620,
+            "returned_blocks": 10,
+            "passage_ids": [
+              "SAFT-2024-02-28_10-K.json#context-89",
+              "SAFT-2024-02-28_10-K.json#context-19",
+              "SAFT-2024-02-28_10-K.json#context-79",
+              "SAFT-2024-02-28_10-K.json#context-54",
+              "SAFT-2024-02-28_10-K.json#context-78",
+              "SAFT-2024-02-28_10-K.json#context-53",
+              "SAFT-2024-02-28_10-K.json#context-57",
+              "SAFT-2024-02-28_10-K.json#context-103",
+              "SAFT-2024-02-28_10-K.json#context-118",
+              "SAFT-2024-02-28_10-K.json#context-106"
+            ]
+          }
+        },
+        "hybrid": {
+          "5": {
+            "evidence_block_recall": 1.0,
+            "all_evidence": true,
+            "mrr": 1.0,
+            "context_characters": 8624,
+            "returned_blocks": 5,
+            "passage_ids": [
+              "SAFT-2024-02-28_10-K.json#context-19",
+              "SAFT-2024-02-28_10-K.json#context-89",
+              "SAFT-2024-02-28_10-K.json#context-53",
+              "SAFT-2024-02-28_10-K.json#context-54",
+              "SAFT-2024-02-28_10-K.json#context-78"
+            ]
+          },
+          "10": {
+            "evidence_block_recall": 1.0,
+            "all_evidence": true,
+            "mrr": 1.0,
+            "context_characters": 21971,
+            "returned_blocks": 10,
+            "passage_ids": [
+              "SAFT-2024-02-28_10-K.json#context-19",
+              "SAFT-2024-02-28_10-K.json#context-89",
+              "SAFT-2024-02-28_10-K.json#context-53",
+              "SAFT-2024-02-28_10-K.json#context-54",
+              "SAFT-2024-02-28_10-K.json#context-78",
+              "SAFT-2024-02-28_10-K.json#context-81",
+              "SAFT-2024-02-28_10-K.json#context-103",
+              "SAFT-2024-02-28_10-K.json#context-79",
+              "SAFT-2024-02-28_10-K.json#context-65",
+              "SAFT-2024-02-28_10-K.json#context-57"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "case_id": "claim_deb89d2f5856c37b8ec30a2ce6a7bf35",
+      "official_case_id_scorer_only": "findver:testmini:knowledge-val-98",
+      "subset": "knowledge",
+      "report": "LVVR-2024-03-27_10-K.json",
+      "candidate_count": 352,
+      "candidate_characters": 273973,
+      "gold_count": 4,
+      "bm25_positive_candidates": 322,
+      "ranking_ms": {
+        "bm25": 14.716833014972508,
+        "dense": 15.7319160643965,
+        "rrf_fusion": 0.18095900304615498
+      },
+      "methods": {
+        "bm25": {
+          "5": {
+            "evidence_block_recall": 0.0,
+            "all_evidence": false,
+            "mrr": 0,
+            "context_characters": 4613,
+            "returned_blocks": 5,
+            "passage_ids": [
+              "LVVR-2024-03-27_10-K.json#context-319",
+              "LVVR-2024-03-27_10-K.json#context-229",
+              "LVVR-2024-03-27_10-K.json#context-138",
+              "LVVR-2024-03-27_10-K.json#context-225",
+              "LVVR-2024-03-27_10-K.json#context-228"
+            ]
+          },
+          "10": {
+            "evidence_block_recall": 0.5,
+            "all_evidence": false,
+            "mrr": 0.14285714285714285,
+            "context_characters": 9052,
+            "returned_blocks": 10,
+            "passage_ids": [
+              "LVVR-2024-03-27_10-K.json#context-319",
+              "LVVR-2024-03-27_10-K.json#context-229",
+              "LVVR-2024-03-27_10-K.json#context-138",
+              "LVVR-2024-03-27_10-K.json#context-225",
+              "LVVR-2024-03-27_10-K.json#context-228",
+              "LVVR-2024-03-27_10-K.json#context-141",
+              "LVVR-2024-03-27_10-K.json#context-322",
+              "LVVR-2024-03-27_10-K.json#context-142",
+              "LVVR-2024-03-27_10-K.json#context-323",
+              "LVVR-2024-03-27_10-K.json#context-47"
+            ]
+          }
+        },
+        "dense": {
+          "5": {
+            "evidence_block_recall": 0.25,
+            "all_evidence": false,
+            "mrr": 0.2,
+            "context_characters": 3875,
+            "returned_blocks": 5,
+            "passage_ids": [
+              "LVVR-2024-03-27_10-K.json#context-319",
+              "LVVR-2024-03-27_10-K.json#context-229",
+              "LVVR-2024-03-27_10-K.json#context-225",
+              "LVVR-2024-03-27_10-K.json#context-142",
+              "LVVR-2024-03-27_10-K.json#context-323"
+            ]
+          },
+          "10": {
+            "evidence_block_recall": 0.25,
+            "all_evidence": false,
+            "mrr": 0.2,
+            "context_characters": 8859,
+            "returned_blocks": 10,
+            "passage_ids": [
+              "LVVR-2024-03-27_10-K.json#context-319",
+              "LVVR-2024-03-27_10-K.json#context-229",
+              "LVVR-2024-03-27_10-K.json#context-225",
+              "LVVR-2024-03-27_10-K.json#context-142",
+              "LVVR-2024-03-27_10-K.json#context-323",
+              "LVVR-2024-03-27_10-K.json#context-232",
+              "LVVR-2024-03-27_10-K.json#context-0",
+              "LVVR-2024-03-27_10-K.json#context-190",
+              "LVVR-2024-03-27_10-K.json#context-57",
+              "LVVR-2024-03-27_10-K.json#context-182"
+            ]
+          }
+        },
+        "hybrid": {
+          "5": {
+            "evidence_block_recall": 0.25,
+            "all_evidence": false,
+            "mrr": 0.2,
+            "context_characters": 3875,
+            "returned_blocks": 5,
+            "passage_ids": [
+              "LVVR-2024-03-27_10-K.json#context-319",
+              "LVVR-2024-03-27_10-K.json#context-229",
+              "LVVR-2024-03-27_10-K.json#context-225",
+              "LVVR-2024-03-27_10-K.json#context-142",
+              "LVVR-2024-03-27_10-K.json#context-323"
+            ]
+          },
+          "10": {
+            "evidence_block_recall": 0.5,
+            "all_evidence": false,
+            "mrr": 0.2,
+            "context_characters": 9227,
+            "returned_blocks": 10,
+            "passage_ids": [
+              "LVVR-2024-03-27_10-K.json#context-319",
+              "LVVR-2024-03-27_10-K.json#context-229",
+              "LVVR-2024-03-27_10-K.json#context-225",
+              "LVVR-2024-03-27_10-K.json#context-142",
+              "LVVR-2024-03-27_10-K.json#context-323",
+              "LVVR-2024-03-27_10-K.json#context-138",
+              "LVVR-2024-03-27_10-K.json#context-141",
+              "LVVR-2024-03-27_10-K.json#context-228",
+              "LVVR-2024-03-27_10-K.json#context-232",
+              "LVVR-2024-03-27_10-K.json#context-322"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "case_id": "claim_e8097b27a17bff2129ccd3147ba1c5f8",
+      "official_case_id_scorer_only": "findver:testmini:numeric-val-242",
+      "subset": "numeric",
+      "report": "MITI-2024-02-13_10-Q.json",
+      "candidate_count": 306,
+      "candidate_characters": 266386,
+      "gold_count": 2,
+      "bm25_positive_candidates": 293,
+      "ranking_ms": {
+        "bm25": 15.72408399078995,
+        "dense": 10.27908397372812,
+        "rrf_fusion": 0.3767079906538129
+      },
+      "methods": {
+        "bm25": {
+          "5": {
+            "evidence_block_recall": 1.0,
+            "all_evidence": true,
+            "mrr": 1.0,
+            "context_characters": 5797,
+            "returned_blocks": 5,
+            "passage_ids": [
+              "MITI-2024-02-13_10-Q.json#context-258",
+              "MITI-2024-02-13_10-Q.json#context-257",
+              "MITI-2024-02-13_10-Q.json#context-263",
+              "MITI-2024-02-13_10-Q.json#context-27",
+              "MITI-2024-02-13_10-Q.json#context-1"
+            ]
+          },
+          "10": {
+            "evidence_block_recall": 1.0,
+            "all_evidence": true,
+            "mrr": 1.0,
+            "context_characters": 11597,
+            "returned_blocks": 10,
+            "passage_ids": [
+              "MITI-2024-02-13_10-Q.json#context-258",
+              "MITI-2024-02-13_10-Q.json#context-257",
+              "MITI-2024-02-13_10-Q.json#context-263",
+              "MITI-2024-02-13_10-Q.json#context-27",
+              "MITI-2024-02-13_10-Q.json#context-1",
+              "MITI-2024-02-13_10-Q.json#context-53",
+              "MITI-2024-02-13_10-Q.json#context-265",
+              "MITI-2024-02-13_10-Q.json#context-21",
+              "MITI-2024-02-13_10-Q.json#context-262",
+              "MITI-2024-02-13_10-Q.json#context-10"
+            ]
+          }
+        },
+        "dense": {
+          "5": {
+            "evidence_block_recall": 1.0,
+            "all_evidence": true,
+            "mrr": 1.0,
+            "context_characters": 2773,
+            "returned_blocks": 5,
+            "passage_ids": [
+              "MITI-2024-02-13_10-Q.json#context-258",
+              "MITI-2024-02-13_10-Q.json#context-263",
+              "MITI-2024-02-13_10-Q.json#context-27",
+              "MITI-2024-02-13_10-Q.json#context-257",
+              "MITI-2024-02-13_10-Q.json#context-24"
+            ]
+          },
+          "10": {
+            "evidence_block_recall": 1.0,
+            "all_evidence": true,
+            "mrr": 1.0,
+            "context_characters": 6148,
+            "returned_blocks": 10,
+            "passage_ids": [
+              "MITI-2024-02-13_10-Q.json#context-258",
+              "MITI-2024-02-13_10-Q.json#context-263",
+              "MITI-2024-02-13_10-Q.json#context-27",
+              "MITI-2024-02-13_10-Q.json#context-257",
+              "MITI-2024-02-13_10-Q.json#context-24",
+              "MITI-2024-02-13_10-Q.json#context-23",
+              "MITI-2024-02-13_10-Q.json#context-265",
+              "MITI-2024-02-13_10-Q.json#context-165",
+              "MITI-2024-02-13_10-Q.json#context-22",
+              "MITI-2024-02-13_10-Q.json#context-259"
+            ]
+          }
+        },
+        "hybrid": {
+          "5": {
+            "evidence_block_recall": 1.0,
+            "all_evidence": true,
+            "mrr": 1.0,
+            "context_characters": 2484,
+            "returned_blocks": 5,
+            "passage_ids": [
+              "MITI-2024-02-13_10-Q.json#context-258",
+              "MITI-2024-02-13_10-Q.json#context-263",
+              "MITI-2024-02-13_10-Q.json#context-257",
+              "MITI-2024-02-13_10-Q.json#context-27",
+              "MITI-2024-02-13_10-Q.json#context-265"
+            ]
+          },
+          "10": {
+            "evidence_block_recall": 1.0,
+            "all_evidence": true,
+            "mrr": 1.0,
+            "context_characters": 9256,
+            "returned_blocks": 10,
+            "passage_ids": [
+              "MITI-2024-02-13_10-Q.json#context-258",
+              "MITI-2024-02-13_10-Q.json#context-263",
+              "MITI-2024-02-13_10-Q.json#context-257",
+              "MITI-2024-02-13_10-Q.json#context-27",
+              "MITI-2024-02-13_10-Q.json#context-265",
+              "MITI-2024-02-13_10-Q.json#context-1",
+              "MITI-2024-02-13_10-Q.json#context-23",
+              "MITI-2024-02-13_10-Q.json#context-24",
+              "MITI-2024-02-13_10-Q.json#context-259",
+              "MITI-2024-02-13_10-Q.json#context-252"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "case_id": "claim_ecd26236ffddb378853710e35d2e35f1",
+      "official_case_id_scorer_only": "findver:testmini:numeric-val-35",
+      "subset": "numeric",
+      "report": "SAFT-2024-02-28_10-K.json",
+      "candidate_count": 127,
+      "candidate_characters": 259856,
+      "gold_count": 2,
+      "bm25_positive_candidates": 110,
+      "ranking_ms": {
+        "bm25": 12.935832957737148,
+        "dense": 0.12441701255738735,
+        "rrf_fusion": 0.06816699169576168
+      },
+      "methods": {
+        "bm25": {
+          "5": {
+            "evidence_block_recall": 0.5,
+            "all_evidence": false,
+            "mrr": 1.0,
+            "context_characters": 12568,
+            "returned_blocks": 5,
+            "passage_ids": [
+              "SAFT-2024-02-28_10-K.json#context-87",
+              "SAFT-2024-02-28_10-K.json#context-77",
+              "SAFT-2024-02-28_10-K.json#context-19",
+              "SAFT-2024-02-28_10-K.json#context-88",
+              "SAFT-2024-02-28_10-K.json#context-55"
+            ]
+          },
+          "10": {
+            "evidence_block_recall": 0.5,
+            "all_evidence": false,
+            "mrr": 1.0,
+            "context_characters": 22205,
+            "returned_blocks": 10,
+            "passage_ids": [
+              "SAFT-2024-02-28_10-K.json#context-87",
+              "SAFT-2024-02-28_10-K.json#context-77",
+              "SAFT-2024-02-28_10-K.json#context-19",
+              "SAFT-2024-02-28_10-K.json#context-88",
+              "SAFT-2024-02-28_10-K.json#context-55",
+              "SAFT-2024-02-28_10-K.json#context-52",
+              "SAFT-2024-02-28_10-K.json#context-89",
+              "SAFT-2024-02-28_10-K.json#context-18",
+              "SAFT-2024-02-28_10-K.json#context-82",
+              "SAFT-2024-02-28_10-K.json#context-105"
+            ]
+          }
+        },
+        "dense": {
+          "5": {
+            "evidence_block_recall": 0.0,
+            "all_evidence": false,
+            "mrr": 0,
+            "context_characters": 7320,
+            "returned_blocks": 5,
+            "passage_ids": [
+              "SAFT-2024-02-28_10-K.json#context-89",
+              "SAFT-2024-02-28_10-K.json#context-106",
+              "SAFT-2024-02-28_10-K.json#context-78",
+              "SAFT-2024-02-28_10-K.json#context-85",
+              "SAFT-2024-02-28_10-K.json#context-115"
+            ]
+          },
+          "10": {
+            "evidence_block_recall": 0.5,
+            "all_evidence": false,
+            "mrr": 0.14285714285714285,
+            "context_characters": 20251,
+            "returned_blocks": 10,
+            "passage_ids": [
+              "SAFT-2024-02-28_10-K.json#context-89",
+              "SAFT-2024-02-28_10-K.json#context-106",
+              "SAFT-2024-02-28_10-K.json#context-78",
+              "SAFT-2024-02-28_10-K.json#context-85",
+              "SAFT-2024-02-28_10-K.json#context-115",
+              "SAFT-2024-02-28_10-K.json#context-77",
+              "SAFT-2024-02-28_10-K.json#context-87",
+              "SAFT-2024-02-28_10-K.json#context-53",
+              "SAFT-2024-02-28_10-K.json#context-80",
+              "SAFT-2024-02-28_10-K.json#context-18"
+            ]
+          }
+        },
+        "hybrid": {
+          "5": {
+            "evidence_block_recall": 0.5,
+            "all_evidence": false,
+            "mrr": 1.0,
+            "context_characters": 10209,
+            "returned_blocks": 5,
+            "passage_ids": [
+              "SAFT-2024-02-28_10-K.json#context-87",
+              "SAFT-2024-02-28_10-K.json#context-89",
+              "SAFT-2024-02-28_10-K.json#context-77",
+              "SAFT-2024-02-28_10-K.json#context-19",
+              "SAFT-2024-02-28_10-K.json#context-18"
+            ]
+          },
+          "10": {
+            "evidence_block_recall": 0.5,
+            "all_evidence": false,
+            "mrr": 1.0,
+            "context_characters": 20314,
+            "returned_blocks": 10,
+            "passage_ids": [
+              "SAFT-2024-02-28_10-K.json#context-87",
+              "SAFT-2024-02-28_10-K.json#context-89",
+              "SAFT-2024-02-28_10-K.json#context-77",
+              "SAFT-2024-02-28_10-K.json#context-19",
+              "SAFT-2024-02-28_10-K.json#context-18",
+              "SAFT-2024-02-28_10-K.json#context-115",
+              "SAFT-2024-02-28_10-K.json#context-78",
+              "SAFT-2024-02-28_10-K.json#context-88",
+              "SAFT-2024-02-28_10-K.json#context-80",
+              "SAFT-2024-02-28_10-K.json#context-106"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "case_id": "claim_f1505b960146b16b95f439d6c1ab341b",
+      "official_case_id_scorer_only": "findver:testmini:ie-val-51",
+      "subset": "ie",
+      "report": "DX-PC-2024-02-26_10-K.json",
+      "candidate_count": 333,
+      "candidate_characters": 274161,
+      "gold_count": 2,
+      "bm25_positive_candidates": 296,
+      "ranking_ms": {
+        "bm25": 19.038999918848276,
+        "dense": 1.0793330147862434,
+        "rrf_fusion": 0.1960410736501217
+      },
+      "methods": {
+        "bm25": {
+          "5": {
+            "evidence_block_recall": 1.0,
+            "all_evidence": true,
+            "mrr": 1.0,
+            "context_characters": 3577,
+            "returned_blocks": 5,
+            "passage_ids": [
+              "DX-PC-2024-02-26_10-K.json#context-307",
+              "DX-PC-2024-02-26_10-K.json#context-294",
+              "DX-PC-2024-02-26_10-K.json#context-297",
+              "DX-PC-2024-02-26_10-K.json#context-295",
+              "DX-PC-2024-02-26_10-K.json#context-32"
+            ]
+          },
+          "10": {
+            "evidence_block_recall": 1.0,
+            "all_evidence": true,
+            "mrr": 1.0,
+            "context_characters": 7674,
+            "returned_blocks": 10,
+            "passage_ids": [
+              "DX-PC-2024-02-26_10-K.json#context-307",
+              "DX-PC-2024-02-26_10-K.json#context-294",
+              "DX-PC-2024-02-26_10-K.json#context-297",
+              "DX-PC-2024-02-26_10-K.json#context-295",
+              "DX-PC-2024-02-26_10-K.json#context-32",
+              "DX-PC-2024-02-26_10-K.json#context-159",
+              "DX-PC-2024-02-26_10-K.json#context-164",
+              "DX-PC-2024-02-26_10-K.json#context-303",
+              "DX-PC-2024-02-26_10-K.json#context-152",
+              "DX-PC-2024-02-26_10-K.json#context-162"
+            ]
+          }
+        },
+        "dense": {
+          "5": {
+            "evidence_block_recall": 1.0,
+            "all_evidence": true,
+            "mrr": 1.0,
+            "context_characters": 5174,
+            "returned_blocks": 5,
+            "passage_ids": [
+              "DX-PC-2024-02-26_10-K.json#context-294",
+              "DX-PC-2024-02-26_10-K.json#context-162",
+              "DX-PC-2024-02-26_10-K.json#context-307",
+              "DX-PC-2024-02-26_10-K.json#context-152",
+              "DX-PC-2024-02-26_10-K.json#context-167"
+            ]
+          },
+          "10": {
+            "evidence_block_recall": 1.0,
+            "all_evidence": true,
+            "mrr": 1.0,
+            "context_characters": 8975,
+            "returned_blocks": 10,
+            "passage_ids": [
+              "DX-PC-2024-02-26_10-K.json#context-294",
+              "DX-PC-2024-02-26_10-K.json#context-162",
+              "DX-PC-2024-02-26_10-K.json#context-307",
+              "DX-PC-2024-02-26_10-K.json#context-152",
+              "DX-PC-2024-02-26_10-K.json#context-167",
+              "DX-PC-2024-02-26_10-K.json#context-168",
+              "DX-PC-2024-02-26_10-K.json#context-137",
+              "DX-PC-2024-02-26_10-K.json#context-290",
+              "DX-PC-2024-02-26_10-K.json#context-1",
+              "DX-PC-2024-02-26_10-K.json#context-150"
+            ]
+          }
+        },
+        "hybrid": {
+          "5": {
+            "evidence_block_recall": 1.0,
+            "all_evidence": true,
+            "mrr": 1.0,
+            "context_characters": 4494,
+            "returned_blocks": 5,
+            "passage_ids": [
+              "DX-PC-2024-02-26_10-K.json#context-294",
+              "DX-PC-2024-02-26_10-K.json#context-307",
+              "DX-PC-2024-02-26_10-K.json#context-162",
+              "DX-PC-2024-02-26_10-K.json#context-152",
+              "DX-PC-2024-02-26_10-K.json#context-297"
+            ]
+          },
+          "10": {
+            "evidence_block_recall": 1.0,
+            "all_evidence": true,
+            "mrr": 1.0,
+            "context_characters": 9052,
+            "returned_blocks": 10,
+            "passage_ids": [
+              "DX-PC-2024-02-26_10-K.json#context-294",
+              "DX-PC-2024-02-26_10-K.json#context-307",
+              "DX-PC-2024-02-26_10-K.json#context-162",
+              "DX-PC-2024-02-26_10-K.json#context-152",
+              "DX-PC-2024-02-26_10-K.json#context-297",
+              "DX-PC-2024-02-26_10-K.json#context-167",
+              "DX-PC-2024-02-26_10-K.json#context-164",
+              "DX-PC-2024-02-26_10-K.json#context-159",
+              "DX-PC-2024-02-26_10-K.json#context-168",
+              "DX-PC-2024-02-26_10-K.json#context-137"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "case_id": "claim_f1aa0a61264f317749607f54c20a8120",
+      "official_case_id_scorer_only": "findver:testmini:ie-val-111",
+      "subset": "ie",
+      "report": "BLDE-2024-03-12_10-K.json",
+      "candidate_count": 463,
+      "candidate_characters": 373809,
+      "gold_count": 3,
+      "bm25_positive_candidates": 340,
+      "ranking_ms": {
+        "bm25": 19.55279102548957,
+        "dense": 0.28558296617120504,
+        "rrf_fusion": 0.21299999207258224
+      },
+      "methods": {
+        "bm25": {
+          "5": {
+            "evidence_block_recall": 0.6666666666666666,
+            "all_evidence": false,
+            "mrr": 0.5,
+            "context_characters": 7330,
+            "returned_blocks": 5,
+            "passage_ids": [
+              "BLDE-2024-03-12_10-K.json#context-52",
+              "BLDE-2024-03-12_10-K.json#context-115",
+              "BLDE-2024-03-12_10-K.json#context-47",
+              "BLDE-2024-03-12_10-K.json#context-114",
+              "BLDE-2024-03-12_10-K.json#context-46"
+            ]
+          },
+          "10": {
+            "evidence_block_recall": 0.6666666666666666,
+            "all_evidence": false,
+            "mrr": 0.5,
+            "context_characters": 12214,
+            "returned_blocks": 10,
+            "passage_ids": [
+              "BLDE-2024-03-12_10-K.json#context-52",
+              "BLDE-2024-03-12_10-K.json#context-115",
+              "BLDE-2024-03-12_10-K.json#context-47",
+              "BLDE-2024-03-12_10-K.json#context-114",
+              "BLDE-2024-03-12_10-K.json#context-46",
+              "BLDE-2024-03-12_10-K.json#context-51",
+              "BLDE-2024-03-12_10-K.json#context-183",
+              "BLDE-2024-03-12_10-K.json#context-113",
+              "BLDE-2024-03-12_10-K.json#context-2",
+              "BLDE-2024-03-12_10-K.json#context-193"
+            ]
+          }
+        },
+        "dense": {
+          "5": {
+            "evidence_block_recall": 0.0,
+            "all_evidence": false,
+            "mrr": 0,
+            "context_characters": 3162,
+            "returned_blocks": 5,
+            "passage_ids": [
+              "BLDE-2024-03-12_10-K.json#context-183",
+              "BLDE-2024-03-12_10-K.json#context-9",
+              "BLDE-2024-03-12_10-K.json#context-184",
+              "BLDE-2024-03-12_10-K.json#context-3",
+              "BLDE-2024-03-12_10-K.json#context-185"
+            ]
+          },
+          "10": {
+            "evidence_block_recall": 0.3333333333333333,
+            "all_evidence": false,
+            "mrr": 0.1111111111111111,
+            "context_characters": 8130,
+            "returned_blocks": 10,
+            "passage_ids": [
+              "BLDE-2024-03-12_10-K.json#context-183",
+              "BLDE-2024-03-12_10-K.json#context-9",
+              "BLDE-2024-03-12_10-K.json#context-184",
+              "BLDE-2024-03-12_10-K.json#context-3",
+              "BLDE-2024-03-12_10-K.json#context-185",
+              "BLDE-2024-03-12_10-K.json#context-4",
+              "BLDE-2024-03-12_10-K.json#context-396",
+              "BLDE-2024-03-12_10-K.json#context-395",
+              "BLDE-2024-03-12_10-K.json#context-115",
+              "BLDE-2024-03-12_10-K.json#context-2"
+            ]
+          }
+        },
+        "hybrid": {
+          "5": {
+            "evidence_block_recall": 0.3333333333333333,
+            "all_evidence": false,
+            "mrr": 0.5,
+            "context_characters": 6409,
+            "returned_blocks": 5,
+            "passage_ids": [
+              "BLDE-2024-03-12_10-K.json#context-183",
+              "BLDE-2024-03-12_10-K.json#context-115",
+              "BLDE-2024-03-12_10-K.json#context-47",
+              "BLDE-2024-03-12_10-K.json#context-2",
+              "BLDE-2024-03-12_10-K.json#context-184"
+            ]
+          },
+          "10": {
+            "evidence_block_recall": 0.6666666666666666,
+            "all_evidence": false,
+            "mrr": 0.5,
+            "context_characters": 12219,
+            "returned_blocks": 10,
+            "passage_ids": [
+              "BLDE-2024-03-12_10-K.json#context-183",
+              "BLDE-2024-03-12_10-K.json#context-115",
+              "BLDE-2024-03-12_10-K.json#context-47",
+              "BLDE-2024-03-12_10-K.json#context-2",
+              "BLDE-2024-03-12_10-K.json#context-184",
+              "BLDE-2024-03-12_10-K.json#context-46",
+              "BLDE-2024-03-12_10-K.json#context-114",
+              "BLDE-2024-03-12_10-K.json#context-3",
+              "BLDE-2024-03-12_10-K.json#context-52",
+              "BLDE-2024-03-12_10-K.json#context-113"
+            ]
+          }
+        }
+      }
+    }
+  ],
+  "wall_seconds_this_run": 894.4842591669876
+}

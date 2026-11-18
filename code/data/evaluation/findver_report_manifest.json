@@ -1,0 +1,61 @@
+{
+  "repository": "https://github.com/yilunzhao/FinDVer",
+  "revision": "e8bb237def4ce555a606a45edba22666e31df248",
+  "verification": "Raw local file Git blob SHA1 matched immutable official GitHub tree; SHA256 frozen for offline checks",
+  "reports": [
+    {
+      "report": "BLDE-2024-03-12_10-K.json",
+      "sha256": "08ecabb8c5f8a5a1aa0a2d5b811d709baaf44a064a14f57313f6893b774d2099",
+      "git_blob_sha1": "00ee7716c024017dbd2a215e1b514443dc429311",
+      "bytes": 1531667
+    },
+    {
+      "report": "DX-PC-2024-02-26_10-K.json",
+      "sha256": "99f98895536494e167bd8a6c5726c60323c023cb25112f7be7d2368281fc30fb",
+      "git_blob_sha1": "5e7b7ff95aff4049ddcc10023dd821c07cbaff69",
+      "bytes": 1541228
+    },
+    {
+      "report": "HQY-2024-03-22_10-K.json",
+      "sha256": "737499a9328f3a06e1a25db7313177380cf94553e4edf5a1160d9123e93319e0",
+      "git_blob_sha1": "a383a4d5732d0f24e570f8a97b1885cdb553396a",
+      "bytes": 1421641
+    },
+    {
+      "report": "LVVR-2024-03-27_10-K.json",
+      "sha256": "a74988dfb6bfecd454a26d0c58e9cf3b5704bd56966fa05a5fa215b2f3b47288",
+      "git_blob_sha1": "42b06cc6e62c4b59faac9d20a11c96ed3f93fd2d",
+      "bytes": 716384
+    },
+    {
+      "report": "MITI-2024-02-13_10-Q.json",
+      "sha256": "de2d8a15e17401d56438a07c5a30637ba78a425d45f3004ba0fe39f96e4b9aa4",
+      "git_blob_sha1": "09227039700216ba7c0d6f0ca5dc3eac84fd9949",
+      "bytes": 1386909
+    },
+    {
+      "report": "RCFA-WT-2024-04-23_10-K.json",
+      "sha256": "cce222840ca708c0d8b821b92695003488e5cee7a67c478ee504281f228ced89",
+      "git_blob_sha1": "81b57d88f4ae802a6e1443ceeae97e8d8def6a77",
+      "bytes": 628554
+    },
+    {
+      "report": "SAFT-2024-02-28_10-K.json",
+      "sha256": "bd02d20b47758269d8f2994420be1acfd3e03b3c69c020ab91ff9f562a85a4e5",
+      "git_blob_sha1": "745947739f729f2a3f951d09d508b1cd1e3d203c",
+      "bytes": 5079948
+    },
+    {
+      "report": "TNET-2024-04-26_10-Q.json",
+      "sha256": "84301ba482cc46b4bc20b064e271467d60956d1cf0e4455b40c55cce7d5504cc",
+      "git_blob_sha1": "8221917923620308765c644d6be636177b93739f",
+      "bytes": 756830
+    },
+    {
+      "report": "WWW-2024-02-22_10-K.json",
+      "sha256": "79b0f114c82b316d91a71f4ca83831b7fc426146dab281d6330e8a2a6755b16a",
+      "git_blob_sha1": "1a289e1703f359bdf80df716f9d70d4036e15e3b",
+      "bytes": 1610190
+    }
+  ]
+}

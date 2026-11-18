@@ -1,0 +1,65 @@
+{
+  "protocol": "e1-outcome-annotation-v1",
+  "packet_sha256": "3addee93e05c563a465cd3395773f8223939e468fff8196780a12ce7a2b5b75e",
+  "source": "independent_human",
+  "annotator_id": "DEMO-reviewer-not-a-human-annotation",
+  "independent": false,
+  "completed_at": null,
+  "guideline_version": "e1-human-v1",
+  "assessment": {
+    "units": [
+      {
+        "id": "unit:r1",
+        "requirement_id": "r1",
+        "description": "DEMO：报告示例公司本季度收入，并核对期间、币种及来源。",
+        "answerability": null,
+        "rationale": ""
+      }
+    ],
+    "baseline": {
+      "claims_segmentation_complete": false,
+      "units": [
+        {
+          "unit_id": "unit:r1",
+          "verdict": null,
+          "assertion_ids": [],
+          "rationale": ""
+        }
+      ],
+      "assertions": [
+        {
+          "id": "before:c1:1",
+          "claim_id": "c1",
+          "text": "DEMO 虚构回答：示例公司的本季度收入为 100 美元。该数字仅用于演示编辑器；请勿当作真实金融事实。",
+          "requirement_unit_ids": [],
+          "verdict": null,
+          "evidence_refs": [],
+          "rationale": ""
+        }
+      ]
+    },
+    "candidate": {
+      "claims_segmentation_complete": false,
+      "units": [
+        {
+          "unit_id": "unit:r1",
+          "verdict": null,
+          "assertion_ids": [],
+          "rationale": ""
+        }
+      ],
+      "assertions": [
+        {
+          "id": "after:c1:1",
+          "claim_id": "c1",
+          "text": "DEMO 虚构回答：示例公司的本季度收入为 100 美元。该数字仅用于演示编辑器；请勿当作真实金融事实。",
+          "requirement_unit_ids": [],
+          "verdict": null,
+          "evidence_refs": [],
+          "rationale": "",
+          "baseline_assertion_ids": []
+        }
+      ]
+    }
+  }
+}

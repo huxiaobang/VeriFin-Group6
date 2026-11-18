@@ -1,0 +1,142 @@
+{
+  "claims": [
+    {
+      "id": "claim:franchise_revenue_not_store_sales",
+      "text": "简单说：加盟店卖得好，麦当劳主要赚的是合同约定的租金、特许权使用费等，而不是把加盟店全部营业额记成自己的收入。相关收费主要与销售额挂钩，也不是按加盟商净利润分成。因此，加盟店销售改善通常有利于麦当劳相关收入，但不能把门店多卖的钱全部算成麦当劳多赚的钱。",
+      "evidence_ids": [
+        "chunk_149bb9c87a7ef7432668eebb",
+        "chunk_f20595b2abb202e49b610e85"
+      ],
+      "calculation_ids": [],
+      "requirement_ids": [
+        "request:episode_096de31c3a8646cfaee04efee9b63502"
+      ],
+      "constraints": {
+        "entity": "MCD",
+        "cutoff": "2026-11-16",
+        "basis": "合同机制及其方向性解释",
+        "business_scope": "franchised restaurants"
+      }
+    },
+    {
+      "id": "claim:conventional_franchise_economics",
+      "text": "传统加盟模式下，麦当劳通常拥有餐厅土地和建筑，或取得长期租赁权；加盟商承担设备、招牌、座椅及装修等投入。麦当劳主要收取按销售额计算的租金和特许权使用费，其中租金设有最低支付额，并在新店开业或授予新加盟权时收取初始费用。具体费用因场地、公司投入及当地经营条件而异，不能套用一个统一收费比例。",
+      "evidence_ids": [
+        "chunk_99d17792d84508e31fc75b83",
+        "chunk_f20595b2abb202e49b610e85"
+      ],
+      "calculation_ids": [],
+      "requirement_ids": [
+        "request:episode_096de31c3a8646cfaee04efee9b63502"
+      ],
+      "constraints": {
+        "entity": "MCD",
+        "business_scope": "Conventional Franchise",
+        "basis": "10-Q披露的经营及合同模式",
+        "document_report_date": "2026-09-30"
+      }
+    },
+    {
+      "id": "claim:developmental_license_economics",
+      "text": "发展许可或附属公司模式下，经营方负责经营管理、提供资本（包括房地产权益），并开发和开设新餐厅；麦当劳通常不投入餐厅资本，主要收取按销售额计算的特许权使用费，通常还会在新店开业或授予新许可时收取初始费用。与传统加盟相比，这一模式的餐厅资本责任更多由经营方承担。",
+      "evidence_ids": [
+        "chunk_f20595b2abb202e49b610e85"
+      ],
+      "calculation_ids": [],
+      "requirement_ids": [
+        "request:episode_096de31c3a8646cfaee04efee9b63502"
+      ],
+      "constraints": {
+        "entity": "MCD",
+        "business_scope": "Developmental License or Affiliate",
+        "basis": "10-Q披露的经营及合同模式",
+        "document_report_date": "2026-09-30"
+      }
+    },
+    {
+      "id": "claim:quarterly_franchised_revenue",
+      "text": "落到2026年第三季度，公司收入表直接披露的加盟收入为44.87亿美元。这是麦当劳确认的加盟收入，不是加盟餐厅向顾客销售食品的全部营业额。",
+      "evidence_ids": [
+        "chunk_6dfa0efaee68fd8342f1524b",
+        "chunk_149bb9c87a7ef7432668eebb"
+      ],
+      "calculation_ids": [],
+      "requirement_ids": [
+        "request:episode_096de31c3a8646cfaee04efee9b63502"
+      ],
+      "constraints": {
+        "entity": "MCD",
+        "metric": "Franchised revenues",
+        "business_scope": "consolidated",
+        "period_start": "2026-07-01",
+        "period_end": "2026-09-30",
+        "currency": "USD",
+        "unit": "亿美元",
+        "basis": "季度收入表原文直接披露，非计算结果"
+      }
+    },
+    {
+      "id": "claim:franchised_restaurant_margin_definition",
+      "text": "这些加盟收入还不是利润。公司将“加盟餐厅利润”（Franchised restaurant margins）定义为加盟收入减去加盟餐厅物业占用成本；这些成本包括租赁费用和折旧，因为麦当劳通常拥有或长期租赁相关土地及建筑。",
+      "evidence_ids": [
+        "chunk_6d40ed804857fe9823b396ea"
+      ],
+      "calculation_ids": [],
+      "requirement_ids": [
+        "request:episode_096de31c3a8646cfaee04efee9b63502"
+      ],
+      "constraints": {
+        "entity": "MCD",
+        "metric": "Franchised restaurant margins",
+        "business_scope": "consolidated franchised restaurants",
+        "basis": "公司披露的餐厅利润定义",
+        "document_report_date": "2026-09-30"
+      }
+    },
+    {
+      "id": "claim:quarterly_franchised_margin_not_net_income",
+      "text": "2026年第三季度，公司餐厅利润表直接披露的加盟餐厅利润为38.00亿美元。它只是扣除上述物业占用成本后的餐厅层面指标，并不等于再扣除集团管理费用、利息、税项等之后的集团净利润。",
+      "evidence_ids": [
+        "chunk_6d40ed804857fe9823b396ea",
+        "span_de69cbdff59e9d164a29cd48"
+      ],
+      "calculation_ids": [],
+      "requirement_ids": [
+        "request:episode_096de31c3a8646cfaee04efee9b63502"
+      ],
+      "constraints": {
+        "entity": "MCD",
+        "metric": "Franchised restaurant margins",
+        "business_scope": "consolidated franchised restaurants",
+        "period_start": "2026-07-01",
+        "period_end": "2026-09-30",
+        "currency": "USD",
+        "unit": "亿美元",
+        "basis": "季度餐厅利润表原文直接披露；与集团净利润的会计口径区分"
+      }
+    },
+    {
+      "id": "claim:international_operated_mixed_ownership",
+      "text": "所以，“国际运营市场”说的是业务分部，而不是全部直营的所有权模式：2026年第三季度的餐厅利润表，在该分部下同时列有加盟餐厅利润和公司自营餐厅利润。看这个分部的表现时，需要区分麦当劳从加盟店收取的费用，与自营店销售扣除餐厅经营成本后留下的利润。",
+      "evidence_ids": [
+        "chunk_6d40ed804857fe9823b396ea"
+      ],
+      "calculation_ids": [],
+      "requirement_ids": [
+        "request:episode_096de31c3a8646cfaee04efee9b63502"
+      ],
+      "constraints": {
+        "entity": "MCD",
+        "business_scope": "International Operated Markets",
+        "period_start": "2026-07-01",
+        "period_end": "2026-09-30",
+        "basis": "季度餐厅利润表及其指标定义"
+      }
+    }
+  ],
+  "answered_requirement_ids": [
+    "request:episode_096de31c3a8646cfaee04efee9b63502"
+  ],
+  "unanswered_requirement_ids": [],
+  "summary": "加盟店销售通过合同约定的租金、特许权使用费等转化为麦当劳收入，并非全额并入公司收入，也非按加盟商净利润分成。传统加盟与发展许可模式的资本责任不同；加盟餐厅利润还需与集团净利润区分。"
+}

@@ -1,0 +1,46 @@
+{
+  "protocol": "verifin-pilot-v1",
+  "phase": "preflight",
+  "created_at": "2026-11-06T08:19:16.180785+00:00",
+  "ready_to_execute": false,
+  "problems": [
+    "model_configuration_missing_or_invalid"
+  ],
+  "suite_label": "Development multi-turn pilot; no independent gold",
+  "split": "development",
+  "dialogues": 2,
+  "turns": 5,
+  "per_episode_budget": {
+    "max_model_calls": 12,
+    "max_tool_calls": 8,
+    "max_seconds": 180,
+    "max_no_progress": 3,
+    "max_planner_steps": 40
+  },
+  "conservative_run_upper_bounds": {
+    "model_calls": 60,
+    "tool_calls": 40,
+    "active_seconds": 900
+  },
+  "budget_note": "Clarification continuations share their original episode budget. Active-time limits are cooperative; a running call returns before cancellation. Token/call budgets are not a currency spending cap.",
+  "model_mode": "unconfigured",
+  "model_settings": null,
+  "credential_presence": {
+    "VERIFIN_API_KEY": false,
+    "OPENAI_API_KEY": false,
+    "DASHSCOPE_API_KEY": false,
+    "ALPHAVANTAGE_API_KEY": false
+  },
+  "live_source_network_allowed": false,
+  "sources": {
+    "data_dir": "/Users/apple/Documents/Codex/2026-10-08/san/outputs/VeriFin_Code/data/replay",
+    "manifest_sha256": "997e47981e8648117e1a074036ee681d48e7f6f34cb23b0806661d4d03580738",
+    "verified_replay_snapshots": 14,
+    "optional": {}
+  },
+  "provider_access_tested": false,
+  "model_calls_made": 0,
+  "network_requests_made": 0,
+  "semantic_acceptance": "not_assessed",
+  "truth_scored": false
+}

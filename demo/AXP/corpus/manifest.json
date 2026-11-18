@@ -1,0 +1,127 @@
+{
+  "companies": [
+    {
+      "name": "AMERICAN EXPRESS CO",
+      "cik": "0000004962",
+      "ticker": "AXP",
+      "aliases": [
+        "American Express",
+        "美国运通"
+      ],
+      "submissions": "snapshots/submissions.json",
+      "facts": "snapshots/facts.json"
+    }
+  ],
+  "files": {
+    "snapshots/submissions.json": {
+      "bytes": 159334,
+      "url": "https://data.sec.gov/submissions/CIK0000004962.json",
+      "sha256": "acffa48f209dde90c0393a84169f845f2633be5c8f525bd308e21e149edcba7f",
+      "retrieved_at": "2026-11-16T16:20:43.978415+00:00"
+    },
+    "snapshots/facts.json": {
+      "bytes": 4834968,
+      "url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0000004962.json",
+      "sha256": "e0f88341930d943f34039276fcd1ff8650219870001b035dc6e107e7f74d87a9",
+      "retrieved_at": "2026-11-16T16:20:49.240975+00:00"
+    },
+    "snapshots/axp-20260930.htm": {
+      "bytes": 3265163,
+      "url": "https://www.sec.gov/Archives/edgar/data/4962/000000496226000409/axp-20260930.htm",
+      "sha256": "5b92b6270a3af3b993c334bc65d30bfd0484164c98075803d2198bed6853211a",
+      "retrieved_at": "2026-11-16T16:20:53.736479+00:00"
+    },
+    "snapshots/axp-20260930.htm.txt": {
+      "bytes": 242319,
+      "url": "https://www.sec.gov/Archives/edgar/data/4962/000000496226000409/axp-20260930.htm",
+      "sha256": "ef693507486ba203d8840f2a5a45b68756b60f3a5b0ffa4214d35255921ca4b3",
+      "retrieved_at": "2026-11-16T16:20:53.912573+00:00"
+    },
+    "snapshots/axp-20260630.htm": {
+      "bytes": 3225213,
+      "url": "https://www.sec.gov/Archives/edgar/data/4962/000000496226000322/axp-20260630.htm",
+      "sha256": "1d92458c1358413fdf8a2864186a97630b5ff9747acb74bad42baf9142a69f8f",
+      "retrieved_at": "2026-11-16T16:20:56.701546+00:00"
+    },
+    "snapshots/axp-20260630.htm.txt": {
+      "bytes": 236365,
+      "url": "https://www.sec.gov/Archives/edgar/data/4962/000000496226000322/axp-20260630.htm",
+      "sha256": "66e18957912651a0ec2a7ec1bc303aba6895d37615e0c3c4a04bfe45a317828d",
+      "retrieved_at": "2026-11-16T16:20:56.853415+00:00"
+    },
+    "snapshots/axp-20251231.htm": {
+      "bytes": 5080737,
+      "url": "https://www.sec.gov/Archives/edgar/data/4962/000000496226000080/axp-20251231.htm",
+      "sha256": "e11d5fceff8d513ac1e70522fbeca3aafa7469877b084415a41f7f46d6ac32fa",
+      "retrieved_at": "2026-11-16T16:21:17.688662+00:00"
+    },
+    "snapshots/axp-20251231.htm.txt": {
+      "bytes": 623978,
+      "url": "https://www.sec.gov/Archives/edgar/data/4962/000000496226000080/axp-20251231.htm",
+      "sha256": "2e961d5b61ee3afe623e7cbda522f6ffe9ba575c7c933dd7e68e3030638aba25",
+      "retrieved_at": "2026-11-16T16:21:18.035918+00:00"
+    },
+    "snapshots/q326exhibit991.htm": {
+      "bytes": 106059,
+      "url": "https://www.sec.gov/Archives/edgar/data/4962/000000496226000405/q326exhibit991.htm",
+      "sha256": "19053fbfc0e231460d39f697ac44c76e16acf71d71108d8dfba0380f47bbef38",
+      "retrieved_at": "2026-11-16T16:21:18.730518+00:00"
+    },
+    "snapshots/q326exhibit991.htm.txt": {
+      "bytes": 16557,
+      "url": "https://www.sec.gov/Archives/edgar/data/4962/000000496226000405/q326exhibit991.htm",
+      "sha256": "c55763d494ac2b1ad5a4c2f8e5502cf5801454c64cce2a2abbcbfa217140637a",
+      "retrieved_at": "2026-11-16T16:21:18.746646+00:00"
+    }
+  },
+  "documents": [
+    {
+      "entity": "AXP",
+      "form": "10-Q",
+      "source": "snapshots/axp-20260930.htm",
+      "text": "snapshots/axp-20260930.htm.txt",
+      "period_start": "2026-07-01",
+      "period_end": "2026-09-30",
+      "published_at": "2026-10-23T16:26:51.000Z",
+      "publication_precision": "timestamp",
+      "publication_basis": "SEC EDGAR acceptance 0000004962-26-000409",
+      "extraction_method": "All visible HTML tables and body in source order."
+    },
+    {
+      "entity": "AXP",
+      "form": "10-Q",
+      "source": "snapshots/axp-20260630.htm",
+      "text": "snapshots/axp-20260630.htm.txt",
+      "period_start": "2026-04-01",
+      "period_end": "2026-06-30",
+      "published_at": "2026-07-24T16:00:43.000Z",
+      "publication_precision": "timestamp",
+      "publication_basis": "SEC EDGAR acceptance 0000004962-26-000322",
+      "extraction_method": "All visible HTML tables and body in source order."
+    },
+    {
+      "entity": "AXP",
+      "form": "10-K",
+      "source": "snapshots/axp-20251231.htm",
+      "text": "snapshots/axp-20251231.htm.txt",
+      "period_start": "2025-01-01",
+      "period_end": "2025-12-31",
+      "published_at": "2026-02-06T17:31:47.000Z",
+      "publication_precision": "timestamp",
+      "publication_basis": "SEC EDGAR acceptance 0000004962-26-000080",
+      "extraction_method": "All visible HTML tables and body in source order."
+    },
+    {
+      "entity": "AXP",
+      "form": "8-K Exhibit 99.1",
+      "source": "snapshots/q326exhibit991.htm",
+      "text": "snapshots/q326exhibit991.htm.txt",
+      "period_start": "2026-07-01",
+      "period_end": "2026-09-30",
+      "published_at": "2026-10-23T11:00:36.000Z",
+      "publication_precision": "timestamp",
+      "publication_basis": "SEC EDGAR acceptance 0000004962-26-000405",
+      "extraction_method": "All visible HTML tables and body in source order."
+    }
+  ]
+}

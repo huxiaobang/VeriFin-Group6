@@ -1,0 +1,15 @@
+{
+  "action": "tool",
+  "tool": "read_document",
+  "arguments": {
+    "entity": "PEP",
+    "document_id": "source_doc_10051e485ae3e4f6272a9b32",
+    "offset": 28825,
+    "limit_chars": 5000,
+    "cutoff": "2026-11-16"
+  },
+  "reason": "已确认本轮要求是拆解同季度北美食品与饮料的量、价、有机收入及收购影响；沿用 reconcile-comparable-growth 核对可比增长桥。现有表格已有量价数字，补读其脚注和定义，避免把有机销量的收入贡献当成实物销量增速，或把有效净定价当成单纯标价变化。",
+  "research_skills": [
+    "reconcile-comparable-growth"
+  ]
+}

@@ -1,0 +1,85 @@
+{
+  "protocol": "pplx-independent-rescore-v1",
+  "result_sha256": "7d0657c72fa977860320b8df0dbd503731a0893bac5585b1ed7daa9f70d7014f",
+  "artifact_sha256": "a29f72d31fb081c334a1b1d842a8948a07efdd081d74cae158910e32a46905cc",
+  "selection_sha256": "2e65eecd02ae4747fb753ebb5682b6aedef09f73fb59e9cf4ef6aa60c2d3bc57",
+  "cases_verified": 100,
+  "top5_rankings_verified": 400,
+  "model_loaded": false,
+  "network_used": false,
+  "all_top5_ids_and_metrics_exactly_match": true,
+  "script_sha256": "722fc37a01d661e399b85ffd09e4b68b0069a32e193658af3610cf45294c615a",
+  "paired_comparison": {
+    "baseline_sha256": "25abcb3d79fd1983d6b1b2aca89c2d112b593ee9d7c72b0120efe710f2e7133f",
+    "source_page_groups": 18,
+    "bootstrap_replicates": 5000,
+    "seed": 20261106,
+    "comparisons": {
+      "history_questions_maxsim_top5_minus_history_questions_dense_top5": {
+        "evidence_recall": {
+          "mean_paired_delta": 0.029761904761904764,
+          "cluster_bootstrap_95pct_interval": [
+            -0.005155429018601418,
+            0.09302512225167044
+          ],
+          "turns_improved": 6,
+          "turns_worsened": 1,
+          "turns_tied": 93
+        },
+        "all_evidence": {
+          "mean_paired_delta": 0.04,
+          "cluster_bootstrap_95pct_interval": [
+            -0.011363636363636364,
+            0.11688657087593253
+          ],
+          "turns_improved": 5,
+          "turns_worsened": 1,
+          "turns_tied": 94
+        },
+        "mrr": {
+          "mean_paired_delta": -0.021000000000000005,
+          "cluster_bootstrap_95pct_interval": [
+            -0.0651699200913242,
+            0.017493407647129276
+          ],
+          "turns_improved": 9,
+          "turns_worsened": 13,
+          "turns_tied": 78
+        }
+      },
+      "history_questions_bm25_maxsim_rrf_top5_minus_history_questions_hybrid_top5": {
+        "evidence_recall": {
+          "mean_paired_delta": 0.02142857142857143,
+          "cluster_bootstrap_95pct_interval": [
+            -0.006410455486542442,
+            0.06024460159478488
+          ],
+          "turns_improved": 7,
+          "turns_worsened": 1,
+          "turns_tied": 92
+        },
+        "all_evidence": {
+          "mean_paired_delta": 0.03,
+          "cluster_bootstrap_95pct_interval": [
+            -0.02247191011235955,
+            0.10526315789473684
+          ],
+          "turns_improved": 4,
+          "turns_worsened": 1,
+          "turns_tied": 95
+        },
+        "mrr": {
+          "mean_paired_delta": -0.0023333333333333344,
+          "cluster_bootstrap_95pct_interval": [
+            -0.030653031327473518,
+            0.025309983896940398
+          ],
+          "turns_improved": 5,
+          "turns_worsened": 7,
+          "turns_tied": 88
+        }
+      }
+    },
+    "notice": "Resampling whole source-page groups; public dev diagnostic, not held-out proof or a training-contamination audit."
+  }
+}

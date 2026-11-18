@@ -1,0 +1,212 @@
+{
+  "protocol": "Four frozen official filings, filing metadata and SEC structured financial data per issuer. As of November 16 2026. Development benchmark. Full-text eligibility screens project code/test/formal fixtures, plus prior agent user messages/titles/scopes. Archived ZIPs and chat outside this workspace are not scanned.",
+  "issuers": {
+    "MCD": {
+      "sizes": [
+        "Consolidated 2025 revenues (USD millions)",
+        26885
+      ],
+      "documents": [
+        {
+          "period_start": "2026-07-01",
+          "period_end": "2026-09-30",
+          "form": "10-Q",
+          "published_at": "2026-11-06T17:07:09.000Z",
+          "text": "snapshots/mcd-20260930.htm.txt",
+          "url": "https://www.sec.gov/Archives/edgar/data/63908/000006390826000083/mcd-20260930.htm"
+        },
+        {
+          "period_start": "2026-04-01",
+          "period_end": "2026-06-30",
+          "form": "10-Q",
+          "published_at": "2026-08-07T16:52:32.000Z",
+          "text": "snapshots/mcd-20260630.htm.txt",
+          "url": "https://www.sec.gov/Archives/edgar/data/63908/000006390826000073/mcd-20260630.htm"
+        },
+        {
+          "period_start": "2025-01-01",
+          "period_end": "2025-12-31",
+          "form": "10-K",
+          "published_at": "2026-02-24T16:12:45.000Z",
+          "text": "snapshots/mcd-20251231.htm.txt",
+          "url": "https://www.sec.gov/Archives/edgar/data/63908/000006390826000035/mcd-20251231.htm"
+        },
+        {
+          "period_start": "2026-07-01",
+          "period_end": "2026-09-30",
+          "form": "8-K Exhibit 99.1",
+          "published_at": "2026-11-04T12:01:40.000Z",
+          "text": "snapshots/exhibit991-9302026.htm.txt",
+          "url": "https://www.sec.gov/Archives/edgar/data/63908/000006390826000080/exhibit991-9302026.htm"
+        }
+      ],
+      "manifest_sha256": "c98ef96e09ba9ea5452972813fe81d0bc5ab0d0a90cbc81905b9e9b7251dd5d2",
+      "formal_tool_inventory": {
+        "cutoff": "2026-11-16",
+        "form_groups_total": 3,
+        "forms": [
+          {
+            "entity": "MCD",
+            "form": "10-Q",
+            "count": 2,
+            "latest_period_end": "2026-09-30",
+            "latest_document_id": "source_doc_0cdcf4786366028311a04eeb"
+          },
+          {
+            "entity": "MCD",
+            "form": "8-K Exhibit 99.1",
+            "count": 1,
+            "latest_period_end": "2026-09-30",
+            "latest_document_id": "source_doc_7ed1c5b5b7251626e61b3bdf"
+          },
+          {
+            "entity": "MCD",
+            "form": "10-K",
+            "count": 1,
+            "latest_period_end": "2025-12-31",
+            "latest_document_id": "source_doc_ac804e45c32e2ff90bb707fb"
+          }
+        ]
+      },
+      "latest_quarter_end": "2026-09-30"
+    },
+    "PEP": {
+      "sizes": [
+        "2025 net revenue (USD millions)",
+        93925
+      ],
+      "documents": [
+        {
+          "period_start": "2026-06-14",
+          "period_end": "2026-09-05",
+          "form": "10-Q",
+          "published_at": "2026-10-07T21:52:53.000Z",
+          "text": "snapshots/pep-20260905.htm.txt",
+          "url": "https://www.sec.gov/Archives/edgar/data/77476/000007747626000048/pep-20260905.htm"
+        },
+        {
+          "period_start": "2026-03-22",
+          "period_end": "2026-06-13",
+          "form": "10-Q",
+          "published_at": "2026-07-08T21:52:18.000Z",
+          "text": "snapshots/pep-20260613.htm.txt",
+          "url": "https://www.sec.gov/Archives/edgar/data/77476/000007747626000035/pep-20260613.htm"
+        },
+        {
+          "period_start": "2024-12-29",
+          "period_end": "2025-12-27",
+          "form": "10-K",
+          "published_at": "2026-02-02T23:07:04.000Z",
+          "text": "snapshots/pep-20251227.htm.txt",
+          "url": "https://www.sec.gov/Archives/edgar/data/77476/000007747626000007/pep-20251227.htm"
+        },
+        {
+          "period_start": "2026-06-14",
+          "period_end": "2026-09-05",
+          "form": "8-K Exhibit 99.1",
+          "published_at": "2026-10-07T21:57:44.000Z",
+          "text": "snapshots/q320268-kxexhibit991.htm.txt",
+          "url": "https://www.sec.gov/Archives/edgar/data/77476/000007747626000050/q320268-kxexhibit991.htm"
+        }
+      ],
+      "manifest_sha256": "dbf78f320aca77b3e4dfaa055e02f216fab9a11fcfa79426fb195da46f9d64f5",
+      "formal_tool_inventory": {
+        "cutoff": "2026-11-16",
+        "form_groups_total": 3,
+        "forms": [
+          {
+            "entity": "PEP",
+            "form": "8-K Exhibit 99.1",
+            "count": 1,
+            "latest_period_end": "2026-09-05",
+            "latest_document_id": "source_doc_10051e485ae3e4f6272a9b32"
+          },
+          {
+            "entity": "PEP",
+            "form": "10-Q",
+            "count": 2,
+            "latest_period_end": "2026-09-05",
+            "latest_document_id": "source_doc_d449d3357bc8b204d1ad9eb2"
+          },
+          {
+            "entity": "PEP",
+            "form": "10-K",
+            "count": 1,
+            "latest_period_end": "2025-12-27",
+            "latest_document_id": "source_doc_ab2ef82f3beaf1270b969eb3"
+          }
+        ]
+      },
+      "latest_quarter_end": "2026-09-05"
+    },
+    "AXP": {
+      "sizes": [
+        "2025 total revenues net of interest expense (USD millions)",
+        72229
+      ],
+      "documents": [
+        {
+          "period_start": "2026-07-01",
+          "period_end": "2026-09-30",
+          "form": "10-Q",
+          "published_at": "2026-10-23T16:26:51.000Z",
+          "text": "snapshots/axp-20260930.htm.txt",
+          "url": "https://www.sec.gov/Archives/edgar/data/4962/000000496226000409/axp-20260930.htm"
+        },
+        {
+          "period_start": "2026-04-01",
+          "period_end": "2026-06-30",
+          "form": "10-Q",
+          "published_at": "2026-07-24T16:00:43.000Z",
+          "text": "snapshots/axp-20260630.htm.txt",
+          "url": "https://www.sec.gov/Archives/edgar/data/4962/000000496226000322/axp-20260630.htm"
+        },
+        {
+          "period_start": "2025-01-01",
+          "period_end": "2025-12-31",
+          "form": "10-K",
+          "published_at": "2026-02-06T17:31:47.000Z",
+          "text": "snapshots/axp-20251231.htm.txt",
+          "url": "https://www.sec.gov/Archives/edgar/data/4962/000000496226000080/axp-20251231.htm"
+        },
+        {
+          "period_start": "2026-07-01",
+          "period_end": "2026-09-30",
+          "form": "8-K Exhibit 99.1",
+          "published_at": "2026-10-23T11:00:36.000Z",
+          "text": "snapshots/q326exhibit991.htm.txt",
+          "url": "https://www.sec.gov/Archives/edgar/data/4962/000000496226000405/q326exhibit991.htm"
+        }
+      ],
+      "manifest_sha256": "794232138fd621b28aeebb63d1b7c5b4c6cc5ba59533af7e631ca281132b19a3",
+      "formal_tool_inventory": {
+        "cutoff": "2026-11-16",
+        "form_groups_total": 3,
+        "forms": [
+          {
+            "entity": "AXP",
+            "form": "10-Q",
+            "count": 2,
+            "latest_period_end": "2026-09-30",
+            "latest_document_id": "source_doc_e753f139bb38d7480d4b861d"
+          },
+          {
+            "entity": "AXP",
+            "form": "8-K Exhibit 99.1",
+            "count": 1,
+            "latest_period_end": "2026-09-30",
+            "latest_document_id": "source_doc_dcbdedf0ae2a1c1306b321fb"
+          },
+          {
+            "entity": "AXP",
+            "form": "10-K",
+            "count": 1,
+            "latest_period_end": "2025-12-31",
+            "latest_document_id": "source_doc_1d2dc6f2c11162e6aaa79bb8"
+          }
+        ]
+      },
+      "latest_quarter_end": "2026-09-30"
+    }
+  }
+}

@@ -1,0 +1,622 @@
+{
+  "created_at": "2026-11-06T10:14:16.298156+00:00",
+  "cases": 100,
+  "source_page_groups": 18,
+  "query_serialization": "newline join of previous questions + current; no enumeration, labels or added numbers",
+  "files": {
+    "e5-small": {
+      "path": "data/evaluation/open_source_dense_public/convfinqa-e5-small-results.json",
+      "sha256": "403bc6512c49a74f1d848a2cbff9748e815a591b9ffeef12d4f1ca6e5917b453"
+    },
+    "bge-m3": {
+      "path": "data/evaluation/open_source_dense_public/convfinqa-bge-m3-results.json",
+      "sha256": "e2ad0844e90db635aa693609bae65d8632f4c8b072a879a2830cbffbe6c5c2a4"
+    },
+    "qwen3-0.6b": {
+      "path": "data/evaluation/open_source_results/convfinqa-qwen0.6-canonical-baselines.json",
+      "sha256": "25abcb3d79fd1983d6b1b2aca89c2d112b593ee9d7c72b0120efe710f2e7133f"
+    }
+  },
+  "metrics": {
+    "e5-small": {
+      "all": {
+        "count": 100,
+        "methods": {
+          "current_question_bm25_top5": {
+            "macro_evidence_recall": 0.5514285714285714,
+            "all_evidence_fraction": 0.41,
+            "mrr": 0.4746666666666667,
+            "mean_context_chars": 582.85
+          },
+          "current_question_dense_top5": {
+            "macro_evidence_recall": 0.5971428571428571,
+            "all_evidence_fraction": 0.43,
+            "mrr": 0.549,
+            "mean_context_chars": 638.81
+          },
+          "current_question_hybrid_top5": {
+            "macro_evidence_recall": 0.6157142857142857,
+            "all_evidence_fraction": 0.43,
+            "mrr": 0.5633333333333334,
+            "mean_context_chars": 672.89
+          },
+          "history_questions_bm25_top5": {
+            "macro_evidence_recall": 0.8405952380952381,
+            "all_evidence_fraction": 0.68,
+            "mrr": 0.7675,
+            "mean_context_chars": 742.04
+          },
+          "history_questions_dense_top5": {
+            "macro_evidence_recall": 0.7946428571428571,
+            "all_evidence_fraction": 0.61,
+            "mrr": 0.7846666666666666,
+            "mean_context_chars": 716.81
+          },
+          "history_questions_hybrid_top5": {
+            "macro_evidence_recall": 0.8148809523809524,
+            "all_evidence_fraction": 0.62,
+            "mrr": 0.8073333333333333,
+            "mean_context_chars": 760.78
+          },
+          "history_questions_hybrid_candidates20": {
+            "macro_evidence_recall": 0.9975,
+            "all_evidence_fraction": 0.99,
+            "mrr": 0.8150119047619048,
+            "mean_context_chars": 2896.63
+          }
+        }
+      },
+      "initial": {
+        "count": 31,
+        "methods": {
+          "current_question_bm25_top5": {
+            "macro_evidence_recall": 0.8271889400921659,
+            "all_evidence_fraction": 0.6451612903225806,
+            "mrr": 0.714516129032258,
+            "mean_context_chars": 725.516129032258
+          },
+          "current_question_dense_top5": {
+            "macro_evidence_recall": 0.7730414746543779,
+            "all_evidence_fraction": 0.5806451612903226,
+            "mrr": 0.7564516129032258,
+            "mean_context_chars": 729.6129032258065
+          },
+          "current_question_hybrid_top5": {
+            "macro_evidence_recall": 0.7684331797235023,
+            "all_evidence_fraction": 0.5483870967741935,
+            "mrr": 0.7483870967741936,
+            "mean_context_chars": 761.4516129032259
+          },
+          "history_questions_bm25_top5": {
+            "macro_evidence_recall": 0.8271889400921659,
+            "all_evidence_fraction": 0.6451612903225806,
+            "mrr": 0.714516129032258,
+            "mean_context_chars": 725.516129032258
+          },
+          "history_questions_dense_top5": {
+            "macro_evidence_recall": 0.7730414746543779,
+            "all_evidence_fraction": 0.5806451612903226,
+            "mrr": 0.7564516129032258,
+            "mean_context_chars": 729.6129032258065
+          },
+          "history_questions_hybrid_top5": {
+            "macro_evidence_recall": 0.7684331797235023,
+            "all_evidence_fraction": 0.5483870967741935,
+            "mrr": 0.7483870967741936,
+            "mean_context_chars": 761.4516129032259
+          },
+          "history_questions_hybrid_candidates20": {
+            "macro_evidence_recall": 0.9919354838709677,
+            "all_evidence_fraction": 0.967741935483871,
+            "mrr": 0.7583717357910906,
+            "mean_context_chars": 2898.6774193548385
+          }
+        }
+      },
+      "followup": {
+        "count": 69,
+        "methods": {
+          "current_question_bm25_top5": {
+            "macro_evidence_recall": 0.427536231884058,
+            "all_evidence_fraction": 0.30434782608695654,
+            "mrr": 0.36690821256038647,
+            "mean_context_chars": 518.7536231884058
+          },
+          "current_question_dense_top5": {
+            "macro_evidence_recall": 0.5181159420289855,
+            "all_evidence_fraction": 0.36231884057971014,
+            "mrr": 0.4557971014492754,
+            "mean_context_chars": 598.0144927536232
+          },
+          "current_question_hybrid_top5": {
+            "macro_evidence_recall": 0.5471014492753623,
+            "all_evidence_fraction": 0.37681159420289856,
+            "mrr": 0.4801932367149758,
+            "mean_context_chars": 633.1014492753624
+          },
+          "history_questions_bm25_top5": {
+            "macro_evidence_recall": 0.8466183574879227,
+            "all_evidence_fraction": 0.6956521739130435,
+            "mrr": 0.7913043478260869,
+            "mean_context_chars": 749.463768115942
+          },
+          "history_questions_dense_top5": {
+            "macro_evidence_recall": 0.8043478260869565,
+            "all_evidence_fraction": 0.6231884057971014,
+            "mrr": 0.7973429951690821,
+            "mean_context_chars": 711.0579710144928
+          },
+          "history_questions_hybrid_top5": {
+            "macro_evidence_recall": 0.8357487922705314,
+            "all_evidence_fraction": 0.6521739130434783,
+            "mrr": 0.8338164251207729,
+            "mean_context_chars": 760.4782608695652
+          },
+          "history_questions_hybrid_candidates20": {
+            "macro_evidence_recall": 1.0,
+            "all_evidence_fraction": 1,
+            "mrr": 0.8404589371980676,
+            "mean_context_chars": 2895.710144927536
+          }
+        }
+      }
+    },
+    "bge-m3": {
+      "all": {
+        "count": 100,
+        "methods": {
+          "current_question_bm25_top5": {
+            "macro_evidence_recall": 0.5514285714285714,
+            "all_evidence_fraction": 0.41,
+            "mrr": 0.4746666666666667,
+            "mean_context_chars": 582.85
+          },
+          "current_question_dense_top5": {
+            "macro_evidence_recall": 0.5392857142857143,
+            "all_evidence_fraction": 0.36,
+            "mrr": 0.4795,
+            "mean_context_chars": 638.94
+          },
+          "current_question_hybrid_top5": {
+            "macro_evidence_recall": 0.5767857142857142,
+            "all_evidence_fraction": 0.4,
+            "mrr": 0.5076666666666667,
+            "mean_context_chars": 677.47
+          },
+          "history_questions_bm25_top5": {
+            "macro_evidence_recall": 0.8405952380952381,
+            "all_evidence_fraction": 0.68,
+            "mrr": 0.7675,
+            "mean_context_chars": 742.04
+          },
+          "history_questions_dense_top5": {
+            "macro_evidence_recall": 0.748452380952381,
+            "all_evidence_fraction": 0.52,
+            "mrr": 0.7193333333333334,
+            "mean_context_chars": 720.02
+          },
+          "history_questions_hybrid_top5": {
+            "macro_evidence_recall": 0.8226190476190476,
+            "all_evidence_fraction": 0.63,
+            "mrr": 0.7586666666666667,
+            "mean_context_chars": 730.79
+          },
+          "history_questions_hybrid_candidates20": {
+            "macro_evidence_recall": 0.9925,
+            "all_evidence_fraction": 0.98,
+            "mrr": 0.7642619047619048,
+            "mean_context_chars": 2866.56
+          }
+        }
+      },
+      "initial": {
+        "count": 31,
+        "methods": {
+          "current_question_bm25_top5": {
+            "macro_evidence_recall": 0.8271889400921659,
+            "all_evidence_fraction": 0.6451612903225806,
+            "mrr": 0.714516129032258,
+            "mean_context_chars": 725.516129032258
+          },
+          "current_question_dense_top5": {
+            "macro_evidence_recall": 0.7638248847926268,
+            "all_evidence_fraction": 0.5161290322580645,
+            "mrr": 0.7387096774193549,
+            "mean_context_chars": 718.741935483871
+          },
+          "current_question_hybrid_top5": {
+            "macro_evidence_recall": 0.7880184331797235,
+            "all_evidence_fraction": 0.5483870967741935,
+            "mrr": 0.7268817204301076,
+            "mean_context_chars": 708.1612903225806
+          },
+          "history_questions_bm25_top5": {
+            "macro_evidence_recall": 0.8271889400921659,
+            "all_evidence_fraction": 0.6451612903225806,
+            "mrr": 0.714516129032258,
+            "mean_context_chars": 725.516129032258
+          },
+          "history_questions_dense_top5": {
+            "macro_evidence_recall": 0.7638248847926268,
+            "all_evidence_fraction": 0.5161290322580645,
+            "mrr": 0.7387096774193549,
+            "mean_context_chars": 718.741935483871
+          },
+          "history_questions_hybrid_top5": {
+            "macro_evidence_recall": 0.7880184331797235,
+            "all_evidence_fraction": 0.5483870967741935,
+            "mrr": 0.7268817204301076,
+            "mean_context_chars": 708.1612903225806
+          },
+          "history_questions_hybrid_candidates20": {
+            "macro_evidence_recall": 0.9919354838709677,
+            "all_evidence_fraction": 0.967741935483871,
+            "mrr": 0.7322580645161291,
+            "mean_context_chars": 2848.483870967742
+          }
+        }
+      },
+      "followup": {
+        "count": 69,
+        "methods": {
+          "current_question_bm25_top5": {
+            "macro_evidence_recall": 0.427536231884058,
+            "all_evidence_fraction": 0.30434782608695654,
+            "mrr": 0.36690821256038647,
+            "mean_context_chars": 518.7536231884058
+          },
+          "current_question_dense_top5": {
+            "macro_evidence_recall": 0.4384057971014493,
+            "all_evidence_fraction": 0.2898550724637681,
+            "mrr": 0.3630434782608696,
+            "mean_context_chars": 603.0869565217391
+          },
+          "current_question_hybrid_top5": {
+            "macro_evidence_recall": 0.48188405797101447,
+            "all_evidence_fraction": 0.3333333333333333,
+            "mrr": 0.4091787439613527,
+            "mean_context_chars": 663.6811594202899
+          },
+          "history_questions_bm25_top5": {
+            "macro_evidence_recall": 0.8466183574879227,
+            "all_evidence_fraction": 0.6956521739130435,
+            "mrr": 0.7913043478260869,
+            "mean_context_chars": 749.463768115942
+          },
+          "history_questions_dense_top5": {
+            "macro_evidence_recall": 0.7415458937198067,
+            "all_evidence_fraction": 0.5217391304347826,
+            "mrr": 0.7106280193236715,
+            "mean_context_chars": 720.5942028985507
+          },
+          "history_questions_hybrid_top5": {
+            "macro_evidence_recall": 0.8381642512077294,
+            "all_evidence_fraction": 0.6666666666666666,
+            "mrr": 0.7729468599033816,
+            "mean_context_chars": 740.9565217391304
+          },
+          "history_questions_hybrid_candidates20": {
+            "macro_evidence_recall": 0.9927536231884058,
+            "all_evidence_fraction": 0.9855072463768116,
+            "mrr": 0.77864044168392,
+            "mean_context_chars": 2874.68115942029
+          }
+        }
+      }
+    },
+    "qwen3-0.6b": {
+      "all": {
+        "count": 100,
+        "methods": {
+          "current_question_bm25_top5": {
+            "macro_evidence_recall": 0.5514285714285714,
+            "all_evidence_fraction": 0.41,
+            "mrr": 0.4746666666666667,
+            "mean_context_chars": 582.85
+          },
+          "current_question_dense_top5": {
+            "macro_evidence_recall": 0.5720238095238095,
+            "all_evidence_fraction": 0.4,
+            "mrr": 0.5658333333333333,
+            "mean_context_chars": 671.4
+          },
+          "current_question_hybrid_top5": {
+            "macro_evidence_recall": 0.5920238095238095,
+            "all_evidence_fraction": 0.42,
+            "mrr": 0.5711666666666667,
+            "mean_context_chars": 671.56
+          },
+          "history_questions_bm25_top5": {
+            "macro_evidence_recall": 0.8405952380952381,
+            "all_evidence_fraction": 0.68,
+            "mrr": 0.7675,
+            "mean_context_chars": 742.04
+          },
+          "history_questions_dense_top5": {
+            "macro_evidence_recall": 0.8070238095238095,
+            "all_evidence_fraction": 0.6,
+            "mrr": 0.8425,
+            "mean_context_chars": 756.48
+          },
+          "history_questions_hybrid_top5": {
+            "macro_evidence_recall": 0.8136904761904762,
+            "all_evidence_fraction": 0.62,
+            "mrr": 0.82,
+            "mean_context_chars": 722.98
+          },
+          "history_questions_hybrid_candidates20": {
+            "macro_evidence_recall": 1.0,
+            "all_evidence_fraction": 1,
+            "mrr": 0.822,
+            "mean_context_chars": 2874.82
+          }
+        }
+      },
+      "initial": {
+        "count": 31,
+        "methods": {
+          "current_question_bm25_top5": {
+            "macro_evidence_recall": 0.8271889400921659,
+            "all_evidence_fraction": 0.6451612903225806,
+            "mrr": 0.714516129032258,
+            "mean_context_chars": 725.516129032258
+          },
+          "current_question_dense_top5": {
+            "macro_evidence_recall": 0.7914746543778802,
+            "all_evidence_fraction": 0.5806451612903226,
+            "mrr": 0.7876344086021505,
+            "mean_context_chars": 787.8064516129032
+          },
+          "current_question_hybrid_top5": {
+            "macro_evidence_recall": 0.8129800307219662,
+            "all_evidence_fraction": 0.6129032258064516,
+            "mrr": 0.7924731182795699,
+            "mean_context_chars": 713.3225806451613
+          },
+          "history_questions_bm25_top5": {
+            "macro_evidence_recall": 0.8271889400921659,
+            "all_evidence_fraction": 0.6451612903225806,
+            "mrr": 0.714516129032258,
+            "mean_context_chars": 725.516129032258
+          },
+          "history_questions_dense_top5": {
+            "macro_evidence_recall": 0.7914746543778802,
+            "all_evidence_fraction": 0.5806451612903226,
+            "mrr": 0.7876344086021505,
+            "mean_context_chars": 787.8064516129032
+          },
+          "history_questions_hybrid_top5": {
+            "macro_evidence_recall": 0.8129800307219662,
+            "all_evidence_fraction": 0.6129032258064516,
+            "mrr": 0.7924731182795699,
+            "mean_context_chars": 713.3225806451613
+          },
+          "history_questions_hybrid_candidates20": {
+            "macro_evidence_recall": 1.0,
+            "all_evidence_fraction": 1,
+            "mrr": 0.7924731182795699,
+            "mean_context_chars": 2872.3870967741937
+          }
+        }
+      },
+      "followup": {
+        "count": 69,
+        "methods": {
+          "current_question_bm25_top5": {
+            "macro_evidence_recall": 0.427536231884058,
+            "all_evidence_fraction": 0.30434782608695654,
+            "mrr": 0.36690821256038647,
+            "mean_context_chars": 518.7536231884058
+          },
+          "current_question_dense_top5": {
+            "macro_evidence_recall": 0.47342995169082125,
+            "all_evidence_fraction": 0.3188405797101449,
+            "mrr": 0.46618357487922707,
+            "mean_context_chars": 619.1014492753624
+          },
+          "current_question_hybrid_top5": {
+            "macro_evidence_recall": 0.4927536231884058,
+            "all_evidence_fraction": 0.3333333333333333,
+            "mrr": 0.4717391304347826,
+            "mean_context_chars": 652.7971014492754
+          },
+          "history_questions_bm25_top5": {
+            "macro_evidence_recall": 0.8466183574879227,
+            "all_evidence_fraction": 0.6956521739130435,
+            "mrr": 0.7913043478260869,
+            "mean_context_chars": 749.463768115942
+          },
+          "history_questions_dense_top5": {
+            "macro_evidence_recall": 0.8140096618357487,
+            "all_evidence_fraction": 0.6086956521739131,
+            "mrr": 0.8671497584541062,
+            "mean_context_chars": 742.4057971014493
+          },
+          "history_questions_hybrid_top5": {
+            "macro_evidence_recall": 0.8140096618357487,
+            "all_evidence_fraction": 0.6231884057971014,
+            "mrr": 0.8323671497584542,
+            "mean_context_chars": 727.3188405797101
+          },
+          "history_questions_hybrid_candidates20": {
+            "macro_evidence_recall": 1.0,
+            "all_evidence_fraction": 1,
+            "mrr": 0.8352657004830918,
+            "mean_context_chars": 2875.913043478261
+          }
+        }
+      }
+    }
+  },
+  "resources": {
+    "e5-small": {
+      "original_passage_encoding_seconds": 3.0223443750292063,
+      "query_encoding_seconds": 0.7413549579214305,
+      "encoder_peak_rss_bytes": 1080868864,
+      "passage_operation": "fresh encoding"
+    },
+    "bge-m3": {
+      "original_passage_encoding_seconds": 24.89908387500327,
+      "query_encoding_seconds": 5.981429083039984,
+      "encoder_peak_rss_bytes": 1953939456,
+      "passage_operation": "fresh encoding"
+    },
+    "qwen3-0.6b": {
+      "original_passage_encoding_seconds": 48.98695895797573,
+      "query_encoding_seconds": 13.968765374971554,
+      "encoder_peak_rss_bytes": 2410004480,
+      "passage_operation": "verified cache load"
+    }
+  },
+  "paired_diagnostics": {
+    "e5-small": {
+      "history_questions_dense_top5": {
+        "evidence_recall": {
+          "delta_vs_qwen0_6b": -0.012380952380952376,
+          "source_page_bootstrap_95pct_interval": [
+            -0.09999999999999998,
+            0.06547935663627148
+          ],
+          "turns_improved": 9,
+          "turns_worsened": 7,
+          "turns_tied": 84
+        },
+        "all_evidence": {
+          "delta_vs_qwen0_6b": 0.01,
+          "source_page_bootstrap_95pct_interval": [
+            -0.10576923076923077,
+            0.13726102941176463
+          ],
+          "turns_improved": 7,
+          "turns_worsened": 6,
+          "turns_tied": 87
+        },
+        "mrr": {
+          "delta_vs_qwen0_6b": -0.057833333333333334,
+          "source_page_bootstrap_95pct_interval": [
+            -0.12978950441100157,
+            0.016014402887139054
+          ],
+          "turns_improved": 12,
+          "turns_worsened": 20,
+          "turns_tied": 68
+        }
+      },
+      "history_questions_hybrid_top5": {
+        "evidence_recall": {
+          "delta_vs_qwen0_6b": 0.0011904761904761862,
+          "source_page_bootstrap_95pct_interval": [
+            -0.08447744155932667,
+            0.0695846704377543
+          ],
+          "turns_improved": 10,
+          "turns_worsened": 5,
+          "turns_tied": 85
+        },
+        "all_evidence": {
+          "delta_vs_qwen0_6b": 0.0,
+          "source_page_bootstrap_95pct_interval": [
+            -0.09,
+            0.09002272727272694
+          ],
+          "turns_improved": 4,
+          "turns_worsened": 4,
+          "turns_tied": 92
+        },
+        "mrr": {
+          "delta_vs_qwen0_6b": -0.012666666666666665,
+          "source_page_bootstrap_95pct_interval": [
+            -0.07677156177156176,
+            0.03443518217306439
+          ],
+          "turns_improved": 8,
+          "turns_worsened": 12,
+          "turns_tied": 80
+        }
+      }
+    },
+    "bge-m3": {
+      "history_questions_dense_top5": {
+        "evidence_recall": {
+          "delta_vs_qwen0_6b": -0.05857142857142858,
+          "source_page_bootstrap_95pct_interval": [
+            -0.12868480725623582,
+            0.021745102723363507
+          ],
+          "turns_improved": 5,
+          "turns_worsened": 13,
+          "turns_tied": 82
+        },
+        "all_evidence": {
+          "delta_vs_qwen0_6b": -0.08,
+          "source_page_bootstrap_95pct_interval": [
+            -0.19117966751918158,
+            0.03615559800176299
+          ],
+          "turns_improved": 3,
+          "turns_worsened": 11,
+          "turns_tied": 86
+        },
+        "mrr": {
+          "delta_vs_qwen0_6b": -0.12316666666666666,
+          "source_page_bootstrap_95pct_interval": [
+            -0.22920770236910945,
+            -0.02227797793518978
+          ],
+          "turns_improved": 8,
+          "turns_worsened": 26,
+          "turns_tied": 66
+        }
+      },
+      "history_questions_hybrid_top5": {
+        "evidence_recall": {
+          "delta_vs_qwen0_6b": 0.008928571428571428,
+          "source_page_bootstrap_95pct_interval": [
+            -0.05555555555555555,
+            0.05973040265581493
+          ],
+          "turns_improved": 9,
+          "turns_worsened": 3,
+          "turns_tied": 88
+        },
+        "all_evidence": {
+          "delta_vs_qwen0_6b": 0.01,
+          "source_page_bootstrap_95pct_interval": [
+            -0.06123233908948194,
+            0.08912477786240139
+          ],
+          "turns_improved": 4,
+          "turns_worsened": 3,
+          "turns_tied": 93
+        },
+        "mrr": {
+          "delta_vs_qwen0_6b": -0.06133333333333334,
+          "source_page_bootstrap_95pct_interval": [
+            -0.13253265694356373,
+            0.00321343626934923
+          ],
+          "turns_improved": 6,
+          "turns_worsened": 21,
+          "turns_tied": 73
+        }
+      }
+    }
+  },
+  "bootstrap_replicates": 5000,
+  "bootstrap_seed": 20261106,
+  "checks": {
+    "same_official_source_and_selection": true,
+    "same_query_serialization": true,
+    "same_case_ids_and_candidate_counts": true,
+    "bm25_per_case_outputs_identical": true,
+    "new_dense_artifacts_hashes_counts_finiteness_norms_valid": true,
+    "new_dense_exact_source_texts_and_query_sets_match": true
+  },
+  "limits": [
+    "Exploratory public-dev results; no unseen-data or training-contamination guarantee.",
+    "Resampling source-page groups, not treating 100 correlated turns as independent.",
+    "Qwen passage time is its original encoding; current canonical query run reused verified passage vectors.",
+    "Memory values are from actual encoder processes, never the model-free rescore process."
+  ],
+  "script_sha256": "1fe51e35ff5b790db865c90eb30ed8cbb8612d28e556d3f4ab959657d466e488"
+}

@@ -1,0 +1,257 @@
+{
+  "protocol": "e1-frozen-detection-v1",
+  "case_id": "FND-policy-B",
+  "context_sha256": "75786a0c586a1b0ea47eca6e2bb009020f2b8bd7f88838a83411a170263ff74e",
+  "created_at": "2026-11-16T16:22:53.529615+00:00",
+  "settings": {
+    "model": "gpt-6.1-sol",
+    "base_url": "https://api.openai.com/v1",
+    "max_output_tokens": 8192,
+    "max_context_chars": 200000,
+    "enable_thinking": null,
+    "timeout": 120.0,
+    "api_mode": "responses",
+    "reasoning_effort": "medium",
+    "service_tier": "default"
+  },
+  "review_order": [
+    "structured_critic",
+    "generic_review"
+  ],
+  "served_model_consistency": {
+    "status": "matched",
+    "served_models": [
+      "gpt-6.1-sol"
+    ],
+    "reported_calls": 2,
+    "model_attempts": 2
+  },
+  "model_mode": "configured_model",
+  "prompt_sha256": {
+    "shared": "cc6e0666632b2188c5324905147bd4c524784a1fa4ac47aff4b9e5028be6d077",
+    "generic_reviewer": "5a8ddfdd5a97fec67d3480211f9f414e6a1bacaf7a2d8de5d7cb94eaab1a95e6",
+    "critic": "01b257e91a33aa2bd07b768ed4e44035cd4910734e5d391e8fd05fabf8825723"
+  },
+  "conditions": {
+    "no_verification": {
+      "condition": "no_verification",
+      "case_id": "FND-policy-B",
+      "context_sha256": "75786a0c586a1b0ea47eca6e2bb009020f2b8bd7f88838a83411a170263ff74e",
+      "model_mode": "configured_model",
+      "status": "ok",
+      "model_attempts": 0,
+      "rule_seconds": 0.0,
+      "model_seconds": 0.0,
+      "usage": {},
+      "feedback": {
+        "rule_findings": []
+      },
+      "settings_sha256": "fbea7b21e5d666f8aa62f50a21fadf39d4d5cc35a68a15a5e1b441b728d47532",
+      "events": [],
+      "seconds": 0.0,
+      "output_sha256": "09486f4afe897b1532ccb8602cda2d5c7d101a5b374cc9ed62819a279d5bb123"
+    },
+    "rules_only": {
+      "condition": "rules_only",
+      "case_id": "FND-policy-B",
+      "context_sha256": "75786a0c586a1b0ea47eca6e2bb009020f2b8bd7f88838a83411a170263ff74e",
+      "model_mode": "configured_model",
+      "status": "ok",
+      "model_attempts": 0,
+      "rule_seconds": 0.000520500005222857,
+      "model_seconds": 0.0,
+      "usage": {},
+      "feedback": {
+        "rule_findings": []
+      },
+      "settings_sha256": "fbea7b21e5d666f8aa62f50a21fadf39d4d5cc35a68a15a5e1b441b728d47532",
+      "events": [],
+      "seconds": 0.000520500005222857,
+      "output_sha256": "09486f4afe897b1532ccb8602cda2d5c7d101a5b374cc9ed62819a279d5bb123"
+    },
+    "structured_critic": {
+      "condition": "structured_critic",
+      "case_id": "FND-policy-B",
+      "context_sha256": "75786a0c586a1b0ea47eca6e2bb009020f2b8bd7f88838a83411a170263ff74e",
+      "model_mode": "configured_model",
+      "status": "ok",
+      "model_attempts": 1,
+      "rule_seconds": 0.000520500005222857,
+      "model_seconds": 22.121151291998103,
+      "usage": {
+        "total_tokens": 19606,
+        "prompt_tokens": 18509,
+        "completion_tokens": 1097,
+        "cached_input_tokens": 3102,
+        "cache_write_tokens": 0,
+        "cache_write_30m_tokens": 0,
+        "cache_write_12h_tokens": 0,
+        "reasoning_tokens": 103
+      },
+      "feedback": {
+        "rule_findings": [],
+        "review": {
+          "issues": [
+            {
+              "target_id": "claim:comparable_store_entry_rule",
+              "issue_type": "conflicting_evidence",
+              "evidence_refs": [
+                "chunk_46ba8bfe961b5047d85cfc6a",
+                "chunk_acd2065202df7c17506724c5"
+              ],
+              "missing_support": "原文明确规定，门店于开业后的第13个完整财政月的第一天纳入同店销售计算，并非开业满365天当天。草稿将财政月口径错误地改成了自然日口径。",
+              "proposed_action": "改为“从开业后的第13个完整财政月的第一天起纳入同店销售计算”，并说明不能简单理解为开业满365天当天。"
+            },
+            {
+              "target_id": "claim:comparable_store_special_rules",
+              "issue_type": "conflicting_evidence",
+              "evidence_refs": [
+                "chunk_46ba8bfe961b5047d85cfc6a"
+              ],
+              "missing_support": "原文明确说，在原有主要商圈内搬迁以及既有同店面积变化不会使门店退出同店销售计算；草稿对搬迁规则的表述与原文相反。停业完整财政月的剔除规则则有支持。",
+              "proposed_action": "将搬迁部分改为“在同一主要商圈内搬迁不会使已纳入同店的门店失去资格”，保留完整停业财政月的剔除规则。"
+            },
+            {
+              "target_id": "request:episode_946196e509df430eb2b4313fc74f0e80",
+              "issue_type": "omission",
+              "evidence_refs": [
+                "chunk_46ba8bfe961b5047d85cfc6a",
+                "chunk_acd2065202df7c17506724c5"
+              ],
+              "affected_request_parts": [],
+              "missing_support": "当前答案未正确交付用户所问的纳入时点：开业后的第13个完整财政月第一天。比较基础和停业规则即使正确，也不能替代对“开多久”的回答。",
+              "proposed_action": "以发行人的准确纳入时点直接回答，并明确按完整财政月而非365个自然日计时。"
+            }
+          ],
+          "reviewed_claim_ids": [
+            "claim:comparable_store_entry_rule",
+            "claim:comparable_store_comparison_base",
+            "claim:comparable_store_special_rules"
+          ],
+          "reviewed_requirement_ids": [
+            "request:episode_946196e509df430eb2b4313fc74f0e80"
+          ],
+          "claim_verdicts": [
+            {
+              "claim_id": "claim:comparable_store_entry_rule",
+              "status": "Conflicting Evidence",
+              "evidence_refs": [
+                "chunk_46ba8bfe961b5047d85cfc6a",
+                "chunk_acd2065202df7c17506724c5"
+              ],
+              "basis": "截止日前发布的2025财年年报两处均规定，纳入时点为开业后的第13个完整财政月第一天，直接否定草稿的满365天、按日历天计算之说。"
+            },
+            {
+              "claim_id": "claim:comparable_store_comparison_base",
+              "status": "Supported",
+              "evidence_refs": [
+                "chunk_46ba8bfe961b5047d85cfc6a"
+              ],
+              "basis": "年报同店销售定义明确指出，两期变化以两个期间均营业的门店在销售发生时的净销售额为基础，与该句一致。"
+            },
+            {
+              "claim_id": "claim:comparable_store_special_rules",
+              "status": "Partially Supported",
+              "evidence_refs": [
+                "chunk_46ba8bfe961b5047d85cfc6a"
+              ],
+              "supported_text": "若停业一个完整财政月或更久，则每个完整停业财政月均从同店销售计算中剔除。",
+              "basis": "年报支持完整停业财政月的剔除规则，但明确规定同一主要商圈内搬迁不会导致退出同店计算，因此搬迁部分不可交付。"
+            }
+          ]
+        }
+      },
+      "settings_sha256": "fbea7b21e5d666f8aa62f50a21fadf39d4d5cc35a68a15a5e1b441b728d47532",
+      "events": [
+        {
+          "type": "model_call",
+          "role": "critic",
+          "ok": true,
+          "mode": "configured_model",
+          "model": "gpt-6.1-sol",
+          "base_url": "https://api.openai.com/v1",
+          "api_mode": "responses",
+          "service_tier": "default",
+          "seconds": 22.121151291998103,
+          "usage": {
+            "total_tokens": 19606,
+            "prompt_tokens": 18509,
+            "completion_tokens": 1097,
+            "cached_input_tokens": 3102,
+            "cache_write_tokens": 0,
+            "cache_write_30m_tokens": 0,
+            "cache_write_12h_tokens": 0,
+            "reasoning_tokens": 103
+          },
+          "response_metadata": {
+            "model": "gpt-6.1-sol",
+            "service_tier": "default"
+          }
+        }
+      ],
+      "review_input_sha256": "8cdda2a5ac5609410bec12821fedca1007d6fecc1c3e00349742a4c6e1fd27bf",
+      "seconds": 22.121671792003326,
+      "output_sha256": "89492159315e1ef5218335268b1c87dce917667fb04a5f9d1bba7fe54be01e4b"
+    },
+    "generic_review": {
+      "condition": "generic_review",
+      "case_id": "FND-policy-B",
+      "context_sha256": "75786a0c586a1b0ea47eca6e2bb009020f2b8bd7f88838a83411a170263ff74e",
+      "model_mode": "configured_model",
+      "status": "ok",
+      "model_attempts": 1,
+      "rule_seconds": 0.000520500005222857,
+      "model_seconds": 18.599978875019588,
+      "usage": {
+        "total_tokens": 18139,
+        "prompt_tokens": 17424,
+        "completion_tokens": 715,
+        "cached_input_tokens": 3102,
+        "cache_write_tokens": 0,
+        "cache_write_30m_tokens": 0,
+        "cache_write_12h_tokens": 0,
+        "reasoning_tokens": 47
+      },
+      "feedback": {
+        "rule_findings": [],
+        "review": {
+          "review": "拟答的核心计时规则有实质性错误，且另一项特殊规则与所引原文完全相反，不能因引用有效或规则检查未报错而接受。\n\n首先，“开业满365天的当天起纳入同店销售，按日历天数计算”不受证据支持。2025财年10-K明确规定，门店从开业后“第13个完整财政月的第一天”起纳入同店销售计算（chunk_46ba8bfe961b5047d85cfc6a）。因此，应强调完整财政月及财政月边界，不能换成自然日周年、365天或开业满一年当天。这正是本次追问及必答要求的核心。\n\n其次，“即使仅在原有主要商圈内搬迁也会失去同店资格”与同一来源相反。原文规定，既有同店面积变化，包括改装及在同一主要商圈内搬迁，不会使门店被剔除。关于停业一个完整财政月或更久时，每个完整停业财政月从计算中排除的表述则正确，应保留，且不要暗示永久丧失资格。\n\n“比较两个期间均在营业门店销售发生时的净销售额”的表述有直接依据，但应与门店首先满足同店纳入条件结合说明，不能理解为只要两个期间都营业就自动属于同店。上述2025财年年报发表于2026年2月19日，早于2026年10月29日截止日，适合用于回答本次定义问题。\n\n若要全面介绍口径，chunk_c855fd1cb8c6ece00c4ccf93还说明：电商、区域客户经理及设计工作室销售按履约门店是否符合条件决定是否纳入；Spartan销售不纳入；53周财年的第53周销售也不纳入。不过，对当前“开多久才算同店”的简短追问，这些属于补充信息，不必重新展开此前季度销售增量分析。",
+          "suggested_actions": "无需追加检索或计算，现有年报原文已足以修正。建议直接回答：“按FND在2025财年年报中的定义，新店从开业后第13个完整财政月的第一天起，才纳入同店销售统计。也就是说，要先经过12个完整财政月，并不是开业满365天当天就自动算同店。”引用chunk_46ba8bfe961b5047d85cfc6a。随后可简要补充：比较基于两个比较期间均营业的合资格门店；同一主要商圈内搬迁或改装不会取消同店资格；连续停业一个完整财政月或以上的，每个完整停业财政月排除。纠正对应的计时和搬迁主张，同时保留原本正确的比较基础及停业规则。"
+        }
+      },
+      "settings_sha256": "fbea7b21e5d666f8aa62f50a21fadf39d4d5cc35a68a15a5e1b441b728d47532",
+      "events": [
+        {
+          "type": "model_call",
+          "role": "generic_reviewer",
+          "ok": true,
+          "mode": "configured_model",
+          "model": "gpt-6.1-sol",
+          "base_url": "https://api.openai.com/v1",
+          "api_mode": "responses",
+          "service_tier": "default",
+          "seconds": 18.599978875019588,
+          "usage": {
+            "total_tokens": 18139,
+            "prompt_tokens": 17424,
+            "completion_tokens": 715,
+            "cached_input_tokens": 3102,
+            "cache_write_tokens": 0,
+            "cache_write_30m_tokens": 0,
+            "cache_write_12h_tokens": 0,
+            "reasoning_tokens": 47
+          },
+          "response_metadata": {
+            "model": "gpt-6.1-sol",
+            "service_tier": "default"
+          }
+        }
+      ],
+      "review_input_sha256": "8cdda2a5ac5609410bec12821fedca1007d6fecc1c3e00349742a4c6e1fd27bf",
+      "seconds": 18.60049937502481,
+      "output_sha256": "0c995cdaa088a78c1ce54a8031254051365cca45d8fe5d69fa244ca802f00ed6"
+    }
+  },
+  "revision_evaluated": false,
+  "truth_scored": false
+}

@@ -1,0 +1,51 @@
+{
+  "issues": [],
+  "reviewed_claim_ids": [
+    "claim:eps-comparison-basis",
+    "claim:eps-adjustment-bridge",
+    "claim:adjusted-growth-interpretation"
+  ],
+  "reviewed_requirement_ids": [
+    "request:episode_1bc8ee25e95f42c8b8787968a2868c04"
+  ],
+  "claim_verdicts": [
+    {
+      "claim_id": "claim:eps-comparison-basis",
+      "status": "Supported",
+      "evidence_refs": [
+        "chunk_5a255fbc933ca3e7241888f6"
+      ],
+      "basis": "附录I截至9月30日的季度栏明确列示：2026年GAAP摊薄EPS为5.42美元、同比增长31%，调整后为4.68美元、同比增长13%；2025年两种口径均为4.14美元。因此比较基数相同，差异来自本期调整项目。草稿使用的是季度数据，而非相邻的九个月累计数据，期间、美元每股单位及公司整体口径一致。"
+    },
+    {
+      "claim_id": "claim:eps-adjustment-bridge",
+      "status": "Supported",
+      "evidence_refs": [
+        "chunk_5a255fbc933ca3e7241888f6"
+      ],
+      "basis": "附录I季度EPS调节表将GBTG出售收益的税后调整列为负1.11美元，将重组费用的税后调整列为正0.37美元，最终调整后EPS为4.68美元。草稿所列5.42－1.11＋0.37＝4.68与原表及算术一致，正确区分剔除收益与加回费用，没有将全部出售收益误作两种EPS的净差额。"
+    },
+    {
+      "claim_id": "claim:adjusted-growth-interpretation",
+      "status": "Supported",
+      "evidence_refs": [
+        "chunk_5a255fbc933ca3e7241888f6",
+        "span_3b74985e92f2fa70a68c88af"
+      ],
+      "basis": "附录I的非GAAP调节仅列GBTG出售收益、重组费用及各自税项，未另行剔除有效税率变化、准备金释放或股数变化。公告季度表显示平均摊薄股数由693百万股降至674百万股；正文将有效税率下降主要归于解决以前期间税务事项产生的离散税收利益，并说明信用损失准备费用下降反映本期释放准备金、上年同期增提准备金，且较高净核销构成部分抵消。草稿以“等因素”保留解释的非穷尽性，未虚构贡献金额；据此提示13%并非完全排除所有非持续因素后的基础经营增速，边界恰当。"
+    }
+  ],
+  "request_coverage": [
+    {
+      "part": "part-1",
+      "status": "answered",
+      "claim_id": "claim:eps-adjustment-bridge",
+      "answer_sentence": "公司附录列示的税后每股调节关系为：报告EPS 5.42美元－GBTG出售收益1.11美元＋重组费用0.37美元＝调整后EPS 4.68美元。",
+      "supporting_claim_ids": [
+        "claim:eps-comparison-basis",
+        "claim:eps-adjustment-bridge",
+        "claim:adjusted-growth-interpretation"
+      ]
+    }
+  ]
+}

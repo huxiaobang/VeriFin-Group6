@@ -1,0 +1,1094 @@
+{
+  "model": "Qwen/Qwen3-Reranker-0.6B",
+  "revision": "e61197ed45024b0ed8a2d74b80b4d909f1255473",
+  "instruction": "判断这项研究方法是否直接帮助回答【本轮】要求的至少一个子问题。只用前文来消解本轮的指代；忽略用户已撤回的要求。泛问、简单查数或仍有关键歧义时不选专门方法。",
+  "decision": "independent yes/no scores >= 0.5; no top-k floor or ceiling",
+  "scope": "development routing only; local scoring adapter in ResearchEngine; no remote API or financial synthesis",
+  "exact": 17,
+  "total": 30,
+  "turns": [
+    {
+      "id": "paraphrase-a/1",
+      "question": "收入同比涨了，排除汇率折算和并购以后，原来的业务实际长了多少？",
+      "received": "【本轮】收入同比涨了，排除汇率折算和并购以后，原来的业务实际长了多少？",
+      "selected": [
+        "attribute-portfolio-growth",
+        "reconcile-comparable-growth"
+      ],
+      "scores": {
+        "attribute-portfolio-growth": 0.9861074686050415,
+        "reconcile-comparable-growth": 0.944501519203186,
+        "store-cohorts": 0.29310205578804016,
+        "cash-flow-bridge": 0.041256535798311234,
+        "compare-restated-series": 0.033320631831884384,
+        "reconcile-per-unit-financials": 0.010558893904089928,
+        "reconcile-fee-bases": 0.0065367622300982475,
+        "unit-profit-reconciliation": 0.0037861193995922804,
+        "implied-period-guidance": 0.0035621230490505695,
+        "trace-lease-commencement": 0.0030966675840318203,
+        "channel-volume-vs-sales": 0.0030057746917009354,
+        "cohort-vs-product-revenue": 0.002951886970549822,
+        "dealer-inventory": 0.002362601226195693,
+        "cash-capex-and-leases": 0.0021167949307709932,
+        "test-pre-earnings-thesis": 0.0017361026257276535,
+        "reconcile-shipment-units-and-prices": 0.0014402164379134774,
+        "estimate-supplier-content": 0.00018079159781336784,
+        "trace-project-cash-rights": 0.00011532419011928141,
+        "trace-production-bottlenecks": 5.5675289331702515e-05
+      },
+      "expected": [
+        "reconcile-comparable-growth"
+      ],
+      "exact": false,
+      "missing": [],
+      "additional": [
+        "attribute-portfolio-growth"
+      ]
+    },
+    {
+      "id": "paraphrase-b/1",
+      "question": "假设外币和去年按同一价格兑回来，也不把买来的公司算进去，销售还比去年多吗？",
+      "received": "【本轮】假设外币和去年按同一价格兑回来，也不把买来的公司算进去，销售还比去年多吗？",
+      "selected": [
+        "reconcile-comparable-growth"
+      ],
+      "scores": {
+        "reconcile-comparable-growth": 0.9066291451454163,
+        "compare-restated-series": 0.12051643431186676,
+        "reconcile-per-unit-financials": 0.07694092392921448,
+        "cash-flow-bridge": 0.059602290391922,
+        "store-cohorts": 0.04327833279967308,
+        "reconcile-shipment-units-and-prices": 0.02122584357857704,
+        "dealer-inventory": 0.020593855530023575,
+        "cohort-vs-product-revenue": 0.01169296633452177,
+        "unit-profit-reconciliation": 0.005250287242233753,
+        "cash-capex-and-leases": 0.00456816703081131,
+        "attribute-portfolio-growth": 0.0032866676338016987,
+        "test-pre-earnings-thesis": 0.003183323424309492,
+        "channel-volume-vs-sales": 0.002814279403537512,
+        "implied-period-guidance": 0.0021731061860919,
+        "trace-lease-commencement": 0.0010318972636014223,
+        "reconcile-fee-bases": 0.0006877348059788346,
+        "estimate-supplier-content": 0.00039765602559782565,
+        "trace-project-cash-rights": 0.00014819414354860783,
+        "trace-production-bottlenecks": 7.45166398701258e-05
+      },
+      "expected": [
+        "reconcile-comparable-growth"
+      ],
+      "exact": true,
+      "missing": [],
+      "additional": []
+    },
+    {
+      "id": "paraphrase-c/1",
+      "question": "这家车厂发给经销商的车比以前多，经销商手里的存车也多了吗？",
+      "received": "【本轮】这家车厂发给经销商的车比以前多，经销商手里的存车也多了吗？",
+      "selected": [
+        "dealer-inventory"
+      ],
+      "scores": {
+        "dealer-inventory": 0.9453802704811096,
+        "store-cohorts": 0.05058307573199272,
+        "cash-flow-bridge": 0.016373224556446075,
+        "cohort-vs-product-revenue": 0.0059836022555828094,
+        "reconcile-shipment-units-and-prices": 0.004845331888645887,
+        "attribute-portfolio-growth": 0.003052102169021964,
+        "compare-restated-series": 0.001409702468663454,
+        "reconcile-per-unit-financials": 0.0013798677828162909,
+        "cash-capex-and-leases": 0.001006959704682231,
+        "estimate-supplier-content": 0.0004481145297177136,
+        "trace-production-bottlenecks": 0.00034443987533450127,
+        "reconcile-comparable-growth": 0.0003290353633929044,
+        "trace-lease-commencement": 0.0003249144065193832,
+        "unit-profit-reconciliation": 0.00026427136617712677,
+        "implied-period-guidance": 0.00019659144163597375,
+        "test-pre-earnings-thesis": 0.0001756164274411276,
+        "channel-volume-vs-sales": 0.00017355571617372334,
+        "reconcile-fee-bases": 5.754103040089831e-05,
+        "trace-project-cash-rights": 1.9383083781576715e-05
+      },
+      "expected": [
+        "dealer-inventory"
+      ],
+      "exact": true,
+      "missing": [],
+      "additional": []
+    },
+    {
+      "id": "paraphrase-d/1",
+      "question": "车从厂里出去了，有多少真到了买家手里，又有多少还趴在车行？",
+      "received": "【本轮】车从厂里出去了，有多少真到了买家手里，又有多少还趴在车行？",
+      "selected": [
+        "dealer-inventory"
+      ],
+      "scores": {
+        "dealer-inventory": 0.9897043108940125,
+        "cash-flow-bridge": 0.009468695148825645,
+        "estimate-supplier-content": 0.0073717194609344006,
+        "cohort-vs-product-revenue": 0.005123627372086048,
+        "cash-capex-and-leases": 0.00487687299028039,
+        "store-cohorts": 0.004656847100704908,
+        "trace-production-bottlenecks": 0.0018111520912498236,
+        "reconcile-per-unit-financials": 0.0016805279301479459,
+        "channel-volume-vs-sales": 0.0008787023252807558,
+        "trace-lease-commencement": 0.0006420552963390946,
+        "attribute-portfolio-growth": 0.000489941390696913,
+        "reconcile-shipment-units-and-prices": 0.0003738387313205749,
+        "reconcile-fee-bases": 0.0003549203975126147,
+        "compare-restated-series": 0.00025762221775949,
+        "unit-profit-reconciliation": 0.0002324606612091884,
+        "test-pre-earnings-thesis": 0.0002319268969586119,
+        "reconcile-comparable-growth": 0.00013676861999556422,
+        "implied-period-guidance": 9.376958769280463e-05,
+        "trace-project-cash-rights": 6.0661179304588586e-05
+      },
+      "expected": [
+        "dealer-inventory"
+      ],
+      "exact": true,
+      "missing": [],
+      "additional": []
+    },
+    {
+      "id": "paraphrase-e/1",
+      "question": "公司赚的净利润变多了，为什么主营业务带回来的现金反而变少了？",
+      "received": "【本轮】公司赚的净利润变多了，为什么主营业务带回来的现金反而变少了？",
+      "selected": [
+        "cash-flow-bridge"
+      ],
+      "scores": {
+        "cash-flow-bridge": 0.8247573375701904,
+        "unit-profit-reconciliation": 0.3114755153656006,
+        "cash-capex-and-leases": 0.020197182893753052,
+        "reconcile-per-unit-financials": 0.01670883782207966,
+        "compare-restated-series": 0.015007231384515762,
+        "trace-project-cash-rights": 0.012746687047183514,
+        "reconcile-comparable-growth": 0.010146500542759895,
+        "store-cohorts": 0.007886596024036407,
+        "test-pre-earnings-thesis": 0.007804198190569878,
+        "implied-period-guidance": 0.005073798820376396,
+        "attribute-portfolio-growth": 0.00427071750164032,
+        "cohort-vs-product-revenue": 0.002811642363667488,
+        "dealer-inventory": 0.0013350454391911626,
+        "reconcile-fee-bases": 0.001219932222738862,
+        "reconcile-shipment-units-and-prices": 0.000863611523527652,
+        "channel-volume-vs-sales": 0.0005271494737826288,
+        "trace-lease-commencement": 0.00027938399580307305,
+        "estimate-supplier-content": 6.537000444950536e-05,
+        "trace-production-bottlenecks": 5.434157719719224e-05
+      },
+      "expected": [
+        "cash-flow-bridge"
+      ],
+      "exact": true,
+      "missing": [],
+      "additional": []
+    },
+    {
+      "id": "paraphrase-f/1",
+      "question": "利润表更好看了，做生意实际收到的钱却不如去年，差在哪？",
+      "received": "【本轮】利润表更好看了，做生意实际收到的钱却不如去年，差在哪？",
+      "selected": [
+        "reconcile-per-unit-financials",
+        "compare-restated-series"
+      ],
+      "scores": {
+        "reconcile-per-unit-financials": 0.9202956557273865,
+        "compare-restated-series": 0.5135767459869385,
+        "unit-profit-reconciliation": 0.49624213576316833,
+        "cash-flow-bridge": 0.46350643038749695,
+        "store-cohorts": 0.07585263252258301,
+        "test-pre-earnings-thesis": 0.04753771424293518,
+        "cohort-vs-product-revenue": 0.037181347608566284,
+        "cash-capex-and-leases": 0.03139851987361908,
+        "reconcile-shipment-units-and-prices": 0.029340870678424835,
+        "reconcile-comparable-growth": 0.025017807260155678,
+        "dealer-inventory": 0.006367475725710392,
+        "reconcile-fee-bases": 0.004298224113881588,
+        "implied-period-guidance": 0.003936294931918383,
+        "trace-project-cash-rights": 0.0022274143993854523,
+        "trace-lease-commencement": 0.0015792850172147155,
+        "channel-volume-vs-sales": 0.0011178901186212897,
+        "attribute-portfolio-growth": 0.000843919173348695,
+        "trace-production-bottlenecks": 0.0002025193243753165,
+        "estimate-supplier-content": 0.00011876736243721098
+      },
+      "expected": [
+        "cash-flow-bridge"
+      ],
+      "exact": false,
+      "missing": [
+        "cash-flow-bridge"
+      ],
+      "additional": [
+        "compare-restated-series",
+        "reconcile-per-unit-financials"
+      ]
+    },
+    {
+      "id": "change/1",
+      "question": "整家公司的生意最近如何？",
+      "received": "【本轮】整家公司的生意最近如何？",
+      "selected": [],
+      "scores": {
+        "cash-flow-bridge": 0.2154134213924408,
+        "store-cohorts": 0.11365267634391785,
+        "dealer-inventory": 0.041237492114305496,
+        "unit-profit-reconciliation": 0.03286592289805412,
+        "test-pre-earnings-thesis": 0.01856035366654396,
+        "attribute-portfolio-growth": 0.014346441254019737,
+        "reconcile-comparable-growth": 0.010824738070368767,
+        "cohort-vs-product-revenue": 0.00854166503995657,
+        "trace-lease-commencement": 0.004456897731870413,
+        "cash-capex-and-leases": 0.004287580959498882,
+        "reconcile-fee-bases": 0.0033397404477000237,
+        "reconcile-shipment-units-and-prices": 0.003195578698068857,
+        "channel-volume-vs-sales": 0.0024167082738131285,
+        "reconcile-per-unit-financials": 0.0021540485322475433,
+        "trace-production-bottlenecks": 0.0017550871707499027,
+        "implied-period-guidance": 0.0013289808994159102,
+        "trace-project-cash-rights": 0.0010962934466078877,
+        "compare-restated-series": 0.0009929488878697157,
+        "estimate-supplier-content": 0.0007548090652562678
+      },
+      "expected": [],
+      "exact": true,
+      "missing": [],
+      "additional": []
+    },
+    {
+      "id": "change/2",
+      "question": "管理层把全年目标上限调高了，但前三季已公布，最后三个月得做到哪里？",
+      "received": "【前文（仅为消解指代）】\nuser: 整家公司的生意最近如何？\nassistant: Research partial (unresolved_items). Verification incomplete. See the report's findings, sources and unresolved items.\n【本轮】管理层把全年目标上限调高了，但前三季已公布，最后三个月得做到哪里？",
+      "selected": [
+        "implied-period-guidance"
+      ],
+      "scores": {
+        "implied-period-guidance": 0.9772352576255798,
+        "cash-flow-bridge": 0.21409744024276733,
+        "store-cohorts": 0.06894121319055557,
+        "dealer-inventory": 0.033780694007873535,
+        "test-pre-earnings-thesis": 0.032192330807447433,
+        "attribute-portfolio-growth": 0.017758900299668312,
+        "cohort-vs-product-revenue": 0.016138792037963867,
+        "reconcile-comparable-growth": 0.01569605991244316,
+        "unit-profit-reconciliation": 0.013698184862732887,
+        "trace-production-bottlenecks": 0.013356291688978672,
+        "cash-capex-and-leases": 0.011137866415083408,
+        "compare-restated-series": 0.006599549204111099,
+        "reconcile-shipment-units-and-prices": 0.005449959542602301,
+        "reconcile-per-unit-financials": 0.004225555807352066,
+        "reconcile-fee-bases": 0.004000629298388958,
+        "channel-volume-vs-sales": 0.0032602129504084587,
+        "trace-lease-commencement": 0.0031007006764411926,
+        "estimate-supplier-content": 0.001792666967958212,
+        "trace-project-cash-rights": 0.0013465109514072537
+      },
+      "expected": [
+        "implied-period-guidance"
+      ],
+      "exact": true,
+      "missing": [],
+      "additional": []
+    },
+    {
+      "id": "change/3",
+      "question": "先把全年目标放一边。新开的店和已经营业两年的老店，各自拉动了多少销售？",
+      "received": "【前文（仅为消解指代）】\nuser: 整家公司的生意最近如何？\nassistant: Research partial (unresolved_items). Verification incomplete. See the report's findings, sources and unresolved items.\nuser: 管理层把全年目标上限调高了，但前三季已公布，最后三个月得做到哪里？\nassistant: Research partial (unresolved_items). Verification incomplete. See the report's findings, sources and unresolved items.\n【本轮】先把全年目标放一边。新开的店和已经营业两年的老店，各自拉动了多少销售？",
+      "selected": [
+        "store-cohorts",
+        "implied-period-guidance",
+        "attribute-portfolio-growth"
+      ],
+      "scores": {
+        "store-cohorts": 0.9946832060813904,
+        "implied-period-guidance": 0.7340483665466309,
+        "attribute-portfolio-growth": 0.6329329013824463,
+        "cash-flow-bridge": 0.0714762955904007,
+        "dealer-inventory": 0.030970118939876556,
+        "unit-profit-reconciliation": 0.015846000984311104,
+        "test-pre-earnings-thesis": 0.012197992764413357,
+        "cohort-vs-product-revenue": 0.006618176121264696,
+        "reconcile-comparable-growth": 0.006463737692683935,
+        "estimate-supplier-content": 0.0031227634754031897,
+        "reconcile-shipment-units-and-prices": 0.0015631604474037886,
+        "channel-volume-vs-sales": 0.001264618244022131,
+        "cash-capex-and-leases": 0.001209275214932859,
+        "reconcile-per-unit-financials": 0.0010775092523545027,
+        "trace-lease-commencement": 0.0009302691323682666,
+        "compare-restated-series": 0.0007601312245242298,
+        "reconcile-fee-bases": 0.0005322518991306424,
+        "trace-production-bottlenecks": 0.00023399076599162072,
+        "trace-project-cash-rights": 7.943381933728233e-05
+      },
+      "expected": [
+        "store-cohorts"
+      ],
+      "exact": false,
+      "missing": [],
+      "additional": [
+        "attribute-portfolio-growth",
+        "implied-period-guidance"
+      ]
+    },
+    {
+      "id": "change/4",
+      "question": "那按开张年份再拆细一点呢？",
+      "received": "【前文（仅为消解指代）】\nuser: 整家公司的生意最近如何？\nassistant: Research partial (unresolved_items). Verification incomplete. See the report's findings, sources and unresolved items.\nuser: 管理层把全年目标上限调高了，但前三季已公布，最后三个月得做到哪里？\nassistant: Research partial (unresolved_items). Verification incomplete. See the report's findings, sources and unresolved items.\nuser: 先把全年目标放一边。新开的店和已经营业两年的老店，各自拉动了多少销售？\nassistant: Research partial (unresolved_items). Verification incomplete. See the report's findings, sources and unresolved items.\n【本轮】那按开张年份再拆细一点呢？",
+      "selected": [
+        "store-cohorts",
+        "implied-period-guidance"
+      ],
+      "scores": {
+        "store-cohorts": 0.9067596793174744,
+        "implied-period-guidance": 0.7064005136489868,
+        "cash-flow-bridge": 0.11215917766094208,
+        "unit-profit-reconciliation": 0.045927856117486954,
+        "test-pre-earnings-thesis": 0.02956717647612095,
+        "attribute-portfolio-growth": 0.02685556747019291,
+        "dealer-inventory": 0.019693242385983467,
+        "cohort-vs-product-revenue": 0.011201963759958744,
+        "reconcile-comparable-growth": 0.004206034820526838,
+        "reconcile-shipment-units-and-prices": 0.0033061187714338303,
+        "trace-lease-commencement": 0.002909697825089097,
+        "channel-volume-vs-sales": 0.0024402739945799112,
+        "compare-restated-series": 0.002404377330094576,
+        "cash-capex-and-leases": 0.0022744147572666407,
+        "reconcile-per-unit-financials": 0.0021434184163808823,
+        "estimate-supplier-content": 0.0014544824371114373,
+        "trace-production-bottlenecks": 0.000662114704027772,
+        "reconcile-fee-bases": 0.00039966663462109864,
+        "trace-project-cash-rights": 0.00033750402508303523
+      },
+      "expected": [
+        "store-cohorts"
+      ],
+      "exact": false,
+      "missing": [],
+      "additional": [
+        "implied-period-guidance"
+      ]
+    },
+    {
+      "id": "change/5",
+      "question": "谢谢。最后帮我查下一次财报发布的日期。",
+      "received": "【前文（仅为消解指代）】\nuser: 整家公司的生意最近如何？\nassistant: Research partial (unresolved_items). Verification incomplete. See the report's findings, sources and unresolved items.\nuser: 管理层把全年目标上限调高了，但前三季已公布，最后三个月得做到哪里？\nassistant: Research partial (unresolved_items). Verification incomplete. See the report's findings, sources and unresolved items.\nuser: 先把全年目标放一边。新开的店和已经营业两年的老店，各自拉动了多少销售？\nassistant: Research partial (unresolved_items). Verification incomplete. See the report's findings, sources and unresolved items.\nuser: 那按开张年份再拆细一点呢？\nassistant: Research partial (unresolved_items). Verification incomplete. See the report's findings, sources and unresolved items.\n【本轮】谢谢。最后帮我查下一次财报发布的日期。",
+      "selected": [
+        "implied-period-guidance"
+      ],
+      "scores": {
+        "implied-period-guidance": 0.6116572618484497,
+        "test-pre-earnings-thesis": 0.4722128212451935,
+        "cash-flow-bridge": 0.12873080372810364,
+        "store-cohorts": 0.07953424006700516,
+        "reconcile-comparable-growth": 0.010428844951093197,
+        "attribute-portfolio-growth": 0.00713080121204257,
+        "unit-profit-reconciliation": 0.005204622633755207,
+        "channel-volume-vs-sales": 0.004598026163876057,
+        "cash-capex-and-leases": 0.004290130455046892,
+        "compare-restated-series": 0.003957756329327822,
+        "reconcile-shipment-units-and-prices": 0.0029842855874449015,
+        "cohort-vs-product-revenue": 0.0029444724787026644,
+        "trace-project-cash-rights": 0.001996123930439353,
+        "dealer-inventory": 0.0017140483250841498,
+        "reconcile-per-unit-financials": 0.0012191208079457283,
+        "trace-lease-commencement": 0.0008702310151420534,
+        "reconcile-fee-bases": 0.0005678958259522915,
+        "estimate-supplier-content": 0.00039041516720317304,
+        "trace-production-bottlenecks": 0.00017981852579396218
+      },
+      "expected": [],
+      "exact": false,
+      "missing": [],
+      "additional": [
+        "implied-period-guidance"
+      ]
+    },
+    {
+      "id": "compound/1",
+      "question": "先算剔除并购和外币折算后的营收增速；再单独解释净利润为何没变成经营现金。",
+      "received": "【本轮】先算剔除并购和外币折算后的营收增速；再单独解释净利润为何没变成经营现金。",
+      "selected": [
+        "reconcile-comparable-growth",
+        "cash-flow-bridge"
+      ],
+      "scores": {
+        "reconcile-comparable-growth": 0.9655132293701172,
+        "cash-flow-bridge": 0.9481444954872131,
+        "attribute-portfolio-growth": 0.11156917363405228,
+        "test-pre-earnings-thesis": 0.09639259427785873,
+        "compare-restated-series": 0.0933060497045517,
+        "cash-capex-and-leases": 0.08081420511007309,
+        "unit-profit-reconciliation": 0.05702460557222366,
+        "store-cohorts": 0.04346124827861786,
+        "reconcile-per-unit-financials": 0.015037459321320057,
+        "implied-period-guidance": 0.005820318590849638,
+        "trace-project-cash-rights": 0.005660767201334238,
+        "reconcile-shipment-units-and-prices": 0.0030714834574609995,
+        "cohort-vs-product-revenue": 0.0028323165606707335,
+        "channel-volume-vs-sales": 0.0018425408052280545,
+        "reconcile-fee-bases": 0.0015810512704774737,
+        "dealer-inventory": 0.001030847430229187,
+        "trace-lease-commencement": 0.0008555406238883734,
+        "estimate-supplier-content": 0.000122427663882263,
+        "trace-production-bottlenecks": 0.00010622679110383615
+      },
+      "expected": [
+        "reconcile-comparable-growth",
+        "cash-flow-bridge"
+      ],
+      "exact": true,
+      "missing": [],
+      "additional": []
+    },
+    {
+      "id": "compound/2",
+      "question": "这次只讲后面那个差额，前一个不用重算。",
+      "received": "【前文（仅为消解指代）】\nuser: 先算剔除并购和外币折算后的营收增速；再单独解释净利润为何没变成经营现金。\nassistant: Research partial (unresolved_items). Verification incomplete. See the report's findings, sources and unresolved items.\n【本轮】这次只讲后面那个差额，前一个不用重算。",
+      "selected": [
+        "reconcile-comparable-growth",
+        "cash-flow-bridge"
+      ],
+      "scores": {
+        "reconcile-comparable-growth": 0.9667343497276306,
+        "cash-flow-bridge": 0.8527634739875793,
+        "store-cohorts": 0.09983599931001663,
+        "test-pre-earnings-thesis": 0.08061374723911285,
+        "reconcile-per-unit-financials": 0.07564285397529602,
+        "compare-restated-series": 0.06625591218471527,
+        "cash-capex-and-leases": 0.06409259885549545,
+        "attribute-portfolio-growth": 0.04224788770079613,
+        "unit-profit-reconciliation": 0.01419514138251543,
+        "trace-project-cash-rights": 0.006291982717812061,
+        "implied-period-guidance": 0.005703970789909363,
+        "cohort-vs-product-revenue": 0.005097587592899799,
+        "channel-volume-vs-sales": 0.002512784907594323,
+        "reconcile-shipment-units-and-prices": 0.0023433484602719545,
+        "reconcile-fee-bases": 0.0007752362289465964,
+        "trace-lease-commencement": 0.0006191038410179317,
+        "dealer-inventory": 0.0004361796600278467,
+        "estimate-supplier-content": 9.731332829687744e-05,
+        "trace-production-bottlenecks": 6.214701716089621e-05
+      },
+      "expected": [
+        "cash-flow-bridge"
+      ],
+      "exact": false,
+      "missing": [],
+      "additional": [
+        "reconcile-comparable-growth"
+      ]
+    },
+    {
+      "id": "blank/1",
+      "question": "为什么账上的钱少了？我还没说是现金余额还是经营现金。",
+      "received": "【本轮】为什么账上的钱少了？我还没说是现金余额还是经营现金。",
+      "selected": [
+        "cash-flow-bridge"
+      ],
+      "scores": {
+        "cash-flow-bridge": 0.6890784502029419,
+        "cash-capex-and-leases": 0.2549086809158325,
+        "reconcile-comparable-growth": 0.0348874032497406,
+        "store-cohorts": 0.03254350274801254,
+        "unit-profit-reconciliation": 0.015667075291275978,
+        "dealer-inventory": 0.013182912021875381,
+        "test-pre-earnings-thesis": 0.012545169331133366,
+        "cohort-vs-product-revenue": 0.010558436624705791,
+        "reconcile-fee-bases": 0.009353667497634888,
+        "reconcile-per-unit-financials": 0.0034373472444713116,
+        "trace-project-cash-rights": 0.002845845650881529,
+        "trace-lease-commencement": 0.002085533458739519,
+        "compare-restated-series": 0.0016633254708722234,
+        "reconcile-shipment-units-and-prices": 0.0016108795534819365,
+        "attribute-portfolio-growth": 0.0007338797440752387,
+        "implied-period-guidance": 0.0007078787311911583,
+        "channel-volume-vs-sales": 0.00043294604984112084,
+        "trace-production-bottlenecks": 0.00011133986845379695,
+        "estimate-supplier-content": 6.750618922524154e-05
+      },
+      "expected": [],
+      "exact": false,
+      "missing": [],
+      "additional": [
+        "cash-flow-bridge"
+      ]
+    },
+    {
+      "id": "unit/1",
+      "question": "用有效付费人数乘人均消费，能对到当期销售额吗？两者差多少？",
+      "received": "【本轮】用有效付费人数乘人均消费，能对到当期销售额吗？两者差多少？",
+      "selected": [
+        "reconcile-per-unit-financials"
+      ],
+      "scores": {
+        "reconcile-per-unit-financials": 0.9629446864128113,
+        "cash-flow-bridge": 0.17657549679279327,
+        "reconcile-shipment-units-and-prices": 0.09801311790943146,
+        "cohort-vs-product-revenue": 0.06802905350923538,
+        "reconcile-fee-bases": 0.03997674956917763,
+        "store-cohorts": 0.03849110007286072,
+        "compare-restated-series": 0.03440326824784279,
+        "unit-profit-reconciliation": 0.024022631347179413,
+        "trace-lease-commencement": 0.012905303388834,
+        "dealer-inventory": 0.008304704912006855,
+        "test-pre-earnings-thesis": 0.005125843919813633,
+        "attribute-portfolio-growth": 0.0037587301339954138,
+        "reconcile-comparable-growth": 0.003422433976083994,
+        "cash-capex-and-leases": 0.0031061675399541855,
+        "channel-volume-vs-sales": 0.0012086384231224656,
+        "implied-period-guidance": 0.0009794849902391434,
+        "estimate-supplier-content": 0.0005750796408392489,
+        "trace-project-cash-rights": 9.786339069250971e-05,
+        "trace-production-bottlenecks": 6.712776666972786e-05
+      },
+      "expected": [
+        "reconcile-per-unit-financials"
+      ],
+      "exact": true,
+      "missing": [],
+      "additional": []
+    },
+    {
+      "id": "cohort/1",
+      "question": "买了新功能的客户贡献一半收入，这就能当作新功能本身的销售额吗？",
+      "received": "【本轮】买了新功能的客户贡献一半收入，这就能当作新功能本身的销售额吗？",
+      "selected": [
+        "cohort-vs-product-revenue",
+        "reconcile-per-unit-financials"
+      ],
+      "scores": {
+        "cohort-vs-product-revenue": 0.9988595247268677,
+        "reconcile-per-unit-financials": 0.7099413871765137,
+        "attribute-portfolio-growth": 0.35003745555877686,
+        "cash-flow-bridge": 0.06619098782539368,
+        "channel-volume-vs-sales": 0.05868292227387428,
+        "reconcile-shipment-units-and-prices": 0.058320436626672745,
+        "store-cohorts": 0.03038722649216652,
+        "reconcile-fee-bases": 0.010682918131351471,
+        "dealer-inventory": 0.003162805223837495,
+        "estimate-supplier-content": 0.0030070580542087555,
+        "reconcile-comparable-growth": 0.0027658117469400167,
+        "cash-capex-and-leases": 0.0021058907732367516,
+        "unit-profit-reconciliation": 0.0014154271921142936,
+        "compare-restated-series": 0.0006995924049988389,
+        "test-pre-earnings-thesis": 0.0006111960974521935,
+        "trace-project-cash-rights": 0.0006019501015543938,
+        "trace-lease-commencement": 0.00044530394370667636,
+        "implied-period-guidance": 0.00010131294402526692,
+        "trace-production-bottlenecks": 3.85771672881674e-05
+      },
+      "expected": [
+        "cohort-vs-product-revenue"
+      ],
+      "exact": false,
+      "missing": [],
+      "additional": [
+        "reconcile-per-unit-financials"
+      ]
+    },
+    {
+      "id": "lease/1",
+      "question": "物流园租约都签了，为什么当季的租金还没涨？什么时候才开始计租？",
+      "received": "【本轮】物流园租约都签了，为什么当季的租金还没涨？什么时候才开始计租？",
+      "selected": [
+        "trace-lease-commencement"
+      ],
+      "scores": {
+        "trace-lease-commencement": 0.994392454624176,
+        "store-cohorts": 0.01679021120071411,
+        "cash-capex-and-leases": 0.005968651734292507,
+        "cash-flow-bridge": 0.005689612124115229,
+        "dealer-inventory": 0.0034261574037373066,
+        "reconcile-fee-bases": 0.0032518638763576746,
+        "reconcile-comparable-growth": 0.0010943901725113392,
+        "cohort-vs-product-revenue": 0.0009210583521053195,
+        "reconcile-per-unit-financials": 0.0006352718337439001,
+        "test-pre-earnings-thesis": 0.0005429029697552323,
+        "reconcile-shipment-units-and-prices": 0.00047734263353049755,
+        "unit-profit-reconciliation": 0.0004590032622218132,
+        "trace-project-cash-rights": 0.0004438261967152357,
+        "compare-restated-series": 0.0003949051024392247,
+        "implied-period-guidance": 0.00014428736176341772,
+        "attribute-portfolio-growth": 0.00010704525629989803,
+        "estimate-supplier-content": 0.00010676012607291341,
+        "trace-production-bottlenecks": 8.759582851780578e-05,
+        "channel-volume-vs-sales": 8.650046220282093e-05
+      },
+      "expected": [
+        "trace-lease-commencement"
+      ],
+      "exact": true,
+      "missing": [],
+      "additional": []
+    },
+    {
+      "id": "capex/1",
+      "question": "今年新添设备里有不少通过融资租赁取得。算自由现金流时是整台设备的钱还是只算当期付出去的？",
+      "received": "【本轮】今年新添设备里有不少通过融资租赁取得。算自由现金流时是整台设备的钱还是只算当期付出去的？",
+      "selected": [
+        "cash-capex-and-leases"
+      ],
+      "scores": {
+        "cash-capex-and-leases": 0.9997648596763611,
+        "cash-flow-bridge": 0.4534488320350647,
+        "trace-lease-commencement": 0.10440400242805481,
+        "cohort-vs-product-revenue": 0.023052100092172623,
+        "reconcile-fee-bases": 0.012928282842040062,
+        "reconcile-shipment-units-and-prices": 0.012237136252224445,
+        "test-pre-earnings-thesis": 0.011078082025051117,
+        "trace-project-cash-rights": 0.00944847334176302,
+        "store-cohorts": 0.005660531111061573,
+        "reconcile-per-unit-financials": 0.0033000907860696316,
+        "attribute-portfolio-growth": 0.002916118362918496,
+        "dealer-inventory": 0.0027310573495924473,
+        "compare-restated-series": 0.0022051380947232246,
+        "unit-profit-reconciliation": 0.0009745901916176081,
+        "reconcile-comparable-growth": 0.0005376744666136801,
+        "channel-volume-vs-sales": 0.0003393270308151841,
+        "implied-period-guidance": 0.0003192072326783091,
+        "estimate-supplier-content": 0.0002785579126793891,
+        "trace-production-bottlenecks": 0.00023830959980841726
+      },
+      "expected": [
+        "cash-capex-and-leases"
+      ],
+      "exact": true,
+      "missing": [],
+      "additional": []
+    },
+    {
+      "id": "pharma/1",
+      "question": "医生给这个药开的方子多了，为什么药企自己确认的该药销售却没同步上去？",
+      "received": "【本轮】医生给这个药开的方子多了，为什么药企自己确认的该药销售却没同步上去？",
+      "selected": [
+        "channel-volume-vs-sales",
+        "dealer-inventory"
+      ],
+      "scores": {
+        "channel-volume-vs-sales": 0.9964206218719482,
+        "dealer-inventory": 0.8597065210342407,
+        "store-cohorts": 0.04694113880395889,
+        "cohort-vs-product-revenue": 0.03950071334838867,
+        "reconcile-shipment-units-and-prices": 0.008596638217568398,
+        "cash-flow-bridge": 0.008596321567893028,
+        "test-pre-earnings-thesis": 0.006024832837283611,
+        "reconcile-per-unit-financials": 0.003118545049801469,
+        "reconcile-comparable-growth": 0.002473121974617243,
+        "compare-restated-series": 0.001365475938655436,
+        "cash-capex-and-leases": 0.0009221933432854712,
+        "estimate-supplier-content": 0.0009151236154139042,
+        "implied-period-guidance": 0.0006161697092466056,
+        "attribute-portfolio-growth": 0.0006133032729849219,
+        "unit-profit-reconciliation": 0.0002084755979012698,
+        "trace-production-bottlenecks": 0.0001555679482407868,
+        "reconcile-fee-bases": 0.00014079714310355484,
+        "trace-lease-commencement": 0.00010853903950192034,
+        "trace-project-cash-rights": 9.555029828334227e-05
+      },
+      "expected": [
+        "channel-volume-vs-sales"
+      ],
+      "exact": false,
+      "missing": [],
+      "additional": [
+        "dealer-inventory"
+      ]
+    },
+    {
+      "id": "portfolio/1",
+      "question": "如果拿掉最火的那条产品线，其余产品加起来到底还有增长吗？",
+      "received": "【本轮】如果拿掉最火的那条产品线，其余产品加起来到底还有增长吗？",
+      "selected": [
+        "attribute-portfolio-growth",
+        "store-cohorts"
+      ],
+      "scores": {
+        "attribute-portfolio-growth": 0.9997332692146301,
+        "store-cohorts": 0.5233304500579834,
+        "cash-flow-bridge": 0.11313274502754211,
+        "dealer-inventory": 0.058661334216594696,
+        "reconcile-comparable-growth": 0.03923724591732025,
+        "channel-volume-vs-sales": 0.02249600552022457,
+        "reconcile-shipment-units-and-prices": 0.009884671308100224,
+        "cohort-vs-product-revenue": 0.007994269952178001,
+        "test-pre-earnings-thesis": 0.005931333173066378,
+        "implied-period-guidance": 0.004050250165164471,
+        "cash-capex-and-leases": 0.0030365821439772844,
+        "compare-restated-series": 0.001245024148374796,
+        "unit-profit-reconciliation": 0.001183092244900763,
+        "trace-lease-commencement": 0.0010654594516381621,
+        "estimate-supplier-content": 0.0009919177973642945,
+        "reconcile-per-unit-financials": 0.0008662525215186179,
+        "trace-production-bottlenecks": 0.0007416433072648942,
+        "reconcile-fee-bases": 0.00024070091603789479,
+        "trace-project-cash-rights": 0.00018880987772718072
+      },
+      "expected": [
+        "attribute-portfolio-growth"
+      ],
+      "exact": false,
+      "missing": [],
+      "additional": [
+        "store-cohorts"
+      ]
+    },
+    {
+      "id": "restatement/1",
+      "question": "公司上季度把一块业务划到了另一分部。去年那个数能直接拿来算今年的同比吗？",
+      "received": "【本轮】公司上季度把一块业务划到了另一分部。去年那个数能直接拿来算今年的同比吗？",
+      "selected": [
+        "compare-restated-series"
+      ],
+      "scores": {
+        "compare-restated-series": 0.9929870963096619,
+        "attribute-portfolio-growth": 0.07507528364658356,
+        "cash-flow-bridge": 0.036462828516960144,
+        "store-cohorts": 0.0171605683863163,
+        "reconcile-comparable-growth": 0.01148416567593813,
+        "reconcile-per-unit-financials": 0.008761698380112648,
+        "implied-period-guidance": 0.0035096784122288227,
+        "unit-profit-reconciliation": 0.003186720423400402,
+        "reconcile-shipment-units-and-prices": 0.0027236209716647863,
+        "reconcile-fee-bases": 0.001309913699515164,
+        "cohort-vs-product-revenue": 0.0012880295980721712,
+        "cash-capex-and-leases": 0.0011974924709647894,
+        "test-pre-earnings-thesis": 0.001079787383787334,
+        "trace-lease-commencement": 0.0009508890216238797,
+        "channel-volume-vs-sales": 0.0003432650992181152,
+        "trace-project-cash-rights": 0.0002841609239112586,
+        "dealer-inventory": 0.000247805641265586,
+        "estimate-supplier-content": 0.0001007787577691488,
+        "trace-production-bottlenecks": 9.655177564127371e-05
+      },
+      "expected": [
+        "compare-restated-series"
+      ],
+      "exact": true,
+      "missing": [],
+      "additional": []
+    },
+    {
+      "id": "supplier/1",
+      "question": "客户打算装三万套机柜，这家供应商每柜能拿到多少元？会不会还要和另一家分单？",
+      "received": "【本轮】客户打算装三万套机柜，这家供应商每柜能拿到多少元？会不会还要和另一家分单？",
+      "selected": [
+        "estimate-supplier-content"
+      ],
+      "scores": {
+        "estimate-supplier-content": 0.9996623992919922,
+        "dealer-inventory": 0.04541083797812462,
+        "reconcile-shipment-units-and-prices": 0.004616740625351667,
+        "reconcile-per-unit-financials": 0.003502650884911418,
+        "cohort-vs-product-revenue": 0.0026942831464111805,
+        "cash-flow-bridge": 0.002265521325170994,
+        "reconcile-fee-bases": 0.0022072994615882635,
+        "store-cohorts": 0.0019142822129651904,
+        "trace-lease-commencement": 0.0008373472956009209,
+        "trace-production-bottlenecks": 0.0006290519959293306,
+        "trace-project-cash-rights": 0.00040746090235188603,
+        "cash-capex-and-leases": 0.00035964284325018525,
+        "reconcile-comparable-growth": 0.00019848205556627363,
+        "unit-profit-reconciliation": 0.00017403464880771935,
+        "compare-restated-series": 0.00010493129229871556,
+        "channel-volume-vs-sales": 9.229632996721193e-05,
+        "test-pre-earnings-thesis": 8.201522723538801e-05,
+        "implied-period-guidance": 6.249408761505038e-05,
+        "attribute-portfolio-growth": 5.630817395285703e-05
+      },
+      "expected": [
+        "estimate-supplier-content"
+      ],
+      "exact": true,
+      "missing": [],
+      "additional": []
+    },
+    {
+      "id": "fee/1",
+      "question": "拿年末受托资产余额直接乘费率，能复算全年的管理费吗？",
+      "received": "【本轮】拿年末受托资产余额直接乘费率，能复算全年的管理费吗？",
+      "selected": [],
+      "scores": {
+        "reconcile-fee-bases": 0.29411694407463074,
+        "reconcile-per-unit-financials": 0.035067442804574966,
+        "cash-flow-bridge": 0.02824602834880352,
+        "cash-capex-and-leases": 0.005749660078436136,
+        "trace-lease-commencement": 0.005532396491616964,
+        "reconcile-shipment-units-and-prices": 0.0036384700797498226,
+        "implied-period-guidance": 0.0027346110437065363,
+        "compare-restated-series": 0.001253209076821804,
+        "store-cohorts": 0.0012177895987406373,
+        "cohort-vs-product-revenue": 0.0010581989772617817,
+        "reconcile-comparable-growth": 0.000882333901245147,
+        "test-pre-earnings-thesis": 0.0005816934863105416,
+        "attribute-portfolio-growth": 0.0005684043862856925,
+        "unit-profit-reconciliation": 0.00043619045754894614,
+        "dealer-inventory": 0.0003294330381322652,
+        "trace-project-cash-rights": 0.00031463499180972576,
+        "channel-volume-vs-sales": 0.00010514362656977028,
+        "estimate-supplier-content": 3.215909964637831e-05,
+        "trace-production-bottlenecks": 2.7591233447310515e-05
+      },
+      "expected": [
+        "reconcile-fee-bases"
+      ],
+      "exact": false,
+      "missing": [
+        "reconcile-fee-bases"
+      ],
+      "additional": []
+    },
+    {
+      "id": "devices/1",
+      "question": "硬盘业务收入的涨幅，分别有多少是块数、每块容量和每 TB 卖价带来的？",
+      "received": "【本轮】硬盘业务收入的涨幅，分别有多少是块数、每块容量和每 TB 卖价带来的？",
+      "selected": [
+        "reconcile-shipment-units-and-prices"
+      ],
+      "scores": {
+        "reconcile-shipment-units-and-prices": 0.9959361553192139,
+        "store-cohorts": 0.33848339319229126,
+        "reconcile-comparable-growth": 0.10383911430835724,
+        "cash-flow-bridge": 0.08375606685876846,
+        "attribute-portfolio-growth": 0.009722983464598656,
+        "reconcile-per-unit-financials": 0.005275980569422245,
+        "reconcile-fee-bases": 0.002928603906184435,
+        "trace-lease-commencement": 0.002771364990621805,
+        "dealer-inventory": 0.0026849815621972084,
+        "test-pre-earnings-thesis": 0.0015863276785239577,
+        "channel-volume-vs-sales": 0.0014523370191454887,
+        "cash-capex-and-leases": 0.0006372802308760583,
+        "unit-profit-reconciliation": 0.0006245887489058077,
+        "compare-restated-series": 0.0006069332594051957,
+        "estimate-supplier-content": 0.0005605900078080595,
+        "cohort-vs-product-revenue": 0.0004623397544492036,
+        "implied-period-guidance": 0.0001048160920618102,
+        "trace-project-cash-rights": 6.209583807503805e-05,
+        "trace-production-bottlenecks": 3.9022808778099716e-05
+      },
+      "expected": [
+        "reconcile-shipment-units-and-prices"
+      ],
+      "exact": true,
+      "missing": [],
+      "additional": []
+    },
+    {
+      "id": "pre/1",
+      "question": "财报前分析师预计涨价能抵消销量下跌。现在数字公布了，当时这个判断究竟哪里对哪里错？",
+      "received": "【本轮】财报前分析师预计涨价能抵消销量下跌。现在数字公布了，当时这个判断究竟哪里对哪里错？",
+      "selected": [
+        "test-pre-earnings-thesis",
+        "reconcile-shipment-units-and-prices"
+      ],
+      "scores": {
+        "test-pre-earnings-thesis": 0.99928879737854,
+        "reconcile-shipment-units-and-prices": 0.5130235552787781,
+        "cash-flow-bridge": 0.10316075384616852,
+        "implied-period-guidance": 0.026970556005835533,
+        "reconcile-per-unit-financials": 0.02129693143069744,
+        "compare-restated-series": 0.01643582247197628,
+        "store-cohorts": 0.0157835241407156,
+        "reconcile-comparable-growth": 0.00851521547883749,
+        "cohort-vs-product-revenue": 0.004869070835411549,
+        "cash-capex-and-leases": 0.004242406692355871,
+        "dealer-inventory": 0.0030815424397587776,
+        "channel-volume-vs-sales": 0.0023189729545265436,
+        "reconcile-fee-bases": 0.0011907938169315457,
+        "unit-profit-reconciliation": 0.0007490722928196192,
+        "attribute-portfolio-growth": 0.0006479454459622502,
+        "trace-project-cash-rights": 0.000591067539062351,
+        "trace-lease-commencement": 0.00028790318174287677,
+        "estimate-supplier-content": 0.00019047598470933735,
+        "trace-production-bottlenecks": 4.21401382482145e-05
+      },
+      "expected": [
+        "test-pre-earnings-thesis"
+      ],
+      "exact": false,
+      "missing": [],
+      "additional": [
+        "reconcile-shipment-units-and-prices"
+      ]
+    },
+    {
+      "id": "plant/1",
+      "question": "新设备已经进厂，为什么合格出货还是上不去？哪一道工序卡着、什么时候才能释放产量？",
+      "received": "【本轮】新设备已经进厂，为什么合格出货还是上不去？哪一道工序卡着、什么时候才能释放产量？",
+      "selected": [
+        "trace-production-bottlenecks"
+      ],
+      "scores": {
+        "trace-production-bottlenecks": 0.9990824460983276,
+        "dealer-inventory": 0.006201348267495632,
+        "estimate-supplier-content": 0.0010611836332827806,
+        "store-cohorts": 0.0008064793073572218,
+        "cash-flow-bridge": 0.00046746485168114305,
+        "compare-restated-series": 0.0002819034270942211,
+        "cash-capex-and-leases": 0.00022537873883266002,
+        "reconcile-shipment-units-and-prices": 0.00022096400789450854,
+        "implied-period-guidance": 0.00016568404680583626,
+        "attribute-portfolio-growth": 0.00013693523942492902,
+        "test-pre-earnings-thesis": 0.00011116248788312078,
+        "reconcile-comparable-growth": 8.42422159621492e-05,
+        "reconcile-per-unit-financials": 8.306124072987586e-05,
+        "channel-volume-vs-sales": 6.948797090444714e-05,
+        "cohort-vs-product-revenue": 5.064529614173807e-05,
+        "unit-profit-reconciliation": 4.8313890147255734e-05,
+        "trace-lease-commencement": 3.538876990205608e-05,
+        "trace-project-cash-rights": 2.943930849141907e-05,
+        "reconcile-fee-bases": 1.0624865353747737e-05
+      },
+      "expected": [
+        "trace-production-bottlenecks"
+      ],
+      "exact": true,
+      "missing": [],
+      "additional": []
+    },
+    {
+      "id": "rights/1",
+      "question": "合营电站签的售电合同总额很大，但扣掉贷款并按协议分配后，有多少真的流到这家上市公司？",
+      "received": "【本轮】合营电站签的售电合同总额很大，但扣掉贷款并按协议分配后，有多少真的流到这家上市公司？",
+      "selected": [
+        "trace-project-cash-rights"
+      ],
+      "scores": {
+        "trace-project-cash-rights": 0.9845810532569885,
+        "cash-flow-bridge": 0.186222642660141,
+        "reconcile-fee-bases": 0.01511047501116991,
+        "cash-capex-and-leases": 0.00857711210846901,
+        "dealer-inventory": 0.001997683197259903,
+        "trace-lease-commencement": 0.0018929049838334322,
+        "store-cohorts": 0.0016120325308293104,
+        "cohort-vs-product-revenue": 0.0011258646845817566,
+        "reconcile-comparable-growth": 0.0008019751403480768,
+        "reconcile-per-unit-financials": 0.0005437320796772838,
+        "compare-restated-series": 0.00043190972064621747,
+        "unit-profit-reconciliation": 0.00037540693301707506,
+        "estimate-supplier-content": 0.0003143402573186904,
+        "channel-volume-vs-sales": 0.00030616254662163556,
+        "test-pre-earnings-thesis": 0.0003020862059202045,
+        "reconcile-shipment-units-and-prices": 0.00029514895868487656,
+        "attribute-portfolio-growth": 0.0002908832102548331,
+        "implied-period-guidance": 0.00021092950191814452,
+        "trace-production-bottlenecks": 1.5556752259726636e-05
+      },
+      "expected": [
+        "trace-project-cash-rights"
+      ],
+      "exact": true,
+      "missing": [],
+      "additional": []
+    },
+    {
+      "id": "profit/1",
+      "question": "餐厅那一层算出的盈利和总部报表里的营业利润为什么对不上？",
+      "received": "【本轮】餐厅那一层算出的盈利和总部报表里的营业利润为什么对不上？",
+      "selected": [
+        "unit-profit-reconciliation",
+        "reconcile-per-unit-financials"
+      ],
+      "scores": {
+        "unit-profit-reconciliation": 0.9990482926368713,
+        "reconcile-per-unit-financials": 0.9972518086433411,
+        "compare-restated-series": 0.22563132643699646,
+        "cash-flow-bridge": 0.2152208834886551,
+        "test-pre-earnings-thesis": 0.04037883132696152,
+        "store-cohorts": 0.025599638000130653,
+        "cash-capex-and-leases": 0.018652159720659256,
+        "cohort-vs-product-revenue": 0.011761892586946487,
+        "reconcile-comparable-growth": 0.011405380442738533,
+        "reconcile-shipment-units-and-prices": 0.008515352383255959,
+        "implied-period-guidance": 0.005832919385284185,
+        "reconcile-fee-bases": 0.0033186718355864286,
+        "trace-lease-commencement": 0.002820667577907443,
+        "dealer-inventory": 0.0022300889249891043,
+        "trace-project-cash-rights": 0.0010992524912580848,
+        "attribute-portfolio-growth": 0.0008320097113028169,
+        "channel-volume-vs-sales": 0.0007127964054234326,
+        "estimate-supplier-content": 0.000148762424942106,
+        "trace-production-bottlenecks": 9.501804743194953e-05
+      },
+      "expected": [
+        "unit-profit-reconciliation"
+      ],
+      "exact": false,
+      "missing": [],
+      "additional": [
+        "reconcile-per-unit-financials"
+      ]
+    },
+    {
+      "id": "plain/1",
+      "question": "请给出公司注册地和证券代码。",
+      "received": "【本轮】请给出公司注册地和证券代码。",
+      "selected": [],
+      "scores": {
+        "cash-capex-and-leases": 0.004601440392434597,
+        "implied-period-guidance": 0.002240133471786976,
+        "cash-flow-bridge": 0.001765763619914651,
+        "store-cohorts": 0.0015887976624071598,
+        "reconcile-comparable-growth": 0.0015324081759899855,
+        "dealer-inventory": 0.001530648791231215,
+        "trace-project-cash-rights": 0.001209624926559627,
+        "channel-volume-vs-sales": 0.0011440952075645328,
+        "compare-restated-series": 0.0009908234933391213,
+        "cohort-vs-product-revenue": 0.0009467324707657099,
+        "test-pre-earnings-thesis": 0.0006783097051084042,
+        "trace-lease-commencement": 0.00047014470328576863,
+        "reconcile-per-unit-financials": 0.00026909762527793646,
+        "unit-profit-reconciliation": 0.00019052755669690669,
+        "reconcile-shipment-units-and-prices": 0.00016219682584051043,
+        "attribute-portfolio-growth": 0.00013864181528333575,
+        "reconcile-fee-bases": 0.00010669499170035124,
+        "estimate-supplier-content": 6.331964686978608e-05,
+        "trace-production-bottlenecks": 3.2063224352896214e-05
+      },
+      "expected": [],
+      "exact": true,
+      "missing": [],
+      "additional": []
+    },
+    {
+      "id": "deixis/1",
+      "question": "具体说，你刚才指出的这段延迟，应该从哪一天开始计？",
+      "received": "【前文（仅为消解指代）】\nuser: 物流园的合同是怎么回事？\nassistant: 新租约已经签了，但租户免租期和实际起租日之间存在时差，这会影响当期租金。\n【本轮】具体说，你刚才指出的这段延迟，应该从哪一天开始计？",
+      "selected": [
+        "trace-lease-commencement"
+      ],
+      "scores": {
+        "trace-lease-commencement": 0.9878681898117065,
+        "cash-capex-and-leases": 0.021561911329627037,
+        "cash-flow-bridge": 0.01642487943172455,
+        "trace-project-cash-rights": 0.010705649852752686,
+        "store-cohorts": 0.010655850172042847,
+        "reconcile-fee-bases": 0.004245349206030369,
+        "dealer-inventory": 0.003955027554184198,
+        "reconcile-per-unit-financials": 0.0026459754444658756,
+        "compare-restated-series": 0.001971042715013027,
+        "cohort-vs-product-revenue": 0.001605889410711825,
+        "unit-profit-reconciliation": 0.0007883433136157691,
+        "reconcile-comparable-growth": 0.0006969020469114184,
+        "test-pre-earnings-thesis": 0.0006834180094301701,
+        "reconcile-shipment-units-and-prices": 0.0004515459877438843,
+        "trace-production-bottlenecks": 0.0003534343559294939,
+        "attribute-portfolio-growth": 0.00024904534802772105,
+        "implied-period-guidance": 0.00020603882148861885,
+        "channel-volume-vs-sales": 0.0002020020765485242,
+        "estimate-supplier-content": 0.00019294935918878764
+      },
+      "expected": [
+        "trace-lease-commencement"
+      ],
+      "exact": true,
+      "missing": [],
+      "additional": []
+    }
+  ],
+  "reference_nonempty": 26,
+  "all_reference_cards_present": 24,
+  "reference_empty": 4,
+  "empty_when_reference_empty": 2
+}

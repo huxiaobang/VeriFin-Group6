@@ -1,0 +1,24 @@
+[
+  {
+    "name": "parser_probe_aapl-20250329.htm",
+    "repository_revision": "107d182146ccf5d22a4e71f82cde8b363b212cf1",
+    "repository_path": "tests/fixtures/attachments/aapl/20250329/aapl-20250329.htm",
+    "download_url": "https://raw.githubusercontent.com/dgunning/edgartools/107d182146ccf5d22a4e71f82cde8b363b212cf1/tests/fixtures/attachments/aapl/20250329/aapl-20250329.htm",
+    "canonical_sec_url": "https://www.sec.gov/Archives/edgar/data/320193/000032019325000057/aapl-20250329.htm",
+    "bytes": 889976,
+    "sha256": "487848fb1b223cb23fe4f359fce0795902800a81f386d372fc2507d36569a003",
+    "kind": "real_SEC_HTML_filing_mirrored_in_upstream_test_fixture",
+    "independent_test_gold": false
+  },
+  {
+    "name": "parser_probe_R2.htm",
+    "repository_revision": "107d182146ccf5d22a4e71f82cde8b363b212cf1",
+    "repository_path": "tests/fixtures/attachments/aapl/20250329/R2.htm",
+    "download_url": "https://raw.githubusercontent.com/dgunning/edgartools/107d182146ccf5d22a4e71f82cde8b363b212cf1/tests/fixtures/attachments/aapl/20250329/R2.htm",
+    "canonical_sec_url": "https://www.sec.gov/Archives/edgar/data/320193/000032019325000057/R2.htm",
+    "bytes": 81015,
+    "sha256": "13cad7f06f77cf15858b13ed3dc4dc468265e9fdfe0cf2c9d895b392e9ff50f1",
+    "kind": "real_SEC_HTML_filing_mirrored_in_upstream_test_fixture",
+    "independent_test_gold": false
+  }
+]

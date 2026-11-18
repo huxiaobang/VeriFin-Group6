@@ -1,0 +1,158 @@
+{
+  "claims": [
+    {
+      "id": "claim:credit-quality-assessment",
+      "text": "不是纯粹“账上少提了”，但也不能把准备费用大降理解为还款情况同幅改善。美国运通2026年第三季度的逾期率和净核销率同比温和改善；与此同时，卡余额净核销金额仍增加，准备释放则对信用损失费用下降起了重要作用。",
+      "evidence_ids": [
+        "span_b21f75af80e96caabb6b6935",
+        "chunk_0cc4f8ec81ab82245c7c9ab2"
+      ],
+      "calculation_ids": [],
+      "requirement_ids": [
+        "request:episode_0ca004d161414843826f7eea58bdb18c"
+      ],
+      "constraints": {
+        "entity": "AXP",
+        "period_start": "2026-07-01",
+        "period_end": "2026-09-30",
+        "comparison_period_start": "2025-07-01",
+        "comparison_period_end": "2025-09-30",
+        "basis": "原始10-Q披露的同比数据；综合分析判断"
+      }
+    },
+    {
+      "id": "claim:delinquency-comparison",
+      "text": "看逾期指标，截至2026年9月末，消费及小企业卡余额的30天以上逾期率为1.2%，低于上年同期的1.3%；企业卡余额的90天以上逾账单日比率为0.3%，低于上年同期的0.4%。这支持信用质量同比有所改善，但两类客户使用的逾期定义不同，不能直接横向比较。",
+      "evidence_ids": [
+        "span_b21f75af80e96caabb6b6935",
+        "chunk_5ebad3058c63ee247f781cea"
+      ],
+      "calculation_ids": [],
+      "requirement_ids": [
+        "request:episode_0ca004d161414843826f7eea58bdb18c"
+      ],
+      "constraints": {
+        "entity": "AXP",
+        "period_end": "2026-09-30",
+        "comparison_period_end": "2025-09-30",
+        "unit": "%",
+        "basis": "消费及小企业为30+ days past due；企业为90+ days past billing",
+        "business_scope": "分别为消费及小企业卡余额、企业卡余额"
+      }
+    },
+    {
+      "id": "claim:writeoff-rate-comparison",
+      "text": "净核销率也略有下降，但要分清口径：消费及小企业卡余额的仅本金净核销率，由2025年第三季度的1.9%降至2026年第三季度的1.8%；卡余额含本金、利息及费用的净核销率，由2.2%降至2.1%。公司因系统限制不提供企业卡余额的仅本金净核销率，因此不能把1.8%说成所有持卡人的统一指标。",
+      "evidence_ids": [
+        "span_b21f75af80e96caabb6b6935",
+        "chunk_5ebad3058c63ee247f781cea"
+      ],
+      "calculation_ids": [],
+      "requirement_ids": [
+        "request:episode_0ca004d161414843826f7eea58bdb18c"
+      ],
+      "constraints": {
+        "entity": "AXP",
+        "period_start": "2026-07-01",
+        "period_end": "2026-09-30",
+        "comparison_period_start": "2025-07-01",
+        "comparison_period_end": "2025-09-30",
+        "unit": "%",
+        "basis": "分别为principal only与principal, interest and fees；不得混用",
+        "business_scope": "仅本金口径限消费及小企业；含利息费用口径为卡余额"
+      }
+    },
+    {
+      "id": "claim:card-credit-provision-components",
+      "text": "但实际核销的金额没有下降。卡余额净核销金额由上年同期的11.11亿美元升至本季11.30亿美元；与此同时，卡余额准备由增提1.09亿美元变为释放2.35亿美元，卡余额信用损失费用因此从12.20亿美元降至8.95亿美元。原表显示：费用下降主要反映准备由增提转为释放，净核销金额增加则构成抵消，而不是坏账金额同步下降。",
+      "evidence_ids": [
+        "chunk_0cc4f8ec81ab82245c7c9ab2"
+      ],
+      "calculation_ids": [],
+      "requirement_ids": [
+        "request:episode_0ca004d161414843826f7eea58bdb18c"
+      ],
+      "constraints": {
+        "entity": "AXP",
+        "period_start": "2026-07-01",
+        "period_end": "2026-09-30",
+        "comparison_period_start": "2025-07-01",
+        "comparison_period_end": "2025-09-30",
+        "currency": "USD",
+        "unit": "亿美元",
+        "business_scope": "Card balances，不是合并全部信用损失费用",
+        "basis": "10-Q表3原文金额换算；未计算额外贡献比例"
+      }
+    },
+    {
+      "id": "claim:consolidated-credit-provision-scope",
+      "text": "如果看合并口径、包括其他贷款等项目，信用损失费用是由上年同期的12.87亿美元降至本季9.85亿美元；这与上面的卡余额信用损失费用不是同一个范围。",
+      "evidence_ids": [
+        "chunk_0cc4f8ec81ab82245c7c9ab2"
+      ],
+      "calculation_ids": [],
+      "requirement_ids": [
+        "request:episode_0ca004d161414843826f7eea58bdb18c"
+      ],
+      "constraints": {
+        "entity": "AXP",
+        "period_start": "2026-07-01",
+        "period_end": "2026-09-30",
+        "comparison_period_start": "2025-07-01",
+        "comparison_period_end": "2025-09-30",
+        "currency": "USD",
+        "unit": "亿美元",
+        "business_scope": "合并",
+        "basis": "Total provisions for credit losses"
+      }
+    },
+    {
+      "id": "claim:quarterly-reserve-release-cause",
+      "text": "关键是释放原因：公司在10-Q中称，第三季度卡余额准备释放主要来自定期审查过程中对预期信用损失模型的改进，卡余额环比增加部分抵消了这一影响。不能把公司对前九个月“主要由逾期下降及模型改进驱动”的解释，直接套用到第三季度。",
+      "evidence_ids": [
+        "chunk_0cc4f8ec81ab82245c7c9ab2"
+      ],
+      "calculation_ids": [],
+      "requirement_ids": [
+        "request:episode_0ca004d161414843826f7eea58bdb18c"
+      ],
+      "constraints": {
+        "entity": "AXP",
+        "period_start": "2026-07-01",
+        "period_end": "2026-09-30",
+        "business_scope": "Card balances",
+        "basis": "管理层对季度准备释放原因的解释，非独立因果验证"
+      }
+    },
+    {
+      "id": "claim:reserve-interpretation-and-limits",
+      "text": "准备释放属于对预期信用损失估计的调整，并不是当季收回了一笔现金；仅凭释放准备也不能断言公司操纵利润。更稳妥的结论是：信用质量同比温和改善，但本季准备费用下降还显著受模型估计调整影响。现有同比指标不能证明环比持续改善，更不能证明每位持卡人的还款都改善；这些材料也不足以独立验证模型调整是否恰当。",
+      "evidence_ids": [
+        "chunk_f6625f7bd94d294c623a5532",
+        "chunk_0cc4f8ec81ab82245c7c9ab2",
+        "span_b21f75af80e96caabb6b6935"
+      ],
+      "calculation_ids": [],
+      "requirement_ids": [
+        "request:episode_0ca004d161414843826f7eea58bdb18c"
+      ],
+      "constraints": {
+        "entity": "AXP",
+        "period_start": "2026-07-01",
+        "period_end": "2026-09-30",
+        "cutoff": "2026-11-16",
+        "basis": "准备定义及已披露信用指标的会计解释和证据边界；有限本地原始披露",
+        "missing_evidence": [
+          "用于判断环比持续趋势的连续季度同口径信用指标",
+          "用于判断个体还款变化的账户级或客户群迁徙数据",
+          "用于独立评估模型调整合理性的具体参数、验证及回测资料"
+        ]
+      }
+    }
+  ],
+  "answered_requirement_ids": [
+    "request:episode_0ca004d161414843826f7eea58bdb18c"
+  ],
+  "unanswered_requirement_ids": [],
+  "summary": "信用质量同比确有温和改善，但不是坏账金额全面下降：逾期率和净核销率略降，卡余额净核销金额仍增加。信用损失费用下降主要受准备由增提转为释放影响，公司称季度释放主要源于预期信用损失模型改进；不宜把费用降幅当作实际还款改善幅度。"
+}

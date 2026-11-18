@@ -1,0 +1,58 @@
+{
+  "case_id": "02-previous",
+  "history": [],
+  "turns": [
+    {
+      "message": "以 2025 年 1 月 31 日为截止日，微软最近一季收入是多少？",
+      "task": {
+        "version": 1,
+        "source": "replay",
+        "cutoff": "2025-01-31",
+        "items": [
+          {
+            "id": "requested",
+            "text": "以 2025 年 1 月 31 日为截止日，微软最近一季收入是多少？",
+            "kind": "fact",
+            "entities": [
+              "MSFT"
+            ],
+            "periods": [
+              {
+                "relative": "latest",
+                "kind": "quarter",
+                "offset": 0
+              }
+            ],
+            "metric": "revenue"
+          }
+        ]
+      }
+    },
+    {
+      "message": "那上一季呢？",
+      "task": {
+        "version": 1,
+        "source": "replay",
+        "cutoff": "2025-01-31",
+        "items": [
+          {
+            "id": "requested",
+            "text": "那上一季呢？",
+            "kind": "fact",
+            "entities": [
+              "MSFT"
+            ],
+            "periods": [
+              {
+                "relative": "latest",
+                "kind": "quarter",
+                "offset": 1
+              }
+            ],
+            "metric": "revenue"
+          }
+        ]
+      }
+    }
+  ]
+}

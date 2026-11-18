@@ -1,0 +1,192 @@
+[
+  {
+    "id": "dealer-inventory",
+    "name": "经销商进销存与终端需求",
+    "category": "经营模式",
+    "trigger": "厂商通过经销商销售，追问备货、去库存或提前下单对销售的影响。",
+    "transfer": "卡特彼勒、哈雷用于开发；Polaris 缺原件；另一次 WD-40 正式实测确认部分中国客户提前采购，缺终端动销和渠道期初期末库存，不能量化提前采购。",
+    "transfer_status": "部分",
+    "source": "work/wdfc_live_20261116/两轮实测原文.md",
+    "risk": "卡边界：批发、终端和厂商自有库存是三个口径。执行检查：已选中时能否找齐同产品、同地区的两端库存。"
+  },
+  {
+    "id": "store-cohorts",
+    "name": "同店与开店批次的销售贡献",
+    "category": "经营模式",
+    "trigger": "多门店经营，问增长来自老店交易与客单，还是各批次新店。",
+    "transfer": "星巴克方法迁至 Chipotle，按迟一天公开的年报复算四项收入变动；材料是开发者离线迁移，未做模型盲跑。",
+    "transfer_status": "独立验证",
+    "source": "outputs/VeriFin_夜间_20261115/研报A/交接.md",
+    "risk": "卡边界：只问同店客流时无需启动新店金额分解。执行检查：不能把报告时点之后的年报带入回答。"
+  },
+  {
+    "id": "cash-flow-bridge",
+    "name": "利润到经营现金流的调节",
+    "category": "跨行业",
+    "trigger": "本期盈利与经营现金差了多少，哪些非现金项和营运资金项目增加或抵消差额。",
+    "transfer": "英特尔、微软是开发例；换 SFM 的现金追问对平，Fastenal 第一次两问均未答、反馈后仅算回归通过；SFM 早先用于另一项利润率任务。",
+    "transfer_status": "独立验证",
+    "source": "work/cashflow_repair_20261116/transfer/跨公司复核.md",
+    "risk": "卡边界：同一期间的利润到现金，与各调节项对同比变化的贡献是两道题。已见执行问题：累计列读表、首次检索和逐问交付可各自出错。"
+  },
+  {
+    "id": "implied-period-guidance",
+    "name": "全年指引隐含的剩余期间",
+    "category": "跨行业",
+    "trigger": "同口径可加总的全年目标给出后，追问减掉已实现数还剩多少，修订前后变了多少。",
+    "transfer": "Salesforce 和 GM 的同类追问均做过离线复算；记录称其为开发问题，GM 旧版缺可比季度中点，部分底稿只存表行。",
+    "transfer_status": "跨公司开发",
+    "source": "outputs/VeriFin_可用性/交付与复跑.md",
+    "risk": "卡边界：EPS、利润率通常不可直接相减，直接发布的单季指引和反推区间应分列。执行检查：只给表值的回放无法证明发现原表。"
+  },
+  {
+    "id": "unit-profit-reconciliation",
+    "name": "经营单位利润与集团利润调节",
+    "category": "经营模式",
+    "trigger": "公司披露餐厅或门店层级利润，追问金额、利润率与集团营业利润如何对上。",
+    "transfer": "Chipotle 调节表两年闭合；换星巴克只能求门店费用占直营收入 52.2%，缺完整门店利润及调节。",
+    "transfer_status": "部分",
+    "source": "outputs/VeriFin_可用性/交付与复跑.md",
+    "risk": "卡边界：普通公司同层级毛利率到营业利润率的变动，不自动触发门店调节。执行检查：每层各自的收入分母及调节正负号。"
+  },
+  {
+    "id": "reconcile-per-unit-financials",
+    "name": "用单位经营指标复算财务行",
+    "category": "跨行业",
+    "trigger": "活跃数、使用量或销量乘单位金额，能否重算同期间的收入或毛利。",
+    "transfer": "用 Reddit、Pinterest 归纳；独立换 Block，用全组 MAU 和年化每用户毛利复算当季毛利 2,070 百万美元，前季仍有显示差额。",
+    "transfer_status": "独立验证",
+    "source": "outputs/VeriFin_研报实作100分/可移交Skills/reconcile-per-unit-financials/证据.md",
+    "risk": "卡边界：与实售量价拆分可重合，前者验算一个财务行，后者解释两期差额。执行检查：平均和期末数量、年化单位。"
+  },
+  {
+    "id": "attribute-portfolio-growth",
+    "name": "拆分业务组合的增长贡献",
+    "category": "跨行业",
+    "trigger": "问某子组占整体新增多少，或剔除该组其余业务是否仍增长。",
+    "transfer": "Unity 用于开发；换 Monster 预先留题，在美国零售扫描样本复算核心与其余品牌分别约贡献 +7.65 与 −1.45 个百分点；不能外推集团。",
+    "transfer_status": "独立验证",
+    "source": "outputs/VeriFin_研报实作100分/可移交Skills/attribute-portfolio-growth/证据.md",
+    "risk": "卡边界：子组自身增长、对整体增速的贡献、占新增金额的比例容易混淆。执行检查：基期权重与渠道样本范围。"
+  },
+  {
+    "id": "test-pre-earnings-thesis",
+    "name": "核对业绩公布前的具体判断",
+    "category": "跨行业",
+    "trigger": "用户已有一段事前预测，追问实际兑现了多少，预期的驱动是否出现。",
+    "transfer": "Amazon 开发；换 Meta 同机构前后稿可核数值和改模，Spotify 跨机构可核原预测与实际，但无法证明原作者改模。",
+    "transfer_status": "独立验证",
+    "source": "outputs/VeriFin_研报实作100分/可移交Skills/test-pre-earnings-thesis/证据.md",
+    "risk": "卡边界：与同季预期差卡可能重复，预测者及事前主张应能指认。执行检查：冻结时点、防止把事后归因写回事前。"
+  },
+  {
+    "id": "reconcile-comparable-growth",
+    "name": "对齐报表、恒汇率与有机增长",
+    "category": "跨行业",
+    "trigger": "追问报表同比为何有别于公司定义的可比、有机、恒汇率或日均增长。",
+    "transfer": "按冻结动作复核 Nike 和可口可乐卖方预测；换 Grainger 跨组核出报表、按营业日、按营业日且有机恒汇率三个不同口径。",
+    "transfer_status": "独立验证",
+    "source": "outputs/VeriFin_研报实作100分/可移交Skills/reconcile-comparable-growth/证据.md",
+    "risk": "卡边界：口径扩大到产品组合时可能与组合贡献卡重合。执行检查：季度和累计并列时要保留两级表头及营业日分母。"
+  },
+  {
+    "id": "compare-restated-series",
+    "name": "历史序列重列后的同口径比较",
+    "category": "跨行业",
+    "trigger": "公司改变分部呈列或数据商改变样本后，追问公布数和真实可比变化。",
+    "transfer": "微软用于开发；行业数据库留出在公布口径 −42% 与同口径约 +15% 之间辨出反向变化，尚未重建第二家发行人的重述历史序列。",
+    "transfer_status": "部分",
+    "source": "outputs/VeriFin_研报实作100分/可移交Skills/compare-restated-series/证据.md",
+    "risk": "卡边界：指引修订、估值变化和合同重述容易误触发；触发须确有历史定义或版本变化。"
+  },
+  {
+    "id": "cash-capex-and-leases",
+    "name": "购建资产、租赁与已付现金",
+    "category": "跨行业",
+    "trigger": "追问资本开支是否已付现，融资租赁款是否已计入披露的自由现金流。",
+    "transfer": "CoreWeave 的购建付现可核；另组用 SpaceX 表区分发行人 FCF −13,834 与另扣租赁的 −14,129 百万美元，Northrop 的混合本金不能单拆。",
+    "transfer_status": "独立验证",
+    "source": "outputs/VeriFin_研报实作100分/可移交Skills/cash-capex-and-leases/证据.md",
+    "risk": "卡边界：与利润到现金的桥分开，先确认 FCF 定义是否已扣租赁。执行检查：披露行同时含债务与租赁本金时不能全额再扣。"
+  },
+  {
+    "id": "cohort-vs-product-revenue",
+    "name": "客户群收入、产品收入与留存",
+    "category": "经营模式",
+    "trigger": "多产品按客户计费，追问采用率、老客加购或整户收入能否说明新功能变现。",
+    "transfer": "从 RingCentral、Datadog 冻结规则；换 Cloudflare 复核留存率与采用数及其范围，Snowflake 访谈只支持个案，独立产品收入仍无分拆。",
+    "transfer_status": "独立验证",
+    "source": "outputs/VeriFin_研报实作100分/可移交Skills/cohort-vs-product-revenue/证据.md",
+    "risk": "卡边界：区分使用某功能的整户、功能本身及客户自身收入；仅问采用人数时应答完即停。"
+  },
+  {
+    "id": "channel-volume-vs-sales",
+    "name": "处方及医药渠道用量与产品销售",
+    "category": "行业专门",
+    "trigger": "从处方、渠道或医生调查的用量追问药品份额、收入或净价。",
+    "transfer": "Arcutis 可合计产品披露额；跨组换 BMS，用两张同源调查图对回约 2.16% 的细分份额，不能据此倒推出净价或细分实际收入。",
+    "transfer_status": "独立验证",
+    "source": "outputs/VeriFin_研报实作100分/可移交Skills/channel-volume-vs-sales/证据.md",
+    "risk": "卡边界：须限定药品、适应证、处方类型、样本、合作收入主体；换行业需另外验证。"
+  },
+  {
+    "id": "reconcile-fee-bases",
+    "name": "收费收入的资产或交易量基数",
+    "category": "经营模式",
+    "trigger": "挂钩资产、贷款余额或期间支付量变动，追问手续费或相关收入如何变动。",
+    "transfer": "MSCI、Figure 研究后换 PayPay，支付分部 GMV 增速与同口径费率合成约 27.3%，对上另一券商转述的约 27%；仍是同一季业绩。",
+    "transfer_status": "独立验证",
+    "source": "outputs/VeriFin_研报实作100分/可移交Skills/reconcile-fee-bases/证据.md",
+    "risk": "已观察到路由漏选；卡是否有缺陷须用不同措辞检验。卡边界：资产存量费和交易流量收费分支不同，须交代采用哪种底数。"
+  },
+  {
+    "id": "trace-lease-commencement",
+    "name": "签约、起租、计费与同物业收益",
+    "category": "经营模式",
+    "trigger": "出租物业或机柜容量，追问新签租约何时贡献本季租金、同物业收益。",
+    "transfer": "Brixmor 与 Equinix 分别属于物业、机柜开发；预留 Terreno 能复核已起租租金增幅及出租率分母，缺分批面积、日期和费用桥，未算出金额。",
+    "transfer_status": "部分",
+    "source": "outputs/VeriFin_研报实作100分/可移交Skills/trace-lease-commencement/证据.md",
+    "risk": "卡边界：与合同承诺卡共用签约阶段，本卡还要物业池、已计费面积和期间暴露。执行检查：同日也可能是两种资产池。"
+  },
+  {
+    "id": "trace-project-cash-rights",
+    "name": "项目合同角色与公司现金权益",
+    "category": "经营模式",
+    "trigger": "合营、园区或项目融资下，问项目总额有多少归公司、由谁出资和偿还。",
+    "transfer": "Riot、IREN 可核合同责任及项目模型；跨到 Ero 可算达成条件后 42 千吨/年经济权益示意，不能据此核当期实收现金。",
+    "transfer_status": "部分",
+    "source": "outputs/VeriFin_研报实作100分/可移交Skills/trace-project-cash-rights/证据.md",
+    "risk": "卡边界：收益权、出资比例、实际收现和偿债现金不同；必须允许有条件的计算，不应因缺现款否决合同事实。"
+  },
+  {
+    "id": "estimate-supplier-content",
+    "name": "从系统配置估供应商可售金额",
+    "category": "经营模式",
+    "trigger": "按部件供货，追问每台、每架或每 MW 可售金额以及其中多少可归该供应商。",
+    "transfer": "Lumentum 与 Celestica 都是开发；换 Vertiv/Eaton，复核原文后能区分每 MW 基准和改型估计，缺采购份额、对应基准等，未算出项目确认收入。",
+    "transfer_status": "部分",
+    "source": "outputs/VeriFin_研报实作100分/可移交Skills/estimate-supplier-content/证据.md",
+    "risk": "卡边界：系统物料价值、供应商份额、已确认收入属于不同终点；现有证据集中在设备链，其他部件行业尚待验证。"
+  },
+  {
+    "id": "trace-production-bottlenecks",
+    "name": "瓶颈工序与可交付合格产出",
+    "category": "行业专门",
+    "trigger": "多工序制造中，追问扩线、良率或设备到厂能转化为多少合格交付量。",
+    "transfer": "台积电可以按季度月产能对回年度能力，Intel 可识别限制环节；安森美、Amkor 等留出缺整条通过率和交付链，无法算全链合格件。",
+    "transfer_status": "部分",
+    "source": "outputs/VeriFin_研报实作100分/可移交Skills/trace-production-bottlenecks/证据.md",
+    "risk": "卡边界：用串联良率或并列部件成功率之前要核独立性、返修与替换；目前证据集中在半导体制造，未验证其他多工序工业。"
+  },
+  {
+    "id": "reconcile-shipment-units-and-prices",
+    "name": "按实售单位和单价拆量价",
+    "category": "经营模式",
+    "trigger": "按台数、容量或额定输出计价，追问销售额同比变化来自销量、每台容量还是售价。",
+    "transfer": "从希捷等出发，First Solar 可用售出瓦数复算预计销售；ASML 跨组重读纠正同年改估与跨年增长混淆，跨年量价分解有 3.4 百万欧元舍入差。",
+    "transfer_status": "独立验证",
+    "source": "outputs/VeriFin_研报实作100分/可移交Skills/reconcile-shipment-units-and-prices/证据.md",
+    "risk": "卡边界：平均售价变动含组合，合同 ASP 未必是实际成交价。已见执行错误：把同一年度旧新预测误贴为跨年增长。"
+  }
+]

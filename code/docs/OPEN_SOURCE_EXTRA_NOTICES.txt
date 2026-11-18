@@ -1,0 +1,105 @@
+VeriFin additional source-material attribution and upstream notices
+Checked 2026-11-06. Complements OPEN_SOURCE_DATASETS_2026-11-06.NOTICE.txt.
+
+This notice accompanies the FinDVer benchmark results and Apple HTML parser
+snapshots or derived samples in this source package. Source material remains
+attributed to its original authors and issuers. A repository software license
+is not represented here as a new grant over every third-party financial report.
+No model weights or installed dependency distributions are included by this notice.
+
+1. FinDVer published benchmark and annotations
+
+Yilun Zhao, Yitao Long, Tintin Jiang, Chengye Wang, Weiyuan Chen, Hongjun Liu,
+Xiangru Tang, Yiming Zhang, Chen Zhao, and Arman Cohan.
+FinDVer: Explainable Claim Verification over Long and Hybrid-content Financial
+Documents. EMNLP 2024, pages 14739-14752.
+https://aclanthology.org/2024.emnlp-main.818/
+https://doi.org/10.18653/v1/2024.emnlp-main.818
+
+Official repository: https://github.com/yilunzhao/FinDVer
+Pinned revision: e8bb237def4ce555a606a45edba22666e31df248
+Official license at that revision:
+https://raw.githubusercontent.com/yilunzhao/FinDVer/e8bb237def4ce555a606a45edba22666e31df248/LICENSE
+Exact license bytes SHA256:
+4b775c6b1cf1d6dcfe73c6f1947720c6f8bf4aa7558f0ae6ba0c669b05f68260
+
+Our adapter separates task inputs from published references, replaces model-facing
+example IDs with hashes, retains official IDs in scorer output, and ranks original
+report context blocks. The retrieval results use 24 published testmini claims from
+9 complete upstream processed reports; no new human gold is claimed. Report names,
+source revision, input hashes, and original context IDs are preserved in results.
+The official processed reports are third-party issuer material:
+https://github.com/yilunzhao/FinDVer/tree/e8bb237def4ce555a606a45edba22666e31df248/reports
+The repository-level MIT notice is reproduced below. It does not transfer issuer
+copyright or make corporate reports United States government works.
+
+----- BEGIN FinDVer official LICENSE (unaltered text) -----
+MIT License
+
+Copyright (c) 2024 Yilun Zhao
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+----- END FinDVer official LICENSE -----
+
+2. Apple Inc. SEC financial-report HTML and EdgarTools fixture mirror
+
+Issuer: Apple Inc. Quarterly report for the period ended March 29, 2025.
+EDGAR accession: 0000320193-25-000057; issuer CIK: 320193.
+Canonical SEC filing:
+https://www.sec.gov/Archives/edgar/data/320193/000032019325000057/aapl-20250329.htm
+Canonical SEC R2 income-statement page:
+https://www.sec.gov/Archives/edgar/data/320193/000032019325000057/R2.htm
+
+The bytes used in the parser comparison were downloaded from the EdgarTools
+project's test-fixture mirror, not directly downloaded from SEC:
+https://github.com/dgunning/edgartools/tree/107d182146ccf5d22a4e71f82cde8b363b212cf1/tests/fixtures/attachments/aapl/20250329
+Pinned fixture revision: 107d182146ccf5d22a4e71f82cde8b363b212cf1
+
+aapl-20250329.htm: 889976 bytes; SHA256
+487848fb1b223cb23fe4f359fce0795902800a81f386d372fc2507d36569a003
+R2.htm: 81015 bytes; SHA256
+13cad7f06f77cf15858b13ed3dc4dc468265e9fdfe0cf2c9d895b392e9ff50f1
+
+The portable download manifest is data/evaluation/parser_fixture_manifest.json.
+Derived JSON/table chunks preserve original strings and source XPath references,
+mark structural transformations, and do not claim validated financial semantics.
+The additional complex HTML fixture is a locally constructed parser test, not an
+Apple filing and not independent human-annotated financial evidence.
+
+EdgarTools software repository: https://github.com/dgunning/edgartools
+Official repository license at the same fixture revision:
+https://raw.githubusercontent.com/dgunning/edgartools/107d182146ccf5d22a4e71f82cde8b363b212cf1/LICENSE.txt
+Exact license bytes SHA256:
+249fb5021f07689c5fb17925c4d8bcd04fd9e2cee4b4b789499fb80b1e9dfe0c
+
+The following is the EdgarTools repository's software notice. It is retained for
+attribution; the Apple issuer material above is not relabeled as MIT-licensed
+software. Installed optional parser dependencies keep their own license notices.
+
+----- BEGIN EdgarTools official LICENSE.txt (unaltered text) -----
+MIT License
+
+Copyright (c) 2022-present Dwight Gunning <dgunning@gmail.com>
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+----- END EdgarTools official LICENSE.txt -----

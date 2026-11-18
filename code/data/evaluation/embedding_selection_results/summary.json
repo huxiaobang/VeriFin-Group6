@@ -1,0 +1,1006 @@
+{
+  "protocol": "verifin-embedding-development-v1",
+  "independent_gold": false,
+  "unique_positive_questions": 10,
+  "positive_query_variants": 30,
+  "metadata_empty_controls": 3,
+  "semantic_no_answer_controls": 1,
+  "hardware": {
+    "processor": "Apple M1 Pro",
+    "ram_bytes": 17179869184,
+    "logical_cpu": 8,
+    "verified_command": "sysctl machdep.cpu.brand_string hw.memsize hw.logicalcpu"
+  },
+  "candidate_summaries": [
+    {
+      "candidate": "bge-m3",
+      "model_id": "BAAI/bge-m3",
+      "revision": "5617a9f61b028005a4858fdac845db406aefb181",
+      "corpus": {
+        "documents": 4,
+        "characters": 73728,
+        "chunks": 158,
+        "fingerprint": "corpus_59f5576b526292b642e7dde9"
+      },
+      "groups": {
+        "chinese_query": {
+          "case_count": 10,
+          "methods": {
+            "bm25": {
+              "macro_span_recall_at_5": 0.0,
+              "mrr_at_5": 0,
+              "empty_result_fraction": 1,
+              "case_ids": [
+                "msft-cloud-margin--chinese_query",
+                "msft-operating-expenses--chinese_query",
+                "msft-shareholder-return--chinese_query",
+                "msft-azure-growth--chinese_query",
+                "msft-constant-currency--chinese_query",
+                "nvda-blackwell--chinese_query",
+                "nvda-gaming-supply--chinese_query",
+                "nvda-gross-margin--chinese_query",
+                "nvda-dividend--chinese_query",
+                "nvda-datacenter-year--chinese_query"
+              ]
+            },
+            "dense": {
+              "macro_span_recall_at_5": 0.7,
+              "mrr_at_5": 0.6,
+              "empty_result_fraction": 0,
+              "case_ids": [
+                "msft-cloud-margin--chinese_query",
+                "msft-operating-expenses--chinese_query",
+                "msft-shareholder-return--chinese_query",
+                "msft-azure-growth--chinese_query",
+                "msft-constant-currency--chinese_query",
+                "nvda-blackwell--chinese_query",
+                "nvda-gaming-supply--chinese_query",
+                "nvda-gross-margin--chinese_query",
+                "nvda-dividend--chinese_query",
+                "nvda-datacenter-year--chinese_query"
+              ]
+            },
+            "hybrid": {
+              "macro_span_recall_at_5": 0.7,
+              "mrr_at_5": 0.6,
+              "empty_result_fraction": 0,
+              "case_ids": [
+                "msft-cloud-margin--chinese_query",
+                "msft-operating-expenses--chinese_query",
+                "msft-shareholder-return--chinese_query",
+                "msft-azure-growth--chinese_query",
+                "msft-constant-currency--chinese_query",
+                "nvda-blackwell--chinese_query",
+                "nvda-gaming-supply--chinese_query",
+                "nvda-gross-margin--chinese_query",
+                "nvda-dividend--chinese_query",
+                "nvda-datacenter-year--chinese_query"
+              ]
+            }
+          }
+        },
+        "english_paraphrase": {
+          "case_count": 10,
+          "methods": {
+            "bm25": {
+              "macro_span_recall_at_5": 0.5,
+              "mrr_at_5": 0.4,
+              "empty_result_fraction": 0,
+              "case_ids": [
+                "msft-cloud-margin--english_paraphrase",
+                "msft-operating-expenses--english_paraphrase",
+                "msft-shareholder-return--english_paraphrase",
+                "msft-azure-growth--english_paraphrase",
+                "msft-constant-currency--english_paraphrase",
+                "nvda-blackwell--english_paraphrase",
+                "nvda-gaming-supply--english_paraphrase",
+                "nvda-gross-margin--english_paraphrase",
+                "nvda-dividend--english_paraphrase",
+                "nvda-datacenter-year--english_paraphrase"
+              ]
+            },
+            "dense": {
+              "macro_span_recall_at_5": 0.6,
+              "mrr_at_5": 0.55,
+              "empty_result_fraction": 0,
+              "case_ids": [
+                "msft-cloud-margin--english_paraphrase",
+                "msft-operating-expenses--english_paraphrase",
+                "msft-shareholder-return--english_paraphrase",
+                "msft-azure-growth--english_paraphrase",
+                "msft-constant-currency--english_paraphrase",
+                "nvda-blackwell--english_paraphrase",
+                "nvda-gaming-supply--english_paraphrase",
+                "nvda-gross-margin--english_paraphrase",
+                "nvda-dividend--english_paraphrase",
+                "nvda-datacenter-year--english_paraphrase"
+              ]
+            },
+            "hybrid": {
+              "macro_span_recall_at_5": 0.8,
+              "mrr_at_5": 0.5283333333333333,
+              "empty_result_fraction": 0,
+              "case_ids": [
+                "msft-cloud-margin--english_paraphrase",
+                "msft-operating-expenses--english_paraphrase",
+                "msft-shareholder-return--english_paraphrase",
+                "msft-azure-growth--english_paraphrase",
+                "msft-constant-currency--english_paraphrase",
+                "nvda-blackwell--english_paraphrase",
+                "nvda-gaming-supply--english_paraphrase",
+                "nvda-gross-margin--english_paraphrase",
+                "nvda-dividend--english_paraphrase",
+                "nvda-datacenter-year--english_paraphrase"
+              ]
+            }
+          }
+        },
+        "metadata_empty": {
+          "case_count": 3,
+          "methods": {
+            "bm25": {
+              "macro_span_recall_at_5": null,
+              "mrr_at_5": null,
+              "empty_result_fraction": 1,
+              "case_ids": [
+                "msft-before-release",
+                "nvda-before-release",
+                "wrong-report-date"
+              ]
+            },
+            "dense": {
+              "macro_span_recall_at_5": null,
+              "mrr_at_5": null,
+              "empty_result_fraction": 1,
+              "case_ids": [
+                "msft-before-release",
+                "nvda-before-release",
+                "wrong-report-date"
+              ]
+            },
+            "hybrid": {
+              "macro_span_recall_at_5": null,
+              "mrr_at_5": null,
+              "empty_result_fraction": 1,
+              "case_ids": [
+                "msft-before-release",
+                "nvda-before-release",
+                "wrong-report-date"
+              ]
+            }
+          }
+        },
+        "original_english": {
+          "case_count": 10,
+          "methods": {
+            "bm25": {
+              "macro_span_recall_at_5": 1.0,
+              "mrr_at_5": 0.875,
+              "empty_result_fraction": 0,
+              "case_ids": [
+                "msft-cloud-margin",
+                "msft-operating-expenses",
+                "msft-shareholder-return",
+                "msft-azure-growth",
+                "msft-constant-currency",
+                "nvda-blackwell",
+                "nvda-gaming-supply",
+                "nvda-gross-margin",
+                "nvda-dividend",
+                "nvda-datacenter-year"
+              ]
+            },
+            "dense": {
+              "macro_span_recall_at_5": 0.6,
+              "mrr_at_5": 0.5333333333333333,
+              "empty_result_fraction": 0,
+              "case_ids": [
+                "msft-cloud-margin",
+                "msft-operating-expenses",
+                "msft-shareholder-return",
+                "msft-azure-growth",
+                "msft-constant-currency",
+                "nvda-blackwell",
+                "nvda-gaming-supply",
+                "nvda-gross-margin",
+                "nvda-dividend",
+                "nvda-datacenter-year"
+              ]
+            },
+            "hybrid": {
+              "macro_span_recall_at_5": 0.8,
+              "mrr_at_5": 0.6666666666666666,
+              "empty_result_fraction": 0,
+              "case_ids": [
+                "msft-cloud-margin",
+                "msft-operating-expenses",
+                "msft-shareholder-return",
+                "msft-azure-growth",
+                "msft-constant-currency",
+                "nvda-blackwell",
+                "nvda-gaming-supply",
+                "nvda-gross-margin",
+                "nvda-dividend",
+                "nvda-datacenter-year"
+              ]
+            }
+          }
+        },
+        "semantic_no_answer": {
+          "case_count": 1,
+          "methods": {
+            "bm25": {
+              "macro_span_recall_at_5": null,
+              "mrr_at_5": null,
+              "empty_result_fraction": 1,
+              "case_ids": [
+                "unrelated-lexical"
+              ],
+              "interpretation": "Diagnostic behavior only: cosine top-k has no calibrated rejection threshold; nonempty results are not a measure of encoder quality."
+            },
+            "dense": {
+              "macro_span_recall_at_5": null,
+              "mrr_at_5": null,
+              "empty_result_fraction": 0,
+              "case_ids": [
+                "unrelated-lexical"
+              ],
+              "interpretation": "Diagnostic behavior only: cosine top-k has no calibrated rejection threshold; nonempty results are not a measure of encoder quality."
+            },
+            "hybrid": {
+              "macro_span_recall_at_5": null,
+              "mrr_at_5": null,
+              "empty_result_fraction": 0,
+              "case_ids": [
+                "unrelated-lexical"
+              ],
+              "interpretation": "Diagnostic behavior only: cosine top-k has no calibrated rejection threshold; nonempty results are not a measure of encoder quality."
+            }
+          }
+        }
+      },
+      "resources": {
+        "model_files_bytes": 2293250249,
+        "peak_process_rss_bytes": 2404532224,
+        "peak_rss_scope": "Whole evaluation process; includes Python, torch, tokenizer and weights. Not model-only RAM, not total machine memory.",
+        "loader_including_hash_seconds": 6.965442458051257,
+        "model_load_seconds": 1.6638289591064677,
+        "float32_conversion_seconds": 0.001630667014978826,
+        "passage_encoding_seconds": 21.132285750005394,
+        "passages_per_second": 7.476711315999485,
+        "query_encoding_median_ms": 171.64227098692209,
+        "query_encoding_p95_ms": 205.169832915999,
+        "query_encoding_scope": "Single-query tokenize + forward + normalize; one warm-up excluded; one measurement per distinct query, no cache."
+      },
+      "runtime": {
+        "python": "3.12.14",
+        "device": "cpu",
+        "torch_threads": 4,
+        "torch_interop_threads": 1,
+        "batch_size": 8,
+        "torch": "2.15.0",
+        "sentence_transformers": "6.2.0",
+        "transformers": "5.22.1",
+        "tokenizer_truncation": false,
+        "dtype": "torch.float32",
+        "source_load_dtype": "torch.float32",
+        "max_seq_length": 8192,
+        "parameter_count": 567754752,
+        "pooling": {
+          "embedding_dimension": 1024,
+          "pooling_mode": "cls",
+          "include_prompt": true
+        }
+      },
+      "preprocessing": {
+        "chunk_chars": 600,
+        "chunk_overlap": 80,
+        "query_prefix": "",
+        "passage_prefix": "",
+        "token_lengths": {
+          "passage": {
+            "maximum": 225,
+            "median": 127.5,
+            "count": 158
+          },
+          "query": {
+            "maximum": 24,
+            "median": 14.5,
+            "count": 34
+          }
+        }
+      },
+      "model_files_fingerprint": "model_a939d96c015fa42d80e6b0b1",
+      "weight_conversion": {
+        "method": "torch.load(weights_only=True, map_location=cpu) -> safetensors.torch.save_file",
+        "torch": "2.15.0",
+        "safetensors": "0.8.0",
+        "source_sha256": "b5e0ce3470abf5ef3831aa1bd5553b486803e83251590ab7ff35a117cf6aad38",
+        "safetensors_sha256": "993b2248881724788dcab8c644a91dfd63584b6e5604ff2037cb5541e1e38e7e",
+        "tensor_count": 391,
+        "parameter_count": 567754752,
+        "custom_pickle_globals": false,
+        "unrestricted_pickle": false
+      },
+      "artifact_sha256": "960992c405ec3eca54c6f1173347bcd22ff2c1e598ee3d204c9d93d3b1d89fac",
+      "result_file": "bge-m3-chars600-overlap80.results.json",
+      "result_sha256": "6901977ebb227fd632674345c638b7dfd86ed610e8d8c59fd0f7597ffe0ca184",
+      "positive_aggregate": {
+        "bm25": {
+          "macro_span_recall": 0.5,
+          "mrr": 0.425
+        },
+        "dense": {
+          "macro_span_recall": 0.6333333333333333,
+          "mrr": 0.5611111111111111
+        },
+        "hybrid": {
+          "macro_span_recall": 0.7666666666666667,
+          "mrr": 0.5983333333333334
+        }
+      }
+    },
+    {
+      "candidate": "e5-small",
+      "model_id": "intfloat/multilingual-e5-small",
+      "revision": "614241f622f53c4eeff9890bdc4f31cfecc418b3",
+      "corpus": {
+        "documents": 4,
+        "characters": 73728,
+        "chunks": 158,
+        "fingerprint": "corpus_59f5576b526292b642e7dde9"
+      },
+      "groups": {
+        "chinese_query": {
+          "case_count": 10,
+          "methods": {
+            "bm25": {
+              "macro_span_recall_at_5": 0.0,
+              "mrr_at_5": 0,
+              "empty_result_fraction": 1,
+              "case_ids": [
+                "msft-cloud-margin--chinese_query",
+                "msft-operating-expenses--chinese_query",
+                "msft-shareholder-return--chinese_query",
+                "msft-azure-growth--chinese_query",
+                "msft-constant-currency--chinese_query",
+                "nvda-blackwell--chinese_query",
+                "nvda-gaming-supply--chinese_query",
+                "nvda-gross-margin--chinese_query",
+                "nvda-dividend--chinese_query",
+                "nvda-datacenter-year--chinese_query"
+              ]
+            },
+            "dense": {
+              "macro_span_recall_at_5": 0.6,
+              "mrr_at_5": 0.48333333333333334,
+              "empty_result_fraction": 0,
+              "case_ids": [
+                "msft-cloud-margin--chinese_query",
+                "msft-operating-expenses--chinese_query",
+                "msft-shareholder-return--chinese_query",
+                "msft-azure-growth--chinese_query",
+                "msft-constant-currency--chinese_query",
+                "nvda-blackwell--chinese_query",
+                "nvda-gaming-supply--chinese_query",
+                "nvda-gross-margin--chinese_query",
+                "nvda-dividend--chinese_query",
+                "nvda-datacenter-year--chinese_query"
+              ]
+            },
+            "hybrid": {
+              "macro_span_recall_at_5": 0.6,
+              "mrr_at_5": 0.48333333333333334,
+              "empty_result_fraction": 0,
+              "case_ids": [
+                "msft-cloud-margin--chinese_query",
+                "msft-operating-expenses--chinese_query",
+                "msft-shareholder-return--chinese_query",
+                "msft-azure-growth--chinese_query",
+                "msft-constant-currency--chinese_query",
+                "nvda-blackwell--chinese_query",
+                "nvda-gaming-supply--chinese_query",
+                "nvda-gross-margin--chinese_query",
+                "nvda-dividend--chinese_query",
+                "nvda-datacenter-year--chinese_query"
+              ]
+            }
+          }
+        },
+        "english_paraphrase": {
+          "case_count": 10,
+          "methods": {
+            "bm25": {
+              "macro_span_recall_at_5": 0.5,
+              "mrr_at_5": 0.4,
+              "empty_result_fraction": 0,
+              "case_ids": [
+                "msft-cloud-margin--english_paraphrase",
+                "msft-operating-expenses--english_paraphrase",
+                "msft-shareholder-return--english_paraphrase",
+                "msft-azure-growth--english_paraphrase",
+                "msft-constant-currency--english_paraphrase",
+                "nvda-blackwell--english_paraphrase",
+                "nvda-gaming-supply--english_paraphrase",
+                "nvda-gross-margin--english_paraphrase",
+                "nvda-dividend--english_paraphrase",
+                "nvda-datacenter-year--english_paraphrase"
+              ]
+            },
+            "dense": {
+              "macro_span_recall_at_5": 0.6,
+              "mrr_at_5": 0.39,
+              "empty_result_fraction": 0,
+              "case_ids": [
+                "msft-cloud-margin--english_paraphrase",
+                "msft-operating-expenses--english_paraphrase",
+                "msft-shareholder-return--english_paraphrase",
+                "msft-azure-growth--english_paraphrase",
+                "msft-constant-currency--english_paraphrase",
+                "nvda-blackwell--english_paraphrase",
+                "nvda-gaming-supply--english_paraphrase",
+                "nvda-gross-margin--english_paraphrase",
+                "nvda-dividend--english_paraphrase",
+                "nvda-datacenter-year--english_paraphrase"
+              ]
+            },
+            "hybrid": {
+              "macro_span_recall_at_5": 0.8,
+              "mrr_at_5": 0.565,
+              "empty_result_fraction": 0,
+              "case_ids": [
+                "msft-cloud-margin--english_paraphrase",
+                "msft-operating-expenses--english_paraphrase",
+                "msft-shareholder-return--english_paraphrase",
+                "msft-azure-growth--english_paraphrase",
+                "msft-constant-currency--english_paraphrase",
+                "nvda-blackwell--english_paraphrase",
+                "nvda-gaming-supply--english_paraphrase",
+                "nvda-gross-margin--english_paraphrase",
+                "nvda-dividend--english_paraphrase",
+                "nvda-datacenter-year--english_paraphrase"
+              ]
+            }
+          }
+        },
+        "metadata_empty": {
+          "case_count": 3,
+          "methods": {
+            "bm25": {
+              "macro_span_recall_at_5": null,
+              "mrr_at_5": null,
+              "empty_result_fraction": 1,
+              "case_ids": [
+                "msft-before-release",
+                "nvda-before-release",
+                "wrong-report-date"
+              ]
+            },
+            "dense": {
+              "macro_span_recall_at_5": null,
+              "mrr_at_5": null,
+              "empty_result_fraction": 1,
+              "case_ids": [
+                "msft-before-release",
+                "nvda-before-release",
+                "wrong-report-date"
+              ]
+            },
+            "hybrid": {
+              "macro_span_recall_at_5": null,
+              "mrr_at_5": null,
+              "empty_result_fraction": 1,
+              "case_ids": [
+                "msft-before-release",
+                "nvda-before-release",
+                "wrong-report-date"
+              ]
+            }
+          }
+        },
+        "original_english": {
+          "case_count": 10,
+          "methods": {
+            "bm25": {
+              "macro_span_recall_at_5": 1.0,
+              "mrr_at_5": 0.875,
+              "empty_result_fraction": 0,
+              "case_ids": [
+                "msft-cloud-margin",
+                "msft-operating-expenses",
+                "msft-shareholder-return",
+                "msft-azure-growth",
+                "msft-constant-currency",
+                "nvda-blackwell",
+                "nvda-gaming-supply",
+                "nvda-gross-margin",
+                "nvda-dividend",
+                "nvda-datacenter-year"
+              ]
+            },
+            "dense": {
+              "macro_span_recall_at_5": 0.7,
+              "mrr_at_5": 0.6,
+              "empty_result_fraction": 0,
+              "case_ids": [
+                "msft-cloud-margin",
+                "msft-operating-expenses",
+                "msft-shareholder-return",
+                "msft-azure-growth",
+                "msft-constant-currency",
+                "nvda-blackwell",
+                "nvda-gaming-supply",
+                "nvda-gross-margin",
+                "nvda-dividend",
+                "nvda-datacenter-year"
+              ]
+            },
+            "hybrid": {
+              "macro_span_recall_at_5": 0.9,
+              "mrr_at_5": 0.6866666666666666,
+              "empty_result_fraction": 0,
+              "case_ids": [
+                "msft-cloud-margin",
+                "msft-operating-expenses",
+                "msft-shareholder-return",
+                "msft-azure-growth",
+                "msft-constant-currency",
+                "nvda-blackwell",
+                "nvda-gaming-supply",
+                "nvda-gross-margin",
+                "nvda-dividend",
+                "nvda-datacenter-year"
+              ]
+            }
+          }
+        },
+        "semantic_no_answer": {
+          "case_count": 1,
+          "methods": {
+            "bm25": {
+              "macro_span_recall_at_5": null,
+              "mrr_at_5": null,
+              "empty_result_fraction": 1,
+              "case_ids": [
+                "unrelated-lexical"
+              ],
+              "interpretation": "Diagnostic behavior only: cosine top-k has no calibrated rejection threshold; nonempty results are not a measure of encoder quality."
+            },
+            "dense": {
+              "macro_span_recall_at_5": null,
+              "mrr_at_5": null,
+              "empty_result_fraction": 0,
+              "case_ids": [
+                "unrelated-lexical"
+              ],
+              "interpretation": "Diagnostic behavior only: cosine top-k has no calibrated rejection threshold; nonempty results are not a measure of encoder quality."
+            },
+            "hybrid": {
+              "macro_span_recall_at_5": null,
+              "mrr_at_5": null,
+              "empty_result_fraction": 0,
+              "case_ids": [
+                "unrelated-lexical"
+              ],
+              "interpretation": "Diagnostic behavior only: cosine top-k has no calibrated rejection threshold; nonempty results are not a measure of encoder quality."
+            }
+          }
+        }
+      },
+      "resources": {
+        "model_files_bytes": 493292828,
+        "peak_process_rss_bytes": 1025900544,
+        "peak_rss_scope": "Whole evaluation process; includes Python, torch, tokenizer and weights. Not model-only RAM, not total machine memory.",
+        "loader_including_hash_seconds": 5.34456420794595,
+        "model_load_seconds": 1.4649006249383092,
+        "float32_conversion_seconds": 0.0008839590009301901,
+        "passage_encoding_seconds": 2.690735209034756,
+        "passages_per_second": 58.72001060136986,
+        "query_encoding_median_ms": 20.455437537748367,
+        "query_encoding_p95_ms": 24.403417017310858,
+        "query_encoding_scope": "Single-query tokenize + forward + normalize; one warm-up excluded; one measurement per distinct query, no cache."
+      },
+      "runtime": {
+        "python": "3.12.14",
+        "device": "cpu",
+        "torch_threads": 4,
+        "torch_interop_threads": 1,
+        "batch_size": 8,
+        "torch": "2.15.0",
+        "sentence_transformers": "6.2.0",
+        "transformers": "5.22.1",
+        "tokenizer_truncation": false,
+        "dtype": "torch.float32",
+        "source_load_dtype": "torch.float32",
+        "max_seq_length": 512,
+        "parameter_count": 117653760,
+        "pooling": {
+          "embedding_dimension": 384,
+          "pooling_mode": "mean",
+          "include_prompt": true
+        }
+      },
+      "preprocessing": {
+        "chunk_chars": 600,
+        "chunk_overlap": 80,
+        "query_prefix": "query: ",
+        "passage_prefix": "passage: ",
+        "token_lengths": {
+          "passage": {
+            "maximum": 227,
+            "median": 129.5,
+            "count": 158
+          },
+          "query": {
+            "maximum": 27,
+            "median": 17.5,
+            "count": 34
+          }
+        }
+      },
+      "model_files_fingerprint": "model_e2ffa0ada8f72474fa7d926f",
+      "weight_conversion": null,
+      "artifact_sha256": "3302ac7e881dfed0858c60953c78420544e7c083736498c5c60c0ce66f6576ff",
+      "result_file": "e5-small-chars600-overlap80.results.json",
+      "result_sha256": "e60e7583f84894fe4b5868e3611b4976b1b258648d92ff84c27c8b54c17718c0",
+      "positive_aggregate": {
+        "bm25": {
+          "macro_span_recall": 0.5,
+          "mrr": 0.425
+        },
+        "dense": {
+          "macro_span_recall": 0.6333333333333333,
+          "mrr": 0.4911111111111111
+        },
+        "hybrid": {
+          "macro_span_recall": 0.7666666666666667,
+          "mrr": 0.5783333333333334
+        }
+      }
+    },
+    {
+      "candidate": "qwen3-0.6b",
+      "model_id": "Qwen/Qwen3-Embedding-0.6B",
+      "revision": "97b0c614be4d77ee51c0cef4e5f07c00f9eb65b3",
+      "corpus": {
+        "documents": 4,
+        "characters": 73728,
+        "chunks": 158,
+        "fingerprint": "corpus_59f5576b526292b642e7dde9"
+      },
+      "groups": {
+        "chinese_query": {
+          "case_count": 10,
+          "methods": {
+            "bm25": {
+              "macro_span_recall_at_5": 0.0,
+              "mrr_at_5": 0,
+              "empty_result_fraction": 1,
+              "case_ids": [
+                "msft-cloud-margin--chinese_query",
+                "msft-operating-expenses--chinese_query",
+                "msft-shareholder-return--chinese_query",
+                "msft-azure-growth--chinese_query",
+                "msft-constant-currency--chinese_query",
+                "nvda-blackwell--chinese_query",
+                "nvda-gaming-supply--chinese_query",
+                "nvda-gross-margin--chinese_query",
+                "nvda-dividend--chinese_query",
+                "nvda-datacenter-year--chinese_query"
+              ]
+            },
+            "dense": {
+              "macro_span_recall_at_5": 0.8,
+              "mrr_at_5": 0.7,
+              "empty_result_fraction": 0,
+              "case_ids": [
+                "msft-cloud-margin--chinese_query",
+                "msft-operating-expenses--chinese_query",
+                "msft-shareholder-return--chinese_query",
+                "msft-azure-growth--chinese_query",
+                "msft-constant-currency--chinese_query",
+                "nvda-blackwell--chinese_query",
+                "nvda-gaming-supply--chinese_query",
+                "nvda-gross-margin--chinese_query",
+                "nvda-dividend--chinese_query",
+                "nvda-datacenter-year--chinese_query"
+              ]
+            },
+            "hybrid": {
+              "macro_span_recall_at_5": 0.8,
+              "mrr_at_5": 0.7,
+              "empty_result_fraction": 0,
+              "case_ids": [
+                "msft-cloud-margin--chinese_query",
+                "msft-operating-expenses--chinese_query",
+                "msft-shareholder-return--chinese_query",
+                "msft-azure-growth--chinese_query",
+                "msft-constant-currency--chinese_query",
+                "nvda-blackwell--chinese_query",
+                "nvda-gaming-supply--chinese_query",
+                "nvda-gross-margin--chinese_query",
+                "nvda-dividend--chinese_query",
+                "nvda-datacenter-year--chinese_query"
+              ]
+            }
+          }
+        },
+        "english_paraphrase": {
+          "case_count": 10,
+          "methods": {
+            "bm25": {
+              "macro_span_recall_at_5": 0.5,
+              "mrr_at_5": 0.4,
+              "empty_result_fraction": 0,
+              "case_ids": [
+                "msft-cloud-margin--english_paraphrase",
+                "msft-operating-expenses--english_paraphrase",
+                "msft-shareholder-return--english_paraphrase",
+                "msft-azure-growth--english_paraphrase",
+                "msft-constant-currency--english_paraphrase",
+                "nvda-blackwell--english_paraphrase",
+                "nvda-gaming-supply--english_paraphrase",
+                "nvda-gross-margin--english_paraphrase",
+                "nvda-dividend--english_paraphrase",
+                "nvda-datacenter-year--english_paraphrase"
+              ]
+            },
+            "dense": {
+              "macro_span_recall_at_5": 0.7,
+              "mrr_at_5": 0.475,
+              "empty_result_fraction": 0,
+              "case_ids": [
+                "msft-cloud-margin--english_paraphrase",
+                "msft-operating-expenses--english_paraphrase",
+                "msft-shareholder-return--english_paraphrase",
+                "msft-azure-growth--english_paraphrase",
+                "msft-constant-currency--english_paraphrase",
+                "nvda-blackwell--english_paraphrase",
+                "nvda-gaming-supply--english_paraphrase",
+                "nvda-gross-margin--english_paraphrase",
+                "nvda-dividend--english_paraphrase",
+                "nvda-datacenter-year--english_paraphrase"
+              ]
+            },
+            "hybrid": {
+              "macro_span_recall_at_5": 0.7,
+              "mrr_at_5": 0.42833333333333334,
+              "empty_result_fraction": 0,
+              "case_ids": [
+                "msft-cloud-margin--english_paraphrase",
+                "msft-operating-expenses--english_paraphrase",
+                "msft-shareholder-return--english_paraphrase",
+                "msft-azure-growth--english_paraphrase",
+                "msft-constant-currency--english_paraphrase",
+                "nvda-blackwell--english_paraphrase",
+                "nvda-gaming-supply--english_paraphrase",
+                "nvda-gross-margin--english_paraphrase",
+                "nvda-dividend--english_paraphrase",
+                "nvda-datacenter-year--english_paraphrase"
+              ]
+            }
+          }
+        },
+        "metadata_empty": {
+          "case_count": 3,
+          "methods": {
+            "bm25": {
+              "macro_span_recall_at_5": null,
+              "mrr_at_5": null,
+              "empty_result_fraction": 1,
+              "case_ids": [
+                "msft-before-release",
+                "nvda-before-release",
+                "wrong-report-date"
+              ]
+            },
+            "dense": {
+              "macro_span_recall_at_5": null,
+              "mrr_at_5": null,
+              "empty_result_fraction": 1,
+              "case_ids": [
+                "msft-before-release",
+                "nvda-before-release",
+                "wrong-report-date"
+              ]
+            },
+            "hybrid": {
+              "macro_span_recall_at_5": null,
+              "mrr_at_5": null,
+              "empty_result_fraction": 1,
+              "case_ids": [
+                "msft-before-release",
+                "nvda-before-release",
+                "wrong-report-date"
+              ]
+            }
+          }
+        },
+        "original_english": {
+          "case_count": 10,
+          "methods": {
+            "bm25": {
+              "macro_span_recall_at_5": 1.0,
+              "mrr_at_5": 0.875,
+              "empty_result_fraction": 0,
+              "case_ids": [
+                "msft-cloud-margin",
+                "msft-operating-expenses",
+                "msft-shareholder-return",
+                "msft-azure-growth",
+                "msft-constant-currency",
+                "nvda-blackwell",
+                "nvda-gaming-supply",
+                "nvda-gross-margin",
+                "nvda-dividend",
+                "nvda-datacenter-year"
+              ]
+            },
+            "dense": {
+              "macro_span_recall_at_5": 0.9,
+              "mrr_at_5": 0.6333333333333333,
+              "empty_result_fraction": 0,
+              "case_ids": [
+                "msft-cloud-margin",
+                "msft-operating-expenses",
+                "msft-shareholder-return",
+                "msft-azure-growth",
+                "msft-constant-currency",
+                "nvda-blackwell",
+                "nvda-gaming-supply",
+                "nvda-gross-margin",
+                "nvda-dividend",
+                "nvda-datacenter-year"
+              ]
+            },
+            "hybrid": {
+              "macro_span_recall_at_5": 0.9,
+              "mrr_at_5": 0.8,
+              "empty_result_fraction": 0,
+              "case_ids": [
+                "msft-cloud-margin",
+                "msft-operating-expenses",
+                "msft-shareholder-return",
+                "msft-azure-growth",
+                "msft-constant-currency",
+                "nvda-blackwell",
+                "nvda-gaming-supply",
+                "nvda-gross-margin",
+                "nvda-dividend",
+                "nvda-datacenter-year"
+              ]
+            }
+          }
+        },
+        "semantic_no_answer": {
+          "case_count": 1,
+          "methods": {
+            "bm25": {
+              "macro_span_recall_at_5": null,
+              "mrr_at_5": null,
+              "empty_result_fraction": 1,
+              "case_ids": [
+                "unrelated-lexical"
+              ],
+              "interpretation": "Diagnostic behavior only: cosine top-k has no calibrated rejection threshold; nonempty results are not a measure of encoder quality."
+            },
+            "dense": {
+              "macro_span_recall_at_5": null,
+              "mrr_at_5": null,
+              "empty_result_fraction": 0,
+              "case_ids": [
+                "unrelated-lexical"
+              ],
+              "interpretation": "Diagnostic behavior only: cosine top-k has no calibrated rejection threshold; nonempty results are not a measure of encoder quality."
+            },
+            "hybrid": {
+              "macro_span_recall_at_5": null,
+              "mrr_at_5": null,
+              "empty_result_fraction": 0,
+              "case_ids": [
+                "unrelated-lexical"
+              ],
+              "interpretation": "Diagnostic behavior only: cosine top-k has no calibrated rejection threshold; nonempty results are not a measure of encoder quality."
+            }
+          }
+        }
+      },
+      "resources": {
+        "model_files_bytes": 1207487354,
+        "peak_process_rss_bytes": 2567176192,
+        "peak_rss_scope": "Whole evaluation process; includes Python, torch, tokenizer and weights. Not model-only RAM, not total machine memory.",
+        "loader_including_hash_seconds": 6.1783571660052985,
+        "model_load_seconds": 1.5968989999964833,
+        "float32_conversion_seconds": 0.0013895001029595733,
+        "passage_encoding_seconds": 53.85814291599672,
+        "passages_per_second": 2.9336325288162044,
+        "query_encoding_median_ms": 197.59575003990903,
+        "query_encoding_p95_ms": 233.08654106222093,
+        "query_encoding_scope": "Single-query tokenize + forward + normalize; one warm-up excluded; one measurement per distinct query, no cache."
+      },
+      "runtime": {
+        "python": "3.12.14",
+        "device": "cpu",
+        "torch_threads": 4,
+        "torch_interop_threads": 1,
+        "batch_size": 8,
+        "torch": "2.15.0",
+        "sentence_transformers": "6.2.0",
+        "transformers": "5.22.1",
+        "tokenizer_truncation": false,
+        "dtype": "torch.float32",
+        "source_load_dtype": "torch.float32",
+        "max_seq_length": 32768,
+        "parameter_count": 595776512,
+        "pooling": {
+          "embedding_dimension": 1024,
+          "pooling_mode": "lasttoken",
+          "include_prompt": true
+        }
+      },
+      "preprocessing": {
+        "chunk_chars": 600,
+        "chunk_overlap": 80,
+        "query_prefix": "Instruct: Given a financial research question, retrieve relevant passages from company financial reports.\nQuery: ",
+        "passage_prefix": "",
+        "token_lengths": {
+          "passage": {
+            "maximum": 372,
+            "median": 122.0,
+            "count": 158
+          },
+          "query": {
+            "maximum": 40,
+            "median": 32.0,
+            "count": 34
+          }
+        }
+      },
+      "model_files_fingerprint": "model_6798ccedb72aae55d86e5553",
+      "weight_conversion": null,
+      "artifact_sha256": "2788f07a6d2482a071866aa5fc9035a4d9d1fee2431be5db90867f4397ba9c44",
+      "result_file": "qwen3-0.6b-chars600-overlap80.results.json",
+      "result_sha256": "052fde32344d19b9284a3497eaf729a80a2a97b44ab0178b51562977f6f5723c",
+      "positive_aggregate": {
+        "bm25": {
+          "macro_span_recall": 0.5,
+          "mrr": 0.425
+        },
+        "dense": {
+          "macro_span_recall": 0.8,
+          "mrr": 0.6027777777777777
+        },
+        "hybrid": {
+          "macro_span_recall": 0.8,
+          "mrr": 0.6427777777777778
+        }
+      }
+    }
+  ],
+  "checks": [
+    {
+      "candidate": "bge-m3",
+      "artifact_hash_verified": true,
+      "frozen_artifact_load_verified": true,
+      "metrics_recomputed_equal": true,
+      "same_fp32_cpu": true,
+      "no_token_truncation": true
+    },
+    {
+      "candidate": "e5-small",
+      "artifact_hash_verified": true,
+      "frozen_artifact_load_verified": true,
+      "metrics_recomputed_equal": true,
+      "same_fp32_cpu": true,
+      "no_token_truncation": true
+    },
+    {
+      "candidate": "qwen3-0.6b",
+      "artifact_hash_verified": true,
+      "frozen_artifact_load_verified": true,
+      "metrics_recomputed_equal": true,
+      "same_fp32_cpu": true,
+      "no_token_truncation": true
+    }
+  ]
+}

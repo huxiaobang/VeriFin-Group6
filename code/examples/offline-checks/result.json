@@ -1,0 +1,279 @@
+{
+  "version": "0.3.0",
+  "classification": "offline_engineering_check_not_model_or_human_quality_evaluation",
+  "preview": {
+    "status": "preview_only",
+    "stop_reason": "synthesis_required",
+    "model_calls": 0,
+    "tool_calls": 4,
+    "planner_steps": 5,
+    "task_sha256": "bd8e428a2987ee3203a8ebf3bf5a6b1c30274d0501161b6b8937d04030011306",
+    "source_manifest_sha256": "7d8b88856cab1bf3ed62a5017732f90dc85c154d2d0febd69539201503dd86d1",
+    "truth_scored": false,
+    "notice": "Acquisition preview only. No synthesis or semantic verification ran; this is not an E2 effectiveness result."
+  },
+  "observations": [
+    {
+      "id": "fact_2860b7548f941f6d50f9c0cb",
+      "entity": "MSFT",
+      "metric": "revenue",
+      "value": 69632000000,
+      "unit": "USD",
+      "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0000789019.json",
+      "snapshot_hash": "f8aae2965b20ad0df44bdf7ccbedf797d275b6b8dc030154a7a311361bb7246f"
+    },
+    {
+      "id": "fact_0a40932ea188ec1576e5171f",
+      "entity": "MSFT",
+      "metric": "operating_income",
+      "value": 31653000000,
+      "unit": "USD",
+      "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0000789019.json",
+      "snapshot_hash": "f8aae2965b20ad0df44bdf7ccbedf797d275b6b8dc030154a7a311361bb7246f"
+    }
+  ],
+  "calculations": [
+    {
+      "id": "calc_3ccb043ef67741477c068267",
+      "operation": "margin",
+      "operand_ids": [
+        "fact_0a40932ea188ec1576e5171f",
+        "fact_2860b7548f941f6d50f9c0cb"
+      ],
+      "operand_versions": {
+        "fact_0a40932ea188ec1576e5171f": 1,
+        "fact_2860b7548f941f6d50f9c0cb": 1
+      },
+      "value": 45.45754825367647,
+      "unit": "%",
+      "formula": "fact_0a40932ea188ec1576e5171f / fact_2860b7548f941f6d50f9c0cb * 100",
+      "entity": "MSFT",
+      "entities": [
+        "MSFT"
+      ],
+      "metric": "operating_income_margin",
+      "period_start": "2024-10-01",
+      "period_end": "2024-12-31",
+      "basis": "US-GAAP",
+      "business_scope": "consolidated",
+      "currency": null,
+      "operand_currencies": [
+        "USD",
+        "USD"
+      ],
+      "concept": null,
+      "published_at": "2025-01-29T21:11:54.000Z",
+      "scope_version": 2,
+      "warnings": [],
+      "version": 1,
+      "created_at": "2026-10-15T06:56:47.737810+00:00",
+      "stale": false
+    }
+  ],
+  "retrieval": {
+    "corpus_fingerprint": "corpus_cb9693bede05e88ba382acd0",
+    "case_count": 14,
+    "case_fingerprint": "queries_b0ef385b640887a2cb5940ab",
+    "limit": 5,
+    "annotation_statuses": [
+      "development_example_not_independent_gold"
+    ],
+    "annotation_provenance_verified": false,
+    "notice": "Metrics use the supplied relevance labels; the evaluator does not establish their independence or correctness.",
+    "max_context_chars": 9000,
+    "repeats": 3,
+    "latency_scope": "ranking and filtering only; corpus construction, vector encoding/loading and disk I/O excluded",
+    "methods": {
+      "bm25": {
+        "status": "evaluated",
+        "cases": [
+          {
+            "id": "msft-cloud-margin",
+            "recall": 1.0,
+            "reciprocal_rank": 1.0,
+            "negative_empty_correct": null,
+            "passage_ids": [
+              "chunk_2d4339daaa52541f82a730a6",
+              "chunk_a81f751b77697b48c4bab948",
+              "chunk_285d3975f85da4d35081f04c",
+              "chunk_374630594433df36139af5e7",
+              "chunk_a59c910ef80a7c6984a96630"
+            ],
+            "context_chars": 8319
+          },
+          {
+            "id": "msft-operating-expenses",
+            "recall": 1.0,
+            "reciprocal_rank": 1.0,
+            "negative_empty_correct": null,
+            "passage_ids": [
+              "chunk_2d4339daaa52541f82a730a6",
+              "chunk_a59c910ef80a7c6984a96630",
+              "chunk_285d3975f85da4d35081f04c",
+              "chunk_a81f751b77697b48c4bab948",
+              "chunk_c84e3b9966c89c5e23c1f34e"
+            ],
+            "context_chars": 8562
+          },
+          {
+            "id": "msft-shareholder-return",
+            "recall": 1.0,
+            "reciprocal_rank": 1.0,
+            "negative_empty_correct": null,
+            "passage_ids": [
+              "chunk_4c503eddf45e52169b55d975",
+              "chunk_285d3975f85da4d35081f04c",
+              "chunk_9758b50efd9aad69a15f95db",
+              "chunk_f6312863a014aec7dcd95fb2",
+              "chunk_db6dbd4b36e5e16bd7e73a3c"
+            ],
+            "context_chars": 7776
+          },
+          {
+            "id": "msft-azure-growth",
+            "recall": 1.0,
+            "reciprocal_rank": 1.0,
+            "negative_empty_correct": null,
+            "passage_ids": [
+              "chunk_285d3975f85da4d35081f04c",
+              "chunk_374630594433df36139af5e7",
+              "chunk_4c503eddf45e52169b55d975",
+              "chunk_a59c910ef80a7c6984a96630",
+              "chunk_42464e92012707b5062136c5"
+            ],
+            "context_chars": 8523
+          },
+          {
+            "id": "msft-constant-currency",
+            "recall": 1.0,
+            "reciprocal_rank": 1.0,
+            "negative_empty_correct": null,
+            "passage_ids": [
+              "chunk_9758b50efd9aad69a15f95db",
+              "chunk_374630594433df36139af5e7",
+              "chunk_285d3975f85da4d35081f04c",
+              "chunk_c3bb42b7a853382a0c33ee99",
+              "chunk_f6312863a014aec7dcd95fb2"
+            ],
+            "context_chars": 7065
+          },
+          {
+            "id": "nvda-blackwell",
+            "recall": 1.0,
+            "reciprocal_rank": 1.0,
+            "negative_empty_correct": null,
+            "passage_ids": [
+              "chunk_2b55c0abc0f24cd8515703a1",
+              "chunk_b27396913e499606e90e330e",
+              "chunk_81c50f3d5bdeda2e07223b74",
+              "chunk_4ccd344cb2763a0517f2cba3",
+              "chunk_637dff083f78ccec3f0b3465"
+            ],
+            "context_chars": 7676
+          },
+          {
+            "id": "nvda-gaming-supply",
+            "recall": 1.0,
+            "reciprocal_rank": 1.0,
+            "negative_empty_correct": null,
+            "passage_ids": [
+              "chunk_fe86efc565de33e1a6032fc0",
+              "chunk_2b55c0abc0f24cd8515703a1",
+              "chunk_ee711153c1588e6d33390f60",
+              "chunk_4ccd344cb2763a0517f2cba3",
+              "chunk_637dff083f78ccec3f0b3465"
+            ],
+            "context_chars": 8282
+          },
+          {
+            "id": "nvda-gross-margin",
+            "recall": 1.0,
+            "reciprocal_rank": 0.3333333333333333,
+            "negative_empty_correct": null,
+            "passage_ids": [
+              "chunk_20ea6e0d9d574129f31844df",
+              "chunk_dd9e4381d35362a5e6039076",
+              "chunk_fe86efc565de33e1a6032fc0",
+              "chunk_c0b0ec9feee5ba1e5cebd323",
+              "chunk_637dff083f78ccec3f0b3465"
+            ],
+            "context_chars": 8574
+          },
+          {
+            "id": "nvda-dividend",
+            "recall": 1.0,
+            "reciprocal_rank": 1.0,
+            "negative_empty_correct": null,
+            "passage_ids": [
+              "chunk_81c50f3d5bdeda2e07223b74",
+              "chunk_dd9e4381d35362a5e6039076",
+              "chunk_637dff083f78ccec3f0b3465",
+              "chunk_c0b0ec9feee5ba1e5cebd323",
+              "chunk_ebe68d813f5e51abc46c2b8c"
+            ],
+            "context_chars": 7777
+          },
+          {
+            "id": "nvda-datacenter-year",
+            "recall": 1.0,
+            "reciprocal_rank": 0.5,
+            "negative_empty_correct": null,
+            "passage_ids": [
+              "chunk_637dff083f78ccec3f0b3465",
+              "chunk_2b55c0abc0f24cd8515703a1",
+              "chunk_dd9e4381d35362a5e6039076",
+              "chunk_fe86efc565de33e1a6032fc0",
+              "chunk_b27396913e499606e90e330e"
+            ],
+            "context_chars": 8551
+          },
+          {
+            "id": "msft-before-release",
+            "recall": null,
+            "reciprocal_rank": 0,
+            "negative_empty_correct": true,
+            "passage_ids": [],
+            "context_chars": 0
+          },
+          {
+            "id": "nvda-before-release",
+            "recall": null,
+            "reciprocal_rank": 0,
+            "negative_empty_correct": true,
+            "passage_ids": [],
+            "context_chars": 0
+          },
+          {
+            "id": "wrong-report-date",
+            "recall": null,
+            "reciprocal_rank": 0,
+            "negative_empty_correct": true,
+            "passage_ids": [],
+            "context_chars": 0
+          },
+          {
+            "id": "unrelated-lexical",
+            "recall": null,
+            "reciprocal_rank": 0,
+            "negative_empty_correct": true,
+            "passage_ids": [],
+            "context_chars": 0
+          }
+        ],
+        "macro_span_recall": 1.0,
+        "mrr": 0.8833333333333333,
+        "negative_empty_accuracy": 1,
+        "latency_median_ms": 2.299187530297786,
+        "latency_p95_ms": 3.3572919201105833
+      },
+      "dense": {
+        "status": "unavailable",
+        "reason": "Dense/hybrid requires genuine frozen embeddings for this corpus and query; none are configured."
+      },
+      "hybrid": {
+        "status": "unavailable",
+        "reason": "Dense/hybrid requires genuine frozen embeddings for this corpus and query; none are configured."
+      }
+    }
+  }
+}

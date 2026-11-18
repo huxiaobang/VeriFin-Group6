@@ -1,0 +1,14 @@
+{
+  "protocol": "verifin-application-acceptance-worksheet-v1",
+  "status": "pending_actual_runs_and_human_review",
+  "scenarios": [
+    {"scenario_id": "reopen", "session_id": null, "report_ids": [], "log_paths": [], "execution_mode": null, "automatic_log_status": "not_run", "human_semantic_status": "pending", "reviewer_ids": [], "notes": "Check persistence and continuation after closing/reopening."},
+    {"scenario_id": "explain_saved_result", "session_id": null, "report_ids": [], "log_paths": [], "execution_mode": null, "automatic_log_status": "not_run", "human_semantic_status": "pending", "reviewer_ids": [], "notes": "Check reference resolution, evidence/formula reuse and explanation support."},
+    {"scenario_id": "add_comparison", "session_id": null, "report_ids": [], "log_paths": [], "execution_mode": null, "automatic_log_status": "not_run", "human_semantic_status": "pending", "reviewer_ids": [], "notes": "Keep both issuers and assess comparable periods, units and definitions."},
+    {"scenario_id": "correct_scope", "session_id": null, "report_ids": [], "log_paths": [], "execution_mode": null, "automatic_log_status": "not_run", "human_semantic_status": "pending", "reviewer_ids": [], "notes": "Check invalidation and corrected answer while old reports remain immutable."},
+    {"scenario_id": "unseen_issuer", "session_id": null, "report_ids": [], "log_paths": [], "execution_mode": null, "automatic_log_status": "not_run", "human_semantic_status": "pending", "reviewer_ids": [], "notes": "Select a real issuer absent from development; distinguish generic logic from actual live source access."},
+    {"scenario_id": "outside_coverage", "session_id": null, "report_ids": [], "log_paths": [], "execution_mode": null, "automatic_log_status": "not_run", "human_semantic_status": "pending", "reviewer_ids": [], "notes": "Check explicit gaps, appropriate partial status and absence of invented support."}
+  ],
+  "completed_human_reviews": 0,
+  "acceptance_passed": false
+}

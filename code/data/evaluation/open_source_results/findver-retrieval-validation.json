@@ -1,0 +1,37 @@
+{
+  "result_sha256": "3c27cd136743688f77c266ca4f35dd853842304f367ac9c4f897a7576f2a301f",
+  "checks": {
+    "completed_all_blocks": true,
+    "bm25_at5_reproduces_prior_audit": true,
+    "all_results_preserve_known_report_candidate_scope": true,
+    "all_top5_are_top10_prefix": true,
+    "all_context_char_counts_match_original": true,
+    "no_duplicate_returned_ids": true,
+    "vectors_hash_matches_result": true,
+    "executed_script_hash_matches_current_file": true
+  },
+  "all_passed": true,
+  "matrices": {
+    "findver-block-vectors.npy": {
+      "shape": [
+        2971,
+        1024
+      ],
+      "all_finite": true,
+      "max_unit_norm_error": 5.960464477539063e-08,
+      "sha256": "78ba11031fa227a8e809db79923bb5961925f41ea166805ade876e51b7adca6b",
+      "bytes": 12169344
+    },
+    "findver-query-vectors.npy": {
+      "shape": [
+        24,
+        1024
+      ],
+      "all_finite": true,
+      "max_unit_norm_error": 5.960464477539063e-08,
+      "sha256": "45a582e6616d691ee3c2e8e2121323d640879261e4da17db648cb995af05bfff",
+      "bytes": 98432
+    }
+  },
+  "no_additional_model_inference": true
+}

@@ -1,0 +1,101 @@
+[
+  {
+    "session": "order-lease",
+    "prior_dialogue": [
+      {
+        "role": "user",
+        "content": "先解释仓库签约后何时开始收租；再解释公司盈利为何没有跟着变成经营活动现金。"
+      }
+    ],
+    "turns": [
+      "只展开后一项。"
+    ]
+  },
+  {
+    "session": "order-cash",
+    "prior_dialogue": [
+      {
+        "role": "user",
+        "content": "先解释公司盈利为何没有跟着变成经营活动现金；再解释仓库签约后何时开始收租。"
+      }
+    ],
+    "turns": [
+      "只展开后一项。"
+    ]
+  },
+  {
+    "session": "answer-store",
+    "prior_dialogue": [
+      {
+        "role": "user",
+        "content": "这家公司的收入增长有哪些来源？"
+      },
+      {
+        "role": "assistant",
+        "content": "第一项是新开门店与原有门店的收入贡献不同；第二项是汇率折算可能改变报表收入增幅。"
+      }
+    ],
+    "turns": [
+      "你刚才列的第一项，具体怎么验证？"
+    ]
+  },
+  {
+    "session": "answer-currency",
+    "prior_dialogue": [
+      {
+        "role": "user",
+        "content": "这家公司的收入增长有哪些来源？"
+      },
+      {
+        "role": "assistant",
+        "content": "第一项是汇率折算可能改变报表收入增幅；第二项是新开门店与原有门店的收入贡献不同。"
+      }
+    ],
+    "turns": [
+      "你刚才列的第一项，具体怎么验证？"
+    ]
+  },
+  {
+    "session": "no-antecedent",
+    "prior_dialogue": [],
+    "turns": [
+      "只展开后一项。"
+    ]
+  },
+  {
+    "session": "change-company",
+    "prior_dialogue": [
+      {
+        "role": "user",
+        "content": "甲公司靠开新店带动了多少收入？"
+      }
+    ],
+    "turns": [
+      "换成乙公司。它的受托资产是按期末数还是日均数收管理费？"
+    ]
+  },
+  {
+    "session": "replace-topic",
+    "prior_dialogue": [
+      {
+        "role": "user",
+        "content": "能否把净利润和经营活动现金流对一下？"
+      }
+    ],
+    "turns": [
+      "这个先放着，只查最近一次公告的发布日期。"
+    ]
+  },
+  {
+    "session": "retain-metric",
+    "prior_dialogue": [
+      {
+        "role": "user",
+        "content": "公司扩张时，经销商库存的变化和终端购买量之间是什么关系？"
+      }
+    ],
+    "turns": [
+      "同一个问题，换成上一季度。"
+    ]
+  }
+]

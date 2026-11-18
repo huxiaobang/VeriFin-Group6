@@ -1,0 +1,106 @@
+{
+  "finding": "Original FinDVer example IDs encode labels by numeric ranges",
+  "status": "fixed_and_export_v2_independently_verified",
+  "label_ranges": {
+    "testmini/ie": {
+      "false": {
+        "count": 125,
+        "minimum": 0,
+        "maximum": 124
+      },
+      "true": {
+        "count": 125,
+        "minimum": 125,
+        "maximum": 249
+      }
+    },
+    "testmini/numeric": {
+      "false": {
+        "count": 125,
+        "minimum": 0,
+        "maximum": 124
+      },
+      "true": {
+        "count": 125,
+        "minimum": 125,
+        "maximum": 249
+      }
+    },
+    "testmini/knowledge": {
+      "false": {
+        "count": 100,
+        "minimum": 100,
+        "maximum": 199
+      },
+      "true": {
+        "count": 100,
+        "minimum": 0,
+        "maximum": 99
+      }
+    },
+    "test/ie": {
+      "false": {
+        "count": 300,
+        "minimum": 0,
+        "maximum": 299
+      },
+      "true": {
+        "count": 300,
+        "minimum": 300,
+        "maximum": 599
+      }
+    },
+    "test/numeric": {
+      "false": {
+        "count": 300,
+        "minimum": 300,
+        "maximum": 599
+      },
+      "true": {
+        "count": 300,
+        "minimum": 0,
+        "maximum": 299
+      }
+    },
+    "test/knowledge": {
+      "false": {
+        "count": 249,
+        "minimum": 0,
+        "maximum": 248
+      },
+      "true": {
+        "count": 251,
+        "minimum": 249,
+        "maximum": 499
+      }
+    }
+  },
+  "ID_only_diagnostic": {
+    "testmini": {
+      "cases": 700,
+      "labels_recovered_from_official_ID_rule": 700,
+      "is_model_accuracy": false
+    },
+    "test": {
+      "cases": 1700,
+      "labels_recovered_from_official_ID_rule": 1700,
+      "is_model_accuracy": false
+    }
+  },
+  "new_export": {
+    "sha256": "60e12122e1917a512c20c0ccfe8aaf9636087351ad903d1d4de24580203f72dd",
+    "rows": 24,
+    "top_level_fields": [
+      "case_id",
+      "input",
+      "input_sha256"
+    ],
+    "forbidden_recursive_fields": [],
+    "opaque_id_sorted": true,
+    "original_id_prefix_occurrences": {
+      "ie-val-": 0,
+      "numeric-val-": 0,
+      "knowledge-val-": 0
+    }
+  }
+}

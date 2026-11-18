@@ -1,0 +1,16 @@
+{
+  "False": {
+    "store_message_count": 0,
+    "ok": false,
+    "summary": "No active user question",
+    "calc_count": 0,
+    "evidence_count": 0
+  },
+  "True": {
+    "store_message_count": 9,
+    "ok": true,
+    "summary": "MCD: examined 4 dated disclosures; 0 sourced findings.",
+    "calc_count": 0,
+    "evidence_count": 0
+  }
+}

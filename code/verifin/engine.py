@@ -1,0 +1,1600 @@
+"""Budgeted research episodes over persistent sessions.
+
+The state machine schedules real model and tool adapters. Tests inject a scripted
+model explicitly; production never substitutes scripted answers for a model.
+"""
+from __future__ import annotations
+
+from contextlib import contextmanager
+from dataclasses import asdict, dataclass
+from datetime import datetime, timezone
+import hashlib
+import json
+import math
+from pathlib import Path
+import threading
+import time
+import uuid
+
+from . import fiscal_followup, planner_evidence, income_followup
+from .verification import Verifier, check_rules
+from .model import ContextLimitReached, SpendLimitReached, USAGE_FIELDS
+from .request_review import clarify_request, request_parts, coverage_issues, report_coverage, single_question_mismatch, unresolved_checklist
+
+
+def utcnow():
+    return datetime.now(timezone.utc).isoformat()
+
+
+def digest(value):
+    return hashlib.sha256(json.dumps(value, sort_keys=True, allow_nan=False).encode()).hexdigest()
+
+
+def request_wording(text):
+    return " ".join(text.split()).casefold().rstrip("。！？.!?")
+
+
+def retry_instruction(text):
+    return request_wording(text) in {
+        "再回答一次", "请再回答一次", "再答一次", "重新回答", "请重新回答", "重答上一问",
+        "重新回答上一个问题", "重复上一个问题", "再试一次", "重试", "请重试",
+        "repeat the last question", "answer the same question again", "answer again", "try again", "retry"}
+
+
+def progress_content(value):
+    """Retrieval bookkeeping alone is not new research progress."""
+    if isinstance(value, dict):
+        return {key: progress_content(child) for key, child in value.items()
+                if key not in {"retrieved_at", "source_observed_at", "network_requests", "retrieval_score",
+                               "ranking_latency_ms", "runtime_encoding"}}
+    if isinstance(value, list):
+        return [progress_content(child) for child in value]
+    return value
+
+
+def review_sources(context):
+    return digest([(r["id"], r.get("version"), r.get("stale", False))
+                   for key in ("evidence", "calculations") for r in context[key]])
+
+
+def record_review(episode, context, instruction):
+    """Count consecutive reviews of each target/category on the same evidence."""
+    sources = review_sources(context)
+    previous = episode.get("revision_memory", {})
+    same_inputs = (sources == previous.get("sources") and
+                   context["session"]["scope_version"] == previous.get("scope_version"))
+    counts = {(r["target_id"], r["issue_type"]): r["reviews"]
+              for r in previous.get("open", [])} if same_inputs else {}
+    targets = sorted({(i["target_id"], i["issue_type"]) for i in episode["issues"]})
+    episode["revision_memory"] = {
+        "sources": sources, "scope_version": context["session"]["scope_version"],
+        "open": [{"target_id": target, "issue_type": category,
+                  "reviews": counts.get((target, category), 0) + 1} for target, category in targets],
+        "last_draft_instruction": instruction, "tool_calls_at_review": episode["tool_calls"]}
+
+
+@dataclass(frozen=True)
+class Budget:
+    max_model_calls: int = 16
+    max_tool_calls: int = 16
+    max_seconds: float = 240
+    max_no_progress: int = 3
+    max_planner_steps: int = 64
+
+    def __post_init__(self):
+        for key in ("max_model_calls", "max_tool_calls", "max_no_progress", "max_planner_steps"):
+            value = getattr(self, key)
+            if type(value) is not int or value < 1:
+                raise ValueError(f"{key} must be a positive integer")
+        if isinstance(self.max_seconds, bool) or not isinstance(self.max_seconds, (int, float)) or not math.isfinite(self.max_seconds) or self.max_seconds <= 0:
+            raise ValueError("max_seconds must be finite and positive")
+
+
+class StopEpisode(Exception):
+    pass
+
+
+_locks = {}
+_locks_guard = threading.Lock()
+
+
+@contextmanager
+def session_lock(store, session_id):
+    """Fail fast for a second writer; cancellation uses a separate connection.
+
+The OS releases the lock on crashes. No long SQLite transaction blocks readers.
+"""
+    key = (str(getattr(store, "path", id(store))), session_id)
+    with _locks_guard:
+        lock = _locks.setdefault(key, threading.Lock())
+    if not lock.acquire(blocking=False):
+        raise ValueError("This session is already running; cancel or wait before continuing.")
+    handle = None
+    try:
+        db_path = str(getattr(store, "path", ":memory:"))
+        if db_path != ":memory:":
+            import fcntl
+            directory = Path(db_path).absolute().parent / ".run-locks"
+            directory.mkdir(parents=True, exist_ok=True)
+            handle = (directory / (hashlib.sha256(session_id.encode()).hexdigest() + ".lock")).open("a")
+            try:
+                fcntl.flock(handle, fcntl.LOCK_EX | fcntl.LOCK_NB)
+            except BlockingIOError:
+                raise ValueError("This session is already running in another process.") from None
+        yield
+    finally:
+        if handle:
+            handle.close()
+        lock.release()
+
+
+class ResearchEngine:
+    def __init__(self, store, model, tools, *, clock=time.monotonic, candidate_callback=None, planner=None,
+                 finish_after_review=False, reference_duplicate_records=False, auto_skills=True,
+                 stop_on_tool_fault=False):
+        self.store, self.model, self.tools = store, model, tools
+        self.clock = clock
+        self.verifier = Verifier(model)
+        self.candidate_callback = candidate_callback
+        self.planner = planner
+        self.finish_after_review = finish_after_review
+        self.reference_duplicate_records = reference_duplicate_records
+        self.auto_skills = auto_skills
+        self.stop_on_tool_fault = stop_on_tool_fault
+
+    def _checkpoint(self, sid, episode):
+        self.store.add_event(sid, {"type": "episode_checkpoint", "episode": episode.copy()})
+
+    def _save_delivery(self, sid, episode, existing=None):
+        with self.store.atomic_step():
+            saved = existing if existing is not None else self.store.save_report(sid, self._report(sid, episode))
+            # Earlier versions committed the final report, message and checkpoint
+            # separately. Reopening a legacy report may need just its reply.
+            messages = self.store.get_context(sid, report_mode="none")["messages"] if existing is not None else []
+            if not messages or messages[-1]["role"] != "assistant":
+                message = f"Research {episode['status']} ({episode['stop_reason']}). "
+                if not saved.get("verification_available"):
+                    message += "Verification incomplete. "
+                self.store.append_message(sid, "assistant", message + "See the report's findings, sources and unresolved items.")
+            self._checkpoint(sid, episode)
+        return saved
+
+    def _restore_review(self, sid, episode):
+        """Bind delivery to the last committed review of the same question, scope and inputs."""
+        episode.update(reviewed=False, request_coverage=[])
+        episode.pop("restored_claim_versions", None)
+        episode.pop("followup_limits", None)
+        if episode.get("draft_reference_issues"):
+            # A newer, saved draft isolated these claims. Earlier reviewed
+            # versions, including records with the same IDs, cannot replace it.
+            return
+        event = self.store.latest_event(sid, "verification")
+        if not event or event.get("episode_id") != episode["id"] or not event.get("review_snapshot"):
+            return
+        snapshot = event["review_snapshot"]
+        ctx = self._context(sid, episode)
+        if snapshot["scope_version"] != ctx["session"]["scope_version"] or snapshot["request"] != episode["request"]:
+            if episode.get("draft_scope_version", episode.get("reviewed_scope_version")) != ctx["session"]["scope_version"]:
+                episode.update(active_claim_ids=[], issues=[], summary="", draft_saved=False, answered_requirement_ids=[], unanswered_requirement_ids=[])
+            return
+        if snapshot["sources"] != review_sources(ctx):
+            return
+        episode.update(snapshot["fields"], reviewed=True, restored_claim_versions=snapshot["claim_versions"])
+        self.store.add_event(sid, {"type": "reviewed_draft_restored", "episode_id": episode["id"],
+                                   "claim_ids": episode["active_claim_ids"], "claim_versions": snapshot["claim_versions"]})
+
+    def latest_episode(self, sid):
+        if hasattr(self.store, "latest_event"):
+            event = self.store.latest_event(sid, "episode_checkpoint")
+            return event["episode"] if event else None
+        for event in reversed(self.store.events(sid)):
+            payload = event.get("event", event)
+            if payload.get("type") == "episode_checkpoint":
+                return payload["episode"]
+        return None
+
+    def ask(self, session_id, message, *, budget=None, reset_cancel=True, as_of=None, max_context_chars=None):
+        if not isinstance(message, str) or not message.strip():
+            raise ValueError("A nonempty research request or clarification is required.")
+        from .scope import after_cutoff_prefix, stated_cutoff, validate_scope
+        from .data import cutoff_time
+        stated = stated_cutoff(message)
+        day_only_prefix = stated and after_cutoff_prefix(message) != message
+        if as_of is not None:
+            validate_scope({"cutoff":as_of})
+            # A day-only lead-in leaves the timezone and intraday cutoff to the explicit option.
+            if stated and cutoff_time(as_of) != cutoff_time(stated) and not (day_only_prefix and as_of[:10] <= stated):
+                raise ValueError("Message research time conflicts with the explicit as_of cutoff")
+        turn_cutoff = as_of or stated
+        with session_lock(self.store, session_id):
+            session = self.store.get_session(session_id)
+            if max_context_chars is not None:
+                session = self.store.set_context_limit(session_id, max_context_chars)
+            previous = self.latest_episode(session_id)
+            if previous and previous["status"] == "running":
+                # A prior process died after a persisted checkpoint. Its findings
+                # remain a partial historical report, never silently completed.
+                count = self.store.get_context(session_id, report_mode="none")["report_count"]
+                saved = self.store.get_report(session_id, count) if count else None
+                if saved and saved.get("episode_id") == previous["id"]:
+                    # The report committed before the writer died on its final checkpoint.
+                    previous.update(status=saved["status"], stop_reason=saved["stop_reason"], finished_at=saved["created_at"])
+                    self._save_delivery(session_id, previous, existing=saved)
+                else:
+                    previous.update(status="partial", stop_reason="interrupted", finished_at=utcnow())
+                    with self.store.atomic_step():
+                        self._restore_review(session_id, previous)
+                        self._save_delivery(session_id, previous)
+            session_scope_at_start = session["scope"]
+            old_cutoff = session["scope"].get("cutoff")
+            if day_only_prefix and as_of is None and old_cutoff and old_cutoff[:10] == stated and len(old_cutoff) > 10:
+                turn_cutoff = old_cutoff
+            new_followup = False
+            use_current_request = False
+            retry_report = None
+            relative_only = fiscal_followup.prior_period_only(message)
+            if previous and previous["status"] in {"complete","partial"}:
+                version = self.store.get_context(session_id,report_mode="none")["report_count"]
+                prior_report = self.store.get_report(session_id, version)
+                same = request_wording(message) == request_wording(prior_report["request"])
+                if retry_instruction(message) or (same and not relative_only):
+                    # Older releases saved the shortcut as the entire report request.
+                    # Follow consecutive shortcuts back to the substantive user turn.
+                    retry_report = prior_report
+                    while version > 1 and retry_instruction(retry_report["request"]):
+                        version -= 1
+                        retry_report = self.store.get_report(session_id, version)
+                new_followup = retry_report is None
+                # Explicitly edited requirements remain actionable. Editing only a date
+                # or a display field does not turn an old checklist into a new task.
+                scope = session["scope"]
+                prior_scope = prior_report["scope"]
+                assigned_task = scope.get("planning_task") and scope["planning_task"] != prior_scope.get("planning_task")
+                use_current_request = (self.planner is None and new_followup and not assigned_task
+                    and scope.get("requirements", []) == prior_scope.get("requirements", []))
+            if turn_cutoff and cutoff_time(turn_cutoff) != cutoff_time(old_cutoff):
+                session = self.store.update_scope(session_id, {**session["scope"], "cutoff":turn_cutoff})
+            if previous and previous["status"] == "waiting_for_clarification":
+                episode = dict(previous)
+                episode.pop("revision_memory", None)
+                episode.pop("income_reason_attempted", None)
+                episode.pop("tool_recovery", None)
+                previous_parts = previous.get("clarified_parts", previous.get("inherited_parts"))
+                amended, parts, revised_checklist = clarify_request(previous["request"], message, previous_parts)
+                episode["request"] = amended
+                episode["clarified_parts"] = parts
+                # Preserve an explicitly edited checklist. Otherwise update the default
+                # task and allow the planner to decompose the amended request afresh.
+                requirements = session["scope"].get("requirements", [])
+                default_id = "request:" + episode["id"]
+                same_checklist = digest(requirements) == episode.get("clarification_checklist_hash")
+                if (self.model is not None and self.planner is None and
+                        (not requirements or requirements == [{"id":default_id, "text":previous["request"]}]
+                         or (same_checklist and revised_checklist))):
+                    session = self.store.update_scope(session_id, {
+                        **session["scope"], "requirements":[{"id":default_id, "text":amended}]})
+                episode.pop("resolve_followup_checklist", None)
+                # Keep source observations and the consumed budget. The old draft was
+                # reviewed against the previous request, even if its fiscal period is unchanged.
+                episode.update(active_claim_ids=[], answered_requirement_ids=[], unanswered_requirement_ids=[],
+                               reviewed_claim_ids=[], reviewed_requirement_ids=[], request_coverage=[], issues=[],
+                               reviewed=False, draft_attempted=False, draft_saved=False, summary="", no_progress=0, seen_results=[])
+                episode.pop("reviewed_scope_version", None)
+                episode.pop("restored_claim_versions", None)
+                episode.pop("draft_reference_issues", None)
+                # A user can also change scope outside ask() while the agent is
+                # waiting. Compare to the last context actually shown to it.
+                prior_view = previous.get("clarification_cutoff")
+                current_view = session["scope"].get("cutoff")
+                if current_view and (not prior_view or cutoff_time(current_view) < cutoff_time(prior_view)):
+                    episode.pop("last_tool_result", None)
+                    episode.pop("recent_tool_results", None)
+                if not turn_cutoff and prior_view != current_view:
+                    episode.pop("user_cutoff", None)
+                # Clarification resumes the original allowance, never a fresh one.
+                limits = Budget(**episode["budget"])
+                episode.update(status="running", question=None)
+            else:
+                limits = budget or Budget()
+                episode = {
+                    "id": "episode_" + uuid.uuid4().hex,
+                    "request": message, "status": "running", "created_at": utcnow(),
+                    "budget": asdict(limits), "model_calls": 0, "tool_calls": 0, "planner_steps": 0,
+                    "active_seconds": 0.0, "usage": {}, "no_progress": 0,
+                    "active_claim_ids": [], "issues": [], "reviewed": False, "draft_saved": False,
+                    "answered_requirement_ids": [], "unanswered_requirement_ids": [],
+                    "summary": "", "seen_results": [],
+                }
+                if new_followup:
+                    episode["new_followup"] = True
+                if retry_report is not None:
+                    episode["request"] = retry_report["request"]
+                    episode["retry_of_version"] = retry_report["version"]
+                    if retry_report.get("request_parts"):
+                        episode["inherited_parts"] = retry_report["request_parts"]
+                    if (retry_report["version"] != prior_report["version"]
+                            and session["scope"].get("requirements") == prior_report["scope"].get("requirements")):
+                        session = self.store.update_scope(session_id, {**session["scope"],
+                            "requirements": retry_report["scope"].get("requirements", [])})
+                if use_current_request and not relative_only:
+                    session = self.store.update_scope(session_id, {
+                        **session["scope"], "requirements": [{"id":"request:"+episode["id"], "text":message}]})
+            if reset_cancel:
+                self.store.clear_cancel(session_id)
+            episode["model_mode"] = getattr(self.model, "mode", "configured_model") if self.model is not None else "offline_tools_only"
+            self.store.append_message(session_id, "user", message)
+            task_message = episode["request"]
+            for field in ("skill_calculations", "skill_gap", "research_skills", "skill_selection_source", "draft_skill_selection", "statement_notes", "skill_assessments", "skill_fiscal_quarter", "requested_fiscal_year", "offline_part_findings"):
+                episode.pop(field, None)
+            if turn_cutoff:
+                episode["user_cutoff"] = turn_cutoff
+            from . import skill_routing, skill_calculations, operating_margin
+            auto = self.auto_skills and self.planner is None and not getattr(self.model, "method_pack", None)
+            scope = session["scope"]
+            catalog = getattr(getattr(self.tools, "data", None), "manifest", {}).get("companies", [])
+            companies = catalog or [{"name":ticker, "ticker":ticker} for ticker in scope.get("entities", [])]
+            resumed = previous and previous["status"] == "waiting_for_clarification"
+            scope_message = message if resumed else task_message
+            amendment = skill_routing.amended_issuers(scope_message, scope, companies)
+            declared = skill_routing.named_issuers(skill_routing.focus_of_switch(scope_message), companies)
+            prior_boundary = (previous or {}).get("user_issuer_boundary")
+            retain_boundary = bool(prior_boundary and
+                set(prior_boundary["entities"]).issubset(scope.get("entities", [])) and
+                ((resumed and not declared and not amendment and skill_routing.focus_of_switch(message) == message)
+                 or episode.get("retry_of_version")))
+            if retain_boundary:
+                scope_message, declared, amendment = message, [], None
+            if amendment:
+                declared = amendment[0]
+            boundary = None
+            period_followup = new_followup and relative_only
+            original_parts = (retry_report or {}).get("quarter_followup_parts")
+            quarter_dates = {}
+            time_message = message if resumed else task_message
+            annual = skill_calculations.requested_fiscal_year(time_message)
+            prior_target = skill_calculations.targets_prior_quarter(time_message)
+            quarter_labels = skill_calculations.target_labels(time_message)
+            return_reference = (fiscal_followup.quarter_reference(time_message)
+                                if (new_followup or retry_report) and not (prior_target or annual or quarter_labels) else None)
+            historical = None
+            return_bounds = {}
+            inherited_quarter = False
+            if auto or declared or amendment or retain_boundary or period_followup or return_reference:
+                stored = self.store.get_context(session_id, report_mode="none")
+                history = stored["messages"]
+                earlier = [m["content"] for m in history[:-1] if m["role"] == "user"]
+                entities, issuer = skill_routing.resolve_issuer_scope(scope_message, earlier, scope, companies, amendment=amendment)
+                if retain_boundary and entities == scope.get("entities", []):
+                    boundary = prior_boundary
+                else:
+                    boundary = skill_routing.user_issuer_boundary(scope_message, declared, entities, scope.get("entities", []))
+                if amendment and amendment[1]:
+                    boundary = {**(boundary or {"entities":[],"open_peers":True}), "excluded":amendment[1]}
+                issuer_history = skill_routing.same_issuer_history(earlier, issuer, companies) if issuer else []
+                prior_entities = scope.get("entities", [])
+                switch = bool(prior_entities and entities != prior_entities)
+                if switch:
+                    # Fiscal dates of the old issuer cannot resolve the new issuer's "this quarter".
+                    issuer_history = []
+                saved_quarter = (previous or {}).get("skill_fiscal_quarter", {})
+                if issuer and not switch and (new_followup or retry_report) and fiscal_followup.report_issuer(prior_report) == issuer:
+                    current = {r["id"]: r for r in stored["evidence"] + stored["calculations"]}
+                    recovered = fiscal_followup.reviewed_quarter(prior_report, issuer, current, scope.get("cutoff"))
+                    if recovered:
+                        saved_quarter = recovered
+                    elif saved_quarter.get("evidence_ids"):
+                        # The reviewed inputs may have been superseded or moved beyond the cutoff.
+                        saved_quarter = {}
+                anchor = saved_quarter.get("quarter") if saved_quarter.get("entity") == issuer and not switch else None
+                if not anchor and episode.get("retry_of_version"):
+                    # Legacy checkpoints did not save the fiscal target. Reconstruct the history
+                    # preceding the original request, ignoring its contiguous replay instructions.
+                    while issuer_history and (retry_instruction(issuer_history[-1]) or
+                            request_wording(issuer_history[-1]) == request_wording(task_message)):
+                        issuer_history = issuer_history[:-1]
+                prior_quarter = anchor or skill_calculations.requested_quarter(issuer_history)
+                target_quarter = (anchor if anchor and episode.get("retry_of_version") else
+                                  skill_calculations.requested_quarter([time_message], prior_quarter))
+                inherited_quarter = bool(new_followup and not switch and not prior_target and not annual
+                                         and target_quarter == prior_quarter and not quarter_labels)
+                if return_reference:
+                    edited_dates = any(scope.get(k) != prior_scope.get(k) for k in ("period_start", "period_end"))
+                    if isinstance(return_reference, int):
+                        historical = self._historical_quarter(session_id, issuer, scope, version=return_reference, match_dates=edited_dates)
+                    target_quarter = historical["quarter"] if historical else None
+                    if historical:
+                        quarter_dates = {k: historical[k] for k in ("period_start", "period_end")}
+                    return_bounds = ({k:scope[k] for k in ("period_start", "period_end") if scope.get(k)}
+                                     if edited_dates else quarter_dates)
+                if original_parts:
+                    episode["quarter_followup_parts"] = original_parts
+                    quarter_dates = {k: saved_quarter[k] for k in ("period_start", "period_end") if saved_quarter.get(k)}
+                shift = not edited_dates if return_reference else prior_target or (prior_quarter and target_quarter != prior_quarter)
+                if (auto and (new_followup or retry_report) and issuer and not (assigned_task or switch or shift)
+                        and saved_quarter.get("entity") == issuer and target_quarter == anchor and anchor
+                        and fiscal_followup.report_issuer(prior_report) == issuer
+                        and all(not scope.get(k) or scope[k] == saved_quarter.get(k) for k in ("period_start","period_end"))
+                        and all(session_scope_at_start.get(k) == prior_scope.get(k)
+                                for k in ("requirements", "metrics", "period_start", "period_end"))
+                        and not annual):
+                    focus = fiscal_followup.same_quarter_focus(task_message, retry_report or prior_report,
+                                                              retry=retry_report is not None)
+                    if focus:
+                        quarter_dates = {k:saved_quarter[k] for k in ("period_start","period_end") if saved_quarter.get(k)}
+                        episode["followup_focus"] = {**focus, "entity":issuer, "quarter":target_quarter, **quarter_dates}
+                if (new_followup and not prior_quarter and target_quarter
+                        and any(scope.get(k) for k in ("period_start", "period_end"))
+                        and all(scope.get(k) == prior_scope.get(k) for k in ("period_start", "period_end"))):
+                    # Earlier questions may omit the fiscal label even when their report has dates.
+                    # Resolve the explicitly named quarter before reusing those dates as tool defaults.
+                    shift = True
+                if (period_followup and issuer and target_quarter and not switch
+                        and fiscal_followup.report_issuer(prior_report) == issuer and not assigned_task
+                        and all(session_scope_at_start.get(k) == prior_scope.get(k)
+                                for k in ("requirements", "period_start", "period_end"))):
+                    original_parts, parts = fiscal_followup.inherited_questions(
+                        prior_report, previous, prior_quarter, target_quarter)
+                    episode.update(inherited_parts=parts, quarter_followup_parts=original_parts)
+                    if anchor and saved_quarter.get("period_start"):
+                        documents = getattr(getattr(self.tools, "data", None), "manifest", {}).get("documents", [])
+                        quarter_dates = fiscal_followup.adjacent_dates(saved_quarter, documents, scope.get("cutoff"))
+                    boundary = {"entities": [issuer], "open_peers": False}
+                if entities != prior_entities or (shift and issuer):
+                    scope = dict(scope)
+                    if switch or shift:
+                        scope.pop("period_start", None)
+                        scope.pop("period_end", None)
+                        if return_reference:
+                            scope.update(quarter_dates)
+                    if switch:
+                        scope.pop("metrics", None)
+                    scope["entities"] = entities
+                    if original_parts and period_followup:
+                        scope.update(quarter_dates)
+                        scope["requirements"] = [{"id": "request:" + episode["id"] + ":" + key, "text": value}
+                                                 for key, value in parts.items()]
+                    session = self.store.update_scope(session_id, scope)
+                    if resumed and (shift or set(prior_entities).difference(entities)):
+                        # Discovery responses can contain source metadata with no evidence IDs to filter.
+                        episode.pop("last_tool_result", None)
+                        episode.pop("recent_tool_results", None)
+                    if resumed and set(prior_entities).difference(entities) and entities and (declared or amendment):
+                        notice = ("当前研究对象限定为 " + "、".join(entities) + "。沿用前问中仍适用的指标、期间和证据要求。"
+                                  "已移出的发行人及其公司间比较不再属于本轮待答项。")
+                        episode["issuer_amendment"] = {"entities":entities, "user_reply":message, "instruction":notice}
+                        episode["clarified_parts"] = {key:notice+" "+value
+                            for key,value in (episode.get("clarified_parts") or {"part-1":message}).items()}
+                        if self.planner is None and same_checklist:
+                            current = [{"id":"request:"+episode["id"], "text":notice+" 本次更正："+message}]
+                            session = self.store.update_scope(session_id, {**scope,"requirements":current})
+                            scope = session["scope"]
+            if use_current_request and relative_only and not original_parts:
+                scope = {**scope, "requirements": [{"id": "request:" + episode["id"], "text": message}]}
+                session = self.store.update_scope(session_id, scope)
+            if boundary:
+                episode["user_issuer_boundary"] = boundary
+            else:
+                episode.pop("user_issuer_boundary", None)
+            if (auto or period_followup or return_reference) and target_quarter and issuer:
+                episode["skill_fiscal_quarter"] = historical or {"entity": issuer, "quarter": target_quarter, **quarter_dates}
+            if auto:
+                skills = skill_routing.select_skills(task_message, issuer_history) if self.model is None else []
+                episode["research_skills"] = skills
+                work = (skill_calculations.prepare(task_message, issuer_history, skills, scope,
+                            quarter_anchor=prior_quarter, target_quarter=target_quarter)
+                        if self.model is None and issuer and scope.get("entities") == [issuer] else None)
+                if annual and issuer:
+                    episode["requested_fiscal_year"] = {"entity":issuer, "fiscal_year":annual}
+                if self.model is None and hasattr(self.tools, "data"):
+                    from .statement_analysis import ANALYZERS
+                    expense_followup = (episode.get("followup_focus") or {}).get("aspect") == "expense_contribution"
+                    unresolved_issuer = ("已识别比较范围 " + "、".join(entities) + "，需要分别核对各公司的可比期间和证据。"
+                                         if len(entities) > 1 else "需要先明确本项分析所属的发行人。")
+                    source_task = skill_calculations.source_request(task_message, issuer_history)
+                    formula_query = skill_calculations.FORMULA_QUERY.fullmatch(task_message.strip())
+                    from .sales_comparison import supports_parts
+                    if original_parts and supports_parts(original_parts):
+                        work = {"method": "quarter_followup", "entity": issuer, "quarter": target_quarter,
+                                "parts": original_parts, "previous_period_start": saved_quarter.get("period_start"),
+                                "steps": [], "operands": [], "calculations": [], **quarter_dates}
+                    elif formula_query:
+                        work = None
+                        episode["statement_notes"], gap = skill_calculations.saved_formula(self.store, session_id, formula_query)
+                        if gap:
+                            episode["skill_gap"] = gap
+                        self.store.add_event(session_id, {"type":"saved_calculation_lookup", "episode_id":episode["id"],
+                            "calculation_ids":[i for n in episode["statement_notes"] for i in n["calculation_ids"]], "gap":gap})
+                    elif (operating_margin.requested(task_message) and "incremental-profit-margin" not in skills) or expense_followup:
+                        dates = {k: saved_quarter[k] for k in ("period_start", "period_end") if saved_quarter.get(k)} if (
+                            target_quarter and saved_quarter.get("entity") == issuer and saved_quarter.get("quarter") == target_quarter) else {}
+                        work, gap = operating_margin.prepare(task_message, issuer, target_quarter, {**dates, **scope}, issuer_history)
+                        if work and expense_followup:
+                            work.update(explain=True, expense_followup=True)
+                        episode["statement_notes"] = []
+                        if gap:
+                            episode["skill_gap"] = gap
+                    elif any(s in ANALYZERS for s in skills) or source_task:
+                        work = None
+                        if not issuer:
+                            episode["skill_gap"] = unresolved_issuer
+                        elif not session["scope"].get("cutoff"):
+                            episode["skill_gap"] = "需要明确可见资料的研究截止时点。"
+                        elif prior_target:
+                            episode["skill_gap"] = "需先核实该发行人所指财季的起止时间，再选择该期间的披露。"
+                        else:
+                            work = {"method":source_task or "statement", "entity":issuer, "steps":[], "operands":[], "calculations":[]}
+                    elif not work and skills:
+                        episode["skill_gap"] = (unresolved_issuer if not issuer else
+                            f"现有资料还未确定 {issuer} 本次问题的可比期间和对应数值。")
+                if self.model is None:
+                    episode["skill_selection_source"] = "offline_rules"
+                    self.store.add_event(session_id, {"type":"skill_selection", "episode_id":episode["id"],
+                                                      "skills":skills, "selection":"offline_rules"})
+            else:
+                work = None
+            income_plan = None
+            income_attempted = False
+            pending_income_draft = None
+            if auto and hasattr(self.tools,"data") and issuer and income_followup.parts_for(task_message,request_parts(task_message)):
+                parts=episode.get("clarified_parts") or episode.get("inherited_parts") or request_parts(task_message) or {"part-1":task_message}
+                referring=bool((new_followup or retry_report) and not switch)
+                window=income_followup.prior_source_window(prior_report, {
+                    r["id"]:r for r in stored["evidence"]},issuer,scope.get("cutoff")) if referring else {}
+                income_plan=income_followup.plan(task_message,parts,scope,window,referring=referring,
+                    resolved_quarter=quarter_dates if target_quarter and not switch else None)
+                if income_plan:
+                    episode.setdefault("inherited_parts",parts)
+                    if self.model is None:
+                        work=None
+                    if income_plan.get("gap") and self.model is None:
+                        episode["skill_gap"]=income_plan["gap"]
+                        episode["offline_part_findings"]={p:{"status":"gap","missing_support":income_plan["gap"]}
+                                                          for p in income_plan["part_ids"]}
+            # A new user turn can change the task; internal replanning cannot
+            # remove already resolved obligations to manufacture completeness.
+            requirements_locked = bool(original_parts) or bool(retry_report and any(
+                not item["id"].startswith("request:") or item["text"] != episode["request"]
+                for item in session["scope"].get("requirements", [])))
+            began = self.clock()
+            elapsed_before = episode["active_seconds"]
+
+            def elapsed():
+                return elapsed_before + max(0.0, self.clock() - began)
+
+            def checkpoint():
+                episode["active_seconds"] = elapsed()
+                self._checkpoint(session_id, episode)
+
+            def guard(kind=None):
+                if self.store.is_cancelled(session_id):
+                    raise StopEpisode("cancelled")
+                if elapsed() >= limits.max_seconds:
+                    raise StopEpisode("time_budget_exhausted")
+                if kind == "model" and episode["model_calls"] >= limits.max_model_calls:
+                    raise StopEpisode("model_budget_exhausted")
+                if kind == "tool" and episode["tool_calls"] >= limits.max_tool_calls:
+                    raise StopEpisode("tool_budget_exhausted")
+                if kind == "planner" and episode.get("planner_steps", 0) >= limits.max_planner_steps:
+                    raise StopEpisode("planner_budget_exhausted")
+
+            def model_call(role, context, *, commit_result=None):
+                guard("model")
+                episode["model_calls"] += 1
+                self.store.add_event(session_id, {"type": "step_started", "episode_id": episode["id"], "role": role})
+                checkpoint()  # Reserve the attempt before I/O, even if the process dies.
+                original_timeout = getattr(self.model, "timeout", None)
+                if original_timeout is not None:
+                    self.model.timeout = max(0.01, min(original_timeout, limits.max_seconds - elapsed()))
+                started = self.clock()
+                # A failed call must not reuse a previous call's token counts.
+                if hasattr(self.model, "last_usage"):
+                    self.model.last_usage = {}
+                if hasattr(self.model, "last_response_metadata"):
+                    self.model.last_response_metadata = {}
+                event = {"type": "model_call", "episode_id": episode["id"], "role": role,
+                         "mode": getattr(self.model, "mode", "configured_model"),
+                         "model": getattr(self.model, "model", None),
+                         "base_url": getattr(self.model, "base_url", None),
+                         "api_mode": getattr(self.model, "api_mode", None),
+                         "service_tier": getattr(self.model, "service_tier", None)}
+                if role == "planner" and episode.get("new_followup") and hasattr(self.tools, "current_document_catalog"):
+                    access = dict(context.get("evidence_access", {}))
+                    access["current_local_manifest"] = self.tools.current_document_catalog(context["scope"])
+                    context = {**context, "evidence_access": access}
+                if role == "critic":
+                    event["draft_scope_version"] = context["session"]["scope_version"]
+                    event["draft_claim_versions"] = {c["id"]: c["version"] for c in context["claims"]}
+                if getattr(self.model, "method_pack", None):
+                    event.update(method_pack=self.model.method_pack, method_pack_sha256=self.model.method_pack_sha256)
+                elif episode.get("research_skills"):
+                    event["research_skills"] = episode["research_skills"]
+                try:
+                    # Compact Planner may receive previews that omit source fields.
+                    # Its latest observation must remain available on the compact path.
+                    if self.reference_duplicate_records and (role != "planner" or getattr(self.model, "planner_view", "full") == "full"):
+                        from .context import reference_tool_records
+                        context = reference_tool_records(context)
+                    response = self.verifier.review(context) if role == "critic" else self.model.complete(role, context)
+                    event["ok"] = True
+                except SpendLimitReached:
+                    episode["model_calls"] -= 1
+                    event.update(type="spend_reservation_declined", ok=False)
+                    raise StopEpisode("spend_budget_exhausted") from None
+                except ContextLimitReached as exc:
+                    episode["model_calls"] -= 1
+                    episode["context_limit"] = {"role":role, "characters":exc.size, "limit":exc.limit}
+                    event.update(type="context_limit_before_send", ok=False, **episode["context_limit"])
+                    raise StopEpisode("local_context_limit") from None
+                except Exception as exc:
+                    # Never echo raw provider responses or credentials to the report.
+                    event.update(ok=False, error_type=type(exc).__name__)
+                    from .model import OutputContractError, ProviderOutputError
+                    if isinstance(exc, OutputContractError):
+                        event["contract_error"] = exc.code
+                    if isinstance(exc, ProviderOutputError):
+                        event["provider_output_error"] = exc.code
+                    raise
+                finally:
+                    event.update(seconds=self.clock() - started,
+                        response_metadata=getattr(self.model, "last_response_metadata", {}) or {},
+                        usage={k: v for k, v in (getattr(self.model, "last_usage", {}) or {}).items()
+                               if k in USAGE_FIELDS and type(v) is int and v >= 0})
+                    if not event.get("ok") or commit_result is None:
+                        self.store.add_event(session_id, event)
+                    if original_timeout is not None:
+                        self.model.timeout = original_timeout
+                    for key, value in (getattr(self.model, "last_usage", {}) or {}).items():
+                        if isinstance(value, (int, float)) and not isinstance(value, bool) and math.isfinite(value) and value >= 0:
+                            episode["usage"][key] = episode["usage"].get(key, 0) + value
+                            if key in USAGE_FIELDS and type(value) is int:
+                                counter = key + "_reported_calls"
+                                episode["usage"][counter] = episode["usage"].get(counter, 0) + 1
+                if commit_result is not None:
+                    # A return already received can be committed locally after a
+                    # stop. No subsequent model/tool call may start. Bind the
+                    # receipt, last reviewed version and restart checkpoint.
+                    prior = episode.copy()
+                    try:
+                        with self.store.atomic_step():
+                            self.store.add_event(session_id, event)
+                            current = self._role_inputs_current(session_id, role, context, response)
+                            if current:
+                                commit_result(response)
+                            else:
+                                episode.update(reviewed=False, request_coverage=[])
+                                self.store.add_event(session_id, {"type":"role_result_superseded", "role":role,
+                                    "episode_id":episode["id"], "reason":"scope_or_cited_record_changed_during_call"})
+                            checkpoint()
+                    except Exception as exc:
+                        # Match the rolled-back transaction. A failed checkpoint
+                        # must not publish a draft that never reached storage.
+                        episode.clear()
+                        episode.update(prior, reviewed=False)
+                        self.store.add_event(session_id, {**event, "local_commit_error":type(exc).__name__})
+                        raise
+                guard()
+                if commit_result is not None and not current:
+                    raise StopEpisode("role_inputs_changed")
+                return response
+
+            checkpoint()
+            try:
+                while True:
+                    guard()
+                    if episode["no_progress"] >= limits.max_no_progress:
+                        raise StopEpisode("no_progress")
+                    guard("planner")
+                    episode["planner_steps"] = episode.get("planner_steps", 0) + 1
+                    checkpoint()
+                    ctx = self._context(session_id, episode)
+                    recovery = episode.get("tool_recovery")
+                    finalize_recovery = False
+                    step = skill_calculations.next_action(work, ctx) if work is not None else None
+                    income_action={"action":"tool","tool":"reconcile_net_income","arguments":income_plan["arguments"]} if (
+                        income_plan and "arguments" in income_plan and not income_attempted and
+                        any(t["name"]=="reconcile_net_income" for t in ctx["tools"])) else None
+                    if income_action and self.model is None:
+                        step=income_action
+                    reason_step = income_followup.reason_action(ctx) if income_plan else None
+                    if reason_step and episode["tool_calls"] < limits.max_tool_calls and not episode.get("income_reason_attempted"):
+                        step = reason_step
+                    cash_handoff = None
+                    income_handoff = False
+                    if step is not None:
+                        decision = step
+                    elif self.planner is None:
+                        if work is not None:
+                            episode["skill_calculations"] = list(work["calculations"])
+                            if work["method"] == "operating_margin":
+                                episode["statement_notes"] = work["notes"]
+                                episode["offline_part_findings"] = work["part_findings"]
+                                if selected := work.get("selected"):
+                                    cell = selected[0, "revenue"]
+                                    if work.get("quarter"):
+                                        episode["skill_fiscal_quarter"] = {"entity": work["entity"], "quarter": work["quarter"],
+                                            "period_start": cell["period_start"], "period_end": cell["period_end"]}
+                            if work.get("gap"):
+                                episode["skill_gap"] = work["gap"]
+                                ctx["episode"]["skill_gap"] = work["gap"]
+                            work = None
+                        if self.model is None:
+                            raise StopEpisode("offline_tools_only")
+                        if auto:
+                            ctx["skill_catalog"] = dict(skill_routing.catalog())
+                        cash_handoff = planner_evidence.cash_draft_instruction(ctx) if auto else None
+                        if (income_attempted and not episode.get("draft_attempted") and income_plan
+                                and set(income_plan["part_ids"])==set(ctx.get("request_parts",{}))):
+                            income_handoff = True
+                            decision={"action":"research","reason":"说明已核对的同比贡献，区分会计调节与披露的经营原因；若缺项则保留可核实金额，明确哪一行哪一期缺资料。"}
+                            self.store.add_event(session_id,{"type":"controller_route","episode_id":episode["id"],
+                                "from":"reconcile_net_income","to":"research","reason":"quarterly_income_statement_examined"})
+                        elif cash_handoff:
+                            decision = {"action": "research", "reason": cash_handoff}
+                            self.store.add_event(session_id, {"type": "controller_route", "episode_id": episode["id"],
+                                "from": "analyze_disclosures", "to": "research", "reason": "reconciled_cash_flow"})
+                        else:
+                            decision = model_call("planner", ctx)
+                    else:
+                        from .model import validate_response
+                        started = self.clock()
+                        try:
+                            decision = validate_response("planner", self.planner.decide(ctx), ctx)
+                        except Exception as exc:
+                            self.store.add_event(session_id, {"type": "fixed_planner_step", "episode_id": episode["id"], "ok": False,
+                                                               "error_type": type(exc).__name__, "seconds": self.clock() - started})
+                            raise
+                        self.store.add_event(session_id, {"type": "fixed_planner_step", "episode_id": episode["id"], "ok": True,
+                                                           "seconds": self.clock() - started})
+                        guard()
+                    if not isinstance(decision, dict):
+                        raise ValueError("Planner must return an object")
+                    if recovery and decision.get("action") == "tool" and (
+                            decision.get("tool") == recovery["tool"]
+                            and decision.get("arguments", {}) == recovery["arguments"]
+                            and all(ctx["scope"].get(k) == v for k, v in decision.get("scope", {}).items())):
+                        # Nothing has changed since the rejected action. Skip the
+                        # identical call and reserve the remaining work for review.
+                        finalize_recovery = True
+                        decision = {"action":"research", "reason":recovery["instruction"]}
+                        self.store.add_event(session_id, {"type":"controller_route", "episode_id":episode["id"],
+                            "from":"tool", "to":"research", "reason":"unchanged_recovery_action"})
+                    if episode.get("user_cutoff") and "cutoff" in decision.get("scope", {}):
+                        decision = {**decision, "scope":{**decision["scope"], "cutoff":episode["user_cutoff"]}}
+                    self.store.add_event(session_id, {"type": "planner_decision", "episode_id": episode["id"], "decision": decision,
+                        **({"decision_source": "controller"} if cash_handoff or income_handoff or
+                           (step is not None and (step is income_action or step is reason_step)) else {}),
+                        "summary": str(decision.get("reason", decision.get("action", "")))})
+                    conflict = skill_routing.issuer_decision_conflict(boundary, decision, companies)
+                    if conflict:
+                        episode["issuer_conflict"] = conflict
+                        self.store.add_event(session_id, {"type":"issuer_scope_conflict","episode_id":episode["id"], **conflict})
+                        raise StopEpisode("planner_issuer_conflicts_with_user")
+                    if auto and self.model is not None and step is None:
+                        if "research_skills" in decision:
+                            skills = skill_routing.checked_selection(decision["research_skills"])
+                            if skills != episode["research_skills"] or episode.get("skill_selection_source") != "planner":
+                                self.store.add_event(session_id, {"type":"skill_selection", "episode_id":episode["id"],
+                                    "skills":skills, "selection":"planner", "reason":decision.get("reason", "")})
+                            episode["research_skills"], episode["skill_selection_source"] = skills, "planner"
+                        elif "skill_selection_source" not in episode:
+                            # Older adapters may omit the field; do not silently invoke keyword routing.
+                            episode["skill_selection_source"] = "not_specified"
+                            self.store.add_event(session_id, {"type":"skill_selection", "episode_id":episode["id"],
+                                "skills":[], "selection":"not_specified"})
+                    if boundary and not boundary["open_peers"] and "entities" in decision.get("scope", {}):
+                        # An equivalent alias is a single issuer identity, not a new scope version.
+                        decision = {**decision,"scope":{**decision["scope"],"entities":boundary["entities"]}}
+                    action = decision.get("action")
+                    # A planner's prose reason is never a reviewed report. If
+                    # it proposes finishing after acquiring original evidence
+                    # but before writing any candidate this turn, route it
+                    # through the existing researcher/critic once. Both calls
+                    # remain budgeted and may return a partial result.
+                    if (self.planner is None and action == "finish" and not episode.get("draft_attempted")
+                            and not episode.get("reviewed") and ctx.get("evidence")):
+                        action = "research"
+                        decision = {**decision, "action": action}
+                        self.store.add_event(session_id, {"type":"controller_route","episode_id":episode["id"],
+                                             "from":"finish","to":"research","reason":"source_evidence_without_a_draft"})
+                    if self.planner is None:
+                        # An explicitly empty array is also an omitted plan. It cannot
+                        # erase the user's current obligation or lock discovery to [].
+                        if decision.get("requirements") == []:
+                            decision = {key:value for key,value in decision.items() if key != "requirements"}
+                        if decision.get("scope", {}).get("requirements") == []:
+                            decision = {**decision,"scope":{key:value for key,value in decision["scope"].items() if key != "requirements"}}
+                    if (self.planner is None and action == "research" and not ctx["requirements"]
+                            and not decision.get("requirements") and not decision.get("scope",{}).get("requirements")):
+                        # Preserve the new user's exact request as the minimum
+                        # coverage obligation, never a model-generated answer.
+                        decision = {**decision,"requirements":[{"id":"request:"+episode["id"],"text":episode["request"]}]}
+                    if episode.get("quarter_followup_parts") and ctx.get("fiscal_target"):
+                        decision = fiscal_followup.bound_plan(decision, ctx["fiscal_target"], ctx)
+                    elif return_bounds and {"period_start", "period_end"}.intersection(decision.get("scope", {})):
+                        decision = {**decision, "scope": {**decision["scope"], **return_bounds}}
+                    previous_cutoff = ctx.get("scope", {}).get("cutoff")
+                    changed_scope = self._apply_scope(session_id, decision, preserve_requirements=requirements_locked,
+                                                      retrying=retry_report is not None or bool(original_parts))
+                    if "requirements" in decision or "requirements" in decision.get("scope", {}) or action == "research":
+                        # Pre-upgrade clarification checkpoints may still carry this marker.
+                        episode.pop("resolve_followup_checklist", None)
+                    # Discovery may precede defining a new user turn's task.
+                    # Freeze its checklist when explicitly supplied or first
+                    # used for synthesis, not after an unrelated lookup.
+                    requirements_locked = requirements_locked or "requirements" in decision or "requirements" in decision.get("scope", {}) or action == "research"
+                    if changed_scope:
+                        if self.planner is None:
+                            existing = {item["id"] for item in ctx["requirements"]}
+                            proposed = decision.get("requirements", decision.get("scope", {}).get("requirements", []))
+                            additions = {item["id"]: item["text"] for item in proposed if item["id"] not in existing}
+                            if additions:
+                                episode.setdefault("planner_added_requirements", {}).update(additions)
+                        if ((inherited_quarter or return_reference)
+                                and {"period_start", "period_end"}.intersection(decision.get("scope", {}))):
+                            planned_scope = self.store.get_session(session_id)["scope"]
+                            current_target = episode.get("skill_fiscal_quarter", {})
+                            bounds = {k:v for k in ("period_start", "period_end") if (v := planned_scope.get(k))}
+                            if bounds and not all(current_target.get(k) == v for k, v in bounds.items()):
+                                matched = self._historical_quarter(session_id, issuer, planned_scope)
+                                if matched:
+                                    episode["skill_fiscal_quarter"] = matched
+                                else:
+                                    episode.pop("skill_fiscal_quarter", None)
+                                episode.pop("followup_focus", None)
+                        episode.update(reviewed=False, active_claim_ids=[], issues=[], summary="", draft_saved=False,
+                                       request_coverage=[], answered_requirement_ids=[], unanswered_requirement_ids=[])
+                        for field in ("reviewed_claim_ids", "reviewed_requirement_ids", "reviewed_scope_version", "restored_claim_versions", "draft_reference_issues", "followup_limits"):
+                            episode.pop(field, None)
+                        episode.pop("revision_memory", None)
+                        current_cutoff = self.store.get_session(session_id)["scope"].get("cutoff")
+                        if current_cutoff and (not previous_cutoff or cutoff_time(current_cutoff) < cutoff_time(previous_cutoff)):
+                            # Tool payloads may include unreferenced future titles or figures.
+                            # The immutable tool events remain available for the audit.
+                            episode.pop("last_tool_result", None)
+                            episode.pop("recent_tool_results", None)
+                            episode["summary"] = ""
+                    draft_after_tool = pending_income_draft if step is not None and step is reason_step else None
+                    if action == "research" and not finalize_recovery and auto and self.model is not None and episode["tool_calls"] < limits.max_tool_calls:
+                        draft_context = self._context(session_id, episode) if changed_scope else ctx
+                        check = draft_context.get("operating_margin_check")
+                        active_scope=draft_context["scope"]
+                        if (income_action and active_scope.get("entities")==[income_action["arguments"]["entity"]]
+                                and all(not active_scope.get(k) or not income_action["arguments"].get(k) or
+                                        active_scope[k]==income_action["arguments"][k] for k in ("period_start","period_end"))):
+                            draft_after_tool=decision
+                            decision=income_action
+                            action="tool"
+                            self.store.add_event(session_id,{"type":"controller_route","episode_id":episode["id"],
+                                "from":"research","to":"reconcile_net_income","reason":"reconcile_comparative_income_statement_before_draft"})
+                        elif check and "receipt_index" not in check:
+                            # Run local arithmetic against the acquired rows, then deliver
+                            # the Planner's original instruction in this same iteration.
+                            draft_after_tool = decision
+                            action = "tool"
+                            decision = {"action":"tool", "tool":check["tool"], "arguments":check["arguments"]}
+                            self.store.add_event(session_id, {"type":"controller_route", "episode_id":episode["id"],
+                                "from":"research", "to":check["tool"], "reason":"check_quarterly_expenses_before_drafting"})
+                    if action == "clarify":
+                        question = decision.get("question")
+                        if not isinstance(question, str) or not question.strip():
+                            raise ValueError("Clarification requires a question")
+                        waiting_scope = self.store.get_session(session_id)["scope"]
+                        episode.update(status="waiting_for_clarification", question=question,
+                                       clarification_cutoff=waiting_scope.get("cutoff"),
+                                       clarification_checklist_hash=digest(waiting_scope.get("requirements", [])))
+                        with self.store.atomic_step():
+                            self.store.append_message(session_id, "assistant", question)
+                            checkpoint()
+                        return {"status": episode["status"], "question": question, "episode": episode}
+                    if action == "tool":
+                        guard("tool")
+                        name, arguments = decision.get("tool"), decision.get("arguments", {})
+                        if name == income_followup.EXPLANATION_TOOL:
+                            if episode.get("income_reason_attempted"):
+                                raise StopEpisode("income_explanation_already_examined")
+                            episode["income_reason_attempted"] = True
+                        if name=="reconcile_net_income":
+                            if income_attempted:
+                                raise StopEpisode("income_statement_already_examined")
+                            if income_plan and "arguments" in income_plan and any(
+                                    arguments.get(k) and arguments[k]!=v for k,v in income_plan["arguments"].items()):
+                                raise StopEpisode("income_statement_scope_mismatch")
+                            if income_plan and "arguments" in income_plan:
+                                arguments={**income_plan["arguments"],**arguments}
+                            income_attempted=True
+                        if not isinstance(name, str) or not isinstance(arguments, dict):
+                            raise ValueError("Tool action requires name and object arguments")
+                        episode["tool_calls"] += 1
+                        checkpoint()
+                        original_timeout = getattr(self.tools, "timeout", None)
+                        if original_timeout is not None:
+                            self.tools.timeout = max(0.01, min(original_timeout, limits.max_seconds - elapsed()))
+                        tool_session = self.store.get_session(session_id)
+                        try:
+                            result = self.tools.execute(name, arguments, session_id, tool_session["scope"])
+                        except Exception as exc:
+                            result = {"ok": False, "summary": "Tool failed", "error": type(exc).__name__, "evidence": [], "calculations": [], "data": {}}
+                        finally:
+                            if original_timeout is not None:
+                                self.tools.timeout = original_timeout
+                        if not isinstance(result, dict):
+                            result = {"ok": False, "summary": "Tool returned a non-object result", "error": "InvalidToolResult",
+                                      "evidence": [], "calculations": [], "data": {"returned_type": type(result).__name__}}
+                        read_gap = None
+                        read_context = ctx
+                        if name == "read_document" and self.model is not None and self.planner is None:
+                            # An indexed passage may be in storage while its full text is
+                            # still new to a planner that received only a preview.
+                            if callable(getattr(self.model, "evidence_view", None)):
+                                read_context = self.model.evidence_view("planner", ctx)
+                            elif getattr(self.model, "planner_view", "full") == "compact":
+                                from .context import planner_view
+                                read_context = planner_view(ctx)
+                            if planner_evidence.covered_document_read(read_context, result):
+                                read_gap = "原文已在当前可见证据中；本次未新增原文、数字记录或计算。"
+                                result["data"]["covered_read_recovery"] = True
+                        if tool_session["scope_version"] == ctx["session"]["scope_version"]:
+                            if name == "read_document":
+                                read_gap = planner_evidence.covered_statement_read_gap(read_context, result) or read_gap
+                            elif name == "analyze_disclosures":
+                                read_gap = planner_evidence.repeated_statement_gap(ctx, arguments, result)
+                        if read_gap:
+                            result["data"]["acquisition_gap"] = read_gap
+                        # Preserve the public observation at call time, including
+                        # failures and results returned just as a budget expires.
+                        # Adapters already exclude credentials/raw HTTP errors.
+                        observation_record = {key: result.get(key, [] if key in {"evidence", "calculations"} else {} if key == "data" else None)
+                                              for key in ("data", "evidence", "calculations", "error")}
+                        receipt = {"type":"tool_call", "episode_id":episode["id"], "tool":name, "arguments":arguments,
+                                   "ok":bool(result.get("ok")), "summary":result.get("summary", ""),
+                                   "network_requests":observation_record["data"].get("network_requests", 0) if isinstance(observation_record["data"], dict) else 0,
+                                   "observation":observation_record, "observation_sha256":digest(observation_record)}
+                        versions = {}
+                        try:
+                            changed = self.store.record_tool_return(session_id, receipt, record_versions=versions)
+                        except Exception:
+                            episode["reviewed"] = False
+                            raise
+                        if changed:
+                            episode["reviewed"] = False
+                        episode["last_tool_result"] = {**result, "record_versions":versions} if versions else result
+                        if name == "read_document" and result.get("ok"):
+                            # The compact history keeps only eight receipts. Keep an explicit
+                            # read available for the rest of *this* turn even after it rolls off.
+                            opened = episode.setdefault("opened_document_ids", [])
+                            for row in result.get("evidence", []):
+                                if row.get("kind") == "document" and row.get("id") and row["id"] not in opened:
+                                    opened.append(row["id"])
+                        if name == "analyze_disclosures":
+                            details = result.get("data", {})
+                            episode["statement_notes"] = details.get("skill_notes", [])
+                            episode["skill_assessments"] = details.get("skill_assessments", [])
+                            gaps = details.get("skill_gaps", [])
+                            if self.model is None and result.get("ok"):
+                                from .statement_analysis import answer_statement_parts
+                                parts = ctx.get("request_parts") or {"part-1": episode["request"]}
+                                fiscal_target = {**{k:ctx.get("scope", {}).get(k) for k in ("period_start","period_end")},
+                                                 **episode.get("skill_fiscal_quarter", {})}
+                                answers = answer_statement_parts(parts, details, fiscal_target)
+                                if answers:
+                                    episode.setdefault("offline_part_findings", {}).update(answers)
+                            if gaps or not result.get("ok"):
+                                episode["skill_gap"] = " ".join(gaps) or result.get("error")
+                            else:
+                                episode.pop("skill_gap", None)
+                        if work is not None and step is not None:
+                            if work["method"] == "quarter_followup" and name == "inspect_sales_comparison" and result.get("ok"):
+                                details = result["data"]
+                                episode["offline_part_findings"] = details.get("part_findings", {})
+                                period = details.get("fiscal_period", {})
+                                if (period.get("entity") == issuer and period.get("quarter") == target_quarter
+                                        and fiscal_followup.confirmed_dates(period, quarter_dates)):
+                                    dates = {k: period[k] for k in ("period_start", "period_end")}
+                                    episode["skill_fiscal_quarter"].update(dates)
+                                    scope = self.store.get_session(session_id)["scope"]
+                                    self.store.update_scope(session_id, {**scope, **dates})
+                            if work["method"] == "overview" and name in ("read_document","search_documents") and result.get("ok"):
+                                episode["statement_notes"] = skill_calculations.overview_notes(result.get("evidence", []))
+                            work["steps"].append({"tool": name, "ok": bool(result.get("ok"))})
+                            work["operands"].extend(result.get("data", {}).get("numeric_operand_ids", []))
+                            work["calculations"].extend(c["id"] for c in result.get("calculations", []))
+                            episode["skill_calculations"] = list(work["calculations"])
+                        recent = episode.setdefault("recent_tool_results", [])
+                        recent.append({"tool": name, "arguments": arguments, "ok": bool(result.get("ok")),
+                                       "scope_version": tool_session["scope_version"],
+                                       "summary": result.get("summary", ""), "data": result.get("data", {}),
+                                       "error": result.get("error"),
+                                       "evidence_ids": [r["id"] for r in result.get("evidence", [])],
+                                       "calculation_ids": [r["id"] for r in result.get("calculations", [])]})
+                        if name == "analyze_disclosures":
+                            recent[-1]["planner_instruction"] = decision.get("reason", "")
+                        if name in ("reconcile_net_income", income_followup.EXPLANATION_TOOL):
+                            recent[-1]["income_request"]=episode["request"]
+                        if versions:
+                            recent[-1]["record_versions"] = versions
+                        episode["recent_tool_results"] = recent[-8:]
+                        guard()
+                        fingerprint = digest(progress_content({"tool": name, "arguments": arguments, "result": result}))
+                        progress = bool(result.get("ok")) and not read_gap and fingerprint not in episode["seen_results"]
+                        if progress:
+                            episode["seen_results"].append(fingerprint)
+                        episode["no_progress"] = 0 if progress else episode["no_progress"] + 1
+                        recoverable = read_gap or (name == "calculate" and not result.get("ok")
+                            and result.get("data", {}).get("recoverable_input_error"))
+                        if (self.model is not None and self.planner is None and not episode.get("draft_attempted")
+                                and (recoverable or (recovery and result.get("ok") and not progress))):
+                            instruction = ("已有原文未增加新证据。可从已读表格提取金额并保留期间和出处。"
+                                if read_gap else "根据工具回执核对输入的指标、单位、符号及会计含义。")
+                            instruction += ("只有能指出具体修正时才换一种操作；否则直接按原问起草，引用已有证据，"
+                                            "标明未核实的部分。被拒绝的计算不能作为依据。")
+                            episode["tool_recovery"] = {"tool":name, "arguments":arguments, "instruction":instruction,
+                                "detail":read_gap or result.get("error") or result.get("summary")}
+                            if (recovery or episode["tool_calls"] >= limits.max_tool_calls
+                                    or episode["model_calls"] + 3 > limits.max_model_calls
+                                    or episode["planner_steps"] >= limits.max_planner_steps
+                                    or episode["no_progress"] >= limits.max_no_progress):
+                                finalize_recovery = True
+                                draft_after_tool = {"action":"research", "reason":instruction}
+                            self.store.add_event(session_id, {"type":"controller_route", "episode_id":episode["id"],
+                                "from":name, "to":"research" if finalize_recovery else "planner",
+                                "reason":"bounded_tool_recovery"})
+                        elif self.stop_on_tool_fault and (read_gap or
+                            (not result.get("ok") and name in {"calculate", "analyze_disclosures"})
+                            or (not progress and result.get("ok") and name in {"read_document", "search_documents"})
+                        ):
+                            raise StopEpisode("tool_fault_requires_inspection")
+                        elif progress:
+                            episode.pop("tool_recovery", None)
+                            if recovery and (episode["model_calls"] + 2 >= limits.max_model_calls
+                                    or episode["planner_steps"] >= limits.max_planner_steps):
+                                finalize_recovery = True
+                                draft_after_tool = {"action":"research", "reason":
+                                    "修正后的工具回执已返回；按原问起草并引用有效记录，标明仍缺的证据。"}
+                        if draft_after_tool is not None:
+                            if (name == "reconcile_net_income" and not episode.get("income_reason_attempted")
+                                    and episode["tool_calls"] < limits.max_tool_calls
+                                    and income_followup.reason_action(self._context(session_id, episode))):
+                                # Carry the planner's draft instruction across the single targeted read.
+                                pending_income_draft = draft_after_tool
+                                continue
+                            pending_income_draft = None
+                            decision, action = draft_after_tool, "research"
+                    if action == "research":
+                        if finalize_recovery and not self.store.get_session(session_id)["scope"].get("requirements"):
+                            self._apply_scope(session_id, {"requirements":[
+                                {"id":"request:" + episode["id"], "text":episode["request"]}]})
+                        if episode.get("reviewed") and limits.max_model_calls - episode["model_calls"] < 2:
+                            # Preserve the last review when the next revision cannot be checked.
+                            raise StopEpisode("model_budget_exhausted")
+                        last = episode.get("revision_memory", {})
+                        repeats = last.get("open", [])
+                        if (episode.get("reviewed") and repeats and all(item["reviews"] >= 2 for item in repeats)
+                                and last.get("tool_calls_at_review") == episode["tool_calls"]):
+                            raise StopEpisode("repeated_review_without_progress")
+                        episode["draft_attempted"] = True
+                        ctx = self._context(session_id, episode)
+                        if not ctx.get("request_parts"):
+                            ctx["request_parts"] = {"part-1":episode["request"]}
+                            episode["inherited_parts"] = ctx["request_parts"]
+                        instruction = decision.get("reason", "")
+                        if draft_after_tool is not None and ctx.get("income_bridge"):
+                            # A real Planner may correctly say no arithmetic exists *at decision time*.
+                            # The receipt just committed supersedes that premise for both roles.
+                            instruction = (instruction + "\n原表核算回执更新：在上述决定之后，本地工具已返回本轮 income_bridge。"
+                                "rows 中带 contribution_id 的变动已有正式计算记录；请交付能核对的各项贡献与净变动。"
+                                "原先关于只有文本或没有计算的判断不适用于这些新记录。缺少的行仍须指出，不倒推填数。").strip()
+                        if ctx.get("income_explanation"):
+                            instruction = (instruction + "\n请按本轮 income_explanation 里的原文交付管理层解释；"
+                                "区分该项目的直接解释、组成费用的背景和仍缺的原因。各行同比金额引用计算回执，"
+                                "分配到具体原因的金额需要另外的量化披露。").strip()
+                        if instruction:
+                            ctx["draft_instruction"] = instruction
+                        if ctx.get("repair_feedback"):
+                            ctx["repair_feedback"]["current_draft_instruction"] = instruction
+                        result = model_call("researcher", ctx, commit_result=lambda draft: self._save_research(session_id, episode, draft))
+                        if episode.get("draft_reference_issues") and not episode["active_claim_ids"]:
+                            raise StopEpisode("researcher_no_valid_references")
+                        ctx = self._context(session_id, episode)
+                        if self.candidate_callback and not episode.get("candidate_captured"):
+                            # Capture only the initial candidate. Later drafts
+                            # have already benefited from this episode's review.
+                            self.candidate_callback({**ctx, "capture_metadata": {
+                                "model_mode": getattr(self.model, "mode", "configured_model"),
+                                "model": getattr(self.model, "model", None)}})
+                            episode["candidate_captured"] = True
+                        display_notes = []
+                        context_notes = []
+                        rules = check_rules(ctx, display_notes=display_notes, context_notes=context_notes)
+                        if display_notes:
+                            ctx["display_review_notes"] = display_notes
+                        if context_notes:
+                            ctx["source_context_notes"] = context_notes
+                        episode["issues"] = rules
+                        ctx["rule_findings"] = rules
+                        if instruction:
+                            ctx["draft_instruction"] = instruction
+                        model_call("critic", ctx, commit_result=lambda review: self._commit_review(session_id, episode, ctx, instruction, review))
+                        pending_recovery = episode.pop("tool_recovery", None)
+                        if finalize_recovery or pending_recovery:
+                            # A reviewed partial answer ends this recovery path.
+                            # Never reopen the same failed call after the review.
+                            raise StopEpisode("completed" if self._complete(session_id, episode) else "unresolved_items")
+                        if self.stop_on_tool_fault and any(i["issue_type"] in {
+                                "numerical_inconsistency", "source_time_mismatch"} for i in rules):
+                            # Preserve this review and the independently supported claims on delivery.
+                            raise StopEpisode("deterministic_check_requires_inspection")
+                        state = {"claims": result.get("claims"), "issues": episode["issues"], "scope": ctx["scope"]}
+                        fingerprint = digest(state)
+                        progress = fingerprint not in episode["seen_results"]
+                        if progress:
+                            episode["seen_results"].append(fingerprint)
+                        episode["no_progress"] = 0 if progress else episode["no_progress"] + 1
+                        bounded_answer = bool(episode.get("followup_limits"))
+                        if self.planner is None and (bounded_answer or self.finish_after_review and not episode["issues"]):
+                            guard()
+                            if self._complete(session_id, episode, require_all_claims=True):
+                                guard()
+                                self.store.add_event(session_id, {"type":"controller_route","episode_id":episode["id"],
+                                    "from":"verification","to":"finish","reason":(
+                                        "user_questions_verified_with_disclosed_limits" if bounded_answer
+                                        else "all_claims_and_requirements_verified")})
+                                raise StopEpisode("completed")
+                    elif action == "finish":
+                        reason = "completed" if self._complete(session_id, episode) else "unresolved_items"
+                        raise StopEpisode(reason)
+                    elif action != "tool":
+                        raise ValueError("Unsupported planner action")
+                    checkpoint()
+            except StopEpisode as exc:
+                episode["stop_reason"] = self._resolve_stop(session_id, episode, str(exc))
+            except Exception as exc:
+                episode["stop_reason"] = "execution_error"
+                episode["error_type"] = type(exc).__name__
+                self.store.add_event(session_id, {"type": "episode_error", "episode_id": episode["id"], "error_type": type(exc).__name__})
+            episode["active_seconds"] = elapsed()
+            if not episode["reviewed"] and episode.get("draft_attempted"):
+                self._restore_review(session_id, episode)
+            episode["status"] = "complete" if episode["stop_reason"] == "completed" else "partial"
+            episode["finished_at"] = utcnow()
+            saved = self._save_delivery(session_id, episode)
+            return {"status": episode["status"], "report": saved, "episode": episode}
+
+    def _context(self, sid, episode, all_claims=False):
+        from .context import as_of_context, select_history
+        ctx = self.store.get_context(sid, report_mode="summaries")
+        ctx["scope"] = ctx["session"]["scope"]
+        ctx["requirements"] = ctx["scope"].get("requirements", [])
+        if episode.get("resolve_followup_checklist"):
+            ctx["scope"] = {**ctx["scope"],"requirements":[]}
+            ctx["session"] = {**ctx["session"],"scope":ctx["scope"]}
+            ctx["requirements"] = []
+        parts = episode.get("clarified_parts", episode.get("inherited_parts"))
+        if parts is None:
+            parts = request_parts(episode["request"])
+        if not parts and episode.get("new_followup"):
+            parts = {"part-1": episode["request"]}
+        if parts:
+            ctx["request_parts"] = parts
+        if episode.get("followup_focus"):
+            ctx["followup_focus"] = episode["followup_focus"]
+        if episode.get("quarter_followup_parts") and episode.get("skill_fiscal_quarter"):
+            ctx["fiscal_target"] = episode["skill_fiscal_quarter"]
+        if not all_claims:
+            active = set(episode["active_claim_ids"])
+            ctx["claims"] = [c for c in ctx["claims"] if c["id"] in active]
+            # A newer draft may reuse the same claim ID. Read the immutable, reviewed version.
+            versions = episode.get("restored_claim_versions", {}) if episode.get("reviewed") else {}
+            for index, claim in enumerate(ctx["claims"]):
+                version = versions.get(claim["id"])
+                if version is not None and claim["version"] != version:
+                    ctx["claims"][index] = next(c for c in self.store.history(sid, "claim", claim["id"]) if c["version"] == version)
+        ctx["tools"] = self.tools.available_tools() if hasattr(self.tools, "available_tools") else self.tools.list_tools()
+        if not self.auto_skills or self.planner is not None or getattr(self.model, "method_pack", None):
+            ctx["tools"] = [t for t in ctx["tools"] if t["name"] != "analyze_disclosures"]
+        if hasattr(self.tools, "evidence_access"):
+            ctx["evidence_access"] = self.tools.evidence_access()
+        # Selected old turns are verbatim excerpts, never a generated summary.
+        selection = select_history(ctx["messages"], ctx["reports"], request=episode["request"], scope=ctx["scope"])
+        ctx["history_omitted"] = selection["omitted"]
+        ctx["history_selection"] = selection
+        ctx["messages"] = [ctx["messages"][i] for i in selection["message_indices"]]
+        # Check each archived version's own provenance before reducing it to the
+        # user-visible summary. A source may have been updated since that report.
+        ctx["reports"] = [self.store.get_report(sid, v) for v in selection["report_versions"]]
+        ctx = as_of_context(ctx)
+        from .context import current_tool_receipts, history_report_views, issuer_scoped_context, reopen_comparison_receipt
+        ctx["reports"] = history_report_views(ctx)
+        ctx["episode"] = {k: v for k, v in episode.items() if k not in {"seen_results", "revision_memory", "draft_reference_issues", "planner_added_requirements", "followup_limits"}}
+        companies = getattr(getattr(self.tools, "data", None), "manifest", {}).get("companies", [])
+        ctx = issuer_scoped_context(ctx, companies)
+        reopen_comparison_receipt(ctx, self.store)
+        ctx = current_tool_receipts(ctx)
+        if current_income := income_followup.current_bridge(ctx):
+            ctx["income_bridge"]=current_income
+            if explanation := income_followup.explanation_context(ctx):
+                ctx["income_explanation"] = {**explanation, **{k:current_income[k] for k in
+                                             ("episode_id","scope_version","part_ids")}}
+        if not income_followup.reason_action(ctx) or episode.get("income_reason_attempted"):
+            ctx["tools"] = [t for t in ctx["tools"] if t["name"] != income_followup.EXPLANATION_TOOL]
+        if self.model is not None and self.auto_skills and self.planner is None and not getattr(self.model, "method_pack", None):
+            check = planner_evidence.margin_draft_check(ctx)
+            if check:
+                ctx["operating_margin_check"] = check
+        ctx["issues"] = episode["issues"]
+        memory = episode.get("revision_memory", {})
+        if episode["issues"] and memory.get("open") and memory["scope_version"] == ctx["session"]["scope_version"]:
+            since = episode["tool_calls"] - memory["tool_calls_at_review"]
+            recent = ctx["episode"].get("recent_tool_results", [])
+            ctx["repair_feedback"] = {
+                "targets_and_consecutive_reviews_on_same_sources": memory["open"],
+                "previous_draft_instruction": memory["last_draft_instruction"],
+                "tool_calls_since_review": since,
+                "last_tool_in_this_turn": (
+                    {k: recent[-1][k] for k in ("tool", "ok", "error", "evidence_ids", "calculation_ids", "record_status")
+                     if k in recent[-1]}
+                    if recent else None),
+                "remaining_model_calls": episode["budget"]["max_model_calls"] - episode["model_calls"],
+            }
+            if any(tool.get("name") == "calculate" for tool in ctx["tools"]):
+                ctx["repair_feedback"]["numeric_records_with_metric_and_unit"] = [
+                    r["id"] for r in ctx["evidence"] + ctx["calculations"]
+                    if not r.get("stale") and r.get("metric") and r.get("unit")
+                    and type(r.get("value")) in (int, float)]
+        return ctx
+
+    def _historical_quarter(self, sid, issuer, scope, *, version=None, match_dates=True):
+        """Resolve a prior answer by conversation position or by its dated, reviewed sources."""
+        if scope.get("entities") != [issuer]:
+            return None
+        history = self.store.get_context(sid, report_mode="none")
+        if version is not None and not 1 <= version <= history["report_count"]:
+            return None
+        records = {r["id"]: r for r in history["evidence"] + history["calculations"]}
+        versions = [version] if version is not None else range(history["report_count"], 0, -1)
+        bounds = {k:scope[k] for k in ("period_start", "period_end") if match_dates and scope.get(k)}
+        candidate = None
+        for number in versions:
+            report = self.store.get_report(sid, number)
+            quarter = fiscal_followup.reviewed_quarter(report, issuer, records, scope.get("cutoff"))
+            if not quarter or any(quarter[k] != v for k, v in bounds.items()):
+                continue
+            if candidate and any(candidate[k] != quarter[k] for k in ("quarter", "period_start", "period_end")):
+                return None
+            candidate = quarter
+        return candidate
+
+    def _apply_scope(self, sid, decision, *, preserve_requirements=False, retrying=False):
+        if "scope" not in decision and "requirements" not in decision:
+            return False
+        scope = dict(self.store.get_session(sid)["scope"])
+        prior_requirements = {r["id"]: r["text"] for r in scope.get("requirements", [])}
+        patch = decision.get("scope", {})
+        if not isinstance(patch, dict):
+            raise ValueError("Scope must be an object")
+        scope.update(patch)
+        if "requirements" in decision:
+            scope["requirements"] = decision["requirements"]
+        requirements = scope.get("requirements", [])
+        if not isinstance(requirements, list) or any(not isinstance(r, dict) or not isinstance(r.get("id"), str) or not r["id"] or not isinstance(r.get("text"), str) or not r["text"].strip() for r in requirements):
+            raise ValueError("Requirements need nonempty id and text")
+        if len({r["id"] for r in requirements}) != len(requirements):
+            raise ValueError("Requirement IDs must be unique")
+        next_requirements = {r["id"]: r["text"] for r in requirements}
+        if preserve_requirements and retrying:
+            # An unchanged user request can acquire a new item, but its original
+            # obligations must still reach synthesis if the new plan omits one.
+            retained = [{"id":key, "text":value} for key, value in prior_requirements.items()]
+            retained.extend(r for r in requirements if r["id"] not in prior_requirements
+                            and r["text"] not in prior_requirements.values())
+            scope["requirements"] = retained
+        elif preserve_requirements and any(next_requirements.get(key) != value for key, value in prior_requirements.items()):
+            raise ValueError("Internal replanning cannot remove or rewrite required-answer items without a new user turn")
+        if scope == self.store.get_session(sid)["scope"]:
+            return False
+        self.store.update_scope(sid, scope)
+        return True
+
+    def _save_research(self, sid, episode, result):
+        if not isinstance(result, dict) or not isinstance(result.get("claims"), list):
+            raise ValueError("Researcher must return claims")
+        if "research_skills" in episode:
+            # Bind reported methods to the actual draft, even if a later plan changes before delivery.
+            episode["draft_skill_selection"] = {"skills":list(episode["research_skills"]),
+                                               "source":episode.get("skill_selection_source", "not_specified")}
+        # Invalidate the old adjudication before changing even the first record.
+        episode.pop("followup_limits", None)
+        episode.update(reviewed=False, request_coverage=[], draft_scope_version=self.store.get_session(sid)["scope_version"])
+        for field in ("restored_claim_versions", "reviewed_claim_ids", "reviewed_requirement_ids", "reviewed_scope_version"):
+            episode.pop(field, None)
+        ids = []
+        requirements = {r["id"] for r in self.store.get_session(sid)["scope"].get("requirements", [])}
+        for key in ("answered_requirement_ids", "unanswered_requirement_ids"):
+            values = result.get(key, [])
+            if not isinstance(values, list) or any(not isinstance(v, str) or v not in requirements for v in values):
+                raise ValueError("Unknown requirement in researcher answer")
+            episode[key] = values
+        if set(episode["answered_requirement_ids"]) & set(episode["unanswered_requirement_ids"]):
+            raise ValueError("An item cannot be both answered and unanswered")
+        if set(episode["answered_requirement_ids"] + episode["unanswered_requirement_ids"]) != requirements:
+            raise ValueError("Researcher must account for every required-answer item")
+        for item in result["claims"]:
+            if not isinstance(item, dict) or not isinstance(item.get("id"), str) or not item["id"] or not isinstance(item.get("text"), str) or not item["text"].strip():
+                raise ValueError("Each claim needs id and text")
+            # Provenance versions, stale flags and status are controller/store
+            # metadata, never authority delegated to a model response.
+            claim = {key: item[key] for key in ("id", "text", "evidence_ids", "calculation_ids", "requirement_ids", "constraints", "asserted_value", "asserted_unit") if key in item}
+            if claim["id"] in ids:
+                raise ValueError("Duplicate claim ID")
+            for key in ("evidence_ids", "calculation_ids", "requirement_ids"):
+                if not isinstance(claim.get(key, []), list) or any(not isinstance(v, str) for v in claim.get(key, [])):
+                    raise ValueError("Claim references must be lists of IDs")
+                claim.setdefault(key, [])
+            if not set(claim["requirement_ids"]).issubset(requirements):
+                raise ValueError("Claim refers to unknown requirement")
+            claim.update(status="Pending Verification", scope_version=self.store.get_session(sid)["scope_version"])
+            self.store.put_claim(sid, claim)
+            ids.append(claim["id"])
+        episode.pop("draft_reference_issues", None)
+        quarantine = result.get("reference_quarantine")
+        if quarantine:
+            event = self.store.add_event(sid, {"type":"researcher_claims_quarantined", "episode_id":episode["id"],
+                                               "scope_version":episode["draft_scope_version"], **quarantine})
+            issues = []
+            for row in quarantine["claims"]:
+                claim = row["claim"]
+                if "contract_error" in row:
+                    issues.append({"target_id":row["diagnostic_target"], "issue_type":"invalid_record", "evidence_refs":[],
+                                   "missing_support":f"第 {row['index']+1} 条草稿未送核验：{row['contract_error']}。",
+                                   "proposed_action":"修正这一条的字段后再提交核验，现有合格主张可继续。",
+                                   "contract_diagnostic":{"code":"invalid_researcher_claim", "field":f"claims[{row['index']}]",
+                                                          "event_id":event["id"]}})
+                    continue
+                unknown = row["unknown_references"]
+                fields = "；".join(field + " = " + ", ".join(refs) for field, refs in unknown.items())
+                issues.append({"target_id":claim["id"], "issue_type":"missing_reference", "evidence_refs":[],
+                               "missing_support":f"该条草稿未送核验，引用不在对应记录中（{fields}）。原主张：{claim['text']}",
+                               "proposed_action":"查阅相应来源，使用实际留存的记录重新起草；证据不足的部分保留为缺口。",
+                               "contract_diagnostic":{"code":"unknown_researcher_reference", "field":f"claims[{row['index']}]",
+                                                      "reported_value":unknown, "event_id":event["id"]}})
+            episode["draft_reference_issues"] = issues
+        episode.update(active_claim_ids=ids, draft_saved=bool(ids) or not quarantine, reviewed=False,
+                       issues=[], summary=str(result.get("summary", "")))
+
+    @staticmethod
+    def _dedupe_issues(issues):
+        unique = {}
+        for issue in issues:
+            unique[digest(issue)] = issue
+        return list(unique.values())
+
+    def _role_inputs_current(self, sid, role, ctx, response):
+        """Bind a returned draft or verdict to the evidence the caller actually supplied."""
+        claims = ctx["claims"] if role == "critic" else response["claims"]
+        refs = {ref for c in claims for field in ("evidence_ids", "calculation_ids") for ref in c.get(field, [])}
+        records = []
+        if role == "critic":
+            records.extend(("claim", c) for c in claims)
+            refs.update(ref for issue in response["issues"] for ref in issue.get("evidence_refs", []))
+            refs.update(ref for verdict in response.get("claim_verdicts", []) for ref in verdict["evidence_refs"])
+        for kind, rows in (("evidence", ctx["evidence"]), ("calculation", ctx["calculations"])):
+            records.extend((kind, record) for record in rows if record["id"] in refs)
+        return self.store.matches_role_inputs(sid, ctx["session"]["scope_version"], records)
+
+    def _commit_review(self, sid, episode, ctx, instruction, review):
+        parts = ctx.get("request_parts", {})
+        rows = review.get("request_coverage", [])
+        if ctx.get("fiscal_target"):
+            rows = fiscal_followup.check_answer_periods(rows, ctx["claims"], ctx["fiscal_target"], parts)
+        from .request_review import check_comparison_coverage, reviewed_followup_limits
+        rows, comparison_gap = check_comparison_coverage(ctx, rows)
+        unanswered_ids = set(episode["unanswered_requirement_ids"])
+        gap = None
+        if not parts and ctx["requirements"] and all(r["id"] in unanswered_ids for r in ctx["requirements"]):
+            gap = "本稿仍缺少以下要求的答案：" + "；".join(r["text"] for r in ctx["requirements"])
+        elif not parts:
+            gap = comparison_gap or single_question_mismatch(episode["request"],ctx["claims"])
+        if gap:
+            # Retain the unresolved single question for redrafting and show any
+            # separately supported background under the same rules as a compound turn.
+            parts = {"part-1":episode["request"]}
+            episode["clarified_parts" if "clarified_parts" in episode else "inherited_parts"] = parts
+            rows = [{"part":"part-1","status":"gap","missing_support":gap}]
+        coverage = coverage_issues(parts, {"request_coverage":rows}, ctx["claims"],
+                                   requirements=ctx["requirements"],unanswered_ids=unanswered_ids)
+        episode["request_coverage"] = rows
+        episode["issues"] = self._dedupe_issues(ctx["rule_findings"] + review["issues"] + coverage
+                                                + episode.get("draft_reference_issues", []))
+        episode["reviewed_claim_ids"] = review["reviewed_claim_ids"]
+        episode["reviewed_requirement_ids"] = review["reviewed_requirement_ids"]
+        episode["reviewed_scope_version"] = ctx["session"]["scope_version"]
+        episode.pop("followup_limits", None)
+        if not (ctx["rule_findings"] or coverage or episode.get("draft_reference_issues")):
+            limits = reviewed_followup_limits(ctx, episode, review, rows)
+            if limits:
+                episode["followup_limits"] = limits
+        record_review(episode, ctx, instruction)
+        verdicts = {v["claim_id"]:v for v in review.get("claim_verdicts", [])}
+        rule_targets = {issue["target_id"] for issue in ctx["rule_findings"]
+                        if issue.get("scope") != "question_coverage"}
+        versions = self._set_claim_statuses(sid, episode, rule_targets, verdicts)
+        fields = ("active_claim_ids", "answered_requirement_ids", "unanswered_requirement_ids",
+                  "summary", "issues", "reviewed_claim_ids", "reviewed_requirement_ids", "reviewed_scope_version", "request_coverage")
+        snapshot = {"claim_versions": versions, "scope_version": episode["reviewed_scope_version"],
+                    "request": episode["request"], "sources": episode["revision_memory"]["sources"],
+                    "fields": {k: episode[k] for k in (*fields, "draft_skill_selection", "draft_reference_issues", "followup_limits") if k in episode}}
+        self.store.add_event(sid, {"type":"verification", "episode_id":episode["id"], "issues":episode["issues"],
+                                  "reviewed_claim_ids":review["reviewed_claim_ids"], "reviewed_requirement_ids":review["reviewed_requirement_ids"],
+                                  "review_snapshot":snapshot, "summary":f"Reviewed {len(versions)} claims; {len(episode['issues'])} issues remain."})
+        episode["reviewed"] = True
+
+    def _set_claim_statuses(self, sid, episode, rule_targets, verdicts):
+        active = set(episode["active_claim_ids"])
+        versions = {}
+        # A missed task requirement leaves the answer open. It does not refute
+        # a separately reviewed assertion such as the issuer's reported growth.
+        claim_issues = [issue for issue in episode["issues"] if issue.get("scope") != "question_coverage"]
+        for original in self.store.get_context(sid, report_mode="none")["claims"]:
+            if original["id"] not in active:
+                continue
+            claim = dict(original)
+            verdict = verdicts.get(claim["id"])
+            problems = [i for i in claim_issues if i["target_id"] == claim["id"]]
+            if claim.get("stale") or claim["id"] not in episode.get("reviewed_claim_ids", []):
+                status = "Pending Verification"
+            elif verdict is None or verdict["status"] == "Pending Verification":
+                status = "Pending Verification"
+            elif any("conflict" in i["issue_type"].lower() for i in problems):
+                status = "Conflicting Evidence"
+            elif problems and (claim["id"] in rule_targets or verdict["status"] == "Supported"):
+                status = "Insufficient Evidence"
+            else:
+                status = verdict["status"]
+            claim["status"] = status
+            if verdict:
+                claim["critic_verdict"] = verdict
+            saved = self.store.put_claim(sid, claim)
+            versions[claim["id"]] = saved["version"]
+        return versions
+
+    def _resolve_stop(self, sid, episode, reason):
+        # A final Critic can consume the last model call. Decide from the
+        # persisted review and coverage before reserving another Planner call.
+        if reason == "model_budget_exhausted" and self._complete(sid, episode):
+            return "completed"
+        return reason
+
+    def _complete(self, sid, episode, *, require_all_claims=False):
+        limits = episode.get("followup_limits", [])
+        if not episode["reviewed"] or (episode["issues"] and not limits):
+            return False
+        ctx = self._context(sid, episode)
+        if episode.get("reviewed_scope_version") != ctx["session"]["scope_version"]:
+            return False
+        requirements = {r["id"] for r in ctx["requirements"]}
+        if require_all_claims or limits:
+            claim_ids = {c["id"] for c in ctx["claims"]}
+            if (not episode.get("draft_attempted") or claim_ids != set(episode["active_claim_ids"])
+                    or claim_ids != set(episode.get("reviewed_claim_ids", ()))
+                    or requirements != set(episode.get("reviewed_requirement_ids", ()))
+                    or any(c.get("status") != "Supported" or c.get("stale") for c in ctx["claims"])):
+                return False
+        covered = {r for c in ctx["claims"] if c.get("status") == "Supported" and not c.get("stale") for r in c.get("requirement_ids", [])}
+        deferred = {rid for item in limits for rid in item["requirement_ids"]}
+        return (bool(requirements and ctx["claims"]) and requirements <= covered
+                and requirements <= set(episode["answered_requirement_ids"]) | deferred
+                and requirements <= set(episode.get("reviewed_requirement_ids", []))
+                and set(episode["unanswered_requirement_ids"]) <= deferred and not check_rules(ctx))
+
+    def _report(self, sid, episode):
+        ctx = self._context(sid, episode)
+        reviewed = bool(episode["reviewed"] and episode.get("reviewed_scope_version") == ctx["session"]["scope_version"])
+        if reviewed:
+            last = self.store.latest_event(sid, "verification")
+            snapshot = last.get("review_snapshot") if last and last.get("episode_id") == episode["id"] else None
+            if snapshot:
+                versions = {c["id"]:c["version"] for c in ctx["claims"]}
+                reviewed = versions == snapshot["claim_versions"] and review_sources(ctx) == snapshot["sources"]
+        if episode["reviewed"] and not reviewed:
+            episode.update(reviewed=False, request_coverage=[])
+            if episode["status"] == "complete":
+                episode.update(status="partial", stop_reason="review_inputs_changed_before_delivery")
+        ctx["claims"] = [{**c, "status": "Pending Verification"} if not reviewed or c.get("stale") else c for c in ctx["claims"]]
+        from .display_numbers import display_check, DISPLAY_LABELS
+        records = {r["id"]: r for r in ctx["evidence"] + ctx["calculations"]}
+        for index, claim in enumerate(ctx["claims"]):
+            refs = claim.get("evidence_ids", []) + claim.get("calculation_ids", [])
+            display = display_check(claim, [records[ref] for ref in refs if ref in records], record_index=records)
+            if display:
+                label = DISPLAY_LABELS[display["method"]]
+                if display.get("negated_displays") and display["method"] == "matched_records":
+                    label = "肯定陈述中的数值已与所引记录核对。否定表述的含义由独立审读判断。"
+                ctx["claims"][index] = {**claim, "display_check":{**display, "label":label}}
+        # Fresh rule findings must be visible even if budget/cancellation stopped a review.
+        issues = self._dedupe_issues(episode["issues"] + check_rules(ctx) + episode.get("draft_reference_issues", []))
+        supported = {r for c in ctx["claims"] if c.get("status") == "Supported" and not c.get("stale") and reviewed for r in c.get("requirement_ids", [])}
+        unanswered = [r for r in ctx["requirements"]
+                      if r["id"] not in supported or r["id"] in episode["unanswered_requirement_ids"]]
+        summary_kind = "unverified_researcher_draft" if episode["summary"] else "see_report_findings"
+        report = {"episode_id": episode["id"], "request": episode["request"], "status": episode["status"], "stop_reason": episode["stop_reason"], "scope": ctx["scope"], "scope_version": ctx["session"]["scope_version"], "summary": episode["summary"] or "No verified answer is available yet.", "summary_kind": summary_kind, "model_mode": getattr(self.model, "mode", "configured_model"), "claims": ctx["claims"], "evidence": ctx["evidence"], "calculations": ctx["calculations"], "issues": issues, "unanswered": unanswered, "verification_available": reviewed, "usage": {"model_calls": episode["model_calls"], "tool_calls": episode["tool_calls"], "planner_steps": episode.get("planner_steps", 0), "active_seconds": episode["active_seconds"], **episode["usage"]}, "created_at": utcnow()}
+        if "research_skills" in episode:
+            draft_methods = episode.get("draft_skill_selection", {})
+            report["research_skills"] = draft_methods.get("skills", episode["research_skills"])
+            report["skill_selection_source"] = draft_methods.get("source", episode.get("skill_selection_source", "not_specified"))
+        if episode.get("issuer_conflict"):
+            report["issuer_conflict"] = episode["issuer_conflict"]
+        if episode["stop_reason"] == "local_context_limit":
+            report["context_limit"] = episode["context_limit"]
+        if "retry_of_version" in episode:
+            report["retry_of_version"] = episode["retry_of_version"]
+        if "skill_assessments" in episode:
+            report["skill_assessments"] = episode["skill_assessments"]
+        if episode["stop_reason"] == "tool_fault_requires_inspection" and episode.get("recent_tool_results"):
+            last = episode["recent_tool_results"][-1]
+            reason = last.get("error") or "The repeated tool call returned no new evidence."
+            report["tool_fault"] = {"tool": last["tool"], "reason": reason}
+        if episode["stop_reason"] in {"repeated_retrieval_without_new_evidence", "no_progress"}:
+            recent = ctx["episode"].get("recent_tool_results", [])
+            if recent and (gap := recent[-1].get("data", {}).get("acquisition_gap")):
+                report["tool_fault"] = {"tool": recent[-1]["tool"], "reason": gap}
+        if ctx.get("request_parts"):
+            report["request_parts"] = ctx["request_parts"]
+            report["request_coverage"] = report_coverage(ctx["request_parts"], episode.get("request_coverage", []),
+                                                       ctx["claims"], reviewed=reviewed,requirements=ctx["requirements"],
+                                                       unanswered_ids=episode["unanswered_requirement_ids"], findings=issues)
+            report["unanswered"] = unresolved_checklist(ctx["requirements"],unanswered,ctx["request_parts"],report["request_coverage"])
+            from .reporting import background_claim_ids
+            background = background_claim_ids(report)
+            if background:
+                report["background_claim_ids"] = background
+        if reviewed and report["status"] == "complete" and episode.get("followup_limits"):
+            # The immutable review and this audit field retain the original objections.
+            # A later user question can promote one of the disclosed limits to a new task.
+            report["followup_limits"] = episode["followup_limits"]
+            report["checklist_observations"] = report["issues"]
+            report["issues"] = []
+            report["unanswered"] = []
+        if reviewed and episode.get("restored_claim_versions"):
+            # The database may contain a later, unreviewed draft of the same claim.
+            report["record_versions"] = {kind: {r["id"]: r["version"] for r in ctx[group]}
+                                         for kind, group in (("claim", "claims"), ("evidence", "evidence"), ("calculation", "calculations"))}
+        # Save reviewed fiscal context alongside the verdict; editing scope here
+        # would invalidate the very review that established this quarter.
+        entity = fiscal_followup.report_issuer(report) if reviewed else None
+        if entity:
+            confirmed = fiscal_followup.reviewed_quarter(report, entity, records, ctx["scope"].get("cutoff"))
+            if confirmed:
+                episode["skill_fiscal_quarter"] = confirmed
+        if "skill_fiscal_quarter" in episode:
+            report["skill_fiscal_quarter"] = episode["skill_fiscal_quarter"]
+        if episode.get("followup_focus"):
+            report["followup_focus"] = episode["followup_focus"]
+        if episode.get("quarter_followup_parts"):
+            report["quarter_followup_parts"] = episode["quarter_followup_parts"]
+        if "offline_part_findings" in episode:
+            report["offline_part_findings"] = episode["offline_part_findings"]
+        if "income_bridge" in ctx:
+            report["income_bridge"]=ctx["income_bridge"]
+            if "income_explanation" in ctx:
+                report["income_explanation"] = ctx["income_explanation"]
+            if self.model is None:
+                report.setdefault("offline_part_findings",{}).update(income_followup.offline_answers(report))
+        report["model_mode"] = episode.get("model_mode", report["model_mode"])
+        if report["model_mode"] == "offline_tools_only" or (self.model is None and "model_mode" not in episode):
+            from .skill_calculations import evidence_notes
+            report["model_mode"] = "offline_tools_only"
+            report["skill_notes"] = evidence_notes(episode, ctx)
+            if episode.get("skill_gap"):
+                report["skill_gap"] = episode["skill_gap"]
+            if report.get("offline_part_findings") and not report["claims"]:
+                from .reporting import report_view
+                view = report_view(report)
+                report["unanswered"], report["issues"] = view["unanswered"], view["issues"]
+                answers = []
+                for row in view.get("question_answers", []):
+                    if row["status"] in {"calculated", "source_excerpt", "partial", "gap"}:
+                        answers.extend(text for key in ("answer_sentence", "missing_support") if (text := row.get(key)))
+                if answers:
+                    report.update(summary=" ".join(dict.fromkeys(answers)), summary_kind="offline_source_results")
+        if "draft_saved" in episode:
+            report["delivery_stage"] = "draft_unverified" if episode["draft_saved"] else "no_draft"
+        return self.store.report_with_stage(sid, report)

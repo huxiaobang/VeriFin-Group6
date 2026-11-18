@@ -1,0 +1,772 @@
+{
+  "protocol": "public-finance-source-audit-v1",
+  "created_at": "2026-11-06T09:23:09.899922+00:00",
+  "scope": "Separate public-data diagnostic; no alteration to formal E1/E2/E3 inputs or labels",
+  "model_calls": 0,
+  "new_human_annotations": 0,
+  "synthetic_gold_created": false,
+  "adapters": {
+    "finqa_dev": {
+      "protocol": "published-qa-adapter-v1",
+      "cases": 883,
+      "datasets": {
+        "finqa": 883
+      },
+      "splits": {
+        "dev": 883
+      },
+      "context_groups": 299,
+      "dialogues": 0,
+      "answer_references": 883,
+      "program_references": 883,
+      "evidence_references": 883,
+      "evidence_mapping_gaps": 0,
+      "answer_types": {
+        "execution_value": 883
+      },
+      "scales": {
+        "": 883
+      },
+      "source": {
+        "url": "https://github.com/czyssrs/FinQA/blob/0f16e2867befa6840783e58be38c9efb9229d742/dataset/dev.json",
+        "revision": "0f16e2867befa6840783e58be38c9efb9229d742",
+        "file_sha256": "a847fb7e0d61a3125a1e2909852df6b89f1ee64d2c5ff1bf689e332214deee51",
+        "file_bytes": 10954658,
+        "adapter_version": "published-qa-adapter-v1"
+      },
+      "model_calls": 0,
+      "new_human_annotations": 0,
+      "critic_semantic_quality": "not_measured",
+      "agent_planning_quality": "not_measured",
+      "objective_answer_scoreable": 883,
+      "candidate_source_counts": {
+        "6": 4,
+        "7": 3,
+        "8": 3,
+        "9": 4,
+        "10": 6,
+        "11": 8,
+        "12": 15,
+        "13": 12,
+        "14": 11,
+        "15": 19,
+        "16": 15,
+        "17": 11,
+        "18": 23,
+        "19": 18,
+        "20": 26,
+        "21": 15,
+        "22": 19,
+        "23": 18,
+        "24": 18,
+        "25": 44,
+        "26": 29,
+        "27": 45,
+        "28": 25,
+        "29": 32,
+        "30": 26,
+        "31": 34,
+        "32": 31,
+        "33": 39,
+        "34": 37,
+        "35": 47,
+        "36": 36,
+        "37": 33,
+        "38": 27,
+        "39": 20,
+        "40": 19,
+        "41": 20,
+        "42": 15,
+        "43": 18,
+        "44": 6,
+        "46": 8,
+        "47": 4,
+        "48": 12,
+        "49": 2,
+        "50": 2,
+        "51": 1,
+        "52": 1,
+        "53": 3,
+        "55": 2,
+        "60": 2,
+        "61": 1,
+        "66": 3,
+        "72": 2,
+        "75": 4,
+        "135": 4,
+        "175": 1
+      },
+      "sample_original_ids": [
+        "V/2008/page_17.pdf-1",
+        "C/2017/page_328.pdf-1",
+        "DVN/2007/page_58.pdf-2"
+      ],
+      "model_visible_fields": [
+        "context_mode",
+        "history_answer_policy",
+        "previous_user_questions",
+        "question",
+        "source_blocks",
+        "table"
+      ],
+      "scorer_only_fields": [
+        "answer",
+        "answer_available",
+        "answer_type",
+        "evidence_granularity",
+        "program",
+        "scale",
+        "source_ids",
+        "source_locators",
+        "unmapped_source_locators"
+      ]
+    },
+    "convfinqa_dev": {
+      "protocol": "published-qa-adapter-v1",
+      "cases": 1490,
+      "datasets": {
+        "convfinqa": 1490
+      },
+      "splits": {
+        "dev": 1490
+      },
+      "context_groups": 218,
+      "dialogues": 421,
+      "answer_references": 1490,
+      "program_references": 1490,
+      "evidence_references": 1490,
+      "evidence_mapping_gaps": 0,
+      "answer_types": {
+        "execution_value": 1490
+      },
+      "scales": {
+        "": 1490
+      },
+      "source": {
+        "url": "https://github.com/czyssrs/ConvFinQA/blob/cf3eed2d5984960bf06bb8145bcea5e80b0222a6/data.zip",
+        "revision": "cf3eed2d5984960bf06bb8145bcea5e80b0222a6",
+        "file_sha256": "8a2461be571a3277c443e2dce6e3cce6f4df197db5b7d0b60eed3477f4c952b9",
+        "file_bytes": 21633236,
+        "adapter_version": "published-qa-adapter-v1"
+      },
+      "model_calls": 0,
+      "new_human_annotations": 0,
+      "critic_semantic_quality": "not_measured",
+      "agent_planning_quality": "not_measured",
+      "objective_answer_scoreable": 1490,
+      "candidate_source_counts": {
+        "6": 11,
+        "7": 11,
+        "9": 14,
+        "10": 19,
+        "11": 22,
+        "12": 34,
+        "13": 33,
+        "14": 19,
+        "15": 62,
+        "16": 14,
+        "17": 10,
+        "18": 63,
+        "19": 17,
+        "20": 52,
+        "21": 28,
+        "22": 26,
+        "23": 35,
+        "24": 30,
+        "25": 63,
+        "26": 55,
+        "27": 82,
+        "28": 46,
+        "29": 66,
+        "30": 35,
+        "31": 45,
+        "32": 49,
+        "33": 83,
+        "34": 54,
+        "35": 62,
+        "36": 38,
+        "37": 60,
+        "38": 43,
+        "39": 39,
+        "40": 36,
+        "41": 19,
+        "42": 23,
+        "43": 26,
+        "46": 9,
+        "47": 3,
+        "48": 16,
+        "50": 12,
+        "52": 3,
+        "53": 7,
+        "66": 2,
+        "72": 3,
+        "75": 7,
+        "135": 4
+      },
+      "sample_original_ids": [
+        "Single_MRO/2007/page_134.pdf-1_0",
+        "Single_MRO/2007/page_134.pdf-1_1",
+        "Single_MRO/2007/page_134.pdf-1_2"
+      ],
+      "model_visible_fields": [
+        "context_mode",
+        "history_answer_policy",
+        "previous_user_questions",
+        "question",
+        "source_blocks",
+        "table"
+      ],
+      "scorer_only_fields": [
+        "answer",
+        "answer_available",
+        "answer_type",
+        "evidence_granularity",
+        "program",
+        "scale",
+        "source_ids",
+        "source_locators",
+        "unmapped_source_locators"
+      ]
+    },
+    "tatqa_dev": {
+      "protocol": "published-qa-adapter-v1",
+      "cases": 1668,
+      "datasets": {
+        "tatqa": 1668
+      },
+      "splits": {
+        "dev": 1668
+      },
+      "context_groups": 278,
+      "dialogues": 0,
+      "answer_references": 1668,
+      "program_references": 0,
+      "evidence_references": 1668,
+      "evidence_mapping_gaps": 0,
+      "answer_types": {
+        "span": 701,
+        "multi-span": 217,
+        "arithmetic": 718,
+        "count": 32
+      },
+      "scales": {
+        "": 794,
+        "million": 254,
+        "percent": 268,
+        "thousand": 345,
+        "billion": 7
+      },
+      "source": {
+        "url": "https://github.com/NExTplusplus/TAT-QA/blob/870accc41953dcde885aabeb963d94aabdc0fbc3/dataset_raw/tatqa_dataset_dev.json",
+        "revision": "870accc41953dcde885aabeb963d94aabdc0fbc3",
+        "file_sha256": "8da095a819af6db3c14877c6df2d4d29960e41d1a63dd1fa853507bd2a616af5",
+        "file_bytes": 1637431,
+        "adapter_version": "published-qa-adapter-v1"
+      },
+      "model_calls": 0,
+      "new_human_annotations": 0,
+      "critic_semantic_quality": "not_measured",
+      "agent_planning_quality": "not_measured",
+      "objective_answer_scoreable": 1668,
+      "candidate_source_counts": {
+        "3": 348,
+        "4": 372,
+        "5": 258,
+        "6": 204,
+        "7": 132,
+        "8": 96,
+        "9": 84,
+        "10": 78,
+        "11": 6,
+        "12": 12,
+        "13": 24,
+        "14": 6,
+        "15": 6,
+        "16": 12,
+        "17": 12,
+        "21": 6,
+        "25": 6,
+        "27": 6
+      },
+      "sample_original_ids": [
+        "23801627-ff77-4597-8d24-1c99e2452082",
+        "4960801d-277d-4f79-8eca-c4d0200fa9d6",
+        "593c4388-5209-4462-8b83-b429c8612c25"
+      ],
+      "model_visible_fields": [
+        "context_mode",
+        "previous_user_questions",
+        "question",
+        "source_blocks",
+        "table"
+      ],
+      "scorer_only_fields": [
+        "answer",
+        "answer_available",
+        "answer_from",
+        "answer_type",
+        "derivation",
+        "evidence_granularity",
+        "scale",
+        "source_ids",
+        "source_locators",
+        "unmapped_source_locators"
+      ]
+    },
+    "tatqa_test": {
+      "protocol": "published-qa-adapter-v1",
+      "cases": 1663,
+      "datasets": {
+        "tatqa": 1663
+      },
+      "splits": {
+        "test": 1663
+      },
+      "context_groups": 277,
+      "dialogues": 0,
+      "answer_references": 1663,
+      "program_references": 0,
+      "evidence_references": 1663,
+      "evidence_mapping_gaps": 0,
+      "answer_types": {
+        "span": 714,
+        "multi-span": 210,
+        "arithmetic": 699,
+        "count": 40
+      },
+      "scales": {
+        "": 836,
+        "percent": 294,
+        "million": 214,
+        "thousand": 319
+      },
+      "source": {
+        "url": "https://github.com/NExTplusplus/TAT-QA/blob/870accc41953dcde885aabeb963d94aabdc0fbc3/dataset_raw/tatqa_dataset_test_gold.json",
+        "revision": "870accc41953dcde885aabeb963d94aabdc0fbc3",
+        "file_sha256": "c4d08418359c1d76468dec420ee748a37f48c06b63cb8ec2766f19d5d314b597",
+        "file_bytes": 2167546,
+        "adapter_version": "published-qa-adapter-v1"
+      },
+      "model_calls": 0,
+      "new_human_annotations": 0,
+      "critic_semantic_quality": "not_measured",
+      "agent_planning_quality": "not_measured",
+      "objective_answer_scoreable": 1663,
+      "candidate_source_counts": {
+        "3": 342,
+        "4": 384,
+        "5": 300,
+        "6": 198,
+        "7": 156,
+        "8": 78,
+        "9": 55,
+        "10": 48,
+        "11": 30,
+        "12": 12,
+        "13": 12,
+        "14": 12,
+        "15": 18,
+        "16": 6,
+        "17": 6,
+        "23": 6
+      },
+      "sample_original_ids": [
+        "a1b54eff7de3dc7bfab148325c7a940b",
+        "e1ebf2222c9950fbf5375e54a65729f2",
+        "7c510956809977a550837006a464fd91"
+      ],
+      "model_visible_fields": [
+        "context_mode",
+        "previous_user_questions",
+        "question",
+        "source_blocks",
+        "table"
+      ],
+      "scorer_only_fields": [
+        "answer",
+        "answer_available",
+        "answer_from",
+        "answer_type",
+        "derivation",
+        "evidence_granularity",
+        "scale",
+        "source_ids",
+        "source_locators",
+        "unmapped_source_locators"
+      ]
+    }
+  },
+  "financebench": {
+    "rows": 150,
+    "unique_ids": 150,
+    "companies": 32,
+    "question_documents": 84,
+    "metadata_documents": 361,
+    "evidence_units": 189,
+    "evidence_documents": 84,
+    "unique_document_pages": 168,
+    "answer_nonempty": 150,
+    "justification_nonempty": 100,
+    "evidence_nonempty": 150,
+    "evidence_text_nonempty": 189,
+    "full_page_text_nonempty": 189,
+    "evidence_document_in_metadata": 189,
+    "nonnegative_integer_page": 189,
+    "fields": [
+      "answer",
+      "company",
+      "dataset_subset_label",
+      "doc_name",
+      "domain_question_num",
+      "evidence",
+      "financebench_id",
+      "justification",
+      "question",
+      "question_reasoning",
+      "question_type"
+    ],
+    "evidence_fields": [
+      "doc_name",
+      "evidence_page_num",
+      "evidence_text",
+      "evidence_text_full_page"
+    ],
+    "sample_original_ids": [
+      "financebench_id_03029",
+      "financebench_id_04672",
+      "financebench_id_00499"
+    ],
+    "question_types": {
+      "metrics-generated": 50,
+      "domain-relevant": 50,
+      "novel-generated": 50
+    },
+    "file_sha256": "a5a2aa673e573e55675fc3c0f9aa38c1cf59d2abc91edb077534f71f10a71877",
+    "pdfs_downloaded": false,
+    "full_report_retrieval_measured": false,
+    "page_text_alignment_validated": false,
+    "objective_answer_metric_implemented": false
+  },
+  "finder": {
+    "population_rows_per_card": 5703,
+    "sample_rows": 50,
+    "selection": "official Hugging Face first-rows endpoint; convenience schema sample, not evaluation split",
+    "fields": [
+      "_id",
+      "answer",
+      "category",
+      "reasoning",
+      "references",
+      "text",
+      "type"
+    ],
+    "sample_original_ids": [
+      "b33fcee7",
+      "b8a1383c",
+      "9826209b"
+    ],
+    "answer_nonempty": 50,
+    "references_nonempty": 50,
+    "reference_string_count": 54,
+    "explicit_reference_doc_or_page_fields": false,
+    "upstream_corpus_file_available": "10-k.zip",
+    "corpus_downloaded": false,
+    "source_mapping_coverage": null,
+    "sample_file_sha256": "58db932b0ea9fd1542fdc757a8a58c168618cbc1d01fa0302e2175626b7c7728",
+    "dataset_revision_at_fetch": "c4c1b6454aef7f0bb1c37235c7f52ce644642da0"
+  },
+  "finqa_convfinqa_dev_shared_original_pages": 218,
+  "cross_dataset_overlap_note": "Observed dev-dev overlap only; shared lineage means all train/dev/test cross-dataset use must be audited before fitting",
+  "retrieval_baselines": {
+    "current": {
+      "file": "convfinqa/bm25-current-full-dev-v2.json",
+      "sha256": "d1beca35bab1a2b3baf2f875692b2c56a260273718a346b411d60d538f1a3e64",
+      "full_dev": {
+        "protocol": "public-within-context-retrieval-probe-v2",
+        "model": "bm25",
+        "history": "current",
+        "top_k": 5,
+        "cases": 1490,
+        "eligible_cases": 1490,
+        "excluded_cases": 0,
+        "mean_recall_at_k": 0.5796899968040907,
+        "all_evidence_rate_at_k": 0.4657718120805369,
+        "mrr_at_k": 0.5094519015659955,
+        "mrr_unbounded": 0.5215153706231479,
+        "corpus_scope": "all supplied source blocks in the question's provided context",
+        "ranking_unit": "whole source block; no re-chunking; source ID tie break",
+        "query_serialization": "current question, or previous user questions plus current joined with newline; no extra labels",
+        "context_char_budget": null,
+        "is_full_corpus_E3": false,
+        "model_calls": 0,
+        "note": "Provided-context source selection diagnostic; not full-report retrieval, generalization or Agent quality."
+      },
+      "frozen_subset": {
+        "cases": 100,
+        "groups": 18,
+        "recall_at_k": 0.5514285714285715,
+        "all_evidence_at_k": 0.41,
+        "reciprocal_rank_at_k": 0.4746666666666667,
+        "reciprocal_rank_unbounded": 0.4823928571428571
+      }
+    },
+    "history": {
+      "file": "convfinqa/bm25-history-full-dev-v2.json",
+      "sha256": "417c25c515da0b8a92742efd35417c05aa4882c84a59c8350d7bb2b9000de87b",
+      "full_dev": {
+        "protocol": "public-within-context-retrieval-probe-v2",
+        "model": "bm25",
+        "history": "all_user_questions",
+        "top_k": 5,
+        "cases": 1490,
+        "eligible_cases": 1490,
+        "excluded_cases": 0,
+        "mean_recall_at_k": 0.8362895493767978,
+        "all_evidence_rate_at_k": 0.7120805369127516,
+        "mrr_at_k": 0.7494519015659956,
+        "mrr_unbounded": 0.7550450850307739,
+        "corpus_scope": "all supplied source blocks in the question's provided context",
+        "ranking_unit": "whole source block; no re-chunking; source ID tie break",
+        "query_serialization": "current question, or previous user questions plus current joined with newline; no extra labels",
+        "context_char_budget": null,
+        "is_full_corpus_E3": false,
+        "model_calls": 0,
+        "note": "Provided-context source selection diagnostic; not full-report retrieval, generalization or Agent quality."
+      },
+      "frozen_subset": {
+        "cases": 100,
+        "groups": 18,
+        "recall_at_k": 0.8405952380952381,
+        "all_evidence_at_k": 0.68,
+        "reciprocal_rank_at_k": 0.7675,
+        "reciprocal_rank_unbounded": 0.7701785714285714
+      }
+    }
+  },
+  "frozen_subset_manifest": "work/open-source-audit/convfinqa/frozen-reranker-20groups.json",
+  "dataset_folder_bytes_including_extracted_copies_and_parallel_retrieval_artifacts": 106420108,
+  "download_manifest_bytes": 33692062,
+  "download_and_selected_archive_member_bytes": 61055508,
+  "download_manifest_entries": [
+    {
+      "url": "https://api.github.com/repos/czyssrs/FinQA/commits/main",
+      "path": "finqa/commit.json",
+      "bytes": 4772,
+      "sha256": "ac13decc50a8db3e834c87486959afd760d3d5dde1d0199a6a7e43a7d1ab7814",
+      "fetched_at_unix": 1793954756.04352
+    },
+    {
+      "url": "https://api.github.com/repos/czyssrs/FinQA/git/trees/0f16e2867befa6840783e58be38c9efb9229d742?recursive=1",
+      "path": "finqa/tree.json",
+      "bytes": 12734,
+      "sha256": "dd2363fd6679d0eb6b171567f8b7f1ea36bc7afbad840485147a4bd1333aa60a",
+      "fetched_at_unix": 1793954761.67264
+    },
+    {
+      "url": "https://raw.githubusercontent.com/czyssrs/FinQA/0f16e2867befa6840783e58be38c9efb9229d742/README.md",
+      "path": "finqa/README.md",
+      "bytes": 6518,
+      "sha256": "eb86779cfed6f0a253913761d8e4fabe032a29d9fcf2944e56c23bf007064605",
+      "fetched_at_unix": 1793954763.955023
+    },
+    {
+      "url": "https://raw.githubusercontent.com/czyssrs/FinQA/0f16e2867befa6840783e58be38c9efb9229d742/LICENSE",
+      "path": "finqa/LICENSE",
+      "bytes": 1067,
+      "sha256": "92c0e67bd762c15c07ba60de09558338315a8ebf99aac4f51f487179809ac087",
+      "fetched_at_unix": 1793954765.656953
+    },
+    {
+      "url": "https://api.github.com/repos/czyssrs/ConvFinQA/commits/main",
+      "path": "convfinqa/commit.json",
+      "bytes": 5278,
+      "sha256": "02d163693603233f37edb82d45cf670a1042eb3895bf29944ea870ba302d4b97",
+      "fetched_at_unix": 1793954767.60121
+    },
+    {
+      "url": "https://api.github.com/repos/czyssrs/ConvFinQA/git/trees/cf3eed2d5984960bf06bb8145bcea5e80b0222a6?recursive=1",
+      "path": "convfinqa/tree.json",
+      "bytes": 11749,
+      "sha256": "26be8ee71b9b6975b25195d024193ea22e7b43050188dbcffe4db952a7aa25cd",
+      "fetched_at_unix": 1793954773.787877
+    },
+    {
+      "url": "https://raw.githubusercontent.com/czyssrs/ConvFinQA/cf3eed2d5984960bf06bb8145bcea5e80b0222a6/README.md",
+      "path": "convfinqa/README.md",
+      "bytes": 6164,
+      "sha256": "c5f329640aaffa142984e559b89e7cabd6934d03751260e9860b9278979c4c69",
+      "fetched_at_unix": 1793954775.854207
+    },
+    {
+      "url": "https://raw.githubusercontent.com/czyssrs/ConvFinQA/cf3eed2d5984960bf06bb8145bcea5e80b0222a6/LICENSE",
+      "path": "convfinqa/LICENSE",
+      "bytes": 1067,
+      "sha256": "5c7b6fe25d37f4b6cc7e0e76267bce7146765b7661d4bb0e9ecc4eb0ed34fb4c",
+      "fetched_at_unix": 1793954783.049172
+    },
+    {
+      "url": "https://api.github.com/repos/NExTplusplus/TAT-QA/commits/master",
+      "path": "tatqa/commit.json",
+      "bytes": 16017,
+      "sha256": "96d2063d818405d67ae3000364c2b9db9385d3492812307b498e8111fd4315ac",
+      "fetched_at_unix": 1793954785.685179
+    },
+    {
+      "url": "https://api.github.com/repos/NExTplusplus/TAT-QA/git/trees/870accc41953dcde885aabeb963d94aabdc0fbc3?recursive=1",
+      "path": "tatqa/tree.json",
+      "bytes": 20452,
+      "sha256": "71778f70b3ac1c0a43c7f3bf3f65fa8c7e46e5095fe703f047cad241f52c181b",
+      "fetched_at_unix": 1793954794.59988
+    },
+    {
+      "url": "https://raw.githubusercontent.com/NExTplusplus/TAT-QA/870accc41953dcde885aabeb963d94aabdc0fbc3/README.md",
+      "path": "tatqa/README.md",
+      "bytes": 4689,
+      "sha256": "85c398173d771a2531abea5b81f3696914296642da2af78c2c34545715c14d5f",
+      "fetched_at_unix": 1793954795.92106
+    },
+    {
+      "url": "https://raw.githubusercontent.com/NExTplusplus/TAT-QA/870accc41953dcde885aabeb963d94aabdc0fbc3/LICENSE",
+      "path": "tatqa/LICENSE",
+      "bytes": 1068,
+      "sha256": "46e27ffbc49c3fd44a9595c2213f8a5f4319a81b53238e49ce1eec39e7e25662",
+      "fetched_at_unix": 1793954797.348772
+    },
+    {
+      "url": "https://api.github.com/repos/patronus-ai/financebench/commits/main",
+      "path": "financebench/commit.json",
+      "bytes": 5494,
+      "sha256": "eca71fb75be3e1afb5748bcdbf78c8eaa3916c7c9399511e39d7481441b68e82",
+      "fetched_at_unix": 1793954800.279961
+    },
+    {
+      "url": "https://api.github.com/repos/patronus-ai/financebench/git/trees/cc39aeb4afdf33909ee1412188bf89035950c2eb?recursive=1",
+      "path": "financebench/tree.json",
+      "bytes": 97329,
+      "sha256": "faeee1bd0a79e0e69b692c9120c4769a252659873181c7352803fb426029a1d9",
+      "fetched_at_unix": 1793954806.5466392
+    },
+    {
+      "url": "https://raw.githubusercontent.com/patronus-ai/financebench/cc39aeb4afdf33909ee1412188bf89035950c2eb/README.md",
+      "path": "financebench/README.md",
+      "bytes": 5094,
+      "sha256": "ab1b914821c5f6329836d0f2c503dbaaa6504721bd0b1d0f70f43fbb23987cec",
+      "fetched_at_unix": 1793954807.4913678
+    },
+    {
+      "url": "https://raw.githubusercontent.com/czyssrs/FinQA/0f16e2867befa6840783e58be38c9efb9229d742/dataset/dev.json",
+      "path": "finqa/dataset/dev.json",
+      "bytes": 10954658,
+      "sha256": "a847fb7e0d61a3125a1e2909852df6b89f1ee64d2c5ff1bf689e332214deee51",
+      "fetched_at_unix": 1793954892.149663
+    },
+    {
+      "url": "https://raw.githubusercontent.com/czyssrs/ConvFinQA/cf3eed2d5984960bf06bb8145bcea5e80b0222a6/data.zip",
+      "path": "convfinqa/data.zip",
+      "bytes": 17512756,
+      "sha256": "d764271fae60d81b62e6d58dfc481807ebc8cfbcd633811241723c4a2101072a",
+      "fetched_at_unix": 1793954983.839457
+    },
+    {
+      "url": "https://raw.githubusercontent.com/NExTplusplus/TAT-QA/870accc41953dcde885aabeb963d94aabdc0fbc3/dataset_raw/tatqa_dataset_dev.json",
+      "path": "tatqa/dataset_raw/tatqa_dataset_dev.json",
+      "bytes": 1637431,
+      "sha256": "8da095a819af6db3c14877c6df2d4d29960e41d1a63dd1fa853507bd2a616af5",
+      "fetched_at_unix": 1793954991.4992661
+    },
+    {
+      "url": "https://raw.githubusercontent.com/NExTplusplus/TAT-QA/870accc41953dcde885aabeb963d94aabdc0fbc3/dataset_raw/tatqa_dataset_test_gold.json",
+      "path": "tatqa/dataset_raw/tatqa_dataset_test_gold.json",
+      "bytes": 2167546,
+      "sha256": "c4d08418359c1d76468dec420ee748a37f48c06b63cb8ec2766f19d5d314b597",
+      "fetched_at_unix": 1793955097.177449
+    },
+    {
+      "url": "https://raw.githubusercontent.com/patronus-ai/financebench/cc39aeb4afdf33909ee1412188bf89035950c2eb/data/financebench_open_source.jsonl",
+      "path": "financebench/data/financebench_open_source.jsonl",
+      "bytes": 929848,
+      "sha256": "a5a2aa673e573e55675fc3c0f9aa38c1cf59d2abc91edb077534f71f10a71877",
+      "fetched_at_unix": 1793955105.218614
+    },
+    {
+      "url": "https://raw.githubusercontent.com/patronus-ai/financebench/cc39aeb4afdf33909ee1412188bf89035950c2eb/data/financebench_document_information.jsonl",
+      "path": "financebench/data/financebench_document_information.jsonl",
+      "bytes": 88781,
+      "sha256": "1c69127783879de8cdadb159d2181f39bc3123b8e0ebf74031c3969d69189575",
+      "fetched_at_unix": 1793955114.2833788
+    },
+    {
+      "url": "https://huggingface.co/api/datasets/Linq-AI-Research/FinDER",
+      "path": "finder/metadata.json",
+      "bytes": 1830,
+      "sha256": "344a3daceaffb4a8dee1bc5408a1d7311bb40787c428ffd9c6247af8d2dc4c09",
+      "fetched_at_unix": 1793955117.463516
+    },
+    {
+      "url": "https://huggingface.co/datasets/Linq-AI-Research/FinDER/raw/c4c1b6454aef7f0bb1c37235c7f52ce644642da0/README.md",
+      "path": "finder/README.md",
+      "bytes": 1786,
+      "sha256": "3d4d0cd77f496363196a81f322e63e738184e3b3ce2b1d1fafdb2faa7b217592",
+      "fetched_at_unix": 1793955124.6225111
+    },
+    {
+      "url": "https://datasets-server.huggingface.co/first-rows?dataset=Linq-AI-Research%2FFinDER&config=default&split=train",
+      "path": "finder/first-rows.json",
+      "bytes": 195245,
+      "sha256": "58db932b0ea9fd1542fdc757a8a58c168618cbc1d01fa0302e2175626b7c7728",
+      "fetched_at_unix": 1793955128.1546829
+    },
+    {
+      "url": "https://huggingface.co/api/datasets/PatronusAI/financebench",
+      "path": "financebench_hf/metadata.json",
+      "bytes": 1277,
+      "sha256": "2f83d19bd13474983873a46742ab1508ae0e1b191a4b8a4453094cc0fecb6c0f",
+      "fetched_at_unix": 1793955130.383436
+    },
+    {
+      "url": "https://huggingface.co/datasets/PatronusAI/financebench/raw/e04404e3a97f69f79c14d42f24981a1c9c3bcd18/README.md",
+      "path": "financebench_hf/README.md",
+      "bytes": 1412,
+      "sha256": "b344ca600c3a0788554bc24556a395e690260a801da1ee83e2ad1b26270f06b9",
+      "fetched_at_unix": 1793955133.258585
+    }
+  ],
+  "component_replay": {
+    "canonical_result": "data/evaluation/open_source_results/convfinqa-qwen0.6-canonical-baselines.json",
+    "html": "examples/open-source-study.html",
+    "files_sha256": {
+      "data/evaluation/open_source_results/convfinqa-qwen0.6-canonical-baselines.json": "25abcb3d79fd1983d6b1b2aca89c2d112b593ee9d7c72b0120efe710f2e7133f",
+      "examples/open-source-study.html": "9c30ae1d4460ff5292ca64db4bc22d7e57afbf16b6fee4209d184c87f0e9a52a",
+      "docs/OPEN_SOURCE_DATASETS_2026-11-06.NOTICE.txt": "f5c626f8629432698b9b8d6129daedaa28d4be19ca65f8e4aad340d1fbcc1edd",
+      "docs/OPEN_SOURCE_EXTRA_NOTICES.txt": "54734180fba1706a0e1d9cdaf11b16e79c71468d9d3cac614b5fcf0360bb2637",
+      "scripts/fetch_public_benchmark_data.py": "d3f0a7dbb4e20953f16f4019d27de20e5c884e062b66966e1a7d64ca8638982a",
+      "docs/verification/open-source-study.jpg": "6e0e1f201bb0c4db2494fd6868f1b69e49231aa966017a830254b0bba146883d",
+      "docs/verification/open-source-table.jpg": "ac491cc2d4e389a09e2f90ab315b2a7bb9e2890b9509c528e3510befcbd4144a"
+    },
+    "case_options": 100,
+    "method_options": 3,
+    "canonical_source_binding_checked": true,
+    "notice_embedded": true,
+    "visual_review": "Root inspected layout, actual Dense/Hybrid method changes and Apple table in the in-app browser; no Chrome used",
+    "latest_rebuild_checks": "source hash, accessible method label, option counts, full NOTICE; prior 300 method/case render checks preserved",
+    "screenshots": [
+      "docs/verification/open-source-study.jpg",
+      "docs/verification/open-source-table.jpg"
+    ],
+    "screenshot_format": "JPEG",
+    "final_hash_refresh_at": "2026-11-06T10:32:58.516097+00:00",
+    "final_hash_refresh_scope": "Metadata only after coordinator source freeze; no model rerun, no full test rerun"
+  },
+  "portable_acquisition": {
+    "script": "scripts/fetch_public_benchmark_data.py",
+    "datasets": [
+      "finqa",
+      "convfinqa",
+      "tatqa"
+    ],
+    "verified_files_including_selected_archive_member": 9,
+    "checksum_verification": "passed against actually downloaded official files",
+    "network_for_this_check": false,
+    "download_plus_selected_extraction_bytes": 53913518
+  }
+}

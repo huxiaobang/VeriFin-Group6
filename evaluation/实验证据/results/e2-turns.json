@@ -1,0 +1,1114 @@
+[
+  {
+    "case": "01-direct",
+    "arm": "adaptive",
+    "turn": 1,
+    "case_sha": "7e88ab51e2f77cf3a76cb67260bc5b268ae1658a15670ab6381fae26fa287eba",
+    "common_hashes": [
+      "7d8b88856cab1bf3ed62a5017732f90dc85c154d2d0febd69539201503dd86d1",
+      "0c936f9cd60aaddf9ce33b2c992d8c7ab686630839f52e95c30e40e60146e53a"
+    ],
+    "source_fault": false,
+    "status": "complete",
+    "stop": "completed",
+    "calls": 6,
+    "tools": [
+      {
+        "name": "discover_company",
+        "ok": true
+      },
+      {
+        "name": "financial_facts",
+        "ok": true
+      }
+    ],
+    "first_claims": [
+      {
+        "text": "Protocol fixture observation: 69632000000",
+        "constraints": {
+          "entity": "MSFT",
+          "metric": "revenue",
+          "period_end": "2024-12-31",
+          "period_start": "2024-10-01",
+          "unit": "USD"
+        },
+        "asserted_value": 69632000000
+      }
+    ],
+    "claims": [
+      {
+        "text": "Protocol fixture observation: 69632000000",
+        "constraints": {
+          "entity": "MSFT",
+          "metric": "revenue",
+          "period_start": "2024-10-01",
+          "period_end": "2024-12-31",
+          "unit": "USD"
+        },
+        "asserted_value": 69632000000,
+        "status": "Supported"
+      }
+    ],
+    "available_data": [
+      {
+        "entity": "MSFT",
+        "metric": "revenue",
+        "period_start": "2024-10-01",
+        "period_end": "2024-12-31",
+        "value": 69632000000
+      }
+    ]
+  },
+  {
+    "case": "01-direct",
+    "arm": "fixed",
+    "turn": 1,
+    "case_sha": "7e88ab51e2f77cf3a76cb67260bc5b268ae1658a15670ab6381fae26fa287eba",
+    "common_hashes": [
+      "7d8b88856cab1bf3ed62a5017732f90dc85c154d2d0febd69539201503dd86d1",
+      "0c936f9cd60aaddf9ce33b2c992d8c7ab686630839f52e95c30e40e60146e53a"
+    ],
+    "source_fault": false,
+    "status": "complete",
+    "stop": "completed",
+    "calls": 2,
+    "tools": [
+      {
+        "name": "discover_company",
+        "ok": true
+      },
+      {
+        "name": "financial_facts",
+        "ok": true
+      }
+    ],
+    "first_claims": [
+      {
+        "text": "Protocol fixture observation: 69632000000",
+        "constraints": {
+          "entity": "MSFT",
+          "metric": "revenue",
+          "period_end": "2024-12-31",
+          "period_start": "2024-10-01",
+          "unit": "USD"
+        },
+        "asserted_value": 69632000000
+      }
+    ],
+    "claims": [
+      {
+        "text": "Protocol fixture observation: 69632000000",
+        "constraints": {
+          "entity": "MSFT",
+          "metric": "revenue",
+          "period_start": "2024-10-01",
+          "period_end": "2024-12-31",
+          "unit": "USD"
+        },
+        "asserted_value": 69632000000,
+        "status": "Supported"
+      }
+    ],
+    "available_data": [
+      {
+        "entity": "MSFT",
+        "metric": "revenue",
+        "period_start": "2024-10-01",
+        "period_end": "2024-12-31",
+        "value": 69632000000
+      }
+    ]
+  },
+  {
+    "case": "02-previous",
+    "arm": "fixed",
+    "turn": 1,
+    "case_sha": "1c680a88c6ed4191191dda63fd56a37f5fb07f50da046841ad559646f765c919",
+    "common_hashes": [
+      "7d8b88856cab1bf3ed62a5017732f90dc85c154d2d0febd69539201503dd86d1",
+      "0c936f9cd60aaddf9ce33b2c992d8c7ab686630839f52e95c30e40e60146e53a"
+    ],
+    "source_fault": false,
+    "status": "complete",
+    "stop": "completed",
+    "calls": 2,
+    "tools": [
+      {
+        "name": "discover_company",
+        "ok": true
+      },
+      {
+        "name": "financial_facts",
+        "ok": true
+      },
+      {
+        "name": "financial_facts",
+        "ok": true
+      }
+    ],
+    "first_claims": [
+      {
+        "text": "Protocol fixture observation: 69632000000",
+        "constraints": {
+          "entity": "MSFT",
+          "metric": "revenue",
+          "period_end": "2024-12-31",
+          "period_start": "2024-10-01",
+          "unit": "USD"
+        },
+        "asserted_value": 69632000000
+      }
+    ],
+    "claims": [
+      {
+        "text": "Protocol fixture observation: 69632000000",
+        "constraints": {
+          "entity": "MSFT",
+          "metric": "revenue",
+          "period_start": "2024-10-01",
+          "period_end": "2024-12-31",
+          "unit": "USD"
+        },
+        "asserted_value": 69632000000,
+        "status": "Supported"
+      }
+    ],
+    "available_data": [
+      {
+        "entity": "MSFT",
+        "metric": "revenue",
+        "period_start": "2024-10-01",
+        "period_end": "2024-12-31",
+        "value": 69632000000
+      }
+    ]
+  },
+  {
+    "case": "02-previous",
+    "arm": "fixed",
+    "turn": 2,
+    "case_sha": "1c680a88c6ed4191191dda63fd56a37f5fb07f50da046841ad559646f765c919",
+    "common_hashes": [
+      "7d8b88856cab1bf3ed62a5017732f90dc85c154d2d0febd69539201503dd86d1",
+      "0c936f9cd60aaddf9ce33b2c992d8c7ab686630839f52e95c30e40e60146e53a"
+    ],
+    "source_fault": false,
+    "status": "complete",
+    "stop": "completed",
+    "calls": 2,
+    "tools": [
+      {
+        "name": "financial_facts",
+        "ok": true
+      },
+      {
+        "name": "financial_facts",
+        "ok": true
+      }
+    ],
+    "first_claims": [
+      {
+        "text": "Protocol fixture observation: 69632000000",
+        "constraints": {
+          "entity": "MSFT",
+          "metric": "revenue",
+          "period_end": "2024-12-31",
+          "period_start": "2024-10-01",
+          "unit": "USD"
+        },
+        "asserted_value": 69632000000
+      }
+    ],
+    "claims": [
+      {
+        "text": "Protocol fixture observation: 69632000000",
+        "constraints": {
+          "entity": "MSFT",
+          "metric": "revenue",
+          "period_start": "2024-10-01",
+          "period_end": "2024-12-31",
+          "unit": "USD"
+        },
+        "asserted_value": 69632000000,
+        "status": "Supported"
+      }
+    ],
+    "available_data": [
+      {
+        "entity": "MSFT",
+        "metric": "revenue",
+        "period_start": "2024-10-01",
+        "period_end": "2024-12-31",
+        "value": 69632000000
+      },
+      {
+        "entity": "MSFT",
+        "metric": "revenue",
+        "period_start": "2024-07-01",
+        "period_end": "2024-09-30",
+        "value": 65585000000
+      }
+    ]
+  },
+  {
+    "case": "02-previous",
+    "arm": "adaptive",
+    "turn": 1,
+    "case_sha": "1c680a88c6ed4191191dda63fd56a37f5fb07f50da046841ad559646f765c919",
+    "common_hashes": [
+      "7d8b88856cab1bf3ed62a5017732f90dc85c154d2d0febd69539201503dd86d1",
+      "0c936f9cd60aaddf9ce33b2c992d8c7ab686630839f52e95c30e40e60146e53a"
+    ],
+    "source_fault": false,
+    "status": "complete",
+    "stop": "completed",
+    "calls": 7,
+    "tools": [
+      {
+        "name": "discover_company",
+        "ok": true
+      },
+      {
+        "name": "financial_facts",
+        "ok": true
+      },
+      {
+        "name": "financial_facts",
+        "ok": true
+      }
+    ],
+    "first_claims": [
+      {
+        "text": "Protocol fixture observation: 69632000000",
+        "constraints": {
+          "entity": "MSFT",
+          "metric": "revenue",
+          "period_end": "2024-12-31",
+          "period_start": "2024-10-01",
+          "unit": "USD"
+        },
+        "asserted_value": 69632000000
+      }
+    ],
+    "claims": [
+      {
+        "text": "Protocol fixture observation: 69632000000",
+        "constraints": {
+          "entity": "MSFT",
+          "metric": "revenue",
+          "period_start": "2024-10-01",
+          "period_end": "2024-12-31",
+          "unit": "USD"
+        },
+        "asserted_value": 69632000000,
+        "status": "Supported"
+      }
+    ],
+    "available_data": [
+      {
+        "entity": "MSFT",
+        "metric": "revenue",
+        "period_start": "2024-10-01",
+        "period_end": "2024-12-31",
+        "value": 69632000000
+      }
+    ]
+  },
+  {
+    "case": "02-previous",
+    "arm": "adaptive",
+    "turn": 2,
+    "case_sha": "1c680a88c6ed4191191dda63fd56a37f5fb07f50da046841ad559646f765c919",
+    "common_hashes": [
+      "7d8b88856cab1bf3ed62a5017732f90dc85c154d2d0febd69539201503dd86d1",
+      "0c936f9cd60aaddf9ce33b2c992d8c7ab686630839f52e95c30e40e60146e53a"
+    ],
+    "source_fault": false,
+    "status": "complete",
+    "stop": "completed",
+    "calls": 6,
+    "tools": [
+      {
+        "name": "financial_facts",
+        "ok": true
+      },
+      {
+        "name": "financial_facts",
+        "ok": true
+      }
+    ],
+    "first_claims": [
+      {
+        "text": "Protocol fixture observation: 69632000000",
+        "constraints": {
+          "entity": "MSFT",
+          "metric": "revenue",
+          "period_end": "2024-12-31",
+          "period_start": "2024-10-01",
+          "unit": "USD"
+        },
+        "asserted_value": 69632000000
+      }
+    ],
+    "claims": [
+      {
+        "text": "Protocol fixture observation: 69632000000",
+        "constraints": {
+          "entity": "MSFT",
+          "metric": "revenue",
+          "period_start": "2024-10-01",
+          "period_end": "2024-12-31",
+          "unit": "USD"
+        },
+        "asserted_value": 69632000000,
+        "status": "Supported"
+      }
+    ],
+    "available_data": [
+      {
+        "entity": "MSFT",
+        "metric": "revenue",
+        "period_start": "2024-10-01",
+        "period_end": "2024-12-31",
+        "value": 69632000000
+      },
+      {
+        "entity": "MSFT",
+        "metric": "revenue",
+        "period_start": "2024-07-01",
+        "period_end": "2024-09-30",
+        "value": 65585000000
+      }
+    ]
+  },
+  {
+    "case": "03-source-outage",
+    "arm": "adaptive",
+    "turn": 1,
+    "case_sha": "7e88ab51e2f77cf3a76cb67260bc5b268ae1658a15670ab6381fae26fa287eba",
+    "common_hashes": [
+      "7d8b88856cab1bf3ed62a5017732f90dc85c154d2d0febd69539201503dd86d1",
+      "0c936f9cd60aaddf9ce33b2c992d8c7ab686630839f52e95c30e40e60146e53a"
+    ],
+    "source_fault": true,
+    "status": "partial",
+    "stop": "execution_error",
+    "calls": 10,
+    "tools": [
+      {
+        "name": "discover_company",
+        "ok": true
+      },
+      {
+        "name": "financial_facts",
+        "ok": false
+      },
+      {
+        "name": "search_documents",
+        "ok": true
+      },
+      {
+        "name": "financial_facts",
+        "ok": false
+      },
+      {
+        "name": "search_documents",
+        "ok": true
+      },
+      {
+        "name": "discover_filings",
+        "ok": true
+      }
+    ],
+    "first_claims": [
+      {
+        "text": "Protocol fixture observation: 135217000000",
+        "constraints": {
+          "entity": "MSFT",
+          "metric": "revenue",
+          "period_end": "2024-12-31",
+          "period_start": "2024-07-01",
+          "unit": "USD"
+        },
+        "asserted_value": 135217000000
+      }
+    ],
+    "claims": [
+      {
+        "text": "Protocol fixture observation: 135217000000",
+        "constraints": {
+          "entity": "MSFT",
+          "metric": "revenue",
+          "period_start": "2024-07-01",
+          "period_end": "2024-12-31",
+          "unit": "USD"
+        },
+        "asserted_value": 135217000000,
+        "status": "Pending Verification"
+      }
+    ],
+    "available_data": [
+      {
+        "entity": "MSFT",
+        "metric": "revenue",
+        "period_start": "2024-10-01",
+        "period_end": "2024-12-31",
+        "value": 69632000000
+      },
+      {
+        "entity": "MSFT",
+        "metric": "revenue",
+        "period_start": "2023-10-01",
+        "period_end": "2023-12-31",
+        "value": 62020000000
+      },
+      {
+        "entity": "MSFT",
+        "metric": "revenue",
+        "period_start": "2024-07-01",
+        "period_end": "2024-12-31",
+        "value": 135217000000
+      },
+      {
+        "entity": "MSFT",
+        "metric": "revenue",
+        "period_start": "2023-07-01",
+        "period_end": "2023-12-31",
+        "value": 118537000000
+      },
+      {
+        "entity": "MSFT",
+        "metric": "gross_profit",
+        "period_start": "2024-10-01",
+        "period_end": "2024-12-31",
+        "value": 47833000000
+      },
+      {
+        "entity": "MSFT",
+        "metric": "gross_profit",
+        "period_start": "2023-10-01",
+        "period_end": "2023-12-31",
+        "value": 42397000000
+      },
+      {
+        "entity": "MSFT",
+        "metric": "gross_profit",
+        "period_start": "2024-07-01",
+        "period_end": "2024-12-31",
+        "value": 93319000000
+      },
+      {
+        "entity": "MSFT",
+        "metric": "gross_profit",
+        "period_start": "2023-07-01",
+        "period_end": "2023-12-31",
+        "value": 82612000000
+      },
+      {
+        "entity": "MSFT",
+        "metric": "operating_income",
+        "period_start": "2024-10-01",
+        "period_end": "2024-12-31",
+        "value": 31653000000
+      },
+      {
+        "entity": "MSFT",
+        "metric": "operating_income",
+        "period_start": "2023-10-01",
+        "period_end": "2023-12-31",
+        "value": 27032000000
+      },
+      {
+        "entity": "MSFT",
+        "metric": "operating_income",
+        "period_start": "2024-07-01",
+        "period_end": "2024-12-31",
+        "value": 62205000000
+      },
+      {
+        "entity": "MSFT",
+        "metric": "operating_income",
+        "period_start": "2023-07-01",
+        "period_end": "2023-12-31",
+        "value": 53927000000
+      },
+      {
+        "entity": "MSFT",
+        "metric": "operating_expense_research_and_development",
+        "period_start": "2024-10-01",
+        "period_end": "2024-12-31",
+        "value": 7917000000
+      },
+      {
+        "entity": "MSFT",
+        "metric": "operating_expense_research_and_development",
+        "period_start": "2023-10-01",
+        "period_end": "2023-12-31",
+        "value": 7142000000
+      },
+      {
+        "entity": "MSFT",
+        "metric": "operating_expense_research_and_development",
+        "period_start": "2024-07-01",
+        "period_end": "2024-12-31",
+        "value": 15461000000
+      },
+      {
+        "entity": "MSFT",
+        "metric": "operating_expense_research_and_development",
+        "period_start": "2023-07-01",
+        "period_end": "2023-12-31",
+        "value": 13801000000
+      },
+      {
+        "entity": "MSFT",
+        "metric": "operating_expense_sales_and_marketing",
+        "period_start": "2024-10-01",
+        "period_end": "2024-12-31",
+        "value": 6440000000
+      },
+      {
+        "entity": "MSFT",
+        "metric": "operating_expense_sales_and_marketing",
+        "period_start": "2023-10-01",
+        "period_end": "2023-12-31",
+        "value": 6246000000
+      },
+      {
+        "entity": "MSFT",
+        "metric": "operating_expense_sales_and_marketing",
+        "period_start": "2024-07-01",
+        "period_end": "2024-12-31",
+        "value": 12157000000
+      },
+      {
+        "entity": "MSFT",
+        "metric": "operating_expense_sales_and_marketing",
+        "period_start": "2023-07-01",
+        "period_end": "2023-12-31",
+        "value": 11433000000
+      },
+      {
+        "entity": "MSFT",
+        "metric": "operating_expense_general_and_administrative",
+        "period_start": "2024-10-01",
+        "period_end": "2024-12-31",
+        "value": 1823000000
+      },
+      {
+        "entity": "MSFT",
+        "metric": "operating_expense_general_and_administrative",
+        "period_start": "2023-10-01",
+        "period_end": "2023-12-31",
+        "value": 1977000000
+      },
+      {
+        "entity": "MSFT",
+        "metric": "operating_expense_general_and_administrative",
+        "period_start": "2024-07-01",
+        "period_end": "2024-12-31",
+        "value": 3496000000
+      },
+      {
+        "entity": "MSFT",
+        "metric": "operating_expense_general_and_administrative",
+        "period_start": "2023-07-01",
+        "period_end": "2023-12-31",
+        "value": 3451000000
+      }
+    ]
+  },
+  {
+    "case": "03-source-outage",
+    "arm": "fixed",
+    "turn": 1,
+    "case_sha": "7e88ab51e2f77cf3a76cb67260bc5b268ae1658a15670ab6381fae26fa287eba",
+    "common_hashes": [
+      "7d8b88856cab1bf3ed62a5017732f90dc85c154d2d0febd69539201503dd86d1",
+      "0c936f9cd60aaddf9ce33b2c992d8c7ab686630839f52e95c30e40e60146e53a"
+    ],
+    "source_fault": true,
+    "status": "partial",
+    "stop": "execution_error",
+    "calls": 2,
+    "tools": [
+      {
+        "name": "discover_company",
+        "ok": true
+      },
+      {
+        "name": "financial_facts",
+        "ok": false
+      },
+      {
+        "name": "search_documents",
+        "ok": true
+      },
+      {
+        "name": "financial_facts",
+        "ok": false
+      },
+      {
+        "name": "search_documents",
+        "ok": true
+      },
+      {
+        "name": "discover_filings",
+        "ok": true
+      }
+    ],
+    "first_claims": [
+      {
+        "text": "Protocol fixture observation: 135217000000",
+        "constraints": {
+          "entity": "MSFT",
+          "metric": "revenue",
+          "period_end": "2024-12-31",
+          "period_start": "2024-07-01",
+          "unit": "USD"
+        },
+        "asserted_value": 135217000000
+      }
+    ],
+    "claims": [
+      {
+        "text": "Protocol fixture observation: 135217000000",
+        "constraints": {
+          "entity": "MSFT",
+          "metric": "revenue",
+          "period_start": "2024-07-01",
+          "period_end": "2024-12-31",
+          "unit": "USD"
+        },
+        "asserted_value": 135217000000,
+        "status": "Pending Verification"
+      }
+    ],
+    "available_data": [
+      {
+        "entity": "MSFT",
+        "metric": "revenue",
+        "period_start": "2024-10-01",
+        "period_end": "2024-12-31",
+        "value": 69632000000
+      },
+      {
+        "entity": "MSFT",
+        "metric": "revenue",
+        "period_start": "2023-10-01",
+        "period_end": "2023-12-31",
+        "value": 62020000000
+      },
+      {
+        "entity": "MSFT",
+        "metric": "revenue",
+        "period_start": "2024-07-01",
+        "period_end": "2024-12-31",
+        "value": 135217000000
+      },
+      {
+        "entity": "MSFT",
+        "metric": "revenue",
+        "period_start": "2023-07-01",
+        "period_end": "2023-12-31",
+        "value": 118537000000
+      },
+      {
+        "entity": "MSFT",
+        "metric": "gross_profit",
+        "period_start": "2024-10-01",
+        "period_end": "2024-12-31",
+        "value": 47833000000
+      },
+      {
+        "entity": "MSFT",
+        "metric": "gross_profit",
+        "period_start": "2023-10-01",
+        "period_end": "2023-12-31",
+        "value": 42397000000
+      },
+      {
+        "entity": "MSFT",
+        "metric": "gross_profit",
+        "period_start": "2024-07-01",
+        "period_end": "2024-12-31",
+        "value": 93319000000
+      },
+      {
+        "entity": "MSFT",
+        "metric": "gross_profit",
+        "period_start": "2023-07-01",
+        "period_end": "2023-12-31",
+        "value": 82612000000
+      },
+      {
+        "entity": "MSFT",
+        "metric": "operating_income",
+        "period_start": "2024-10-01",
+        "period_end": "2024-12-31",
+        "value": 31653000000
+      },
+      {
+        "entity": "MSFT",
+        "metric": "operating_income",
+        "period_start": "2023-10-01",
+        "period_end": "2023-12-31",
+        "value": 27032000000
+      },
+      {
+        "entity": "MSFT",
+        "metric": "operating_income",
+        "period_start": "2024-07-01",
+        "period_end": "2024-12-31",
+        "value": 62205000000
+      },
+      {
+        "entity": "MSFT",
+        "metric": "operating_income",
+        "period_start": "2023-07-01",
+        "period_end": "2023-12-31",
+        "value": 53927000000
+      },
+      {
+        "entity": "MSFT",
+        "metric": "operating_expense_research_and_development",
+        "period_start": "2024-10-01",
+        "period_end": "2024-12-31",
+        "value": 7917000000
+      },
+      {
+        "entity": "MSFT",
+        "metric": "operating_expense_research_and_development",
+        "period_start": "2023-10-01",
+        "period_end": "2023-12-31",
+        "value": 7142000000
+      },
+      {
+        "entity": "MSFT",
+        "metric": "operating_expense_research_and_development",
+        "period_start": "2024-07-01",
+        "period_end": "2024-12-31",
+        "value": 15461000000
+      },
+      {
+        "entity": "MSFT",
+        "metric": "operating_expense_research_and_development",
+        "period_start": "2023-07-01",
+        "period_end": "2023-12-31",
+        "value": 13801000000
+      },
+      {
+        "entity": "MSFT",
+        "metric": "operating_expense_sales_and_marketing",
+        "period_start": "2024-10-01",
+        "period_end": "2024-12-31",
+        "value": 6440000000
+      },
+      {
+        "entity": "MSFT",
+        "metric": "operating_expense_sales_and_marketing",
+        "period_start": "2023-10-01",
+        "period_end": "2023-12-31",
+        "value": 6246000000
+      },
+      {
+        "entity": "MSFT",
+        "metric": "operating_expense_sales_and_marketing",
+        "period_start": "2024-07-01",
+        "period_end": "2024-12-31",
+        "value": 12157000000
+      },
+      {
+        "entity": "MSFT",
+        "metric": "operating_expense_sales_and_marketing",
+        "period_start": "2023-07-01",
+        "period_end": "2023-12-31",
+        "value": 11433000000
+      },
+      {
+        "entity": "MSFT",
+        "metric": "operating_expense_general_and_administrative",
+        "period_start": "2024-10-01",
+        "period_end": "2024-12-31",
+        "value": 1823000000
+      },
+      {
+        "entity": "MSFT",
+        "metric": "operating_expense_general_and_administrative",
+        "period_start": "2023-10-01",
+        "period_end": "2023-12-31",
+        "value": 1977000000
+      },
+      {
+        "entity": "MSFT",
+        "metric": "operating_expense_general_and_administrative",
+        "period_start": "2024-07-01",
+        "period_end": "2024-12-31",
+        "value": 3496000000
+      },
+      {
+        "entity": "MSFT",
+        "metric": "operating_expense_general_and_administrative",
+        "period_start": "2023-07-01",
+        "period_end": "2023-12-31",
+        "value": 3451000000
+      }
+    ]
+  },
+  {
+    "case": "04-switch",
+    "arm": "fixed",
+    "turn": 1,
+    "case_sha": "d4aceb5031a8fee3a7ad61c0566c56f15b1da0a92f915d840319accc91e3162f",
+    "common_hashes": [
+      "7d8b88856cab1bf3ed62a5017732f90dc85c154d2d0febd69539201503dd86d1",
+      "0c936f9cd60aaddf9ce33b2c992d8c7ab686630839f52e95c30e40e60146e53a"
+    ],
+    "source_fault": false,
+    "status": "complete",
+    "stop": "completed",
+    "calls": 2,
+    "tools": [
+      {
+        "name": "discover_company",
+        "ok": true
+      },
+      {
+        "name": "financial_facts",
+        "ok": true
+      },
+      {
+        "name": "financial_facts",
+        "ok": true
+      }
+    ],
+    "first_claims": [
+      {
+        "text": "Protocol fixture observation: 69632000000",
+        "constraints": {
+          "entity": "MSFT",
+          "metric": "revenue",
+          "period_end": "2024-12-31",
+          "period_start": "2024-10-01",
+          "unit": "USD"
+        },
+        "asserted_value": 69632000000
+      }
+    ],
+    "claims": [
+      {
+        "text": "Protocol fixture observation: 69632000000",
+        "constraints": {
+          "entity": "MSFT",
+          "metric": "revenue",
+          "period_start": "2024-10-01",
+          "period_end": "2024-12-31",
+          "unit": "USD"
+        },
+        "asserted_value": 69632000000,
+        "status": "Supported"
+      }
+    ],
+    "available_data": [
+      {
+        "entity": "MSFT",
+        "metric": "revenue",
+        "period_start": "2024-10-01",
+        "period_end": "2024-12-31",
+        "value": 69632000000
+      }
+    ]
+  },
+  {
+    "case": "04-switch",
+    "arm": "fixed",
+    "turn": 2,
+    "case_sha": "d4aceb5031a8fee3a7ad61c0566c56f15b1da0a92f915d840319accc91e3162f",
+    "common_hashes": [
+      "7d8b88856cab1bf3ed62a5017732f90dc85c154d2d0febd69539201503dd86d1",
+      "0c936f9cd60aaddf9ce33b2c992d8c7ab686630839f52e95c30e40e60146e53a"
+    ],
+    "source_fault": false,
+    "status": "complete",
+    "stop": "completed",
+    "calls": 2,
+    "tools": [
+      {
+        "name": "discover_company",
+        "ok": true
+      },
+      {
+        "name": "financial_facts",
+        "ok": true
+      },
+      {
+        "name": "financial_facts",
+        "ok": true
+      }
+    ],
+    "first_claims": [
+      {
+        "text": "Protocol fixture observation: 35082000000",
+        "constraints": {
+          "entity": "NVDA",
+          "metric": "revenue",
+          "period_end": "2024-10-27",
+          "period_start": "2024-07-29",
+          "unit": "USD"
+        },
+        "asserted_value": 35082000000
+      }
+    ],
+    "claims": [
+      {
+        "text": "Protocol fixture observation: 35082000000",
+        "constraints": {
+          "entity": "NVDA",
+          "metric": "revenue",
+          "period_start": "2024-07-29",
+          "period_end": "2024-10-27",
+          "unit": "USD"
+        },
+        "asserted_value": 35082000000,
+        "status": "Supported"
+      }
+    ],
+    "available_data": [
+      {
+        "entity": "NVDA",
+        "metric": "revenue",
+        "period_start": "2024-07-29",
+        "period_end": "2024-10-27",
+        "value": 35082000000
+      }
+    ]
+  },
+  {
+    "case": "04-switch",
+    "arm": "adaptive",
+    "turn": 1,
+    "case_sha": "d4aceb5031a8fee3a7ad61c0566c56f15b1da0a92f915d840319accc91e3162f",
+    "common_hashes": [
+      "7d8b88856cab1bf3ed62a5017732f90dc85c154d2d0febd69539201503dd86d1",
+      "0c936f9cd60aaddf9ce33b2c992d8c7ab686630839f52e95c30e40e60146e53a"
+    ],
+    "source_fault": false,
+    "status": "complete",
+    "stop": "completed",
+    "calls": 7,
+    "tools": [
+      {
+        "name": "discover_company",
+        "ok": true
+      },
+      {
+        "name": "financial_facts",
+        "ok": true
+      },
+      {
+        "name": "financial_facts",
+        "ok": true
+      }
+    ],
+    "first_claims": [
+      {
+        "text": "Protocol fixture observation: 69632000000",
+        "constraints": {
+          "entity": "MSFT",
+          "metric": "revenue",
+          "period_end": "2024-12-31",
+          "period_start": "2024-10-01",
+          "unit": "USD"
+        },
+        "asserted_value": 69632000000
+      }
+    ],
+    "claims": [
+      {
+        "text": "Protocol fixture observation: 69632000000",
+        "constraints": {
+          "entity": "MSFT",
+          "metric": "revenue",
+          "period_start": "2024-10-01",
+          "period_end": "2024-12-31",
+          "unit": "USD"
+        },
+        "asserted_value": 69632000000,
+        "status": "Supported"
+      }
+    ],
+    "available_data": [
+      {
+        "entity": "MSFT",
+        "metric": "revenue",
+        "period_start": "2024-10-01",
+        "period_end": "2024-12-31",
+        "value": 69632000000
+      }
+    ]
+  },
+  {
+    "case": "04-switch",
+    "arm": "adaptive",
+    "turn": 2,
+    "case_sha": "d4aceb5031a8fee3a7ad61c0566c56f15b1da0a92f915d840319accc91e3162f",
+    "common_hashes": [
+      "7d8b88856cab1bf3ed62a5017732f90dc85c154d2d0febd69539201503dd86d1",
+      "0c936f9cd60aaddf9ce33b2c992d8c7ab686630839f52e95c30e40e60146e53a"
+    ],
+    "source_fault": false,
+    "status": "complete",
+    "stop": "completed",
+    "calls": 7,
+    "tools": [
+      {
+        "name": "discover_company",
+        "ok": true
+      },
+      {
+        "name": "financial_facts",
+        "ok": true
+      },
+      {
+        "name": "financial_facts",
+        "ok": true
+      }
+    ],
+    "first_claims": [
+      {
+        "text": "Protocol fixture observation: 35082000000",
+        "constraints": {
+          "entity": "NVDA",
+          "metric": "revenue",
+          "period_end": "2024-10-27",
+          "period_start": "2024-07-29",
+          "unit": "USD"
+        },
+        "asserted_value": 35082000000
+      }
+    ],
+    "claims": [
+      {
+        "text": "Protocol fixture observation: 35082000000",
+        "constraints": {
+          "entity": "NVDA",
+          "metric": "revenue",
+          "period_start": "2024-07-29",
+          "period_end": "2024-10-27",
+          "unit": "USD"
+        },
+        "asserted_value": 35082000000,
+        "status": "Supported"
+      }
+    ],
+    "available_data": [
+      {
+        "entity": "NVDA",
+        "metric": "revenue",
+        "period_start": "2024-07-29",
+        "period_end": "2024-10-27",
+        "value": 35082000000
+      }
+    ]
+  }
+]

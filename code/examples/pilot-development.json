@@ -1,0 +1,31 @@
+{
+  "protocol": "verifin-pilot-v1",
+  "label": "Development multi-turn pilot; no independent gold",
+  "split": "development",
+  "budget": {
+    "max_model_calls": 12,
+    "max_tool_calls": 8,
+    "max_seconds": 180,
+    "max_no_progress": 3,
+    "max_planner_steps": 40
+  },
+  "cases": [
+    {
+      "id": "msft-revenue-margin",
+      "title": "Development: revenue, calculation reuse and scope correction",
+      "turns": [
+        "Report MSFT revenue and operating margin for 2024-10-01 through 2024-12-31 using information available by 2025-01-31. Show the operands and sources.",
+        "Explain that margin calculation using the saved sources.",
+        "Now change the question to the previous quarter. Keep the same information cutoff. State any missing evidence instead of reusing the old quarter's answer."
+      ]
+    },
+    {
+      "id": "nvda-evidence-gap",
+      "title": "Development: distinguish data and explanations",
+      "turns": [
+        "Using NVIDIA disclosures available by 2025-03-01, explain why gaming revenue changed in fiscal Q4 2025. Separate reported numbers from management's explanation, with original sources.",
+        "Can that evidence establish that gaming demand will recover next quarter? Explain what can and cannot be concluded."
+      ]
+    }
+  ]
+}

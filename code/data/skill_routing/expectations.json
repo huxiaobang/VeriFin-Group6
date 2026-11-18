@@ -1,0 +1,85 @@
+{
+  "paraphrase-a/1": [
+    "reconcile-comparable-growth"
+  ],
+  "paraphrase-b/1": [
+    "reconcile-comparable-growth"
+  ],
+  "paraphrase-c/1": [
+    "dealer-inventory"
+  ],
+  "paraphrase-d/1": [
+    "dealer-inventory"
+  ],
+  "paraphrase-e/1": [
+    "cash-flow-bridge"
+  ],
+  "paraphrase-f/1": [
+    "cash-flow-bridge"
+  ],
+  "change/1": [],
+  "change/2": [
+    "implied-period-guidance"
+  ],
+  "change/3": [
+    "store-cohorts"
+  ],
+  "change/4": [
+    "store-cohorts"
+  ],
+  "change/5": [],
+  "compound/1": [
+    "reconcile-comparable-growth",
+    "cash-flow-bridge"
+  ],
+  "compound/2": [
+    "cash-flow-bridge"
+  ],
+  "blank/1": [],
+  "unit/1": [
+    "reconcile-per-unit-financials"
+  ],
+  "cohort/1": [
+    "cohort-vs-product-revenue"
+  ],
+  "lease/1": [
+    "trace-lease-commencement"
+  ],
+  "capex/1": [
+    "cash-capex-and-leases"
+  ],
+  "pharma/1": [
+    "channel-volume-vs-sales"
+  ],
+  "portfolio/1": [
+    "attribute-portfolio-growth"
+  ],
+  "restatement/1": [
+    "compare-restated-series"
+  ],
+  "supplier/1": [
+    "estimate-supplier-content"
+  ],
+  "fee/1": [
+    "reconcile-fee-bases"
+  ],
+  "devices/1": [
+    "reconcile-shipment-units-and-prices"
+  ],
+  "pre/1": [
+    "test-pre-earnings-thesis"
+  ],
+  "plant/1": [
+    "trace-production-bottlenecks"
+  ],
+  "rights/1": [
+    "trace-project-cash-rights"
+  ],
+  "profit/1": [
+    "unit-profit-reconciliation"
+  ],
+  "plain/1": [],
+  "deixis/1": [
+    "trace-lease-commencement"
+  ]
+}

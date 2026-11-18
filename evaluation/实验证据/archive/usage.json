@@ -1,0 +1,242 @@
+{
+  "B09W": {
+    "generic_review": {
+      "attempts": 1,
+      "charged_calls": 1,
+      "known_cost_usd": "0.01301",
+      "total_cost_usd": "0.01301",
+      "tokens": {
+        "input": 1045,
+        "output": 464,
+        "cached_input": 0,
+        "write_30m": 2512,
+        "write_12h": 0
+      },
+      "unknowns": []
+    },
+    "structured_critic": {
+      "attempts": 1,
+      "charged_calls": 1,
+      "known_cost_usd": "0.0063212",
+      "total_cost_usd": "0.0063212",
+      "tokens": {
+        "input": 1135,
+        "output": 380,
+        "cached_input": 2512,
+        "write_30m": 0,
+        "write_12h": 0
+      },
+      "unknowns": []
+    }
+  },
+  "D57Y": {
+    "generic_review": {
+      "attempts": 1,
+      "charged_calls": 1,
+      "known_cost_usd": "0.0070152",
+      "total_cost_usd": "0.0070152",
+      "tokens": {
+        "input": 812,
+        "output": 514,
+        "cached_input": 2512,
+        "write_30m": 0,
+        "write_12h": 0
+      },
+      "unknowns": []
+    },
+    "structured_critic": {
+      "attempts": 1,
+      "charged_calls": 1,
+      "known_cost_usd": "0.0052952",
+      "total_cost_usd": "0.0052952",
+      "tokens": {
+        "input": 902,
+        "output": 324,
+        "cached_input": 2512,
+        "write_30m": 0,
+        "write_12h": 0
+      },
+      "unknowns": []
+    }
+  },
+  "F28M": {
+    "generic_review": {
+      "attempts": 1,
+      "charged_calls": 1,
+      "known_cost_usd": "0.0072112",
+      "total_cost_usd": "0.0072112",
+      "tokens": {
+        "input": 835,
+        "output": 529,
+        "cached_input": 2512,
+        "write_30m": 0,
+        "write_12h": 0
+      },
+      "unknowns": []
+    },
+    "structured_critic": {
+      "attempts": 1,
+      "charged_calls": 1,
+      "known_cost_usd": "0.0066612",
+      "total_cost_usd": "0.0066612",
+      "tokens": {
+        "input": 925,
+        "output": 456,
+        "cached_input": 2512,
+        "write_30m": 0,
+        "write_12h": 0
+      },
+      "unknowns": []
+    }
+  },
+  "J35H": {
+    "generic_review": {
+      "attempts": 1,
+      "charged_calls": 1,
+      "known_cost_usd": "0.0075852",
+      "total_cost_usd": "0.0075852",
+      "tokens": {
+        "input": 812,
+        "output": 571,
+        "cached_input": 2512,
+        "write_30m": 0,
+        "write_12h": 0
+      },
+      "unknowns": []
+    },
+    "structured_critic": {
+      "attempts": 1,
+      "charged_calls": 1,
+      "known_cost_usd": "0.0057352",
+      "total_cost_usd": "0.0057352",
+      "tokens": {
+        "input": 902,
+        "output": 368,
+        "cached_input": 2512,
+        "write_30m": 0,
+        "write_12h": 0
+      },
+      "unknowns": []
+    }
+  },
+  "K82V": {
+    "generic_review": {
+      "attempts": 1,
+      "charged_calls": 1,
+      "known_cost_usd": "0.0102912",
+      "total_cost_usd": "0.0102912",
+      "tokens": {
+        "input": 1025,
+        "output": 799,
+        "cached_input": 2512,
+        "write_30m": 0,
+        "write_12h": 0
+      },
+      "unknowns": []
+    },
+    "structured_critic": {
+      "attempts": 1,
+      "charged_calls": 1,
+      "known_cost_usd": "0.0069612",
+      "total_cost_usd": "0.0069612",
+      "tokens": {
+        "input": 1115,
+        "output": 448,
+        "cached_input": 2512,
+        "write_30m": 0,
+        "write_12h": 0
+      },
+      "unknowns": []
+    }
+  },
+  "Q73L": {
+    "generic_review": {
+      "attempts": 1,
+      "charged_calls": 1,
+      "known_cost_usd": "0.0079512",
+      "total_cost_usd": "0.0079512",
+      "tokens": {
+        "input": 1045,
+        "output": 561,
+        "cached_input": 2512,
+        "write_30m": 0,
+        "write_12h": 0
+      },
+      "unknowns": []
+    },
+    "structured_critic": {
+      "attempts": 1,
+      "charged_calls": 1,
+      "known_cost_usd": "0.0033812",
+      "total_cost_usd": "0.0033812",
+      "tokens": {
+        "input": 1135,
+        "output": 86,
+        "cached_input": 2512,
+        "write_30m": 0,
+        "write_12h": 0
+      },
+      "unknowns": []
+    }
+  },
+  "S41R": {
+    "generic_review": {
+      "attempts": 1,
+      "charged_calls": 1,
+      "known_cost_usd": "0.0086012",
+      "total_cost_usd": "0.0086012",
+      "tokens": {
+        "input": 1025,
+        "output": 630,
+        "cached_input": 2512,
+        "write_30m": 0,
+        "write_12h": 0
+      },
+      "unknowns": []
+    },
+    "structured_critic": {
+      "attempts": 1,
+      "charged_calls": 1,
+      "known_cost_usd": "0.0082312",
+      "total_cost_usd": "0.0082312",
+      "tokens": {
+        "input": 1115,
+        "output": 575,
+        "cached_input": 2512,
+        "write_30m": 0,
+        "write_12h": 0
+      },
+      "unknowns": []
+    }
+  },
+  "T66N": {
+    "generic_review": {
+      "attempts": 1,
+      "charged_calls": 1,
+      "known_cost_usd": "0.0097912",
+      "total_cost_usd": "0.0097912",
+      "tokens": {
+        "input": 835,
+        "output": 787,
+        "cached_input": 2512,
+        "write_30m": 0,
+        "write_12h": 0
+      },
+      "unknowns": []
+    },
+    "structured_critic": {
+      "attempts": 1,
+      "charged_calls": 1,
+      "known_cost_usd": "0.0089712",
+      "total_cost_usd": "0.0089712",
+      "tokens": {
+        "input": 925,
+        "output": 687,
+        "cached_input": 2512,
+        "write_30m": 0,
+        "write_12h": 0
+      },
+      "unknowns": []
+    }
+  }
+}

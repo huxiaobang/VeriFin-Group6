@@ -1,0 +1,15 @@
+test_chunks_repeat_both_period_header_levels (tests.test_structured_documents.StructuredDocumentTests.test_chunks_repeat_both_period_header_levels) ... ok
+test_duplicate_and_empty_headers_are_source_text_not_pandas_inventions (tests.test_structured_documents.StructuredDocumentTests.test_duplicate_and_empty_headers_are_source_text_not_pandas_inventions) ... ok
+test_empty_layout_table_is_not_a_successful_financial_table (tests.test_structured_documents.StructuredDocumentTests.test_empty_layout_table_is_not_a_successful_financial_table) ... ok
+test_hidden_content_removed_without_discarding_visible_tail (tests.test_structured_documents.StructuredDocumentTests.test_hidden_content_removed_without_discarding_visible_tail) ... ok
+test_merged_headers_and_cells_keep_exact_financial_strings (tests.test_structured_documents.StructuredDocumentTests.test_merged_headers_and_cells_keep_exact_financial_strings) ... ok
+test_nested_and_oversized_tables_are_explicit_failures (tests.test_structured_documents.StructuredDocumentTests.test_nested_and_oversized_tables_are_explicit_failures) ... ok
+test_no_network_and_stable_identity (tests.test_structured_documents.StructuredDocumentTests.test_no_network_and_stable_identity) ... ok
+test_source_locators_resolve_against_original_snapshot (tests.test_structured_documents.StructuredDocumentTests.test_source_locators_resolve_against_original_snapshot) ... ok
+test_table_nested_in_list_is_not_flattened_by_paragraph_walker (tests.test_structured_documents.StructuredDocumentTests.test_table_nested_in_list_is_not_flattened_by_paragraph_walker) ... ok
+test_undeclared_td_headers_do_not_get_detached_from_rows (tests.test_structured_documents.StructuredDocumentTests.test_undeclared_td_headers_do_not_get_detached_from_rows) ... ok
+
+----------------------------------------------------------------------
+Ran 10 tests in 0.650s
+
+OK

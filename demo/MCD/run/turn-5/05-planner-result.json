@@ -1,0 +1,13 @@
+{
+  "action": "tool",
+  "tool": "financial_facts",
+  "arguments": {
+    "entity": "MCD",
+    "metric": "franchised restaurant margins",
+    "period_start": "2026-07-01",
+    "period_end": "2026-09-30",
+    "unit": "USD",
+    "cutoff": "2026-11-16"
+  },
+  "reason": "现有原表足以解释其他营业收入、管理费用及调整项目，但读取结果均为text_only，专用调节工具也未生成计算。尝试本地结构化事实取得加盟餐厅利润的可计算操作数，以量化其同比增量；若无匹配事实，将保留原表直接披露的变动并明确计算核验缺口。"
+}
