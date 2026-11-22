@@ -4,7 +4,7 @@ from decimal import Decimal
 
 from .metric_language import NAME, NAMES, metric_mentions, plain_amount_metric
 from .display_numbers import bare_stated_metric, _quantities
-from .skill_calculations import leading_quarter, quarter_label
+from .skill_calculations import leading_quarter, quarter_label, quarter_mentions
 
 # Split a list governed by an explicit enumeration request. An incidental "and"
 # in an ordinary question (e.g. a comparison, company name or ratio) is not a list.
@@ -13,7 +13,7 @@ _ENUMERATION = re.compile(
     r"(?:列出|给出|列示)(?=[^。！？]*[、和与])|"
     r"\b(?:report|list|give|provide|state|show)\s+(?:both|each of|separately)\b", re.I)
 _POSTFIX_ENUMERATION = re.compile(r"(?:分别|各自)(?:是|为)?多少[?？。.!！]*$")
-_LIST_JOIN = re.compile(r"、|以及|和|与|\s+(?:and|as well as)\s+|,\s+(?:and\s+)?", re.I)
+_LIST_JOIN = re.compile(r"、|以及|和|与|與|\s+(?:and|as well as)\s+|,\s+(?:and\s+)?", re.I)
 _COMPOUND_NAME = re.compile(
     r"现金(?:和|与|及)现金等价物|"
     r"\bcash and cash equivalents\b|\bproperty,? plant(?:,)? and equipment\b|"
@@ -136,7 +136,12 @@ def request_parts(request):
             continue
         # The full request stays alongside its parts so later items inherit the
         # same company, period, or basis qualifier as the first.
-        items = enumerated_items(chunk[directive.end():])
+        # Formula and citation are separate deliverables even when appended to
+        # the final fiscal label in a Chinese enumeration.
+        listed = re.split(r"[，,]\s*(?=(?:並|并)提供(?:可核[實实]|可核[驗验]|可核查)?(?:來源|来源))",
+                          chunk[directive.end():])
+        items = [piece for clause in listed for item in enumerated_items(clause)
+                 for piece in re.split(r"(?<!以)及(?=[計计]算公式)", item) if piece]
         if len(items) > 1:
             start = chunk[:directive.end()]
             if start[-1].isascii() and start[-1].isalnum():
@@ -473,6 +478,227 @@ def unresolved_checklist(requirements, unanswered, parts, coverage):
              and "answered" not in states[_question_wording(r["text"])])]
 
 
+_QUARTER_IDENTITY = re.compile(
+    r"(?:查询|确定|指出|识别|是哪|哪一).{0,100}?(?:最近|最新)(?:已)?(?:发布|公布|披露|报告)?的?财季(?:[。？！?]|$)"
+    r"|(?:which|identify|name)\b[^?.!]{0,100}(?:latest|most recent) fiscal quarter\b", re.I)
+_FILING_LINK = re.compile(r"(?:申报|披露|报告|文件)\s*(?:的)?链接|filing (?:link|URL)",re.I)
+_DATE_RANGE = re.compile(r"(?:起止|起讫)日期|start and end dates?",re.I)
+_URL = re.compile(r"https?://[^\s<>，。]+",re.I)
+
+
+_DATE_TEXT = re.compile(
+    r"\b\d{4}-\d{2}-\d{2}\b|\d{4}年\s*\d{1,2}月\s*\d{1,2}日|"
+    r"\b(?:Jan(?:uary)?|Feb(?:ruary)?|Mar(?:ch)?|Apr(?:il)?|May|Jun(?:e)?|Jul(?:y)?|"
+    r"Aug(?:ust)?|Sep(?:tember)?|Oct(?:ober)?|Nov(?:ember)?|Dec(?:ember)?)\.? \d{1,2},? \d{4}\b",re.I)
+
+
+def _grounded_clause(clause, source, question):
+    clause = clause.strip().rstrip(".。")
+    for sentence in re.split(r"(?<=[。！？!?])|(?<=\.)\s+",source):
+        sentence = sentence.strip().rstrip(".。")
+        if clause == sentence:
+            return True
+        # A repeated period or a longer filing caption can be elided in a joined
+        # quote. Keep the actual source sentence (including the qualification).
+        if sentence.endswith(clause) and clause:
+            prefix = sentence[:-len(clause)]
+            if re.fullmatch(r"For the (?:three months|quarter|year) ended " + "(?:" + _DATE_TEXT.pattern + "), ",prefix,re.I):
+                return True
+        if _FILING_LINK.search(question):
+            caption,sep,url = clause.rpartition(" is ")
+            if (sep and _URL.fullmatch(url) and sentence.endswith(sep+url)
+                    and re.fullmatch(r"(?:the )?(?:[a-z]+ )?filing link(?: for the [a-z0-9-]+ report)?",caption,re.I)
+                    and sentence.casefold().startswith(caption.casefold()+" covering ")):
+                return True
+    return False
+
+
+_MARGIN_RESULT = re.compile(
+    r"(?:operating (?:profit )?margin|营业利润率)\s*(?:(?:of|was|is|为|是)\s*)?"
+    r"(?:(?:approximately|about|约为|约)\s*)?([-+−]?\d+(?:\.\d+)?\s*%)", re.I)
+_FILING_URL = re.compile(r"https://www\.sec\.gov/Archives/edgar/data/\d+/\d{18}/[\w.-]+\.html?\b", re.I)
+_MAPPING_GAP = "本版未能把该项要求对应到单独核验过的回答。"
+
+
+def _consistent_claims(left, right):
+    a, b = left.get("constraints") or {}, right.get("constraints") or {}
+    return all(not a.get(k) or not b.get(k) or a[k] == b[k]
+               for k in ("entity", "period_start", "period_end"))
+
+
+def _quarter_heading(claim, question):
+    text = claim["text"]
+    label = leading_quarter(text, entity=(claim.get("constraints") or {}).get("entity"))
+    if label:
+        return label
+    # The request may give the issuer's name followed by its ticker, while
+    # the claim's entity field uses the ticker or CIK.
+    first = next(quarter_mentions(text), None)
+    if first:
+        name = text[:first[0].start()].strip()
+        if name and re.search(r"(?<![a-zA-Z0-9])" + re.escape(name)
+                              + r"\s*[（(][A-Z][A-Z0-9.-]*[）)]", question, re.I):
+            return quarter_label(text)
+    return None
+
+
+def _printed_dates(text):
+    """Compare the same printed day across numeric, Chinese and English spellings."""
+    months = "jan feb mar apr may jun jul aug sep oct nov dec".split()
+    days = set()
+    for literal in _DATE_TEXT.findall(text):
+        numbers = list(map(int, re.findall(r"\d+", literal)))
+        if literal[0].isdigit():
+            year, month, day = numbers
+        else:
+            day, year = numbers
+            month = months.index(literal[:3].lower()) + 1
+        days.add((year, month, day))
+    return days
+
+
+def _complete_quarter_links(parts, rows, supported, summary):
+    """Recover redundant links for a single latest-quarter answer from its reviewed text."""
+    if sum(bool(_QUARTER_IDENTITY.search(q)) for q in parts.values()) != 1:
+        return
+    primary_claims = [supported[r["claim_id"]] for r in rows
+                      if _QUARTER_IDENTITY.search(parts.get(r["part"], ""))
+                      and isinstance(r.get("claim_id"), str) and r["claim_id"] in supported]
+    summary_urls = set(_FILING_URL.findall(summary))
+    margins = set(_MARGIN_RESULT.findall(summary))
+    summary_dates = _printed_dates(summary)
+    # A reviewed formula row identifies the specific claim for this question.
+    # Use its separate dated result sentence only if the summary agrees.
+    margin_answers = []
+    for row in rows:
+        if not re.fullmatch(r"(?:计算)?公式[。.?？]?|(?:calculation )?formula[.?]?", parts.get(row["part"], "").strip(), re.I):
+            continue
+        claim = supported.get(row.get("claim_id")) if isinstance(row.get("claim_id"), str) else None
+        if (not claim or row.get("status") != "answered" or len(primary_claims) != 1
+                or not _consistent_claims(claim, primary_claims[0])):
+            continue
+        if not isinstance(claim.get("text"), str):
+            continue
+        sentences = [s.strip() for s in re.split(r"(?<=[。！？!?])|(?<=\.)\s+", claim["text"])]
+        if row.get("answer_sentence") not in sentences:
+            continue
+        for sentence in sentences:
+            values = _MARGIN_RESULT.findall(sentence)
+            dates = _printed_dates(sentence)
+            if (sentence != row["answer_sentence"] and len(values) == 1 and margins == set(values)
+                    and len(dates) == 1 and dates <= summary_dates
+                    and dates <= _printed_dates(primary_claims[0]["text"])):
+                margin_answers.append((claim["id"], sentence))
+
+    for part, question in parts.items():
+        matches = [r for r in rows if r["part"] == part]
+        if len(matches) > 1:
+            continue
+        row = matches[0] if matches else {}
+        if (re.fullmatch(r"(?:营业利润率|operating (?:profit )?margin)(?:分别)?(?:是多少)?[？?。.]?", question.strip(), re.I)
+                and len(margin_answers) == 1 and (not row or row.get("status") == "gap"
+                and row.get("missing_support", _MAPPING_GAP) == _MAPPING_GAP)):
+            if not row:
+                rows.append(row)
+            cid, sentence = margin_answers[0]
+            row.clear()
+            row.update(part=part, status="answered", claim_id=cid, answer_sentence=sentence)
+        if (_QUARTER_IDENTITY.search(question) and row.get("status") == "partial"
+                and row.get("missing_support") == "本稿未在已核实的答句和摘要中一致给出财年及季度编号。"):
+            primary = supported.get(row.get("claim_id")) if isinstance(row.get("claim_id"), str) else None
+            amount = row.get("answer_sentence")
+            label = quarter_label(summary)
+            if primary and isinstance(amount, str) and _grounded_clause(amount, primary["text"], question) and label:
+                dates = _printed_dates(amount)
+                labels = [cid for cid, c in supported.items() if quarter_label(c["text"]) == label
+                          and _consistent_claims(c, primary) and _quarter_heading(c, question) == label
+                          and dates.intersection(_printed_dates(c["text"]))
+                          and not re.search(r"unconfirmed|uncertain|not (?:confirmed|explicit)|未确认|无法确认", c["text"], re.I)]
+                if len(labels) == 1 and not re.search(r"unconfirmed|无法确认|未确认", summary, re.I) and metric_mentions(question).issubset(metric_mentions(amount)):
+                    ids = list(dict.fromkeys([labels[0], primary["id"]]))
+                    row.update(status="answered", claim_id=labels[0], answer_sentence=supported[labels[0]]["text"],
+                               joint_claim_ids=ids, supporting_claim_ids=ids)
+                    row.pop("missing_support", None)
+        if not (_DATE_RANGE.search(question) and _FILING_LINK.search(question) and
+                row.get("status") == "partial" and row.get("missing_support") == "本项未对应到已核实的申报链接。"):
+            continue
+        primary = supported.get(row.get("claim_id")) if isinstance(row.get("claim_id"), str) else None
+        quote = row.get("answer_sentence")
+        if not primary or not isinstance(quote, str) or not _grounded_clause(quote, primary["text"], question):
+            continue
+        # Require both endpoints in the same summary that explicitly cites this filing.
+        dates = _printed_dates(quote)
+        if len(dates.intersection(summary_dates)) < 2 or len(summary_urls) != 1:
+            continue
+        links = [cid for cid,c in supported.items() if _consistent_claims(c, primary) and re.search(r"\b10-Q\b", c["text"], re.I)
+                 and _FILING_URL.findall(c["text"]) == list(summary_urls)]
+        if len(links) == 1:
+            ids = list(dict.fromkeys([primary["id"], links[0]]))
+            row.update(status="answered", joint_claim_ids=ids, supporting_claim_ids=ids)
+            row.pop("missing_support", None)
+
+
+def grounded_review_rows(parts, rows, claims, verdicts, summary):
+    """Keep the reviewer's explicit links, but deliver only the cited draft's own text."""
+    supported = {c["id"]:c for c in claims if not c.get("stale")
+                 and verdicts.get(c["id"],{}).get("status") == "Supported"}
+    checked = []
+    for original in rows if isinstance(rows,list) else ():
+        if not isinstance(original,dict) or not isinstance(original.get("part"),str):
+            continue
+        row = dict(original)
+        row.pop("joint_claim_ids", None)  # Derived locally from checked quotes.
+        checked.append(row)
+        question = parts.get(row.get("part"), "")
+        if not question or row.get("status") != "answered" or not isinstance(row.get("claim_id"),str):
+            continue
+        primary = row["claim_id"]
+        ids = [item.strip() for item in primary.split(",")]
+        quote = row.get("answer_sentence")
+        if not isinstance(quote,str):
+            continue
+        if len(ids) > 1:
+            # Some reviewers put a joined ID list in the scalar field and splice
+            # clauses. Require both explicit ID lists to agree, and ground each
+            # clause in its own reviewed claim before replacing the synthetic quote.
+            if (ids != row.get("supporting_claim_ids") or len(set(ids)) != len(ids)
+                    or any(cid not in supported for cid in ids)):
+                continue
+            clauses = re.split(r",\s+and\s+|；|;\s+",quote,flags=re.I)
+            if len(clauses) != len(ids):
+                continue
+            if not all(_grounded_clause(clause,supported[cid]["text"],question) for clause,cid in zip(clauses,ids)):
+                continue
+            row.update(claim_id=ids[0],answer_sentence=supported[ids[0]]["text"],joint_claim_ids=ids)
+        if row["claim_id"] not in supported:
+            continue
+        refs = row.get("supporting_claim_ids",[])
+        if not isinstance(refs,list):
+            refs = []
+        texts = [row["answer_sentence"], *(supported[cid]["text"] for cid in refs
+                                          if isinstance(cid,str) and cid in supported)]
+        if not all(isinstance(t,str) for t in texts):
+            continue
+        answer = " ".join(texts)
+        missing = []
+        if _QUARTER_IDENTITY.search(question):
+            label = quarter_label(answer)
+            if not label or quarter_label(summary or "") != label:
+                missing.append("本稿未在已核实的答句和摘要中一致给出财年及季度编号。")
+            measures = metric_mentions(question)
+            if measures and not measures.issubset(metric_mentions(answer)):
+                missing.append("答句未对应到所问的财务指标。")
+        if _DATE_RANGE.search(question) and _FILING_LINK.search(question):
+            if not _URL.search(answer):
+                missing.append("本项未对应到已核实的申报链接。")
+            if len(_printed_dates(answer)) < 2:
+                missing.append("本项未对应到已核实的完整起止日期。")
+        if missing:
+            row.update(status="partial",missing_support=" ".join(missing))
+    _complete_quarter_links(parts, checked, supported, summary or "")
+    return checked
+
+
 def coverage_issues(parts, response, claims, *, requirements=(), unanswered_ids=()):
     if not parts:
         return []
@@ -520,6 +746,10 @@ def coverage_issues(parts, response, claims, *, requirements=(), unanswered_ids=
             reusable = True
         matching_ids = requirements_by_text.get(_question_wording(text),set())
         reason = None
+        joint = row.get("joint_claim_ids", [])
+        if joint and (not isinstance(joint,list) or any(not isinstance(cid,str) or cid not in by_claim
+                         or by_claim[cid].get("stale") for cid in joint)):
+            reason = "该组合答复的部分主张已失效或尚未核实。"
         if row.get("status") == "answered" and matching_ids:
             if matching_ids.issubset(unanswered_ids):
                 reason = "起草时这项要求仍列为未回答，引用的背景不能代替答案。"
@@ -541,11 +771,43 @@ def coverage_issues(parts, response, claims, *, requirements=(), unanswered_ids=
     return issues
 
 
+def check_period_coverage(parts, rows, claims, findings, requirements):
+    """Prevent a reviewed mapping from delivering a rejected reporting period."""
+    from .answer_periods import CHECK
+
+    defects = {f["target_id"]: f["missing_support"] for f in findings if f.get("scope") == CHECK}
+    if not defects:
+        return rows
+    amended = {}
+    by_claim = {c["id"]: c for c in claims}
+    for part, question in parts.items():
+        matches = [r for r in rows if isinstance(r, dict) and r.get("part") == part]
+        if len(matches) > 1:
+            continue
+        row = matches[0] if matches else {}
+        req_ids = {r["id"] for r in requirements if _question_wording(r["text"]) == _question_wording(question)}
+        claim_ids = [row.get("claim_id")]
+        joint = row.get("joint_claim_ids")
+        if isinstance(joint, list):
+            claim_ids.extend(joint)
+        claim_ids = [cid for cid in claim_ids if isinstance(cid, str)]
+        if row.get("status") not in ("answered", "partial"):
+            claim_ids.extend(c["id"] for c in claims if req_ids.intersection(c.get("requirement_ids", [])))
+        for cid in claim_ids:
+            req_ids.update(by_claim.get(cid, {}).get("requirement_ids", []))
+        reasons = [defects[cid] for cid in [*sorted(req_ids), *claim_ids] if cid in defects]
+        if reasons:
+            amended[part] = {"part": part, "status":"gap", "missing_support": " ".join(dict.fromkeys(reasons))}
+    retained = [r for r in rows if not isinstance(r, dict) or r.get("part") not in amended]
+    return [*retained, *amended.values()]
+
+
 def report_coverage(parts, rows, claims, *, reviewed, requirements=(), unanswered_ids=(), findings=()):
     """Only publish answer mappings grounded in the supported text of this report."""
     if not reviewed:
         return []
     rows = rows if isinstance(rows, list) else []
+    rows = check_period_coverage(parts, rows, claims, findings, requirements)
     supported = [c for c in claims if c.get("status") == "Supported" and not c.get("stale")]
     issues = coverage_issues(parts, {"request_coverage": rows}, supported,requirements=requirements,unanswered_ids=unanswered_ids)
     invalid = {i["target_id"]:i for i in issues}
@@ -554,7 +816,7 @@ def report_coverage(parts, rows, claims, *, reviewed, requirements=(), unanswere
     for part in parts:
         row = by_part.get(part, {})
         if part not in invalid:
-            result.append({k: row[k] for k in ("part", "status", "claim_id", "answer_sentence") if k in row})
+            result.append({k: row[k] for k in ("part", "status", "claim_id", "answer_sentence", "joint_claim_ids") if k in row})
         elif row.get("status") == "partial" and isinstance(row.get("missing_support"), str) and row["missing_support"].strip():
             # Validate the delivered portion against the exact reviewed text. A
             # mixed claim may contribute only the excerpt the Critic accepted.
@@ -567,7 +829,7 @@ def report_coverage(parts, rows, claims, *, reviewed, requirements=(), unanswere
             trial = [dict(r, status="answered") if r is row else r for r in rows]
             defects = coverage_issues(parts, {"request_coverage":trial}, candidates, requirements=requirements)
             if not any(issue["target_id"] == part for issue in defects):
-                result.append({k:row[k] for k in ("part", "status", "claim_id", "answer_sentence", "missing_support")})
+                result.append({k:row[k] for k in ("part", "status", "claim_id", "answer_sentence", "missing_support", "joint_claim_ids") if k in row})
             else:
                 result.append({"part":part, "status":"gap", "missing_support":row["missing_support"]})
         else:

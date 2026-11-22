@@ -347,11 +347,65 @@ def reference_tool_records(context):
     return {**context, "episode":{**episode, "last_tool_result":result}}
 
 
+def shared_receipt_data(context):
+    """Reference the latest retained observation's data when the values are identical."""
+    episode = context.get("episode", {})
+    latest = episode.get("last_tool_result")
+    recent = episode.get("recent_tool_results")
+    if (not isinstance(latest, dict) or "data_from_recent_tool_result" in latest
+            or not isinstance(recent, list) or not recent or not isinstance(recent[-1], dict)):
+        return context
+    data = latest.get("data")
+    previous = recent[-1].get("data")
+    if not isinstance(data, dict) or not isinstance(previous, dict):
+        return context
+    if any(key not in latest or key not in recent[-1] or latest[key] != recent[-1][key]
+           for key in ("ok", "summary")):
+        return context
+    ref = {"data_from_recent_tool_result": len(recent) - 1}
+    serialized = json.dumps(data, ensure_ascii=False, allow_nan=False)
+    if (len(serialized) <= len(json.dumps(ref))
+            or serialized != json.dumps(previous, ensure_ascii=False, allow_nan=False)):
+        return context
+    result = {key: value for key, value in latest.items() if key != "data"}
+    return {**context, "episode": {**episode, "last_tool_result": {**result, **ref}}}
+
+
 _PROVENANCE_FIELDS = (
     "document_id", "snapshot_hash", "source_url", "snapshot_path", "text_snapshot_hash",
     "text_snapshot_path", "extraction_method", "published_at", "form", "table_id",
     "table_xpath", "table_title", "table_title_locator", "unit_locator", "currency_basis",
 )
+_EXTENDED_PROVENANCE_FIELDS = (
+    "printed_unit", "currency_reference", "column_headers", "column_header_locators",
+    "retrieved_at", "concept_label", "concept_description",
+)
+_STRUCTURED_PROVENANCE_FIELDS = {"currency_reference", "column_headers", "column_header_locators"}
+
+
+def _source_anchor_key(row, source, table, *, extended_sources):
+    if isinstance(table, str) and all(isinstance(v, str) and v for v in source):
+        return ("document", *source, table)
+    if extended_sources and row.get("kind") == "financial_fact" and source[0] is None:
+        identity = (source[1], row.get("source_url"), row.get("entity"), row.get("concept"))
+        if all(isinstance(v, str) and v for v in identity):
+            return ("financial_fact", *identity)
+    return None
+
+
+def _shared_source_fields(row, anchor, field_names):
+    omitted = {}
+    for key in field_names:
+        if key not in row or key not in anchor:
+            continue
+        value = row[key]
+        if isinstance(value, str) and value == anchor[key]:
+            omitted[key] = value
+        elif (key in _STRUCTURED_PROVENANCE_FIELDS and isinstance(value, (dict, list))
+              and json.dumps(value, ensure_ascii=False, allow_nan=False)
+              == json.dumps(anchor[key], ensure_ascii=False, allow_nan=False)):
+            omitted[key] = value
+    return omitted
 
 
 def _pack_passage(row, literals):
@@ -386,11 +440,15 @@ def _pack_passage(row, literals):
     return parts
 
 
-def shared_evidence_sources(context):
-    """Pack rows in source order. Appending evidence never rewrites an earlier row."""
+def shared_evidence_sources(context, *, extended_sources=False):
+    """Pack rows in source order. Appending evidence never rewrites an earlier row.
+
+    The extended layout also shares exact table headers and fact taxonomy metadata.
+    """
     evidence = context.get("evidence")
     if not isinstance(evidence, list):
         return context
+    field_names = _PROVENANCE_FIELDS + _EXTENDED_PROVENANCE_FIELDS if extended_sources else _PROVENANCE_FIELDS
     anchors, passages, rows, seen = {}, {}, [], set()
     for row in evidence:
         if (not isinstance(row, dict) or not isinstance(row.get("id"), str) or row["id"] in seen
@@ -400,18 +458,16 @@ def shared_evidence_sources(context):
         seen.add(row["id"])
         packed = row
         source = (row.get("document_id"), row.get("snapshot_hash"))
+        key = _source_anchor_key(row, source, row.get("table_id", ""), extended_sources=extended_sources)
+        if key is not None and not row.get("stale"):
+            anchor = anchors.setdefault(key, row)
+            if anchor is not row:
+                omitted = _shared_source_fields(row, anchor, field_names)
+                ref = {"id": anchor["id"], "fields": list(omitted)}
+                if len(json.dumps(omitted, ensure_ascii=False)) > len(json.dumps(ref, ensure_ascii=False)) + 24:
+                    packed = {k:v for k,v in row.items() if k not in omitted}
+                    packed["source_fields_from"] = ref
         if not row.get("stale") and all(isinstance(v, str) and v for v in source):
-            table = row.get("table_id", "")
-            if isinstance(table, str):
-                anchor = anchors.setdefault((*source, table), row)
-                if anchor is not row:
-                    fields = [k for k in _PROVENANCE_FIELDS if isinstance(row.get(k), str)
-                              and row[k] == anchor.get(k)]
-                    ref = {"id": anchor["id"], "fields": fields}
-                    omitted = {k:row[k] for k in fields}
-                    if len(json.dumps(omitted, ensure_ascii=False)) > len(json.dumps(ref, ensure_ascii=False)) + 24:
-                        packed = {k:v for k,v in row.items() if k not in omitted}
-                        packed["source_fields_from"] = ref
             if (row.get("kind") == "document" and isinstance(row.get("entity"), str)
                     and isinstance(row.get("text_snapshot_hash"), str) and row["text_snapshot_hash"]
                     and type(row.get("start")) is int and type(row.get("end")) is int

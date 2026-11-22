@@ -62,7 +62,7 @@ def named_issuers(text, companies):
     return [c["ticker"] for c in companies if any(re.search(p,text,re.I) for p in _issuer_patterns(c))]
 
 
-_SWITCH_TARGET = re.compile(r"(?:换|改)(?:看|查|问|到|成|为)\s*|\bswitch\s+(?:from\s+.{1,55}?\s+)?to\s+", re.I)
+_SWITCH_TARGET = re.compile(r"(?:[换換]|改)(?:看|查|[问問]|到|成|[为為])\s*|\bswitch\s+(?:from\s+.{1,55}?\s+)?to\s+", re.I)
 
 
 def focus_of_switch(message):
@@ -176,6 +176,21 @@ def resolve_issuer_scope(message, previous_questions, scope, companies, *, amend
         return list(dict.fromkeys(previous + named)), None
     active = named[0] if named else (issuer_context(message, previous_questions, scope, companies) if focus == message else None)
     return ([active] if active else (previous if len(previous) > 1 else [])), active
+
+
+def preserves_prior_participants(message):
+    focus = focus_of_switch(message)
+    if _ADDITION.search(focus) or _PEER.search(focus) or _OPEN_PEERS.search(focus):
+        return True
+    # A stated comparison can name one issuer and refer to its counterpart
+    # by a pronoun. Protect that counterpart when checking a proposed replacement.
+    if not _COMPARISON.search(_PERIOD_COMPARISON.sub(" ", focus)):
+        return False
+    return bool(re.search(
+        r"\b(?:it|them|both|the other (?:one|company|issuer)|(?:this|that|these|those)"
+        r"(?:\s+(?:comparison|issuer|company|one|two))?)\b"
+        r"|它[们們]?|[那这這两兩](?:一|两|兩)?家|二者|上述公司|刚才的公司|剛才的公司",
+        focus, re.I))
 
 
 def user_issuer_boundary(message, declared, resolved, prior):

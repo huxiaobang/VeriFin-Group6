@@ -66,6 +66,13 @@ class _NoRedirect(HTTPRedirectHandler):
         raise DataError("Redirect refused: one tool action permits one HTTP request.")
 
 
+# Extend issuer identity by CIK while preserving the frozen source manifest.
+_ISSUER_ALIASES = {
+    "0000789019": ("微软", "微軟"),
+    "0001045810": ("英伟达", "英偉達", "輝達"),
+}
+
+
 class SnapshotData:
     _sec_rate_lock = threading.Lock()
     _last_sec_request_at = 0.0
@@ -84,6 +91,9 @@ class SnapshotData:
             manifest_bytes = manifest_path.read_bytes()
             self.manifest = json.loads(manifest_bytes.decode("utf-8"))
             self.manifest_hash = hashlib.sha256(manifest_bytes).hexdigest()
+            for issuer in self.manifest.get("companies", []):
+                if aliases := _ISSUER_ALIASES.get(issuer.get("cik")):
+                    issuer["aliases"] = list(dict.fromkeys([*issuer.get("aliases", []), *aliases]))
 
     @property
     def timeout(self):
@@ -120,6 +130,10 @@ class SnapshotData:
     def info(self, name: str) -> dict:
         return dict(self.manifest["files"][name], snapshot=name, mode="replay")
 
+    @classmethod
+    def sec_request_delay(cls):
+        return max(0.0, 0.2 - (time.monotonic() - cls._last_sec_request_at))
+
     def _get_sec_response(self, url: str, kind: str) -> tuple[bytes, dict]:
         if not self.allow_network:
             raise DataError("Network access is disabled. Select replay data or enable SEC access.")
@@ -139,7 +153,7 @@ class SnapshotData:
         # Bound throughput without sleeping or concealing a queued request.
         with self._sec_rate_lock:
             now = time.monotonic()
-            if now - SnapshotData._last_sec_request_at < 0.2:
+            if self.sec_request_delay():
                 raise DataError("SEC request rate limited locally; a later explicit action may retry.")
             SnapshotData._last_sec_request_at = now
             self.network_requests += 1
@@ -157,16 +171,21 @@ class SnapshotData:
         if len(raw) > max_bytes:
             raise DataError(f"SEC response exceeds the {max_bytes // 1_000_000} MB bound.")
         if kind == "html":
-            prefix = raw[:3000].lower()
-            if b"<html" not in prefix and b"<!doctype html" not in prefix:
-                raise DataError("SEC response lacks an HTML document header.")
-            if any(marker in prefix for marker in [b"your request originates from an undeclared automated tool", b"request rate threshold exceeded"]):
-                raise DataError("SEC access-denial page is not a filing.")
+            self.check_sec_html(raw)
         sha = hashlib.sha256(raw).hexdigest()
         path = self.save_live_bytes(raw, ".json" if kind == "json" else ".html")
         return raw, {"sha256": sha, "url": url, "content_type": content_type, "charset": charset,
                      "retrieved_at": datetime.now(timezone.utc).isoformat(),
                      "snapshot": str(path), "mode": "live"}
+
+    @staticmethod
+    def check_sec_html(raw):
+        prefix = raw[:3000].lower()
+        if b"<html" not in prefix and b"<!doctype html" not in prefix:
+            raise DataError("SEC response lacks an HTML document header.")
+        if (b"your request originates from an undeclared automated tool" in prefix
+                or b"request rate threshold exceeded" in prefix):
+            raise DataError("SEC access-denial page is not a filing.")
 
     def save_live_bytes(self, raw: bytes, suffix: str) -> Path:
         if suffix not in {".json", ".html", ".text.txt"}:

@@ -4,10 +4,11 @@ from __future__ import annotations
 from datetime import date, datetime
 import json
 import re
+from .reporting_period import ENGLISH_DAY, parse_reported_date
 
 
 _LEADING_CUTOFF = re.compile(
-    r"^\s*(?:研究时点(?:固定)?为|研究截止时间为|信息截止时间为|"
+    r"^\s*(?:研究时点(?:固定)?为|研究截止时间为|信息截止时间为|截至|"
     r"(?:research\s+)?as\s+of\s+)"
     r"\s*(\d{4}-\d{2}-\d{2}T\d{2}:\d{2}(?::\d{2}(?:\.\d{1,6})?)?(?:Z|[+-]\d{2}:\d{2}))"
     r"(?=$|[\s,，。；;（(])", re.IGNORECASE)
@@ -17,7 +18,10 @@ _AMENDED_CUTOFF = re.compile(
     r"|\b(?:change|set|move)\s+(?:the\s+)?(?:research |information )?(?:cutoff|as[- ]of date)\s+to\s+", re.I)
 _CUTOFF_VALUE = re.compile(r"(\d{4}-\d{2}-\d{2}(?:T\d{2}:\d{2}(?::\d{2}(?:\.\d{1,6})?)?(?:Z|[+-]\d{2}:\d{2}))?)"
                            r"(?=$|[\s,，。；;（(])", re.I)
-_AS_OF_DAY = re.compile(r"^\s*截至\s*(\d{4})年\s*(\d{1,2})月\s*(\d{1,2})日\s*[,，。；;]\s*")
+_AS_OF_DAY = re.compile(
+    r"^\s*(?:as\s+of\s+|截至\s*)(?P<day>\d{4}-\d{2}-\d{2}|\d{4}/\d{1,2}/\d{1,2}"
+    r"|\d{4}\s*年\s*\d{1,2}\s*月\s*\d{1,2}\s*日|" + ENGLISH_DAY + r")"
+    r"\s*(?:[,，。；;]\s*|(?=请问|請問|(?:what|which|how|did|was|were)\b))", re.I)
 
 
 def after_cutoff_prefix(message):
@@ -25,9 +29,12 @@ def after_cutoff_prefix(message):
 
 def stated_cutoff(message):
     """Recognize a stated information cutoff separately from a financial reporting period."""
-    chinese_day = _AS_OF_DAY.match(message)
-    if chinese_day:
-        return date(*(int(v) for v in chinese_day.groups())).isoformat()
+    day_prefix = _AS_OF_DAY.match(message)
+    if day_prefix:
+        day = parse_reported_date(day_prefix["day"].replace("/", "-"))
+        if day is None:
+            raise ValueError("The stated information cutoff is not a valid calendar date.")
+        return day
     match = _LEADING_CUTOFF.match(message)
     if match:
         return validate_scope({"cutoff":match.group(1)})["cutoff"]
@@ -96,7 +103,7 @@ def edit_scope(store, session_id, scope, *, expected_version):
     if type(expected_version) is not int or expected_version < 1:
         raise ValueError("An expected positive scope version is required")
     scope = validate_scope(scope)
-    with session_lock(store, session_id):
+    with session_lock(store, session_id), store.atomic_step():
         before = store.get_session(session_id)
         if before["scope_version"] != expected_version:
             raise ValueError("Scope changed since this form was opened; reload the current scope before saving")

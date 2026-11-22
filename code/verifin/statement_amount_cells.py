@@ -11,7 +11,7 @@ from .revenue_bridge import layout, month_start
 from .structured_documents import _hidden
 
 METRICS = {"net sales": "revenue", "total net sales": "revenue", "revenue": "revenue",
-           "revenues": "revenue", "total revenue": "revenue", "total revenues": "revenue",
+           "revenues": "revenue", "net revenue": "revenue", "total revenue": "revenue", "total revenues": "revenue",
            "gross profit": "gross_profit", "gross margin": "gross_profit",
            "operating income": "operating_income", "income from operations": "operating_income",
            "operating income (loss)": "operating_income", "operating profit": "operating_income"}
@@ -24,7 +24,7 @@ DURATION = re.compile(r"\b(?:(\d{1,2}|" + "|".join(NUMBERS) + r")[ -](months?|we
 MONTHS = {name.casefold():i for i, name in enumerate(calendar.month_name) if name}
 DATE = re.compile(r"\b(" + "|".join(MONTHS) + r")\s+(\d{1,2}),?\s+(\d{4})\b", re.I)
 SCALE = {"thousands":1000, "millions":10**6, "billions":10**9}
-SCALE_NOTE = re.compile(r"\bin (thousands|millions|billions)\b", re.I)
+SCALE_NOTE = re.compile(r"(?:\bin\s+|^\s*\(\s*)(thousands|millions|billions)\b", re.I)
 CURRENCIES = {"U.S. DOLLARS":"USD", "US DOLLARS":"USD", "CANADIAN DOLLARS":"CAD",
               "AUSTRALIAN DOLLARS":"AUD", "EUROS":"EUR", "POUNDS STERLING":"GBP"}
 CURRENCY = re.compile(r"\b(?:USD|CAD|AUD|NZD|HKD|SGD|EUR|GBP|JPY|CNY|CHF|U\.S\. dollars|US dollars|Canadian dollars|Australian dollars|euros|pounds sterling)\b", re.I)
@@ -44,7 +44,36 @@ def text(node):
     return " ".join(" ".join(node.itertext()).split())
 
 
-def period(headings):
+def filed_boundaries(data, doc):
+    """Reporting boundaries disclosed in this issuer's filings strictly before the release."""
+    company = next((c for c in data.manifest["companies"] if c["ticker"] == doc["entity"]), {})
+    path = company.get("submissions")
+    if not path or not company.get("cik"):
+        return {}
+    filings = data.json(path)
+    if str(filings.get("cik", "")).lstrip("0") != str(company["cik"]).lstrip("0"):
+        return {}
+    recent = filings.get("filings", {}).get("recent", {})
+    columns = [recent.get(k, []) for k in ("reportDate", "filingDate", "form", "accessionNumber")]
+    if len({len(c) for c in columns}) != 1:
+        return {}
+    boundaries = {}
+    source_hash = data.info(path)["sha256"]
+    for ending, filed, form, accession in zip(*columns):
+        if (form not in ("10-K", "10-Q", "10-KT", "10-QT") or not accession or
+                not isinstance(ending, str) or not isinstance(filed, str) or
+                not ending or not ending <= filed < doc["published_at"][:10]):
+            continue
+        try:
+            day = date.fromisoformat(ending)
+        except ValueError:
+            continue
+        boundaries.setdefault(day, []).append(dict(form=form, accession=accession, filed=filed,
+            report_date=ending, snapshot_path=path, snapshot_hash=source_hash))
+    return boundaries
+
+
+def period(headings, boundaries=None):
     header = " ".join(headings).replace("–", "-").replace("‑", "-")
     durations = list(DURATION.finditer(header))
     dates = list(DATE.finditer(header))
@@ -68,6 +97,15 @@ def period(headings):
         else:
             if n not in (3, 6, 9, 12):
                 return None
+            if boundaries and n in (3, 12):
+                allowed = (13, 14) if n == 3 else (52, 53)
+                forms = ("10-Q", "10-K") if n == 3 else ("10-K",)
+                window = [(d, refs) for d, refs in boundaries.items()
+                          if end - timedelta(weeks=max(allowed)) <= d < end
+                          and any(r["form"] in (*forms, "10-QT", "10-KT") for r in refs)]
+                if (len(window) == 1 and all(r["form"] in forms for r in window[0][1])
+                        and (end - window[0][0]).days in {w * 7 for w in allowed}):
+                    return (window[0][0] + timedelta(days=1)).isoformat(), end.isoformat()
             start = month_start(end, n)
         return start.isoformat(), end.isoformat()
     except (ValueError, OverflowError):
@@ -82,7 +120,7 @@ def nearby(table):
     cursor = table
     while cursor.getparent() is not None and cursor.getparent().tag in ("div","section"):
         previous = cursor.getprevious()
-        while (previous is not None and previous.tag in ("span", "br") and len(previous) == 0
+        while (previous is not None and previous.tag in ("span", "br", "font") and len(previous) == 0
                and not text(previous) and not (previous.tail or "").strip()):
             previous = previous.getprevious()
         if previous is not None or (cursor.getparent().text or "").strip():
@@ -107,6 +145,8 @@ def row_span(parts, source_text):
     # complete original row, including all comparison columns, in the text snapshot.
     sep = r"(?:\s+|\s*(?:\|\s*)+)"
     escaped = [r"\s+".join(re.escape(w) for w in part.split()) for part in parts if part]
+    if not escaped:
+        return None
     matches = re.finditer(r"(?<!\w)" + sep.join(escaped) + r"(?![\w.,]\d|\w)", source_text)
     first = next(matches, None)
     if first and not next(matches, None):
@@ -141,7 +181,7 @@ def prior_currency_evidence(data, doc, metrics=("revenue", "gross_profit", "oper
     return by_value
 
 
-def row_amounts(row, label_node, header_nodes, scale):
+def row_amounts(row, label_node, header_nodes, scale, boundaries):
     values = {}
     if not header_nodes or row[-1][0].stop < max(span.stop for span, _, _ in header_nodes):
         return {}  # A physically short row can shift every following value into the wrong period.
@@ -155,7 +195,7 @@ def row_amounts(row, label_node, header_nodes, scale):
         if len(stacks) != 1:
             return {}
         stack = next(iter(stacks))
-        dates = period([v for v,_ in stack])
+        dates = period([v for v,_ in stack], boundaries)
         if not dates or dates in values:
             return {}
         number = amount["amount"].replace("−","-").replace(",","").replace("(","-").replace(")","")
@@ -205,7 +245,7 @@ def expense_rows(rows, targets, paths):
     return inventory
 
 
-def statement_table(table, paths, doc, info, document_id, source_text, prior_units):
+def statement_table(table, paths, doc, info, document_id, source_text, prior_units, boundaries=None):
     rows = [[(span, text(td), td) for span, _, td in row] for row in layout(table)]
     candidate_rows = defaultdict(list)
     for i, row in enumerate(rows):
@@ -248,7 +288,7 @@ def statement_table(table, paths, doc, info, document_id, source_text, prior_uni
     scale = SCALE[scale_name]
     columns = {}
     for metric, (i,label,label_node) in targets.items():
-        columns[metric] = row_amounts(rows[i], label_node, header_nodes, scale)
+        columns[metric] = row_amounts(rows[i], label_node, header_nodes, scale, boundaries)
     explicit = {CURRENCIES.get(m.upper(),m.upper()) for n in notes for m in CURRENCY.findall(text(n))}
     symbols = {s for row in rows for _,v,_ in row for s in re.findall(r"[$£€]",v)}
     matched = {}
@@ -282,9 +322,27 @@ def statement_table(table, paths, doc, info, document_id, source_text, prior_uni
     table_path = paths[table]
     table_id = stable_id("table_", [document_id, info["sha256"], table_path])
     inventory = expense_rows(rows, targets, paths)
+    # If another table repeats a row, the entire ordered source table can still
+    # establish its location. An incomplete or ambiguous table stays unresolved.
+    table_range = None
+    def source_row(index):
+        nonlocal table_range
+        parts = [v for _, v, _ in rows[index] if v]
+        offsets = row_span(parts, source_text)
+        if offsets or not parts:
+            return offsets
+        if table_range is None:
+            table_range = row_span([v for row in rows for _, v, _ in row if v], source_text) or ()
+        if table_range:
+            begin, end = table_range
+            within = row_span(parts, source_text[begin:end])
+            if within:
+                return begin + within[0], begin + within[1]
+        return None
+
     expense_offsets = {}
     for i, entry in inventory.items():
-        offsets = row_span([v for _, v, _ in rows[i]], source_text)
+        offsets = source_row(i)
         expense_offsets[i] = offsets
         if offsets:
             entry["source_row_start"], entry["source_row_end"] = offsets
@@ -298,17 +356,17 @@ def statement_table(table, paths, doc, info, document_id, source_text, prior_uni
             metric = "operating_expense_" + entry["key"]
         label_node = next(node for _, value, node in rows[i] if value)
         targets[metric] = (i, entry["label"], label_node)
-        columns[metric] = row_amounts(rows[i], label_node, header_nodes, scale)
+        columns[metric] = row_amounts(rows[i], label_node, header_nodes, scale, boundaries)
     out = []
     expense_ids = {}
     for metric, (i,label,label_node) in targets.items():
-        offsets = expense_offsets[i] if i in inventory else row_span([v for _,v,_ in rows[i]], source_text)
+        offsets = expense_offsets[i] if i in inventory else source_row(i)
         if offsets is None:
             continue
         for (start,end), (printed,v,node,span,stack) in columns[metric].items():
             headings = [value for value,_ in stack]
             out.append({
-                "kind":"financial_fact", "cell_type":"statement_amount_cell", "mode":"replay",
+                "kind":"financial_fact", "cell_type":"statement_amount_cell", "mode":info.get("mode", "replay"),
                 "id":stable_id("cell_",[document_id,info["sha256"],paths[node]]),
                 "document_id":document_id,"entity":doc["entity"],"published_at":doc["published_at"],
                 "form":doc.get("form"), "snapshot_hash":info["sha256"],"snapshot_path":doc["source"],
@@ -324,6 +382,9 @@ def statement_table(table, paths, doc, info, document_id, source_text, prior_uni
                 "currency_reference":matched.get(currency),"value":int(v) if v==v.to_integral_value() else float(v),
                 "currency":currency,"unit":currency,"scale":1,"basis":"US-GAAP","business_scope":"consolidated",
                 "metric":metric,"concept":"issuer:"+metric,"period_start":start,"period_end":end})
+            previous = date.fromisoformat(start) - timedelta(days=1)
+            if boundaries and previous in boundaries:
+                out[-1]["preceding_filing_references"] = boundaries[previous]
             if i in inventory:
                 out[-1].update(expense_key=inventory[i]["key"], expense_role=inventory[i]["role"])
                 expense_ids[i, start, end] = out[-1]["id"]
@@ -343,8 +404,9 @@ def statement_table(table, paths, doc, info, document_id, source_text, prior_uni
     return out
 
 
-def statement_cells(raw, doc, info, document_id, source_text, prior_units):
+def statement_cells(raw, doc, info, document_id, source_text, prior_units, boundaries=None, *, companies=()):
     from lxml import html
+    from .reported_gaap_cells import reported_gaap_cells
     root = html.document_fromstring(raw, parser=html.HTMLParser(encoding="utf-8", no_network=True, remove_comments=True))
     tree = root.getroottree()
     paths = {node:tree.getpath(node) for node in root.iter() if node.tag in
@@ -353,9 +415,19 @@ def statement_cells(raw, doc, info, document_id, source_text, prior_units):
         if _hidden(node) and node.getparent() is not None:
             node.drop_tree()
     cells = []
+    summaries = []
     for table in root.xpath("//table[not(.//table)]"):
         try:
-            cells.extend(statement_table(table, paths, doc, info, document_id, source_text, prior_units))
+            cells.extend(statement_table(table, paths, doc, info, document_id, source_text, prior_units, boundaries))
+            if summary := reported_gaap_cells(table, paths, doc, info, document_id, source_text, prior_units, companies):
+                summaries.append(summary)
         except (ValueError, OverflowError):
             continue
+    if len(summaries) == 1:
+        summary = summaries[0]
+        # Keep summary inputs only when independently located statement cells agree.
+        if not any((row["value"], row["currency"]) != (cell["value"], cell["currency"])
+                   for row in cells for cell in summary
+                   if all(row[k] == cell[k] for k in ("metric", "period_start", "period_end"))):
+            cells.extend(summary)
     return cells

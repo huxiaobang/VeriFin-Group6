@@ -116,6 +116,9 @@ class PlannerEvidenceTests(unittest.TestCase):
         updated["calculations"].append({"id":"additional","value":1})
         self.assertIsNone(repeated_statement_gap(context, prior["arguments"], updated))
         self.assertIsNone(repeated_statement_gap(context, {"entity":"OTHER"}, returned))
+        prior["arguments"].update(comparison="direct_quarter_revenue_guidance", fiscal_quarter="2026Q1")
+        self.assertTrue(repeated_statement_gap(context, prior["arguments"], returned))
+        self.assertIsNone(repeated_statement_gap(context, {**prior["arguments"], "fiscal_quarter":"2026Q2"}, returned))
 
     def test_extra_selected_method_must_be_assessed_before_cash_only_handoff(self):
         context = self.context()

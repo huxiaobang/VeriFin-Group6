@@ -115,6 +115,27 @@ class StopHandoffTests(unittest.TestCase):
                 self.assertEqual(1, sum(e["type"] == "verification" for e in store.events(sid)))
                 self.assertEqual(["planner"], [role for role, _ in next_model.calls])
 
+    def test_delivery_only_recovery_reuses_a_review_without_starting_a_turn(self):
+        with SessionStore(self.path) as store:
+            sid = store.create_session()["id"]
+            engine = ResearchEngine(store, ScriptedModel(full_script()), FixtureTools())
+            self.assertIsNone(engine.recover_interrupted(sid))
+            with patch.object(engine, "_save_delivery", side_effect=SimulatedCrash), self.assertRaises(SimulatedCrash):
+                engine.ask(sid, "Revenue?")
+        with SessionStore(self.path) as store:
+            tools = FixtureTools()
+            engine = ResearchEngine(store, None, tools)
+            episodes = [e for e in store.events(sid) if e["type"] in ("model_call", "tool_call")]
+            report = engine.recover_interrupted(sid)
+            self.assertEqual("interrupted", report["stop_reason"])
+            self.assertTrue(report["verification_available"])
+            self.assertEqual("Supported", report["claims"][0]["status"])
+            self.assertIsNone(engine.recover_interrupted(sid))
+            self.assertEqual(1, len(store.list_reports(sid)))
+            self.assertEqual(["user", "assistant"], [m["role"] for m in store.get_context(sid)["messages"]])
+            self.assertEqual(episodes, [e for e in store.events(sid) if e["type"] in ("model_call", "tool_call")])
+            self.assertEqual([], tools.calls)
+
     def test_delivery_checkpoint_failure_rolls_back_report_and_assistant_message_together(self):
         with SessionStore(self.path) as store:
             sid = store.create_session()["id"]

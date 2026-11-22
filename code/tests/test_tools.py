@@ -73,9 +73,10 @@ class ToolTests(unittest.TestCase):
             self.assertEqual(self.tools.current_document_catalog({**scope, "entities": ["ANOTHER"]})["forms"], [])
 
     def test_text_only_passages_do_not_offer_a_futile_calculator_reread(self):
-        doc = self.tools.document_corpus().documents[0]
+        doc = next(d for d in self.tools.document_corpus().documents if "FY25 Q2 - Press Releases" in d["text"])
         ids = []
-        for start in (0, 200):
+        # Both spans are navigation text; a financial label would invoke the optional table parser.
+        for start in (0, doc["text"].index("Microsoft 365 Azure")):
             result = self.run_tool("read_document", {"entity":doc["entity"], "document_id":doc["id"],
                                    "offset":start, "limit_chars":200}, save=True)
             self.assertEqual(result["data"]["numeric_operand_status"], "text_only")

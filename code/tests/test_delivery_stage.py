@@ -1,12 +1,17 @@
 """Delivery stages reflect this archived draft and only its own local receipts."""
 import copy
+from pathlib import Path
+from tempfile import TemporaryDirectory
 import unittest
 from unittest.mock import patch
 
 from tests.test_engine import FACT, FixtureTools, ScriptedModel, full_script
+from tests.test_tools import DATA
 from verifin.engine import Budget, ResearchEngine
 from verifin.model import ModelError, OutputContractError, ProviderOutputError
+from verifin.reporting import render_markdown, report_view
 from verifin.storage import SessionStore
+from verifin.tools import ToolRegistry
 
 
 class DeliveryStageTests(unittest.TestCase):
@@ -32,6 +37,12 @@ class DeliveryStageTests(unittest.TestCase):
                 self.assertEqual(r.get("critic_receipt_error"), "unknown_reference" if isinstance(error, OutputContractError) else None)
                 self.assertEqual(r["episode_material_ids"], {"evidence": [FACT["id"]], "calculations": []})
                 self.assertEqual(r, self.store.get_report(sid, r["version"]))
+                # Earlier archives already contain the delivery stage, but omit the length diagnostic.
+                archived = {k: v for k, v in r.items() if k != "critic_output_error"}
+                view = self.store.report_with_stage(sid, archived)
+                expected = "max_output_tokens" if isinstance(error, ProviderOutputError) else None
+                self.assertEqual(view.get("critic_output_error"), expected)
+                self.assertEqual(view, r)
 
     def test_no_committed_draft_in_new_turn_is_independent_of_history(self):
         script = full_script()
@@ -131,3 +142,94 @@ class DeliveryStageTests(unittest.TestCase):
         r.pop("episode_material_ids")
         r["evidence"][0]["version"] += 1
         self.assertEqual([], self.store.report_with_stage(self.sid, r)["episode_material_ids"]["evidence"])
+
+
+    def test_reopened_q1_draft_keeps_its_sources_and_marks_budget_interruption(self):
+        question = ("把分析期间改为微软 FY2025 Q1（截至 2024 年 9 月 30 日）。"
+                    "这一季的营收、营业利润和营业利润率分别是多少？请给出出处和算式。")
+        clock = [0.0]
+        dates = {"period_start": "2024-07-01", "period_end": "2024-09-30"}
+
+        class Q1Draft:
+            def complete(self, role, ctx):
+                if role == "researcher":
+                    amounts = {r["metric"]: r for r in ctx["evidence"] if r.get("period_end") == dates["period_end"]}
+                    margin, = ctx["calculations"]
+                    text = (f"营收 {amounts['revenue']['value'] / 10**8:.2f} 亿美元，"
+                            f"营业利润 {amounts['operating_income']['value'] / 10**8:.2f} 亿美元，"
+                            f"营业利润率 {margin['value']:.2f}%。")
+                    clock[0] = 241
+                    return {"summary": text, "claims": [{"id": "q1", "text": text, "constraints": {},
+                            "requirement_ids": ["q1-lookup"], "evidence_ids": [r["id"] for r in amounts.values()],
+                            "calculation_ids": [margin["id"]]}], "answered_requirement_ids": ["q1-lookup"],
+                            "unanswered_requirement_ids": []}
+                if role != "planner":
+                    raise AssertionError("Critic should not start after the deadline")
+                available = {r["metric"]: r["id"] for r in ctx["evidence"] if r.get("period_end") == dates["period_end"]}
+                for metric in ("revenue", "operating_income"):
+                    if metric not in available:
+                        return {"action": "tool", "tool": "financial_facts",
+                                "arguments": {"entity": "MSFT", "metric": metric, **dates},
+                                "scope": dates, "requirements": [{"id": "q1-lookup", "text": question}]}
+                if not ctx["calculations"]:
+                    return {"action": "tool", "tool": "calculate", "arguments": {
+                        "operation": "margin", "operand_ids": [available["operating_income"], available["revenue"]]}}
+                return {"action": "research"}
+
+        with TemporaryDirectory() as directory:
+            path = Path(directory) / "sessions.sqlite"
+            with SessionStore(path) as store:
+                sid = store.create_session()["id"]
+                first = ResearchEngine(store, ScriptedModel(full_script()), FixtureTools()).ask(
+                    sid, "What was Microsoft's FY2025 Q2 revenue?")["report"]
+                self.assertEqual(first["delivery_stage"], "reviewed")
+            with SessionStore(path) as store:
+                tools = ToolRegistry(store, DATA / "replay", cache_dir=Path(directory) / "cache")
+                report = ResearchEngine(store, Q1Draft(), tools, clock=lambda: clock[0], auto_skills=False).ask(
+                    sid, question, budget=Budget(16, 16, 240))["report"]
+                self.assertEqual(store.get_report(sid, 1), first)
+                self.assertEqual(store.get_report(sid, 2), report)
+        self.assertEqual((report["status"], report["stop_reason"], report["delivery_stage"]),
+                         ("partial", "time_budget_exhausted", "draft_unverified"))
+        self.assertFalse(report["verification_available"])
+        markdown = render_markdown(report)
+        for text in ("时间预算已用完，尚未完成 Critic 核验", "未核验草稿", "655.85", "305.52", "46.58"):
+            self.assertIn(text, markdown)
+        self.assertTrue(all(row["status"] == "draft_unverified" for row in report_view(report)["question_answers"]))
+        self.assertEqual(len(report["episode_material_ids"]["evidence"]), 2)
+
+
+    def test_chinese_margin_comparison_shows_missing_cutoff_after_planner_failure(self):
+        question = ("刚才算出微软 FY2025 Q2 的营业利润率是 45.46%。和上年同期相比变化了多少个百分点？"
+                    "微软在财报中披露了哪些原因？请引用原文，并标明哪些原因没有披露。")
+        args = {"entity": "MSFT", "period_start": "2024-10-01", "period_end": "2024-12-31"}
+        script = [
+            ("planner", {"action": "tool", "tool": "reconcile_operating_margin", "arguments": args,
+                         "scope": {"entities": ["MSFT"]}, "requirements": [{"id": "compare", "text": question}]}),
+            ("planner", ModelError("uncategorized fixture")),
+        ]
+        with TemporaryDirectory() as directory:
+            tools = ToolRegistry(self.store, DATA / "replay", cache_dir=Path(directory) / "cache")
+            report = ResearchEngine(self.store, ScriptedModel(script), tools).ask(self.sid, question)["report"]
+        self.assertEqual((report["stop_reason"], report["delivery_stage"]), ("execution_error", "no_draft"))
+        self.assertEqual(report["tool_fault"]["tool"], "reconcile_operating_margin")
+        self.assertIn("同比比较需要明确的信息截止日", report_view(report)["stage_message"])
+        self.assertFalse(report["verification_available"])
+
+    def test_same_question_retains_reviewed_answer_after_revised_draft_hits_deadline(self):
+        script = full_script()
+        revised = {**script[2][1], "summary": "An unreviewed revision."}
+        clock = [0.0]
+        researches = []
+        def advance(role, context):
+            if role == "researcher":
+                researches.append(role)
+                if len(researches) == 2:
+                    clock[0] = 241
+        model = ScriptedModel([*script[:-1], script[1], ("researcher", revised)], callback=advance)
+        report = ResearchEngine(self.store, model, FixtureTools(), clock=lambda: clock[0]).ask(
+            self.sid, "Revenue?", budget=Budget(16, 16, 240))["report"]
+        self.assertEqual((report["stop_reason"], report["delivery_stage"]), ("time_budget_exhausted", "reviewed"))
+        self.assertTrue(report["verification_available"])
+        self.assertEqual(report["summary"], script[2][1]["summary"])
+        self.assertNotIn(revised["summary"], render_markdown(report))

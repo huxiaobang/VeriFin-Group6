@@ -209,6 +209,83 @@ class ResponsesTests(unittest.TestCase):
         ctx["evidence"][0] = {**row, "stale": True}
         self.assertNotEqual(client._cached_tool_input("critic", ctx)["input"][1], expanded[1])
 
+    def test_cached_responses_references_exact_receipt_and_source_metadata_before_admission(self):
+        from verifin.context import shared_evidence_sources, shared_receipt_data
+        from verifin.model import ContextLimitReached
+
+        source = {"id": "current", "document_id": "release", "snapshot_hash": "snapshot",
+                  "table_id": "income", "column_header_locators": ["/very/long/path/" * 25],
+                  "locator": "current column", "value": 1200}
+        prior = {**source, "id": "prior", "locator": "previous column", "value": 800}
+        data = {"original_tool_observation": "財報回執" * 200}
+        receipt = {"summary": "same receipt", "ok": True, "data": data}
+        ctx = {"tools": TOOL_SPECS[:1], "evidence": [source, prior], "episode": {
+            "request": "Compare two periods", "last_tool_result": receipt,
+            "recent_tool_results": [dict(receipt, tool="discover_company")],
+        }}
+        packed = shared_receipt_data(shared_evidence_sources(ctx, extended_sources=True))
+        limit = len(json.dumps(packed, ensure_ascii=False, allow_nan=False))
+        transport = Mock(return_value=response())
+        with self.assertRaises(ContextLimitReached):
+            self.client(transport, max_context_chars=limit).complete("planner", ctx)
+        transport.assert_not_called()
+        self.client(transport, cache_shared_tools=True, max_context_chars=limit).complete("planner", ctx)
+
+        sent = json.loads(transport.call_args.args[0].data)["input"]
+        packed_source, packed_prior = (
+            json.loads(item["text"].split("\n", 1)[1]) for item in sent[1]["content"])
+        anchor = packed_prior.pop("source_fields_from")
+        self.assertEqual(anchor["id"], source["id"])
+        self.assertEqual({**packed_prior, **{k: packed_source[k] for k in anchor["fields"]}}, prior)
+        episode = json.loads(sent[-1]["content"].split("\n", 1)[1])["episode"]
+        latest = episode["last_tool_result"]
+        index = latest.pop("data_from_recent_tool_result")
+        self.assertNotIn("data", latest)
+        self.assertEqual({**latest, "data": episode["recent_tool_results"][index]["data"]}, receipt)
+        self.assertIn("data_from_recent_tool_result", sent[-2]["content"])
+        self.assertEqual(ctx["evidence"], [source, prior])
+        self.assertEqual(ctx["episode"]["last_tool_result"], receipt)
+
+    def test_issuer_attribution_wire_instructs_roles_to_keep_scoped_reported_magnitudes(self):
+        passage = ("In the three months ended March 31, service revenue rose 17% year over year "
+                   "primarily due to subscription renewals. Installation volumes declined "
+                   "because customers deferred projects.")
+        evidence = {"id": "issuer-release", "kind": "document", "text": passage}
+        requirement = {"id": "r1", "text": "Summarize the issuer's explanation of quarterly movements."}
+        claims = [
+            {"id": "claim:services", "text": "Service revenue rose 17% year over year in the quarter ended "
+             "March 31. The issuer primarily attributed the increase to subscription renewals.",
+             "evidence_ids": [evidence["id"]], "calculation_ids": [], "requirement_ids": ["r1"], "constraints": {}},
+            {"id": "claim:installations", "text": "The issuer attributed the decline in quarterly installation "
+             "volumes to customers deferring projects.", "evidence_ids": [evidence["id"]],
+             "calculation_ids": [], "requirement_ids": ["r1"], "constraints": {}},
+        ]
+        draft = {"claims": claims, "summary": "", "answered_requirement_ids": ["r1"],
+                 "unanswered_requirement_ids": []}
+        review = {"reviewed_claim_ids": [claim["id"] for claim in claims], "reviewed_requirement_ids": ["r1"],
+                  "issues": [], "claim_verdicts": [
+                      {"claim_id": claim["id"], "status": "Supported", "evidence_refs": [evidence["id"]],
+                       "basis": "The cited issuer passage supports this quarterly attribution."}
+                      for claim in claims]}
+        ctx = {"tools": TOOL_SPECS[:1], "episode": {"request": requirement["text"]},
+               "evidence": [evidence], "requirements": [requirement]}
+        for role, reply, language in (
+                ("planner", {"action": "research"}, "Seek the reported magnitude and comparison period"),
+                ("researcher", draft, "when the cited disclosure directly provides them for the same measure and scope"),
+                ("critic", review, "Verify any quantified contribution separately.")):
+            with self.subTest(role=role):
+                transport = Mock(return_value=response(reply))
+                client = self.client(transport, cache_shared_tools=True)
+                role_ctx = {**ctx, "claims": claims} if role == "critic" else ctx
+                client.complete(role, role_ctx)
+                sent = json.loads(transport.call_args.args[0].data)["input"]
+                self.assertEqual(json.loads(sent[1]["content"][0]["text"].split("\n", 1)[1]), evidence)
+                instructions = " ".join(sent[-2]["content"].split())
+                self.assertIn(language, instructions)
+                if role == "researcher":
+                    self.assertIn("Keep an unquantified movement qualitative.", instructions)
+                    self.assertIn("Quantify a driver's contribution only when separately supported.", instructions)
+
     def test_frozen_cases_share_tools_only_and_unknown_tools_stay_user_data(self):
         client = self.client(lambda *_: response(), cache_shared_tools=True)
         ctx = {"evidence": [{"id":"a","text":"original"}], "tools": TOOL_SPECS[:1]}

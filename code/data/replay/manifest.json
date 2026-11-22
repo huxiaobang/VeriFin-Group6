@@ -8,6 +8,7 @@
       "ticker": "MSFT",
       "cik": "0000789019",
       "name": "MICROSOFT CORP",
+      "aliases": ["Microsoft", "Microsoft Corp.", "Microsoft Corporation"],
       "facts": "snapshots/sec_msft_companyfacts.json",
       "submissions": "snapshots/sec_msft_submissions.json",
       "prices": "snapshots/yahoo_msft_history.json"
@@ -16,6 +17,7 @@
       "ticker": "NVDA",
       "cik": "0001045810",
       "name": "NVIDIA CORP",
+      "aliases": ["NVIDIA", "NVIDIA Corp.", "NVIDIA Corporation"],
       "facts": "snapshots/sec_nvda_companyfacts.json",
       "submissions": "snapshots/sec_nvda_submissions.json",
       "prices": "snapshots/yahoo_nvda_history.json"

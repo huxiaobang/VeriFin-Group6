@@ -7,7 +7,7 @@ import unittest
 from unittest.mock import Mock
 from urllib.request import Request
 
-from verifin.context import planner_view, shared_evidence_sources
+from verifin.context import planner_view, shared_evidence_sources, shared_receipt_data
 from verifin.model import ModelClient, ModelError, SpendLimitReached
 from verifin.spend_guard import SpendGuard
 from verifin.tools import TOOL_SPECS
@@ -118,6 +118,84 @@ class PlannerViewTests(unittest.TestCase):
         self.assertNotIn("text_parts", packed[4])
         self.assertNotIn("text_parts", packed[5])
         self.assertEqual(self.restore(packed), rows)
+
+
+class SharedProvenanceTests(unittest.TestCase):
+    def test_shared_table_provenance_keeps_exact_cell_headers_and_values(self):
+        first = {
+            "id": "first", "kind": "financial_fact", "document_id": "release", "snapshot_hash": "a" * 64,
+            "table_id": "quarterly-income", "column_headers": ["Three Months Ended", "2025"],
+            "column_header_locators": ["/same/heading/" + "x" * 80],
+            "currency_reference": {"source": "disclosure/" + "x" * 200, "published_at": "2025-07-30"},
+            "printed_unit": "In millions except per share amounts", "printed_value": "76,441", "value": 76_441_000_000,
+            "locator": "row 3, column 4", "period_end": "2025-06-30",
+        }
+        second = {**first, "id": "second", "printed_value": "20,500", "value": 20_500_000_000,
+                  "locator": "row 4, column 4"}
+        changed_header = {**second, "id": "changed", "column_headers": ["Nine Months Ended", "2025"]}
+        different_source = {**second, "id": "alternate", "snapshot_hash": "b" * 64}
+        stale = {**second, "id": "stale", "stale": True}
+        rows = [first, second, changed_header, different_source, stale]
+        legacy = shared_evidence_sources({"evidence": rows})["evidence"]
+        extended = shared_evidence_sources({"evidence": rows}, extended_sources=True)["evidence"]
+
+        self.assertEqual(legacy[1]["currency_reference"], first["currency_reference"])
+        self.assertEqual(extended[1]["source_fields_from"]["id"], first["id"])
+        self.assertIn("currency_reference", extended[1]["source_fields_from"]["fields"])
+        self.assertIn("column_header_locators", extended[1]["source_fields_from"]["fields"])
+        self.assertEqual(extended[1]["value"], second["value"])
+        self.assertEqual(extended[1]["locator"], second["locator"])
+        self.assertEqual(extended[2]["column_headers"], changed_header["column_headers"])
+        self.assertEqual(extended[3:], rows[3:])
+        self.assertEqual(PlannerViewTests.restore(extended), rows)
+        self.assertLess(len(json.dumps(extended)), len(json.dumps(legacy)))
+
+    def test_taxonomy_metadata_requires_same_source_and_concept(self):
+        first = {
+            "id": "first", "kind": "financial_fact", "entity": "MSFT", "snapshot_hash": "a" * 64,
+            "source_url": "https://example.test/companyfacts", "concept": "revenue",
+            "concept_description": "Official taxonomy release note. " * 20,
+            "period_end": "2025-03-31", "value": 700,
+        }
+        second = {**first, "id": "second", "period_end": "2025-06-30", "value": 900}
+        other_concept = {**second, "id": "third", "concept": "gross_profit"}
+        other_source = {**second, "id": "fourth", "source_url": "https://example.test/other"}
+        context = {"evidence": [first, second, other_concept, other_source]}
+
+        packed = shared_evidence_sources(context, extended_sources=True)["evidence"]
+        self.assertIs(shared_evidence_sources(context), context)
+        self.assertIn("concept_description", packed[1]["source_fields_from"]["fields"])
+        self.assertEqual(packed[1]["period_end"], second["period_end"])
+        self.assertEqual(packed[2:], context["evidence"][2:])
+        self.assertEqual(PlannerViewTests.restore(packed), context["evidence"])
+
+    def test_latest_tool_data_points_only_to_an_exact_visible_duplicate(self):
+        observation = {
+            "ok": True, "summary": "Results", "data": {"search_term": "截至期末" * 40, "value": 1},
+            "evidence": [{"id": "c1", "value": 76_441_000_000}], "calculations": [],
+        }
+        recent = {"tool": "search_documents", "ok": True, "summary": "Results", "data": dict(observation["data"]),
+                  "evidence_ids": ["c1"], "calculation_ids": []}
+        context = {"episode": {"last_tool_result": observation, "recent_tool_results": [recent, dict(recent)]}}
+        packed = shared_receipt_data(context)["episode"]
+        latest = dict(packed["last_tool_result"])
+        self.assertEqual(latest.pop("data_from_recent_tool_result"), 1)
+        latest["data"] = packed["recent_tool_results"][1]["data"]
+        self.assertEqual(latest, observation)
+        self.assertEqual(packed["recent_tool_results"], context["episode"]["recent_tool_results"])
+        self.assertEqual(context["episode"]["last_tool_result"], observation)
+
+        different = {**recent, "data": {**recent["data"], "value": True}}
+        contexts_without_safe_duplicate = [
+            {**context["episode"], "recent_tool_results": [recent, different]},
+            {**context["episode"], "recent_tool_results": [recent, {**recent, "summary": "Other operation"}]},
+            {**context["episode"], "recent_tool_results": []},
+            {"last_tool_result": observation},
+        ]
+        for episode in contexts_without_safe_duplicate:
+            with self.subTest(episode=episode):
+                other = {"episode": episode}
+                self.assertIs(shared_receipt_data(other), other)
 
 
 class BudgetTests(unittest.TestCase):

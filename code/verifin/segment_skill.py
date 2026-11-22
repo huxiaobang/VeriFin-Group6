@@ -6,6 +6,7 @@ from decimal import Decimal
 import re
 
 from .skill_routing import TOPICS
+from .reporting_period import filed_quarter_label
 from .revenue_bridge import dom, layout, nearby, numeric
 from .statement_amount_cells import nearby as statement_headings, text
 
@@ -193,22 +194,9 @@ def _horizontal(rows,end,title):
                 yield metric, [(label,_amount(line,s,label)) for s,label in cols[:-1]], _amount(line,*cols[-1])
 
 
-def _disclosed_quarter(root,end):
-    fields=[]
-    for name in ('DocumentFiscalYearFocus','DocumentFiscalPeriodFocus','DocumentPeriodEndDate'):
-        vals={text(n) for n in root.xpath('//*[@name=$name]',name='dei:'+name)}
-        if len(vals)!=1:
-            return None
-        fields.append(vals.pop())
-    year,quarter,printed=fields
-    if not re.fullmatch(r'20\d{2}',year) or not re.fullmatch(r'Q[1-4]',quarter) or _date(printed)!=end:
-        return None
-    return year+quarter
-
-
 def _bridges(doc,end):
     root=dom(doc['raw'])
-    quarter=_disclosed_quarter(root,end)
+    quarter = filed_quarter_label(root, end)
     tables=[]
     anchors=defaultdict(list)
     for table in root.xpath('//table'):

@@ -337,8 +337,13 @@ def eps_and_margin(result, rel, earlier):
         result.gap("缺可比的单季营业利润与收入，无法算出该季度的营业利润率。")
 
 
-def analyze(question, history, documents, result):
+def analyze(question, history, documents, result, *, data=None, fiscal_quarter=None,
+            period_start=None, period_end=None):
     """Caller supplies the issuer's as-of-visible documents. History only resolves the metric."""
+    if fiscal_quarter:
+        from .guidance_comparison import direct_comparison
+        direct_comparison(fiscal_quarter, documents, result, data=data, period_start=period_start, period_end=period_end)
+        return
     if re.search(r"恒定汇率|不变汇率|有机收入|分部|区域收入|北美收入|segment|organic revenue|constant currency|"
                  r"未调整.{0,8}EBIT|unadjusted EBIT|EBITDA", question, re.I):
         result.gap("当前仅能核对已支持的集团报告口径，提问指定的范围或盈利定义需要单独证据。")

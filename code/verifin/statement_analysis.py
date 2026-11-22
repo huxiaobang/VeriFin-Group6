@@ -4,7 +4,7 @@ from importlib import import_module
 from pathlib import Path
 
 from .data import available_by, cutoff_time, stable_id
-from .financial import check_operand_shape
+from .financial import GUIDANCE_VARIANCE, check_operand_shape
 from .record_context import statement_dimensions
 
 
@@ -34,6 +34,8 @@ def scalar(operation, values):
         if not b:
             raise ValueError("Zero denominator")
         return a / b * (100 if operation == "margin" else 1)
+    if operation == GUIDANCE_VARIANCE:
+        return (a / b - 1) * 100
     raise ValueError("Unknown statement operation " + operation)
 
 
@@ -52,7 +54,7 @@ class Findings:
         self.gaps = []
         self.inapplicable_reason = None
 
-    def fact(self, doc, locator, metric, value, unit, period, label=None):
+    def fact(self, doc, locator, metric, value, unit, period, label=None, **dimensions):
         if not all(isinstance(v, str) and v.strip() for v in (locator, metric, unit, period)):
             raise ValueError("Each amount needs an original locator, measure, unit and period")
         key = stable_id("cell_", [doc["entity"], doc["url"], locator, metric, unit, period])
@@ -60,7 +62,7 @@ class Findings:
                       unit=unit, value=number(value), source_url=doc["url"], locator=locator,
                       published_at=doc["published_at"], snapshot_hash=doc["snapshot_hash"],
                       source_form=doc["source_form"], period_label=period,
-                      text=label or metric, snapshot=doc["source"])
+                      text=label or metric, snapshot=doc["source"], **dimensions)
         if key in self.evidence and self.evidence[key]["value"] != record["value"]:
             raise ValueError("Conflicting values at one disclosure locator")
         self.evidence[key] = record
@@ -81,13 +83,16 @@ class Findings:
         if operation == "percentage_point_change":
             if records[0]["unit"] != "%" or unit != "percentage_points":
                 raise ValueError("Percentage-point change requires percent operands and a percentage-point result")
-        elif operation not in ("ratio", "margin") and unit != records[0]["unit"]:
+        elif operation not in ("ratio", "margin", GUIDANCE_VARIANCE) and unit != records[0]["unit"]:
             raise ValueError("Unexpected output unit for additive amounts")
+        dimensions = statement_dimensions(operation, records, unit)
         answer = scalar(operation, [Decimal(str(r["value"])) for r in records])
+        formula = (f"({ids[0]} / {ids[1]} - 1) × 100" if operation == GUIDANCE_VARIANCE
+                   else f"{operation}({', '.join(ids)})")
         key = stable_id("calc_", [label, operation, ids, unit])
         self.calculations[key] = dict(id=key, entity=records[0]["entity"], metric=label,
                                      operation=operation, operand_ids=ids, unit=unit, value=number(answer),
-                                     formula=f"{operation}({', '.join(ids)})", **statement_dimensions(operation, records, unit))
+                                     formula=formula, **dimensions)
         return key
 
     def note(self, text, ids, **metadata):
@@ -106,7 +111,7 @@ class Findings:
             self.gaps.append(text)
 
 
-def analyze(data, entity, cutoff, question, history, skills, *, cash_quarter_end=None, period_start=None, period_end=None):
+def analyze(data, entity, cutoff, question, history, skills, *, cash_quarter_end=None, guidance_fiscal_quarter=None, period_start=None, period_end=None):
     docs = []
     for d in data.manifest["documents"]:
         name = Path(d["source"]).name
@@ -117,9 +122,10 @@ def analyze(data, entity, cutoff, question, history, skills, *, cash_quarter_end
         info = data.info(d["source"])
         extra = {}
         if ("incremental-profit-margin" in skills and name.lower().endswith((".htm", ".html")) and d.get("text")):
-            from .statement_amount_cells import prior_currency_evidence
+            from .statement_amount_cells import filed_boundaries, prior_currency_evidence
             extra["source_text"] = data.raw(d["text"]).decode("utf-8")
             extra["prior_units"] = prior_currency_evidence(data, d)
+            extra["filed_boundaries"] = filed_boundaries(data, d)
         docs.append({**d, **extra, "name":name, "filename":name, "raw":data.raw(d["source"]),
                      "url":info["url"], "snapshot_hash":info["sha256"],
                      "source_form":d.get("source_form") or d.get("form") or "issuer_document"})
@@ -142,6 +148,9 @@ def analyze(data, entity, cutoff, question, history, skills, *, cash_quarter_end
                     options["quarter_end"] = period_end
                 if skill in {"reconcile-segment-totals", "isolate-discrete-tax-item"} and period_start:
                     options["period_start"] = period_start
+                if skill == "implied-period-guidance" and guidance_fiscal_quarter:
+                    options.update(data=data, fiscal_quarter=guidance_fiscal_quarter,
+                                   period_start=period_start, period_end=period_end)
                 module.analyze(question, history, docs, findings, **options)
             except ImportError as exc:
                 if exc.name not in ("lxml", "pdfplumber", "pypdf"):

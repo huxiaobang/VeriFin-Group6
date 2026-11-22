@@ -1,0 +1,482 @@
+{
+  "renderer_revision": "503c149808aeaf225f4b35be89c89dd50a827fbc",
+  "method": "Real ask and known fixture role outputs; separate archived true-run report re-rendering; zero paid requests.",
+  "scenarios": {
+    "no-draft-call-limit": {
+      "status": "partial",
+      "stop_reason": "model_budget_exhausted",
+      "stage": "no_draft",
+      "stage_message": "本轮在形成草稿前停止。",
+      "answer_rows": [
+        {
+          "status": "no_draft",
+          "text": null,
+          "missing": null
+        },
+        {
+          "status": "no_draft",
+          "text": null,
+          "missing": null
+        }
+      ],
+      "claims": [],
+      "material_ids": {
+        "evidence": [
+          "fact:revenue"
+        ],
+        "calculations": []
+      },
+      "summary_kind": "see_report_findings",
+      "board_kind": "result",
+      "board_first_line": "replay-model · 本轮未完整通过。模型调用次数已达上限。尚未形成草稿。",
+      "markdown_sha256": "7ec554d1875469470aeabe19535e376cffe0099e349ee0173bd5f9cafac147cd",
+      "board_body_sha256": "fa3ca6452819df2d330ab2adf5d312c24e2e61674c155183b039bae2488edc89",
+      "scripted_roles": [
+        "planner"
+      ],
+      "max_seconds": 240,
+      "reviewed_snapshot_versions": [],
+      "restores": [],
+      "retained_claim_history": []
+    },
+    "draft-unverified-call-limit": {
+      "status": "partial",
+      "stop_reason": "model_budget_exhausted",
+      "stage": "draft_unverified",
+      "stage_message": "本轮已保存草稿。模型调用预算已用完，尚未完成 Critic 核验。",
+      "answer_rows": [
+        {
+          "status": "draft_unverified",
+          "text": null,
+          "missing": null
+        },
+        {
+          "status": "draft_unverified",
+          "text": null,
+          "missing": null
+        }
+      ],
+      "claims": [
+        {
+          "status": "Pending Verification",
+          "version": 1,
+          "text": "Quarterly revenue was USD 69.632 billion."
+        }
+      ],
+      "material_ids": {
+        "evidence": [
+          "fact:revenue"
+        ],
+        "calculations": []
+      },
+      "summary_kind": "unverified_researcher_draft",
+      "board_kind": "result",
+      "board_first_line": "replay-model · 本轮未完整通过。模型调用次数已达上限。已有草稿，尚未核验。",
+      "markdown_sha256": "65c6b8bc53502ff7fbbef1c8653547fc2cd189651edb84bf8ff33b5c81bcea03",
+      "board_body_sha256": "4818f6d01ed4039548e9a9d8588ce92d70492830cc5fe61cac06afbba0b6ffb0",
+      "scripted_roles": [
+        "planner",
+        "planner",
+        "researcher"
+      ],
+      "max_seconds": 240,
+      "reviewed_snapshot_versions": [],
+      "restores": [],
+      "retained_claim_history": [
+        {
+          "text": "Quarterly revenue was USD 69.632 billion.",
+          "version": 1
+        }
+      ]
+    },
+    "reviewed-partial-call-limit": {
+      "status": "partial",
+      "stop_reason": "model_budget_exhausted",
+      "stage": "reviewed",
+      "stage_message": null,
+      "answer_rows": [
+        {
+          "status": "answered",
+          "text": "Quarterly revenue was USD 69.632 billion.",
+          "missing": null
+        },
+        {
+          "status": "gap",
+          "text": null,
+          "missing": "Operating income still needs its filing evidence."
+        }
+      ],
+      "claims": [
+        {
+          "status": "Supported",
+          "version": 2,
+          "text": "Quarterly revenue was USD 69.632 billion."
+        }
+      ],
+      "material_ids": {
+        "evidence": [
+          "fact:revenue"
+        ],
+        "calculations": []
+      },
+      "summary_kind": "unverified_researcher_draft",
+      "board_kind": "result",
+      "board_first_line": "replay-model · 本轮未完整通过。模型调用次数已达上限。已保存已审报告。",
+      "markdown_sha256": "ea944b3bfd1fcc17fb8829cc7cf6e49dcf7f073583534258f88d369d3840a011",
+      "board_body_sha256": "4e4fc775f061784b37bacaadba514e5168fb845e1af659a4a6922f3b544ee7b5",
+      "scripted_roles": [
+        "planner",
+        "planner",
+        "researcher",
+        "critic"
+      ],
+      "max_seconds": 240,
+      "reviewed_snapshot_versions": [
+        {
+          "claim:revenue": 2
+        }
+      ],
+      "restores": [],
+      "retained_claim_history": [
+        {
+          "text": "Quarterly revenue was USD 69.632 billion.",
+          "version": 1
+        },
+        {
+          "text": "Quarterly revenue was USD 69.632 billion.",
+          "version": 2
+        }
+      ]
+    },
+    "revision-admission-stops-at-call-limit": {
+      "status": "partial",
+      "stop_reason": "model_budget_exhausted",
+      "stage": "reviewed",
+      "stage_message": null,
+      "answer_rows": [
+        {
+          "status": "answered",
+          "text": "Quarterly revenue was USD 69.632 billion.",
+          "missing": null
+        },
+        {
+          "status": "gap",
+          "text": null,
+          "missing": "Operating income still needs its filing evidence."
+        }
+      ],
+      "claims": [
+        {
+          "status": "Supported",
+          "version": 2,
+          "text": "Quarterly revenue was USD 69.632 billion."
+        }
+      ],
+      "material_ids": {
+        "evidence": [
+          "fact:revenue"
+        ],
+        "calculations": []
+      },
+      "summary_kind": "unverified_researcher_draft",
+      "board_kind": "result",
+      "board_first_line": "replay-model · 本轮未完整通过。模型调用次数已达上限。已保存已审报告。",
+      "markdown_sha256": "9546c40dfcf5178a8bf39d859405251c9146004d4ae48616bee46439d4a420b1",
+      "board_body_sha256": "b758a2927a4911f02b067d5d6b545053fecbfe84f795d04933955add5daff464",
+      "scripted_roles": [
+        "planner",
+        "planner",
+        "researcher",
+        "critic",
+        "planner"
+      ],
+      "max_seconds": 240,
+      "reviewed_snapshot_versions": [
+        {
+          "claim:revenue": 2
+        }
+      ],
+      "restores": [],
+      "retained_claim_history": [
+        {
+          "text": "Quarterly revenue was USD 69.632 billion.",
+          "version": 1
+        },
+        {
+          "text": "Quarterly revenue was USD 69.632 billion.",
+          "version": 2
+        }
+      ]
+    },
+    "revision-saved-before-call-limit": {
+      "status": "partial",
+      "stop_reason": "model_budget_exhausted",
+      "stage": "reviewed",
+      "stage_message": null,
+      "answer_rows": [
+        {
+          "status": "answered",
+          "text": "Quarterly revenue was USD 69.632 billion.",
+          "missing": null
+        },
+        {
+          "status": "gap",
+          "text": null,
+          "missing": "Operating income still needs its filing evidence."
+        }
+      ],
+      "claims": [
+        {
+          "status": "Supported",
+          "version": 2,
+          "text": "Quarterly revenue was USD 69.632 billion."
+        }
+      ],
+      "material_ids": {
+        "evidence": [
+          "fact:revenue"
+        ],
+        "calculations": []
+      },
+      "summary_kind": "unverified_researcher_draft",
+      "board_kind": "result",
+      "board_first_line": "replay-model · 本轮未完整通过。模型调用次数已达上限。已保存已审报告。",
+      "markdown_sha256": "ebc01e4ec36bd35245b2e714f060d26c70fbb46b0ed4913bc3a40170c8b17fab",
+      "board_body_sha256": "695cb462a22970118268b45306390f75cd9a52b3d89598ee00e62b1d5750573a",
+      "scripted_roles": [
+        "planner",
+        "planner",
+        "researcher",
+        "critic",
+        "planner",
+        "researcher",
+        "critic"
+      ],
+      "max_seconds": 240,
+      "reviewed_snapshot_versions": [
+        {
+          "claim:revenue": 2
+        }
+      ],
+      "restores": [
+        {
+          "claim:revenue": 2
+        }
+      ],
+      "retained_claim_history": [
+        {
+          "text": "Quarterly revenue was USD 69.632 billion.",
+          "version": 1
+        },
+        {
+          "text": "Quarterly revenue was USD 69.632 billion.",
+          "version": 2
+        },
+        {
+          "text": "Quarterly revenue was USD 69.632 billion. New revision has distinct wording.",
+          "version": 3
+        }
+      ]
+    },
+    "revision-saved-before-deadline": {
+      "status": "partial",
+      "stop_reason": "time_budget_exhausted",
+      "stage": "reviewed",
+      "stage_message": null,
+      "answer_rows": [
+        {
+          "status": "answered",
+          "text": "Quarterly revenue was USD 69.632 billion.",
+          "missing": null
+        },
+        {
+          "status": "gap",
+          "text": null,
+          "missing": "Operating income still needs its filing evidence."
+        }
+      ],
+      "claims": [
+        {
+          "status": "Supported",
+          "version": 2,
+          "text": "Quarterly revenue was USD 69.632 billion."
+        }
+      ],
+      "material_ids": {
+        "evidence": [
+          "fact:revenue"
+        ],
+        "calculations": []
+      },
+      "summary_kind": "unverified_researcher_draft",
+      "board_kind": "result",
+      "board_first_line": "replay-model · 本轮未完整通过。本轮已达运行时限。已保存已审报告。",
+      "markdown_sha256": "ade441d8763b265c37270c20cc916bb9a00eb2bd76cf0d299856b756b0de73e3",
+      "board_body_sha256": "bb7fa065f506c3d1a23dda7d18d32cc29a97306473360a6a37f5fec4c51985f4",
+      "scripted_roles": [
+        "planner",
+        "planner",
+        "researcher",
+        "critic",
+        "planner",
+        "researcher"
+      ],
+      "max_seconds": 60,
+      "reviewed_snapshot_versions": [
+        {
+          "claim:revenue": 2
+        }
+      ],
+      "restores": [
+        {
+          "claim:revenue": 2
+        }
+      ],
+      "retained_claim_history": [
+        {
+          "text": "Quarterly revenue was USD 69.632 billion.",
+          "version": 1
+        },
+        {
+          "text": "Quarterly revenue was USD 69.632 billion.",
+          "version": 2
+        },
+        {
+          "text": "Quarterly revenue was USD 69.632 billion. New revision has distinct wording.",
+          "version": 3
+        }
+      ]
+    },
+    "archived-qwen-N4": {
+      "status": "partial",
+      "stop_reason": "time_budget_exhausted",
+      "stage": "no_draft",
+      "stage_message": "本轮在形成草稿前停止。",
+      "answer_rows": [
+        {
+          "status": "no_draft",
+          "text": null,
+          "missing": null
+        }
+      ],
+      "claims": [],
+      "material_ids": {
+        "evidence": [
+          "chunk_3be8f84879761fb0f57baf56",
+          "chunk_cc7f6530e053c2b886f6cf0f",
+          "chunk_1fd5bd89ec7600cf7936dd89",
+          "chunk_5052373a1ae04a69805e65e4",
+          "chunk_c6604d49a25c0531aa1ae6fc",
+          "price_06300facb9495964710dd013",
+          "price_68b8845b6b5808226575d157",
+          "span_22f1f8d4165d13138111ce6c",
+          "span_13ce55ba9ed6aee1bd802ba2",
+          "chunk_e44ebdb3bf835e85c065d20b",
+          "chunk_89c749ac4cee6141c5056099"
+        ],
+        "calculations": [
+          "calc_05abd49c1832ec87b58ffcba"
+        ]
+      },
+      "summary_kind": "see_report_findings",
+      "board_kind": "result",
+      "board_first_line": "replay-model · 本轮未完整通过。本轮已达运行时限。尚未形成草稿。",
+      "markdown_sha256": "db1118e4f009cfd9d6ed18da31e2afcfcb1e9525f0331668333aae022e3e5200",
+      "board_body_sha256": "b5f393b2213ccd0b28cdf2b7b4937814c0d455e725f70e61efc647b4942b7b2d",
+      "historical_answer_sha256": "db1118e4f009cfd9d6ed18da31e2afcfcb1e9525f0331668333aae022e3e5200",
+      "originating_product_revision": "0d7d9f3b23843a4a6b07bd3008072672244a00c1",
+      "not_a_new_model_run": true,
+      "max_seconds": 360
+    },
+    "archived-gpt-A4": {
+      "status": "partial",
+      "stop_reason": "model_budget_exhausted",
+      "stage": "reviewed",
+      "stage_message": null,
+      "answer_rows": [
+        {
+          "status": "gap",
+          "text": null,
+          "missing": "答句尚未给出与所问利润率口径一致、且有原始证据或计算支持的数值。"
+        },
+        {
+          "status": "answered",
+          "text": "价格是 legacy provider close，并非 adjusted close 或总回报；拆股调整状态未知，历史时点源字节、盘中发布时间以及授权和调整语义未验证，不能无保留认证为完全核实的原始未复权价格。",
+          "missing": null
+        }
+      ],
+      "claims": [
+        {
+          "status": "Supported",
+          "version": 4,
+          "text": "AMD 于 2025-02-04 美东时间 16:15 发布 FY2024 Q4 及全年业绩。发布稿标题中的原文“Fourth Quarter and Full Year 2024”位于保存文本字符 [12,45)，确认财年与季度。SEC 8-K 业绩附件的合并季度利润表列示本季截至 2024-12-28，去年可比季度截至 2023-12-30。"
+        },
+        {
+          "status": "Insufficient Evidence",
+          "version": 4,
+          "text": "原始合并季度利润表显示，AMD FY2024 Q4 收入为 7,658、GAAP 营业利润为 871；去年同季分别为 6,168 和 342，单位均为百万美元。精确营业利润率应分别按 871÷7658×100% 和 342÷6168×100% 计算，同比百分点变化为两者之差；不能用发布稿取整后的 11% 和 6% 替代精确计算。原表网址：https://www.sec.gov/Archives/edgar/data/2488/000000248825000009/q42024991.htm。目前没有对应的已保存计算记录，仍需补做两期比率及其差值计算。"
+        },
+        {
+          "status": "Supported",
+          "version": 4,
+          "text": "合并利润表桥所需的本季／去年同季金额均已披露（百万美元）：毛利 3,882／2,911，研发费用 1,712／1,511，销售及管理费用 792／644，营业费用中的收购相关无形资产摊销 332／420，许可收益 11／6，重组费用 186／破折号。桥应以各季度自身收入为分母：毛利贡献为 +(3882/7658−2911/6168)×100；研发为 −(1712/7658−1511/6168)×100；销售管理为 −(792/7658−644/6168)×100；摊销为 −(332/7658−420/6168)×100；许可收益为 +(11/7658−6/6168)×100；重组为 −(186/7658−0/6168)×100。此前把研发和销售管理费用金额增长写成利润率的抵消项是不正确的：金额增长不等于费用率上升，必须比较各自收入占比。本次不再保留该错误方向判断。两期金额核对及六项数值贡献仍需保存计算记录；这属于分析桥，不是管理层归因。"
+        },
+        {
+          "status": "Supported",
+          "version": 4,
+          "text": "公司对季度分部收入增长的解释是：数据中心同比增长 69%，主要由 Instinct GPU 出货快速增长及 EPYC CPU 销售增长推动；客户端同比增长 58%，主要由 Ryzen 处理器强劲需求推动。这些是管理层对分部收入的归因，不能直接作为合并 GAAP 营业利润率改善的定量分配。"
+        },
+        {
+          "status": "Supported",
+          "version": 4,
+          "text": "公司同时解释，游戏业务季度收入同比下降 59%，主要因为半定制业务收入下降；嵌入式业务下降 13%，背景是终端市场需求仍然参差不齐。CFO 表示公司继续积极投资 AI 与创新。这些表述提供业务背景，但所引段落没有逐项解释合并研发、销售管理等费用变化，也没有量化合并毛利率改善的驱动。"
+        },
+        {
+          "status": "Insufficient Evidence",
+          "version": 4,
+          "text": "Yahoo chart legacy snapshot 记录的 AMD 上市普通股（供应商代码 AMD，交易所标识 NMS）2025-02-04 收盘价为 119.50 美元／股，时区为 America/New_York；字段是 provider close。"
+        },
+        {
+          "status": "Insufficient Evidence",
+          "version": 4,
+          "text": "相同证券、供应商及价格口径的 2025-02-05 收盘价约为 112.01 美元／股；收益计算使用保存记录的完整精度，而非先将价格舍入。"
+        },
+        {
+          "status": "Supported",
+          "version": 4,
+          "text": "2025-02-04 收盘至 2025-02-05 收盘的价格收益为 −6.27%，公式为（后日 provider close／前日 provider close−1）×100。该结果仅描述指定窗口的收盘价变化，不含现金股息，也不证明跌幅由财报造成。"
+        },
+        {
+          "status": "Supported",
+          "version": 4,
+          "text": "截至 2025-02-06 的资料范围是有限本地回放，不是实时网络核验。原始合并季度表已提供全部所需金额；实际尝试的搜索仅返回 text_only，两次营业利润率桥调用未识别出明确季度报表，季度 facts 查询也无匹配，因此自动计算验证尚未完成，不能将此误写为公司未披露。价格是 legacy provider close，并非 adjusted close 或总回报；拆股调整状态未知，历史时点源字节、盘中发布时间以及授权和调整语义未验证，不能无保留认证为完全核实的原始未复权价格。当前资料没有用于隔离其他同期因素的事件研究证据，不能将股价变化直接归因于财报。"
+        }
+      ],
+      "material_ids": {
+        "evidence": [
+          "metadata_b703bf3f98cbc6467758db5f",
+          "span_961ef6aaa3ba86b92e2d6aca",
+          "chunk_17bb56d413c78ed94f649a97",
+          "chunk_9fd5e739dc63ef063acc2792",
+          "chunk_9e7993acc20f6cab6e05ddae",
+          "chunk_70a336cb1dfe3fe451024f1e",
+          "chunk_1006855b98047ff8fa3f34a8",
+          "price_b69379603a78bf4789021c77",
+          "price_212a38c64601f0c0e09b8c97"
+        ],
+        "calculations": [
+          "calc_d105dc1bab756a82b49cdba1"
+        ]
+      },
+      "summary_kind": "unverified_researcher_draft",
+      "board_kind": "result",
+      "board_first_line": "replay-model · 本轮未完整通过。模型调用次数已达上限。已保存已审报告。",
+      "markdown_sha256": "0d03df0b9dbe10e2bced74c6c56283bbef444f2f651acfb0111bbb4c049fbb21",
+      "board_body_sha256": "c88f0b0a3a0926284e713b0a0c0d16ef3cdfb3f3beedc069688c411b55a13f73",
+      "historical_answer_sha256": "0d03df0b9dbe10e2bced74c6c56283bbef444f2f651acfb0111bbb4c049fbb21",
+      "originating_product_revision": "0d7d9f3b23843a4a6b07bd3008072672244a00c1",
+      "not_a_new_model_run": true,
+      "max_seconds": 360
+    }
+  }
+}

@@ -8,8 +8,9 @@ _QUARTER = re.compile(r"(20\d{2})\s*(?:年|财年|FY)?\s*(?:第\s*)?([一二三�
 _ORDINAL = re.compile(r"(?<![上一前那这同另下])(?:第\s*)?([一二三四1-4])\s*(?:财季|季度)|\bQ([1-4])\b", re.I)
 _YEAR_WINDOW = re.compile(r"20\d\d\s*(?:财年|年度|年\s*全年)|\bFY\s*20\d\d\b|"
                           r"(?:改看|改为|只看|改查)\s*(?:全年|本财年)|\bfull (?:fiscal )?year\b", re.I)
-_PRIOR_QUARTER = re.compile(r"(?:上(?:一|个|一个)?|前(?:一个|一))(?:财季|季(?:度)?)|\b(?:last|previous|prior) (?:fiscal )?quarter\b", re.I)
-_BASELINE = re.compile(r"(?:环比|较|比|相对(?:于)?|(?:相|对)比|从|与|和|versus|vs\.?|from|compared? (?:with|to))"
+_PRIOR_CHINESE = r"(?:上(?:一[个個]?|[个個])?|前一[个個]?)(?:[财財]季(?:度)?|季(?:度)?)"
+_PRIOR_QUARTER = re.compile(_PRIOR_CHINESE + r"|\b(?:last|previous|prior|preceding) (?:fiscal )?quarter\b", re.I)
+_BASELINE = re.compile(r"(?:[环環]比|[较較]|比|相[对對](?:[于於])?|(?:相|[对對])比|[从從与與]|和|versus|vs\.?|from|compared? (?:with|to))"
                        r"\s*(?:the\s+)?$", re.I)
 _OTHER_WINDOW = re.compile(r"(?:[12]\d{3}[-/]\d{1,2}[-/]\d{1,2}|(?:FY\s*20\d\d|20\d\d\s*(?:财年|年))"
                            r"|上半年|下半年|上年度|上一年|明年|下(?:一|个)?(?:财季|季度)|"
@@ -18,6 +19,8 @@ _OTHER_WINDOW = re.compile(r"(?:[12]\d{3}[-/]\d{1,2}[-/]\d{1,2}|(?:FY\s*20\d\d|2
 
 _WORD_QUARTER = re.compile(
     r"\b(first|second|third|fourth)\s+(?:fiscal\s+)?quarter\s+(?:of\s+)?(?:fiscal\s+(?:year\s+)?|FY\s*)?(20\d{2})\b", re.I)
+_SHARED_YEAR_JOIN = re.compile(r"\s*(?:[,，、和及与與]|\band\b)\s*(?=Q[1-4]\b)", re.I)
+_BARE_QUARTER = re.compile(r"Q([1-4])\b", re.I)
 _REFERENCE_BEFORE = re.compile(
     r"(?:相对于|相比于|对比|较|比|从|\bvs\.?|\bversus|\bfrom|\bcompared? (?:with|to))\s*(?:the\s+)?$", re.I)
 _REFERENCE_AFTER = re.compile(r"\s*(?:相比|比较而言|为基[期准])")
@@ -28,6 +31,14 @@ def quarter_mentions(text):
         year = match[1] or match[3] or match[6]
         q = match[2] or match[4] or match[5]
         yield match, year + "Q" + (str("一二三四".index(q)+1) if q in "一二三四" else q)
+        end = match.end()
+        while join := _SHARED_YEAR_JOIN.match(text, end):
+            other = _BARE_QUARTER.match(text, join.end())
+            # A separate year after the quarter number is already parsed above.
+            if re.match(r"\s*(?:FY\s*)?20\d{2}\b", text[other.end():], re.I):
+                break
+            yield other, year + "Q" + other[1]
+            end = other.end()
     for match in _WORD_QUARTER.finditer(text):
         ordinal = ("first", "second", "third", "fourth").index(match[1].lower()) + 1
         yield match, f"{match[2]}Q{ordinal}"
@@ -73,6 +84,34 @@ def previous_quarter(label, year_on_year=False):
 
 def targets_prior_quarter(text):
     return any(not _BASELINE.search(text[:match.start()]) for match in _PRIOR_QUARTER.finditer(text))
+
+
+_LATEST_CHINESE = (r"(?:最新|最近)(?:一[个個期])?(?:已|剛|刚|經|经|的|公布|公佈|披露|[发發][布佈]|[报報]告|"
+                   r"[财財][务務]|[业業][绩績]|公告)*[ \t]*(?:[财財]季(?:度)?|季度|[财財][报報]|[业業][绩績]公告)")
+_LATEST_ENGLISH = (r"(?:latest|most recent(?:ly)?)\s+(?:(?:publicly|reported|announced|disclosed|published|released|"
+                   r"fiscal)\s+)*quarter\b")
+_ANCHOR_PREDECESSOR = re.compile(
+    _LATEST_CHINESE + r"\s*(?:之前的|以前的|之前|以前|的)?\s*" + _PRIOR_CHINESE
+    + r"|\b(?:quarter\s+(?:immediately\s+)?(?:before|preceding|previous to|prior to)\s+(?:the\s+)?"
+    + _LATEST_ENGLISH + r"|" + _LATEST_ENGLISH + r"['’]s\s+(?:previous|prior|preceding)\s+quarter\b)", re.I)
+_MULTI_PERIOD = re.compile(
+    r"同比|[环環]比|比[较較]|[对對]比|差[额額]|去年同期|上年同期|"
+    r"(?:近|前|過去|过去|最近|最新)\s*[两兩二三四五六七八九十2-9]\s*[个個]?(?:[财財]季|季度|季)|"
+    r"\b(?:vs\.?|versus|compar\w*|(?:year|quarter).over.(?:year|quarter)|yoy|qoq|"
+    r"(?:last|past|latest|previous|most recent)\s+(?:two|three|four|\d+)\s+(?:fiscal\s+)?quarters?|"
+    r"both\s+(?:quarters?|periods?))\b", re.I)
+
+
+def latest_reported_target(text):
+    """Select the requested period when the latest disclosure is the reference point."""
+    anchored = _ANCHOR_PREDECESSOR.search(text)
+    if _MULTI_PERIOD.search(text) or any(quarter_mentions(text)):
+        return "check_source"
+    if anchored:
+        rest = text[:anchored.start()] + " " + text[anchored.end():]
+        if not (targets_prior_quarter(rest) or re.search(_LATEST_CHINESE + "|" + _LATEST_ENGLISH, rest, re.I)):
+            return "previous"
+    return "check_source" if anchored or targets_prior_quarter(text) else "latest"
 
 
 def requested_quarter(questions, anchor=None):

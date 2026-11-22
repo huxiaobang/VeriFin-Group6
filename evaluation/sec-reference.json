@@ -1,0 +1,58 @@
+{
+  "issuer": "Microsoft Corporation",
+  "cik": 789019,
+  "analysis_cutoff": "2025-08-01T23:59:59-04:00",
+  "companyfacts_snapshot": {
+    "archive_name": "sec_msft_companyfacts.json",
+    "sha256": "f8aae2965b20ad0df44bdf7ccbedf797d275b6b8dc030154a7a311361bb7246f",
+    "url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0000789019.json"
+  },
+  "facts": [
+    {
+      "taxonomy": "us-gaap",
+      "tag": "OperatingIncomeLoss",
+      "unit": "USD",
+      "row": {
+        "start": "2025-01-01",
+        "end": "2025-03-31",
+        "val": 32000000000,
+        "accn": "0000950170-25-061046",
+        "fy": 2025,
+        "fp": "Q3",
+        "form": "10-Q",
+        "filed": "2025-04-30"
+      }
+    },
+    {
+      "taxonomy": "us-gaap",
+      "tag": "RevenueFromContractWithCustomerExcludingAssessedTax",
+      "unit": "USD",
+      "row": {
+        "start": "2025-01-01",
+        "end": "2025-03-31",
+        "val": 70066000000,
+        "accn": "0000950170-25-061046",
+        "fy": 2025,
+        "fp": "Q3",
+        "form": "10-Q",
+        "filed": "2025-04-30"
+      }
+    }
+  ],
+  "submissions_snapshot": {
+    "archive_name": "sec_msft_submissions_captured.json",
+    "sha256": "0c7415804bdda6f5daea74122223596eecc02ee5fe23de8e83cf4e2630ff03e0",
+    "url": "https://data.sec.gov/submissions/CIK0000789019.json"
+  },
+  "primary_filing": {
+    "accessionNumber": "0000950170-25-061046",
+    "form": "10-Q",
+    "reportDate": "2025-03-31",
+    "filingDate": "2025-04-30",
+    "acceptanceDateTime": "2025-04-30T20:08:52.000Z",
+    "primaryDocument": "msft-20250331.htm"
+  },
+  "filings_recent_zero_based_row": 296,
+  "indexed_primary_document_url": "https://www.sec.gov/Archives/edgar/data/789019/000095017025061046/msft-20250331.htm",
+  "archive_coverage": "Exact rows transcribed from the two hashed frozen SEC JSON snapshots. The quarter’s main 10-Q HTML was not available to either run. The reference is for post-run review."
+}

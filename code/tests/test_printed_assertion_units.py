@@ -24,6 +24,25 @@ class PrintedAssertionUnitsTest(unittest.TestCase):
             self.assertEqual((result["asserted_value"], result["asserted_unit"]), (12_500_000, "CAD"))
             self.assertEqual(result["text"], self.claim["text"])
 
+    def test_matching_printed_constraint_is_normalized_only_with_exact_cell_proof(self):
+        dims = {**self.claim["constraints"], "unit": "CAD millions"}
+        printed = {**self.claim, "constraints": dims}
+        correct = self.read(self.cell, printed)
+        self.assertEqual(correct["asserted_value"], 12_500_000)
+        self.assertEqual(correct["constraints"], {**dims, "unit": "CAD"})
+        self.assertEqual(printed["constraints"]["unit"], "CAD millions")
+        for wrong in ({"period_end": "2024-03-31"}, {"currency": "USD"}, {"basis": "other"},
+                      {"printed_scale": 1000}, {"value": 12_500}, {"value": 12_500_000_000}):
+            claim = {**printed, "constraints": {**dims, "basis": "GAAP"}}
+            with self.subTest(wrong=wrong):
+                self.assertEqual(self.read({**self.cell, "basis": "GAAP", **wrong}, claim), claim)
+        nested = {**dims, "asserted_value": 12.5, "asserted_unit": "CAD millions"}
+        normalized = self.read(self.cell, {**printed, "constraints": nested})
+        self.assertEqual(normalized["constraints"]["asserted_value"], 12_500_000)
+        self.assertEqual(normalized["constraints"]["asserted_unit"], "CAD")
+        conflict = {**printed, "constraints": {**nested, "asserted_value": 12.6}}
+        self.assertEqual(self.read(self.cell, conflict), conflict)
+
     def test_requires_exact_matching_cited_cell(self):
         for wrong in ({"period_start": "2024-12-01"}, {"period_end": "2024-03-31"}, {"currency": "USD"},
                       {"printed_scale": 1000}, {"value": 12_500_100}, {"metric": "operating_income"},

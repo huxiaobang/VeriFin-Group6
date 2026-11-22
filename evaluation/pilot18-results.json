@@ -1,0 +1,1367 @@
+{
+  "product_revision": "0d7d9f3b23843a4a6b07bd3008072672244a00c1",
+  "comparison_id": "4a09d21e14ffac5b274b0de233aa86ca9b09c0ec45bebfe6f89e1d338d9ffe0f",
+  "grading": "Human-readable content assessment by Codex against the existing development rubric. Partial output is assessed as delivered; source receipts alone do not answer a question. Model identity visible to the grader. No blinded human adjudication.",
+  "arms": {
+    "gpt": {
+      "cases": [
+        {
+          "question_id": "M1",
+          "content_grade": "通过",
+          "reason": "报告把 FY2025 Q4 定位于 2025-04-01 至 06-30，准确给出合并收入 76,441 USD million，并指明 Income Statements 的 Total revenue 行和三个月截至 June 30、2025 列，给 SEC 附件及行字符区间。",
+          "original_qwen_grade": "失败",
+          "status": "complete",
+          "reviewed": true,
+          "stop_reason": "completed",
+          "elapsed_seconds": 68.356,
+          "answer_sha256": "1da946863200995f876143a0eb6ea249286d144575d38d7604dba9b53c230f98",
+          "role_calls": {
+            "planner": 6,
+            "researcher": 2,
+            "critic": 2
+          },
+          "tool_calls": 3,
+          "usage_receipts": 10
+        },
+        {
+          "question_id": "M2",
+          "content_grade": "通过",
+          "reason": "同季 GAAP 合并利润表四个单元格均有引用，报告得出 FY25Q4 44.90%、去年同期 43.14% 和 +1.76 个百分点；附录用两期未舍入比率相减可复算 1.75855846pp。",
+          "original_qwen_grade": "失败",
+          "status": "complete",
+          "reviewed": true,
+          "stop_reason": "completed",
+          "elapsed_seconds": 92.507,
+          "answer_sha256": "506aa7ffb8daf874848a6d004b446ec25fe55a2602d35d005a31b45ba70beee2",
+          "role_calls": {
+            "planner": 7,
+            "researcher": 2,
+            "critic": 2
+          },
+          "tool_calls": 4,
+          "usage_receipts": 11
+        },
+        {
+          "question_id": "M3",
+          "content_grade": "通过",
+          "reason": "报告背景区逐字引用正确 Q4 SEC 附件，区分 Nadella 的财年 Azure >75bn/+34% 及各工作负载增长、Hood 的季度 Cloud 46.7bn/+27%（固定汇率 +25%）和业务亮点的季度 Azure 等 +39%，分析单独说明无法量化 AI 贡献。问答映射显示 gap，但用户实际可读到完整且有原文定位的已核验解释。",
+          "original_qwen_grade": "部分",
+          "status": "partial",
+          "reviewed": true,
+          "stop_reason": "unresolved_items",
+          "elapsed_seconds": 92.739,
+          "answer_sha256": "3755ea4ede6baf69540bd6db24d89b6d0bea25d7c7eec875a8ce4b3c69e0f516",
+          "role_calls": {
+            "planner": 5,
+            "researcher": 2,
+            "critic": 2
+          },
+          "tool_calls": 2,
+          "usage_receipts": 9
+        },
+        {
+          "question_id": "M4",
+          "content_grade": "通过",
+          "reason": "用户可见且明确标识未经核验的草稿交付两期准确原数、44.90%/43.14%、同比 +1.76pp，分项费率桥与附录可复算。用 SEC 附件区分 CEO 全年 Azure 与 CFO 季度 Cloud，注明不能据此量化利润率成因。Yahoo quote.close 两端 513.24/533.50 与 +3.94747% 齐全，并交代历史快照、拆股语义与因果局限。最终 Critic 材料 180,989 字符超过 180,000，未核验；按原标准依据实际可见内容评分。",
+          "original_qwen_grade": "部分",
+          "status": "partial",
+          "reviewed": false,
+          "stop_reason": "local_context_limit",
+          "elapsed_seconds": 119.671,
+          "answer_sha256": "dcf09469127a62a82ba7d1832128b1bd94d111e22a3087b1fcc317c5396a6027",
+          "role_calls": {
+            "planner": 12,
+            "researcher": 1
+          },
+          "tool_calls": 11,
+          "usage_receipts": 13
+        },
+        {
+          "question_id": "M5",
+          "content_grade": "通过",
+          "reason": "准确引用同季收入对照表报告 +18% 及固定汇率 +17%；说明按各期实际汇率与把两期同用上年同期平均汇率折算的区别，明确 issuer 将恒定汇率披露归为 non-GAAP。",
+          "original_qwen_grade": "通过",
+          "status": "complete",
+          "reviewed": true,
+          "stop_reason": "completed",
+          "elapsed_seconds": 88.855,
+          "answer_sha256": "acfb5355adf7ad04402c46052c4abc944f40ecab2dcb717b4f08230f0853d3ef",
+          "role_calls": {
+            "planner": 4,
+            "researcher": 2,
+            "critic": 2
+          },
+          "tool_calls": 1,
+          "usage_receipts": 8
+        },
+        {
+          "question_id": "M6",
+          "content_grade": "通过",
+          "reason": "合并营收 76,441m 和现有业绩与原表一致，清楚区分全年 Azure >75bn/+34%、季度 Azure and other cloud services +39% 和 Microsoft Cloud +27%。两日 513.24→533.50、+20.26/股、+3.95% 齐全。明确关联不证明股价唯一成因，其他因素及意外程度尚未排除；证据与价格口径说明完整。",
+          "original_qwen_grade": "部分",
+          "status": "complete",
+          "reviewed": true,
+          "stop_reason": "completed",
+          "elapsed_seconds": 89.218,
+          "answer_sha256": "46d94328af0d375f04f9040b10328a530cdcac734774b38a7c93513c045d1382",
+          "role_calls": {
+            "planner": 7,
+            "researcher": 1,
+            "critic": 1
+          },
+          "tool_calls": 5,
+          "usage_receipts": 9
+        },
+        {
+          "question_id": "N1",
+          "content_grade": "通过",
+          "reason": "给出截至 2025-01-26 的 FY2025 Q4 公司收入 39,331 USD million；SEC 附件的简明合并利润表 Revenue 行、三个月季度列及字符 13314–15131 均正确。",
+          "original_qwen_grade": "通过",
+          "status": "complete",
+          "reviewed": true,
+          "stop_reason": "completed",
+          "elapsed_seconds": 36.737,
+          "answer_sha256": "ecab0b1c33efdc0d33668b7d6bbec0cba2bcdd653c64807621406254d9490473",
+          "role_calls": {
+            "planner": 3,
+            "researcher": 1,
+            "critic": 1
+          },
+          "tool_calls": 1,
+          "usage_receipts": 5
+        },
+        {
+          "question_id": "N2",
+          "content_grade": "部分",
+          "reason": "答复核实两期原表 24,034/39,331 和 13,615/22,103，公式与符号约定正确。实际答案明确缺少比率及变动；仅在列出的 Critic 异议中可读到正确 61.11%、61.60%、−0.49pp，未成为研究主张。",
+          "original_qwen_grade": "失败",
+          "status": "partial",
+          "reviewed": true,
+          "stop_reason": "model_budget_exhausted",
+          "elapsed_seconds": 160.242,
+          "answer_sha256": "efcc46e1e62ec3f2627889f98ad394277fd6bc146e0708f8e5e008462c775e5b",
+          "role_calls": {
+            "planner": 12,
+            "researcher": 2,
+            "critic": 2
+          },
+          "tool_calls": 9,
+          "usage_receipts": 16
+        },
+        {
+          "question_id": "N3",
+          "content_grade": "通过",
+          "reason": "CFO 评论第3页及 CEO 发布稿原话分别定位。准确说明加速计算应用需求推动 Data Center、Blackwell 与 H200 对 compute 的不同作用，并把全公司当季毛利率下降限定为向更复杂且高成本系统过渡；没有把分部收入增长推为合并营业利润率原因。",
+          "original_qwen_grade": "通过",
+          "status": "complete",
+          "reviewed": true,
+          "stop_reason": "completed",
+          "elapsed_seconds": 76.042,
+          "answer_sha256": "8578001c62db73294a129767f0b98fc85c037e7ba99df3202b7e06bccbc54e15",
+          "role_calls": {
+            "planner": 5,
+            "researcher": 1,
+            "critic": 1
+          },
+          "tool_calls": 3,
+          "usage_receipts": 7
+        },
+        {
+          "question_id": "N4",
+          "content_grade": "部分",
+          "reason": "交付两端 131.28/120.15 美元及 −8.48%，准确说明更复杂高成本系统影响毛利率、费用开支增加与股价归因的证据边界，并列出原始金额。研究答案明示未算出必需的两期营业利润率 61.11%、61.60% 与 −0.49pp，报告不完整。这些正确比率和费率桥另出现在用户可见的 Critic 修改建议内，未写成研究结论。",
+          "original_qwen_grade": "失败",
+          "status": "partial",
+          "reviewed": true,
+          "stop_reason": "unresolved_items",
+          "elapsed_seconds": 170.833,
+          "answer_sha256": "33cb4cad183c2fc1def56001b5b2c0a8c3bfa05acafcfd2a67f89d2de005f5d3",
+          "role_calls": {
+            "planner": 14,
+            "researcher": 1,
+            "critic": 1
+          },
+          "tool_calls": 13,
+          "usage_receipts": 16
+        },
+        {
+          "question_id": "N5",
+          "content_grade": "部分",
+          "reason": "两项经核验金额及引文正确：Q3 Outlook 中点 37,500m ±2%，Q4 GAAP 原表 39,331m（明确辨别标题近似值）。比较问在结论区明示未回答，未形成百分比主张。可见的 Critic 修订建议确实完整写出（39,331÷37,500−1）×100%=4.882666…%，超出约 4.88%，故按全文承认正确计算已呈现；作为未落实的修改建议，未形成最终研究结论。连续复核后停止。",
+          "original_qwen_grade": "部分",
+          "status": "partial",
+          "reviewed": true,
+          "stop_reason": "repeated_review_without_progress",
+          "elapsed_seconds": 105.14,
+          "answer_sha256": "ace94ac6a545238b9815159763fd49c5ecaa4968d42a04f5512562e4d3cc8369",
+          "role_calls": {
+            "planner": 8,
+            "researcher": 2,
+            "critic": 2
+          },
+          "tool_calls": 5,
+          "usage_receipts": 12
+        },
+        {
+          "question_id": "N6",
+          "content_grade": "部分",
+          "reason": "明确拒绝把 Blackwell 或 AI 推理解释认作整个跌幅的原因，列出两端 131.28/120.15、收益 −8.48%，管理层原话和局限均准确。独立冻结判据还含当季合并收入 39,331m 的可验证业绩观察；最终仅给财季和定性的产品表述及首季数十亿美元销售，没有这项集团收入。按题面因果判断已答，对照预注册的全部业绩元素仅部分。",
+          "original_qwen_grade": "失败",
+          "status": "complete",
+          "reviewed": true,
+          "stop_reason": "completed",
+          "elapsed_seconds": 108.741,
+          "answer_sha256": "266bf77669e7f4ddc6d4de4ebcfa383669a0c6becef1b4a32d115c957dd64729",
+          "role_calls": {
+            "planner": 7,
+            "researcher": 2,
+            "critic": 2
+          },
+          "tool_calls": 4,
+          "usage_receipts": 11
+        },
+        {
+          "question_id": "A1",
+          "content_grade": "通过",
+          "reason": "准确给出 AMD 截至 2024-12-28 的 FY2024 Q4 合并净收入 7,658 USD million，列出原 SEC 附件、简明合并经营表 Net revenue 行及三个月列，与原表一致。",
+          "original_qwen_grade": "通过",
+          "status": "complete",
+          "reviewed": true,
+          "stop_reason": "completed",
+          "elapsed_seconds": 34.888,
+          "answer_sha256": "9cc829ce47ed680d8c21f28df86901a47052545df68558671d6aa81708054441",
+          "role_calls": {
+            "planner": 3,
+            "researcher": 1,
+            "critic": 1
+          },
+          "tool_calls": 1,
+          "usage_receipts": 5
+        },
+        {
+          "question_id": "A2",
+          "content_grade": "部分",
+          "reason": "取得原表两期营业利润和收入，871/7,658 及 342/6,168 正确。报告用户可见审核文字明确给出正确 11.37%、5.54% 与 +5.83pp；研究结论仍标缺口并拒绝确认，已审主张停留于操作数。",
+          "original_qwen_grade": "失败",
+          "status": "partial",
+          "reviewed": true,
+          "stop_reason": "model_budget_exhausted",
+          "elapsed_seconds": 158.612,
+          "answer_sha256": "7985b9d38347431ae9982ac64a08d9f8029b309d3a60af91c959ac406c1c8532",
+          "role_calls": {
+            "planner": 11,
+            "researcher": 2,
+            "critic": 2
+          },
+          "tool_calls": 8,
+          "usage_receipts": 15
+        },
+        {
+          "question_id": "A3",
+          "content_grade": "通过",
+          "reason": "季度 Segment Summary 两个原段分别支持 Data Center 同比 +69%（Instinct GPU 出货放量及 EPYC CPU 销售增长）、Client +58%（Ryzen 需求），准确区分收入同比、分部营业利润与集团利润的归因范围。",
+          "original_qwen_grade": "失败",
+          "status": "complete",
+          "reviewed": true,
+          "stop_reason": "completed",
+          "elapsed_seconds": 58.406,
+          "answer_sha256": "32b335d8a3570b0ef63177cdaa2294122126d117c9741a7f05a8ca9fa0873961",
+          "role_calls": {
+            "planner": 4,
+            "researcher": 1,
+            "critic": 1
+          },
+          "tool_calls": 2,
+          "usage_receipts": 6
+        },
+        {
+          "question_id": "A4",
+          "content_grade": "部分",
+          "reason": "价格两端 119.50/112.01 和收益 −6.27% 正确；准确限定 Instinct/EPYC、Ryzen 的分部收入归因，不据此认证股价成因，保留工具与行情局限。研究答案列 GAAP 收入、营业利润和桥的式子，未给两期利润率与 pp 结论，11.3737%、5.5447%、+5.8290pp 仅出现在 Critic 修改建议。规则还误警两笔正确收盘价。",
+          "original_qwen_grade": "失败",
+          "status": "partial",
+          "reviewed": true,
+          "stop_reason": "model_budget_exhausted",
+          "elapsed_seconds": 225.71,
+          "answer_sha256": "0d03df0b9dbe10e2bced74c6c56283bbef444f2f651acfb0111bbb4c049fbb21",
+          "role_calls": {
+            "planner": 11,
+            "researcher": 2,
+            "critic": 2
+          },
+          "tool_calls": 8,
+          "usage_receipts": 15
+        },
+        {
+          "question_id": "A5",
+          "content_grade": "通过",
+          "reason": "原文和分部表分别定位 2024 全年 Client 实际收入 7,054m=7.054bn，舍入为 7.1bn；Current Outlook 另给 FY2025 Q1 合并收入指引 7.1bn±0.3bn。清楚区分展示精度、期间、业务范围与实际/预测。",
+          "original_qwen_grade": "失败",
+          "status": "complete",
+          "reviewed": true,
+          "stop_reason": "completed",
+          "elapsed_seconds": 47.395,
+          "answer_sha256": "480606d38bae869696171c0d23029c6a72219a2ee408990cfe8ac923c4f6706c",
+          "role_calls": {
+            "planner": 4,
+            "researcher": 1,
+            "critic": 1
+          },
+          "tool_calls": 2,
+          "usage_receipts": 6
+        },
+        {
+          "question_id": "A6",
+          "content_grade": "通过",
+          "reason": "清楚拒绝“利润率变化导致全部股价变化”，同源 119.50→112.01 美元和 −6.27% 齐全。GAAP 营业利润率按发行人公开整数栏 11% 对 6%、同比 +5pp，并明确为取整口径，该替代表述在冻结参考中允许；还区别 GAAP、非 GAAP 和价格语义，未把先后关系当因果。",
+          "original_qwen_grade": "部分",
+          "status": "partial",
+          "reviewed": true,
+          "stop_reason": "unresolved_items",
+          "elapsed_seconds": 145.084,
+          "answer_sha256": "f8f8e42e97c8719b3d93eb7885c88e745334fbbdaeaa0d473402ffca94f2bb5b",
+          "role_calls": {
+            "planner": 11,
+            "researcher": 1,
+            "critic": 1
+          },
+          "tool_calls": 9,
+          "usage_receipts": 13
+        }
+      ],
+      "content_grades": {
+        "通过": 12,
+        "部分": 6
+      },
+      "product_statuses": {
+        "complete": 10,
+        "partial": 8
+      },
+      "model_calls": 187,
+      "tool_calls": 91,
+      "usage_receipts": 187,
+      "observed_tokens": {
+        "input": 3879958,
+        "cache_read": 2120266,
+        "cache_write": 213296,
+        "output": 124406,
+        "reasoning": 14061
+      },
+      "median_case_elapsed_s": 92.623,
+      "median_response_s": {
+        "planner": 5.4864999999999995,
+        "researcher": 17.031,
+        "critic": 13.167
+      },
+      "response_s_total": 1849.9319999999998,
+      "role_calls": {
+        "planner": 134,
+        "researcher": 27,
+        "critic": 26
+      },
+      "reported_cost_usd": null,
+      "estimated_cost_usd": "5.0821186"
+    },
+    "qwen": {
+      "cases": [
+        {
+          "question_id": "M1",
+          "content_grade": "通过",
+          "reason": "明确 FY2025 Q4 截至 2025-06-30 的三个月，Microsoft 合并 total revenue 76,441 USD million；引用 8-K 附件 99.1 的原始 INCOME STATEMENTS，含对应季度栏与数额。",
+          "original_qwen_grade": "失败",
+          "status": "complete",
+          "reviewed": true,
+          "stop_reason": "completed",
+          "elapsed_seconds": 146.948,
+          "answer_sha256": "46faaa81dfc331f0513c0839da382e33a3252b3db528e1d1820036e55e7d4500",
+          "role_calls": {
+            "planner": 4,
+            "researcher": 2,
+            "critic": 2
+          },
+          "tool_calls": 1,
+          "usage_receipts": 8
+        },
+        {
+          "question_id": "M2",
+          "content_grade": "通过",
+          "reason": "同季原表四个 GAAP 操作数与公式准确；正文给 44.9%、43.1% 与 +1.76pp；附件记录两期未舍入比率及 1.75855846pp。原主跑没有草稿。",
+          "original_qwen_grade": "失败",
+          "status": "complete",
+          "reviewed": true,
+          "stop_reason": "completed",
+          "elapsed_seconds": 176.072,
+          "answer_sha256": "d1db0d2164ace230cb8aded654b2428b2ee9ee34627a96e6055d4f030b51db4a",
+          "role_calls": {
+            "planner": 7,
+            "researcher": 1,
+            "critic": 1
+          },
+          "tool_calls": 5,
+          "usage_receipts": 9
+        },
+        {
+          "question_id": "M3",
+          "content_grade": "部分",
+          "reason": "本季原文确有 Nadella 关于全年 Azure >75bn/+34% 和 Hood 关于当季 Microsoft Cloud 46.7bn/+27% 的引述。报告又加入 Q2，并把 Q2 的 AI 年化收入 13bn/+175% 错归给 Hood，原文为 Nadella；跨季收入、增速及毛利率不能验证 AI 商业化效率或基建投资转化为全部工作负载增量。分析虽另标，证据不足。",
+          "original_qwen_grade": "部分",
+          "status": "complete",
+          "reviewed": true,
+          "stop_reason": "completed",
+          "elapsed_seconds": 169.457,
+          "answer_sha256": "490e69d38dd39835ad6de69782bbf50a68d6c2513bc6ba840ab89821a967ac3e",
+          "role_calls": {
+            "planner": 3,
+            "researcher": 1,
+            "critic": 1
+          },
+          "tool_calls": 1,
+          "usage_receipts": 5
+        },
+        {
+          "question_id": "M4",
+          "content_grade": "部分",
+          "reason": "未核验草稿给两期正确 GAAP 收入、营业利润和收盘 513.24/533.50；可见计算附录给 +3.94747%。草稿没有两期利润率或 +1.76pp，虽原始操作数齐全却称必须再执行计算。关于 Cloud 和 AI 对集团营收、营业利润增长的强归因也超过引文。",
+          "original_qwen_grade": "部分",
+          "status": "partial",
+          "reviewed": false,
+          "stop_reason": "execution_error",
+          "elapsed_seconds": 360.161,
+          "answer_sha256": "fd2ad8013ff13118a521a3b32143fa4450eb1e2fa165cf1174ff207e37f1285b",
+          "role_calls": {
+            "planner": 8,
+            "researcher": 1,
+            "critic": 1
+          },
+          "tool_calls": 6,
+          "usage_receipts": 9
+        },
+        {
+          "question_id": "M5",
+          "content_grade": "通过",
+          "reason": "正确引用截至 2025-06-30 三个月的实际报告收入 76,441m、报告增速 +18%、固定汇率 +17%。分别解释使用各期间实际汇率、统一用对比期间平均汇率折算；正确说明 fixed-currency 为公司指定 non-GAAP 口径。",
+          "original_qwen_grade": "通过",
+          "status": "complete",
+          "reviewed": true,
+          "stop_reason": "completed",
+          "elapsed_seconds": 136.671,
+          "answer_sha256": "4c095ca25c1ac6b4a3f24a9d507b0731adfbf966b7eb9bd062df6c93ceae849f",
+          "role_calls": {
+            "planner": 3,
+            "researcher": 1,
+            "critic": 1
+          },
+          "tool_calls": 1,
+          "usage_receipts": 5
+        },
+        {
+          "question_id": "M6",
+          "content_grade": "通过",
+          "reason": "实际可见的研究主张给 Q4 营收 76.4bn、当季 Microsoft Cloud 46.7bn/+27%、Azure 等 +39%，不再把全年 34% 写进当季，也未断言超预期。两端 513.24/533.50、增加 20.26/股、+3.95% 可复算；明确拒绝仅凭公告及收盘价把云/AI 认作唯一原因。系统把涨额误作价格记录不一致而标 gap；金融答案在报告背景区已交付。",
+          "original_qwen_grade": "部分",
+          "status": "partial",
+          "reviewed": true,
+          "stop_reason": "unresolved_items",
+          "elapsed_seconds": 235.814,
+          "answer_sha256": "c0fd11bc7ebc8c9964bb13fdd6600d2854bf9be0a174eada39f37197c29eb201",
+          "role_calls": {
+            "planner": 4,
+            "researcher": 1,
+            "critic": 1
+          },
+          "tool_calls": 3,
+          "usage_receipts": 6
+        },
+        {
+          "question_id": "N1",
+          "content_grade": "部分",
+          "reason": "给对财季、2025-01-26 季末、公司与发行披露；将新闻标题 39.3bn 换算成 39,300m，未按要求交付原表精确 39,331m 及对应行列，把粗数当作百万美元答案。原主跑正确给出精确值和表名。",
+          "original_qwen_grade": "通过",
+          "status": "complete",
+          "reviewed": true,
+          "stop_reason": "completed",
+          "elapsed_seconds": 112.676,
+          "answer_sha256": "2a4d968852ec1c331c5c90e72e95145c1228520f897ae6118588978f407f6e42",
+          "role_calls": {
+            "planner": 3,
+            "researcher": 1,
+            "critic": 1
+          },
+          "tool_calls": 1,
+          "usage_receipts": 5
+        },
+        {
+          "question_id": "N2",
+          "content_grade": "失败",
+          "reason": "实际问答明确尚未形成草稿。10 条留存证据只给来源定位，0 项计算，未报告任何一季营业利润率或有符号百分点变化，末次 financial_facts 未匹配日期。",
+          "original_qwen_grade": "失败",
+          "status": "partial",
+          "reviewed": false,
+          "stop_reason": "no_progress",
+          "elapsed_seconds": 318.438,
+          "answer_sha256": "3ccfe41adfd4c7ad79ddf0690fa7e0cb37b2199e40ce23d7348fd4913b301a96",
+          "role_calls": {
+            "planner": 10
+          },
+          "tool_calls": 10,
+          "usage_receipts": 10
+        },
+        {
+          "question_id": "N3",
+          "content_grade": "部分",
+          "reason": "正确指出 Data Center 季度收入 +93%、Blackwell 需求和营收驱动不构成公司利润率归因。多数研究主张仅中文转述、没有逐条原句；把 Stargate 及其他合作公告当作当季增长解释，没有 CFO 所述加速计算应用需求等直接因果原文。Critic 修改建议补有少量原句，但未补齐各项。",
+          "original_qwen_grade": "通过",
+          "status": "partial",
+          "reviewed": true,
+          "stop_reason": "insufficient_time_for_reviewed_revision",
+          "elapsed_seconds": 324.727,
+          "answer_sha256": "fd0bde648c83a4de73ba8ec63635ed60f061b21ecc2c8e21bd25d21673bc6e87",
+          "role_calls": {
+            "planner": 5,
+            "researcher": 1,
+            "critic": 1
+          },
+          "tool_calls": 3,
+          "usage_receipts": 7
+        },
+        {
+          "question_id": "N4",
+          "content_grade": "部分",
+          "reason": "无草稿；唯一交付的实质结果是用户可见计算附录中的窗口收盘收益 −8.47806%，含两日价格记录代码与日期，可复算。未交付两端价格数值、两季营业利润率及差值、管理层解释或市场因果边界。",
+          "original_qwen_grade": "失败",
+          "status": "partial",
+          "reviewed": false,
+          "stop_reason": "time_budget_exhausted",
+          "elapsed_seconds": 399.348,
+          "answer_sha256": "db1118e4f009cfd9d6ed18da31e2afcfcb1e9525f0331668333aae022e3e5200",
+          "role_calls": {
+            "planner": 9
+          },
+          "tool_calls": 8,
+          "usage_receipts": 9
+        },
+        {
+          "question_id": "N5",
+          "content_grade": "部分",
+          "reason": "同依赖正式组：两份发行公告分别支持历史中点 37.5bn（±2%）和标题收入 39.3bn，给出正确方向、分母和基于标题数的 +4.8%。所用实际数经舍入却未标注近似；原表为 39,331m，精确 +4.8827%（一位小数 +4.9%）。Critic 对未经限定的 4.8% 判 Supported。",
+          "original_qwen_grade": "部分",
+          "status": "complete",
+          "reviewed": true,
+          "stop_reason": "completed",
+          "elapsed_seconds": 161.514,
+          "answer_sha256": "19868f261e6bcfc4936cf7d1e05ac6d075728060aab91d8ab19296696867185c",
+          "role_calls": {
+            "planner": 4,
+            "researcher": 1,
+            "critic": 1
+          },
+          "tool_calls": 2,
+          "usage_receipts": 6
+        },
+        {
+          "question_id": "N6",
+          "content_grade": "部分",
+          "reason": "准确区分公告、两日价格下降与未证实的唯一因果，给 Blackwell 评论、季度收入约 39.3bn、两日收盘 131.28 和 120.15；缺冻结要求的窗口收益 −8.48%，没有给原表精确 39,331m，虽核心因果判断已回答，量化观察不完整。",
+          "original_qwen_grade": "失败",
+          "status": "complete",
+          "reviewed": true,
+          "stop_reason": "completed",
+          "elapsed_seconds": 226.671,
+          "answer_sha256": "89cbc4d8a7351393c48e9f94cdec7e523a0e908cac89f3f38bae0577545ece8f",
+          "role_calls": {
+            "planner": 4,
+            "researcher": 1,
+            "critic": 1
+          },
+          "tool_calls": 2,
+          "usage_receipts": 6
+        },
+        {
+          "question_id": "A1",
+          "content_grade": "通过",
+          "reason": "给出截至 2024-12-28 的 AMD 第四季度合并净收入 7,658 USD million；明确原始公告简明合并经营表并附来源定位，满足数额、季度与原表要求。",
+          "original_qwen_grade": "通过",
+          "status": "complete",
+          "reviewed": true,
+          "stop_reason": "completed",
+          "elapsed_seconds": 137.484,
+          "answer_sha256": "30b3a5418a56b5034f067af8fd796b44e253a222f4ae8be912745b9a61208546",
+          "role_calls": {
+            "planner": 4,
+            "researcher": 1,
+            "critic": 1
+          },
+          "tool_calls": 2,
+          "usage_receipts": 6
+        },
+        {
+          "question_id": "A2",
+          "content_grade": "通过",
+          "reason": "正确采用发行人 GAAP Quarterly Financial Results 季度表列示的 FY2024Q4 11%、去年同季 6%、同比上升 5 个百分点，说明系公司披露，引用原季度表且无混算不同精度，符合冻结规则接受的整数口径。",
+          "original_qwen_grade": "失败",
+          "status": "complete",
+          "reviewed": true,
+          "stop_reason": "completed",
+          "elapsed_seconds": 125.665,
+          "answer_sha256": "0597c539b6eb003d1305c41b3314e154ee47c6b31fa50765f388a2196cbb81d1",
+          "role_calls": {
+            "planner": 4,
+            "researcher": 1,
+            "critic": 1
+          },
+          "tool_calls": 2,
+          "usage_receipts": 6
+        },
+        {
+          "question_id": "A3",
+          "content_grade": "通过",
+          "reason": "分别从官方当季 Segment Summary 引用 Data Center +69% 的 Instinct GPU 出货快速放量和 EPYC CPU 销售扩张、Client +58% 的 Ryzen 需求，清楚标为管理层对相应分部收入的解释并附独立证据定位。",
+          "original_qwen_grade": "失败",
+          "status": "complete",
+          "reviewed": true,
+          "stop_reason": "completed",
+          "elapsed_seconds": 119.662,
+          "answer_sha256": "fee4407edcffe077e38fc655220bcb22658423b22f5592e651f24183eafd2f6b",
+          "role_calls": {
+            "planner": 3,
+            "researcher": 1,
+            "critic": 1
+          },
+          "tool_calls": 1,
+          "usage_receipts": 5
+        },
+        {
+          "question_id": "A4",
+          "content_grade": "部分",
+          "reason": "发行人 GAAP 利润率整数口径 11% 对 6%、+5pp 正确，119.50→112.01 和 −6.27% 均可复算。却把收入及分部 EPYC/Instinct 业务增长直接解释成公司对合并利润率扩张的明确因果归因，缺原文支持，未单独交代 Client 的 Ryzen 需求。虽提示没有产品结构或业务量的量化桥，仍不能补正归因范围。",
+          "original_qwen_grade": "失败",
+          "status": "partial",
+          "reviewed": true,
+          "stop_reason": "time_budget_exhausted",
+          "elapsed_seconds": 369.065,
+          "answer_sha256": "f16f8b355fdf87a33a803badfd6192325a3cf48363e6a08df94a09d39b4dce47",
+          "role_calls": {
+            "planner": 9,
+            "researcher": 1,
+            "critic": 1
+          },
+          "tool_calls": 7,
+          "usage_receipts": 11
+        },
+        {
+          "question_id": "A5",
+          "content_grade": "通过",
+          "reason": "官方正文全年 Client 7.1bn，Selected Corporate Data 精确列 7,054m，单位换算及舍入一致。另一项为 FY2025 Q1 公司合并收入前瞻指引 7.1bn±0.3bn；两段分别引用，区分历史分部与未来合并口径。",
+          "original_qwen_grade": "失败",
+          "status": "complete",
+          "reviewed": true,
+          "stop_reason": "completed",
+          "elapsed_seconds": 152.038,
+          "answer_sha256": "496d96f3d53c42e186211cadd63cdff8693237d67d28d08338a711a651a73f9a",
+          "role_calls": {
+            "planner": 4,
+            "researcher": 1,
+            "critic": 1
+          },
+          "tool_calls": 2,
+          "usage_receipts": 6
+        },
+        {
+          "question_id": "A6",
+          "content_grade": "部分",
+          "reason": "给出收盘 119.50→112.01 和 −7.49 美元/股、季度 GAAP 营业利润率 11% 同比 +5pp（公司整数口径），没有给窗口百分比 −6.27%。明确说证据不支持唯一因果，但进一步宣称利润率上升、价格下跌的方向相反就能证伪因果，超出这两点价格可识别的范围；Critic 错误认可该结论。",
+          "original_qwen_grade": "部分",
+          "status": "partial",
+          "reviewed": true,
+          "stop_reason": "insufficient_time_for_reviewed_revision",
+          "elapsed_seconds": 232.479,
+          "answer_sha256": "a41785e2d465e33472a0159303c1862311967fc82c23a3e68a54cb3de195d64e",
+          "role_calls": {
+            "planner": 4,
+            "researcher": 1,
+            "critic": 1
+          },
+          "tool_calls": 2,
+          "usage_receipts": 6
+        }
+      ],
+      "content_grades": {
+        "通过": 8,
+        "部分": 9,
+        "失败": 1
+      },
+      "product_statuses": {
+        "complete": 11,
+        "partial": 7
+      },
+      "model_calls": 126,
+      "tool_calls": 59,
+      "usage_receipts": 125,
+      "observed_tokens": {
+        "input": 2201089,
+        "cache_read": 621184,
+        "cache_write": 0,
+        "output": 226353,
+        "reasoning": 187363
+      },
+      "median_case_elapsed_s": 172.7645,
+      "median_response_s": {
+        "planner": 20.392,
+        "researcher": 49.523,
+        "critic": 39.576
+      },
+      "response_s_total": 3886.204,
+      "role_calls": {
+        "planner": 92,
+        "researcher": 17,
+        "critic": 17
+      },
+      "reported_cost_usd": "0.835057216",
+      "unsettled_reservation_usd": "0.087876125"
+    }
+  },
+  "reference_used_after_generation": [
+    {
+      "question_id": "M1",
+      "query": "Microsoft FY2025 Q4 的合并收入是多少？按财务表的 USD million 给数值，附期间和原表位置。",
+      "public_context": {
+        "information_cutoff": "2025-08-01T23:59:59-04:00",
+        "market_timezone": "America/New_York",
+        "price_convention": "regular_session_raw_close",
+        "research_mode": "historical_evidence_brief"
+      },
+      "release_publication_date": "2025-07-30",
+      "elements": [
+        {
+          "end": "2025-06-30",
+          "net_revenue_usd_million": 76441,
+          "scope": "consolidated quarterly actual",
+          "source": [
+            "https://www.microsoft.com/en-us/investor/earnings/fy-2025-q4/press-release-webcast"
+          ],
+          "locator": "Income Statements, Three Months Ended June 30, Total revenue / Operating income; columns 2025 and 2024"
+        }
+      ],
+      "scope": "single AI evaluator, development only",
+      "formal_test_eligible": false
+    },
+    {
+      "question_id": "M2",
+      "query": "比较 Microsoft FY2025 Q4 与去年同季的 GAAP 营业利润率，报告两期比率和有符号百分点变动。",
+      "public_context": {
+        "information_cutoff": "2025-08-01T23:59:59-04:00",
+        "market_timezone": "America/New_York",
+        "price_convention": "regular_session_raw_close",
+        "research_mode": "historical_evidence_brief"
+      },
+      "release_publication_date": "2025-07-30",
+      "elements": [
+        {
+          "end": "2025-06-30",
+          "prior_end": "2024-06-30",
+          "basis": "GAAP consolidated quarter",
+          "operands_oi_revenue_current_prior": [
+            34323,
+            76441,
+            27925,
+            64727
+          ],
+          "current_pct": 44.901296424693555,
+          "prior_pct": 43.14273796097456,
+          "change_pp": 1.758558463719001,
+          "formula": "100*OI/revenue, current minus prior pp",
+          "locator": "Income Statements, Three Months Ended June 30, Total revenue / Operating income; columns 2025 and 2024",
+          "source": [
+            "https://www.microsoft.com/en-us/investor/earnings/fy-2025-q4/press-release-webcast"
+          ]
+        }
+      ],
+      "scope": "single AI evaluator, development only",
+      "formal_test_eligible": false
+    },
+    {
+      "question_id": "M3",
+      "query": "从该次公司披露中找出管理层对 Cloud/AI 业务增长的说法，区分原文归因和你自己的解释。",
+      "public_context": {
+        "information_cutoff": "2025-08-01T23:59:59-04:00",
+        "market_timezone": "America/New_York",
+        "price_convention": "regular_session_raw_close",
+        "research_mode": "historical_evidence_brief"
+      },
+      "release_publication_date": "2025-07-30",
+      "elements": [
+        {
+          "required": "归属 Nadella：AI/云推动业务转型，全年 Azure 超过 USD 75bn、增长34%，各工作负载贡献。或 Hood：本季 Microsoft Cloud 46.7bn、同比+27%（固定汇率+25%）。区分全年 Azure 与季度 Cloud，有原段并明确个人解释范围。",
+          "locator": "开头 CEO 与 CFO 两段发言；Business Highlights 中季度 Azure and other cloud services +39%。",
+          "source": [
+            "https://www.microsoft.com/en-us/investor/earnings/fy-2025-q4/press-release-webcast"
+          ]
+        }
+      ],
+      "scope": "single AI evaluator, development only",
+      "formal_test_eligible": false
+    },
+    {
+      "question_id": "M4",
+      "query": "对 Microsoft FY2025 Q4 财报事件，比较与去年同季的 GAAP 营业利润率，概括官方相关解释，并计算 MSFT 从 2025-07-30 常规交易收盘到 2025-07-31 常规交易收盘的原始收盘价收益。列来源和尚未证实的解释。",
+      "public_context": {
+        "information_cutoff": "2025-08-01T23:59:59-04:00",
+        "market_timezone": "America/New_York",
+        "price_convention": "regular_session_raw_close",
+        "research_mode": "historical_evidence_brief"
+      },
+      "release_publication_date": "2025-07-30",
+      "elements": [
+        {
+          "end": "2025-06-30",
+          "prior_end": "2024-06-30",
+          "basis": "GAAP consolidated quarter",
+          "operands_oi_revenue_current_prior": [
+            34323,
+            76441,
+            27925,
+            64727
+          ],
+          "current_pct": 44.901296424693555,
+          "prior_pct": 43.14273796097456,
+          "change_pp": 1.758558463719001,
+          "formula": "100*OI/revenue, current minus prior pp",
+          "locator": "Income Statements, Three Months Ended June 30, Total revenue / Operating income; columns 2025 and 2024",
+          "source": [
+            "https://www.microsoft.com/en-us/investor/earnings/fy-2025-q4/press-release-webcast"
+          ]
+        },
+        {
+          "required": "归属 Nadella：AI/云推动业务转型，全年 Azure 超过 USD 75bn、增长34%，各工作负载贡献。或 Hood：本季 Microsoft Cloud 46.7bn、同比+27%（固定汇率+25%）。区分全年 Azure 与季度 Cloud，有原段并明确个人解释范围。",
+          "locator": "开头 CEO 与 CFO 两段发言；Business Highlights 中季度 Azure and other cloud services +39%。",
+          "source": [
+            "https://www.microsoft.com/en-us/investor/earnings/fy-2025-q4/press-release-webcast"
+          ]
+        },
+        {
+          "dates": [
+            "2025-07-30",
+            "2025-07-31"
+          ],
+          "timezone": "America/New_York",
+          "field": "daily regular-session raw close, USD per share",
+          "close": [
+            513.24,
+            533.5
+          ],
+          "return_pct": 3.9474709687475684,
+          "formula": "100*(end/start−1)",
+          "sources": [
+            "https://www.sec.gov/Archives/edgar/data/9631/000183988225041936/bns_424b2-23063.htm",
+            "https://www.sec.gov/Archives/edgar/data/1666268/000183988225043021/ms9431_424b2-23587.htm"
+          ],
+          "evidence": "N uses frozen chart timestamps and indicators.quote[0].close. M/A are independent retrospective cross-checks of daily closing prices in SEC-hosted pricing supplements, not agent inputs or proof of filing availability by cutoff. Only grade agent support from actual admissible event-time sources."
+        },
+        "公告可证财务值、公司叙述，只能与指定窗口价格并列；仅凭公告和两个收盘不能识别某一因素导致全部变动。任何替代假说应标明未证实。"
+      ],
+      "scope": "single AI evaluator, development only",
+      "formal_test_eligible": false
+    },
+    {
+      "question_id": "M5",
+      "query": "核对 Microsoft FY2025 Q4 收入的 as-reported 同比增长和 constant-currency 同比增长，说明两者定义；能否把 fixed-currency 数字直接称为 GAAP 增速？",
+      "public_context": {
+        "information_cutoff": "2025-08-01T23:59:59-04:00",
+        "market_timezone": "America/New_York",
+        "price_convention": "regular_session_raw_close",
+        "research_mode": "historical_evidence_brief"
+      },
+      "release_publication_date": "2025-07-30",
+      "elements": [
+        {
+          "required": "收入同比：实际报告 +18%，固定汇率 +17%。前者采用各期实际折算汇率，后者用上年对比期平均汇率折算两期非美元实体，剔除汇率波动。公司界定固定汇率为 non-GAAP。",
+          "locator": "Constant Currency 段及 Financial Performance Constant Currency Reconciliation — Revenue，Three Months Ended June 30，Percentage Change Y/Y (GAAP) 与 Y/Y Constant Currency 两行。",
+          "sources": [
+            "https://www.microsoft.com/en-us/investor/earnings/fy-2025-q4/press-release-webcast"
+          ]
+        }
+      ],
+      "scope": "single AI evaluator, development only",
+      "formal_test_eligible": false
+    },
+    {
+      "question_id": "M6",
+      "query": "使用 Microsoft FY2025 Q4 公告与 MSFT 从 2025-07-30 收盘到 2025-07-31 收盘的价格，判断“Cloud/AI 增长已经被证实是上述股价变动的唯一原因”是否有证据，同时仍报告可核查的业绩与价格变化。",
+      "public_context": {
+        "information_cutoff": "2025-08-01T23:59:59-04:00",
+        "market_timezone": "America/New_York",
+        "price_convention": "regular_session_raw_close",
+        "research_mode": "historical_evidence_brief"
+      },
+      "release_publication_date": "2025-07-30",
+      "elements": [
+        "公告可证财务值、公司叙述，只能与指定窗口价格并列；仅凭公告和两个收盘不能识别某一因素导致全部变动。任何替代假说应标明未证实。",
+        {
+          "end": "2025-06-30",
+          "net_revenue_usd_million": 76441,
+          "scope": "consolidated quarterly actual",
+          "source": [
+            "https://www.microsoft.com/en-us/investor/earnings/fy-2025-q4/press-release-webcast"
+          ],
+          "locator": "Income Statements, Three Months Ended June 30, Total revenue / Operating income; columns 2025 and 2024"
+        },
+        {
+          "dates": [
+            "2025-07-30",
+            "2025-07-31"
+          ],
+          "timezone": "America/New_York",
+          "field": "daily regular-session raw close, USD per share",
+          "close": [
+            513.24,
+            533.5
+          ],
+          "return_pct": 3.9474709687475684,
+          "formula": "100*(end/start−1)",
+          "sources": [
+            "https://www.sec.gov/Archives/edgar/data/9631/000183988225041936/bns_424b2-23063.htm",
+            "https://www.sec.gov/Archives/edgar/data/1666268/000183988225043021/ms9431_424b2-23587.htm"
+          ],
+          "evidence": "N uses frozen chart timestamps and indicators.quote[0].close. M/A are independent retrospective cross-checks of daily closing prices in SEC-hosted pricing supplements, not agent inputs or proof of filing availability by cutoff. Only grade agent support from actual admissible event-time sources."
+        },
+        "允许其他有依据且与题意相关的真实业绩指标。AMD 题特指利润率变化。范围必须同时保留可回答的数字和未知的原因。"
+      ],
+      "scope": "single AI evaluator, development only",
+      "formal_test_eligible": false
+    },
+    {
+      "question_id": "N1",
+      "query": "NVIDIA FY2025 Q4 的合并收入是多少？给 USD million、季度截止日和表格定位。",
+      "public_context": {
+        "information_cutoff": "2025-02-28T23:59:59-05:00",
+        "market_timezone": "America/New_York",
+        "price_convention": "regular_session_raw_close",
+        "research_mode": "historical_evidence_brief"
+      },
+      "release_publication_date": "2025-02-26",
+      "elements": [
+        {
+          "end": "2025-01-26",
+          "net_revenue_usd_million": 39331,
+          "scope": "consolidated quarterly actual",
+          "source": [
+            "https://investor.nvidia.com/news/press-release-details/2025/NVIDIA-Announces-Financial-Results-for-Fourth-Quarter-and-Fiscal-2025/default.aspx",
+            "https://investor.nvidia.com/files/doc_financials/2025/Q425/Q4FY25-CFO-Commentary.pdf"
+          ],
+          "locator": "Q4 Fiscal 2025 Summary, GAAP ($ in millions), Q4 FY25 and Q4 FY24, Revenue / Operating income; also Condensed Consolidated Statements of Income, three months ended"
+        }
+      ],
+      "scope": "single AI evaluator, development only",
+      "formal_test_eligible": false
+    },
+    {
+      "question_id": "N2",
+      "query": "比较 NVIDIA FY2025 Q4 与去年同季的 GAAP 营业利润率，给两期比率和有符号 pp 变化。",
+      "public_context": {
+        "information_cutoff": "2025-02-28T23:59:59-05:00",
+        "market_timezone": "America/New_York",
+        "price_convention": "regular_session_raw_close",
+        "research_mode": "historical_evidence_brief"
+      },
+      "release_publication_date": "2025-02-26",
+      "elements": [
+        {
+          "end": "2025-01-26",
+          "prior_end": "2024-01-28",
+          "basis": "GAAP consolidated quarter",
+          "operands_oi_revenue_current_prior": [
+            24034,
+            39331,
+            13615,
+            22103
+          ],
+          "current_pct": 61.10701482291322,
+          "prior_pct": 61.597973125820026,
+          "change_pp": -0.49095830290680764,
+          "formula": "100*OI/revenue, current minus prior pp",
+          "locator": "Q4 Fiscal 2025 Summary, GAAP ($ in millions), Q4 FY25 and Q4 FY24, Revenue / Operating income; also Condensed Consolidated Statements of Income, three months ended",
+          "source": [
+            "https://investor.nvidia.com/news/press-release-details/2025/NVIDIA-Announces-Financial-Results-for-Fourth-Quarter-and-Fiscal-2025/default.aspx",
+            "https://investor.nvidia.com/files/doc_financials/2025/Q425/Q4FY25-CFO-Commentary.pdf"
+          ]
+        }
+      ],
+      "scope": "single AI evaluator, development only",
+      "formal_test_eligible": false
+    },
+    {
+      "question_id": "N3",
+      "query": "NVIDIA FY2025 Q4 官方公告对 Data Center 业务增长给出哪些解释？每个解释分别引用原句或原段，不能自动视为整个公司利润率变化的原因。",
+      "public_context": {
+        "information_cutoff": "2025-02-28T23:59:59-05:00",
+        "market_timezone": "America/New_York",
+        "price_convention": "regular_session_raw_close",
+        "research_mode": "historical_evidence_brief"
+      },
+      "release_publication_date": "2025-02-26",
+      "elements": [
+        {
+          "required": "CFO p.3：LLM、推荐及生成式 AI 应用对加速计算平台的需求推动 Data Center 同比和环比增长。Compute 子项有 Blackwell 需求、H200 环比增长；云服务商是 Blackwell 主要买方。CEO 对 Blackwell 需求的原话也可支持该产品范围的陈述。若提及合并盈利，仅 CFO p.3 Gross Margin 指 Data Center 转向更复杂高成本系统主要影响毛利率；费用段归因同样须保持范围。",
+          "locator": "CFO Commentary pp.1,3，Revenue 下首个 Data Center 段与 Gross Margin、Expenses 段。季度收入按市场平台呈列。",
+          "source": [
+            "https://investor.nvidia.com/news/press-release-details/2025/NVIDIA-Announces-Financial-Results-for-Fourth-Quarter-and-Fiscal-2025/default.aspx",
+            "https://investor.nvidia.com/files/doc_financials/2025/Q425/Q4FY25-CFO-Commentary.pdf"
+          ]
+        }
+      ],
+      "scope": "single AI evaluator, development only",
+      "formal_test_eligible": false
+    },
+    {
+      "question_id": "N4",
+      "query": "对 NVIDIA FY2025 Q4 财报事件，比较与去年同季的 GAAP 营业利润率，概括相关公司解释，并计算 NVDA 从 2025-02-26 收盘到 2025-02-27 收盘的原始收盘价收益，说明解释与市场观察的证据边界。",
+      "public_context": {
+        "information_cutoff": "2025-02-28T23:59:59-05:00",
+        "market_timezone": "America/New_York",
+        "price_convention": "regular_session_raw_close",
+        "research_mode": "historical_evidence_brief"
+      },
+      "release_publication_date": "2025-02-26",
+      "elements": [
+        {
+          "end": "2025-01-26",
+          "prior_end": "2024-01-28",
+          "basis": "GAAP consolidated quarter",
+          "operands_oi_revenue_current_prior": [
+            24034,
+            39331,
+            13615,
+            22103
+          ],
+          "current_pct": 61.10701482291322,
+          "prior_pct": 61.597973125820026,
+          "change_pp": -0.49095830290680764,
+          "formula": "100*OI/revenue, current minus prior pp",
+          "locator": "Q4 Fiscal 2025 Summary, GAAP ($ in millions), Q4 FY25 and Q4 FY24, Revenue / Operating income; also Condensed Consolidated Statements of Income, three months ended",
+          "source": [
+            "https://investor.nvidia.com/news/press-release-details/2025/NVIDIA-Announces-Financial-Results-for-Fourth-Quarter-and-Fiscal-2025/default.aspx",
+            "https://investor.nvidia.com/files/doc_financials/2025/Q425/Q4FY25-CFO-Commentary.pdf"
+          ]
+        },
+        {
+          "required": "CFO p.3：LLM、推荐及生成式 AI 应用对加速计算平台的需求推动 Data Center 同比和环比增长。Compute 子项有 Blackwell 需求、H200 环比增长；云服务商是 Blackwell 主要买方。CEO 对 Blackwell 需求的原话也可支持该产品范围的陈述。若提及合并盈利，仅 CFO p.3 Gross Margin 指 Data Center 转向更复杂高成本系统主要影响毛利率；费用段归因同样须保持范围。",
+          "locator": "CFO Commentary pp.1,3，Revenue 下首个 Data Center 段与 Gross Margin、Expenses 段。季度收入按市场平台呈列。",
+          "source": [
+            "https://investor.nvidia.com/news/press-release-details/2025/NVIDIA-Announces-Financial-Results-for-Fourth-Quarter-and-Fiscal-2025/default.aspx",
+            "https://investor.nvidia.com/files/doc_financials/2025/Q425/Q4FY25-CFO-Commentary.pdf"
+          ]
+        },
+        {
+          "dates": [
+            "2025-02-26",
+            "2025-02-27"
+          ],
+          "timezone": "America/New_York",
+          "field": "daily regular-session raw close, USD per share",
+          "close": [
+            131.28,
+            120.15
+          ],
+          "return_pct": -8.4780621572212,
+          "formula": "100*(end/start−1)",
+          "sources": [
+            "code/data/replay/snapshots/yahoo_nvda_history.json"
+          ],
+          "evidence": "N uses frozen chart timestamps and indicators.quote[0].close. M/A are independent retrospective cross-checks of daily closing prices in SEC-hosted pricing supplements, not agent inputs or proof of filing availability by cutoff. Only grade agent support from actual admissible event-time sources."
+        },
+        "公告可证财务值、公司叙述，只能与指定窗口价格并列；仅凭公告和两个收盘不能识别某一因素导致全部变动。任何替代假说应标明未证实。"
+      ],
+      "scope": "single AI evaluator, development only",
+      "formal_test_eligible": false
+    },
+    {
+      "question_id": "N5",
+      "query": "NVIDIA FY2025 Q4 收入相对上一季度公告给出的本季公司收入指引中点，超出或低于多少百分比？将历史指引与实际值分别引用。",
+      "public_context": {
+        "information_cutoff": "2025-02-28T23:59:59-05:00",
+        "market_timezone": "America/New_York",
+        "price_convention": "regular_session_raw_close",
+        "research_mode": "historical_evidence_brief"
+      },
+      "release_publication_date": "2025-02-26",
+      "elements": [
+        {
+          "required": "上一季 Q3 FY25 公告 2024-11-20 给本季公司收入 USD 37,500m ±2%；本季实际 USD 39,331m。以预测中点作分母，(39331−37500)/37500=+4.8826667%。两份独立发布的来源分别定位。",
+          "locator": "Q3 财报的 Outlook 首条 revenue；Q4 财报的财务表 Revenue 或 Q4 CFO p.1 GAAP summary。",
+          "sources": [
+            "https://investor.nvidia.com/news/press-release-details/2024/NVIDIA-Announces-Financial-Results-for-Third-Quarter-Fiscal-2025/default.aspx",
+            "https://investor.nvidia.com/news/press-release-details/2025/NVIDIA-Announces-Financial-Results-for-Fourth-Quarter-and-Fiscal-2025/default.aspx"
+          ]
+        }
+      ],
+      "scope": "single AI evaluator, development only",
+      "formal_test_eligible": false
+    },
+    {
+      "question_id": "N6",
+      "query": "只凭 NVIDIA FY2025 Q4 公告和 NVDA 从 2025-02-26 收盘到 2025-02-27 收盘的窗口价格，能否确认当季披露中的某项管理层解释导致了全部股价变化？给可支持与不可支持的结论。",
+      "public_context": {
+        "information_cutoff": "2025-02-28T23:59:59-05:00",
+        "market_timezone": "America/New_York",
+        "price_convention": "regular_session_raw_close",
+        "research_mode": "historical_evidence_brief"
+      },
+      "release_publication_date": "2025-02-26",
+      "elements": [
+        "公告可证财务值、公司叙述，只能与指定窗口价格并列；仅凭公告和两个收盘不能识别某一因素导致全部变动。任何替代假说应标明未证实。",
+        {
+          "end": "2025-01-26",
+          "net_revenue_usd_million": 39331,
+          "scope": "consolidated quarterly actual",
+          "source": [
+            "https://investor.nvidia.com/news/press-release-details/2025/NVIDIA-Announces-Financial-Results-for-Fourth-Quarter-and-Fiscal-2025/default.aspx",
+            "https://investor.nvidia.com/files/doc_financials/2025/Q425/Q4FY25-CFO-Commentary.pdf"
+          ],
+          "locator": "Q4 Fiscal 2025 Summary, GAAP ($ in millions), Q4 FY25 and Q4 FY24, Revenue / Operating income; also Condensed Consolidated Statements of Income, three months ended"
+        },
+        {
+          "dates": [
+            "2025-02-26",
+            "2025-02-27"
+          ],
+          "timezone": "America/New_York",
+          "field": "daily regular-session raw close, USD per share",
+          "close": [
+            131.28,
+            120.15
+          ],
+          "return_pct": -8.4780621572212,
+          "formula": "100*(end/start−1)",
+          "sources": [
+            "code/data/replay/snapshots/yahoo_nvda_history.json"
+          ],
+          "evidence": "N uses frozen chart timestamps and indicators.quote[0].close. M/A are independent retrospective cross-checks of daily closing prices in SEC-hosted pricing supplements, not agent inputs or proof of filing availability by cutoff. Only grade agent support from actual admissible event-time sources."
+        },
+        "允许其他有依据且与题意相关的真实业绩指标。AMD 题特指利润率变化。范围必须同时保留可回答的数字和未知的原因。"
+      ],
+      "scope": "single AI evaluator, development only",
+      "formal_test_eligible": false
+    },
+    {
+      "question_id": "A1",
+      "query": "AMD FY2024 Q4 的合并收入是多少？给 USD million、季度截止日和原表位置。",
+      "public_context": {
+        "information_cutoff": "2025-02-06T23:59:59-05:00",
+        "market_timezone": "America/New_York",
+        "price_convention": "regular_session_raw_close",
+        "research_mode": "historical_evidence_brief"
+      },
+      "release_publication_date": "2025-02-04",
+      "elements": [
+        {
+          "end": "2024-12-28",
+          "net_revenue_usd_million": 7658,
+          "scope": "consolidated quarterly actual",
+          "source": [
+            "https://ir.amd.com/news-events/press-releases/detail/1236/amd-reports-fourth-quarter-and-full-year-2024-financial-results"
+          ],
+          "locator": "GAAP Quarterly Financial Results: Revenue ($M) / Operating income ($M); Q4 2024 and Q4 2023. Or Condensed Consolidated Statements of Operations, Net revenue / Operating income, three months ended."
+        }
+      ],
+      "scope": "single AI evaluator, development only",
+      "formal_test_eligible": false
+    },
+    {
+      "question_id": "A2",
+      "query": "比较 AMD FY2024 Q4 与去年同季的 GAAP 营业利润率，给两期和有符号 pp 变化。",
+      "public_context": {
+        "information_cutoff": "2025-02-06T23:59:59-05:00",
+        "market_timezone": "America/New_York",
+        "price_convention": "regular_session_raw_close",
+        "research_mode": "historical_evidence_brief"
+      },
+      "release_publication_date": "2025-02-04",
+      "elements": [
+        {
+          "end": "2024-12-28",
+          "prior_end": "2023-12-30",
+          "basis": "GAAP consolidated quarter",
+          "operands_oi_revenue_current_prior": [
+            871,
+            7658,
+            342,
+            6168
+          ],
+          "current_pct": 11.373726821624444,
+          "prior_pct": 5.544747081712062,
+          "change_pp": 5.828979739912383,
+          "formula": "100*OI/revenue, current minus prior pp",
+          "locator": "GAAP Quarterly Financial Results: Revenue ($M) / Operating income ($M); Q4 2024 and Q4 2023. Or Condensed Consolidated Statements of Operations, Net revenue / Operating income, three months ended.",
+          "source": [
+            "https://ir.amd.com/news-events/press-releases/detail/1236/amd-reports-fourth-quarter-and-full-year-2024-financial-results"
+          ],
+          "equivalent": "Issuer explicitly reports whole-percent 11%, 6%, +5 pp in GAAP Quarterly Financial Results; accept with source and rounded convention. From exact displayed operands +5.83 pp. Never mix precision conventions."
+        }
+      ],
+      "scope": "single AI evaluator, development only",
+      "formal_test_eligible": false
+    },
+    {
+      "question_id": "A3",
+      "query": "AMD FY2024 Q4 官方披露对 Data Center 与 Client 分部表现分别给出了什么解释？分别定位，不把分部原因改写成集团确定因果。",
+      "public_context": {
+        "information_cutoff": "2025-02-06T23:59:59-05:00",
+        "market_timezone": "America/New_York",
+        "price_convention": "regular_session_raw_close",
+        "research_mode": "historical_evidence_brief"
+      },
+      "release_publication_date": "2025-02-04",
+      "elements": [
+        {
+          "required": "Segment Summary 的两个季度段：Data Center（+69%）主要由 Instinct GPU 出货快速放量与 EPYC CPU 销售增长推动；Client（+58%）主要由 Ryzen 处理器强劲需求推动。每条说法定位到相应段，不泛化为集团因果。",
+          "locator": "Segment Summary 中 Data Center、Client 各自首条 quarterly bullet；不把缩进的全年段落冒充季度。",
+          "source": [
+            "https://ir.amd.com/news-events/press-releases/detail/1236/amd-reports-fourth-quarter-and-full-year-2024-financial-results"
+          ]
+        }
+      ],
+      "scope": "single AI evaluator, development only",
+      "formal_test_eligible": false
+    },
+    {
+      "question_id": "A4",
+      "query": "对 AMD FY2024 Q4 财报事件，比较与去年同季的 GAAP 营业利润率，概括官方解释，并计算 AMD 从 2025-02-04 收盘到 2025-02-05 收盘的原始收盘价收益，列出处和缺口。",
+      "public_context": {
+        "information_cutoff": "2025-02-06T23:59:59-05:00",
+        "market_timezone": "America/New_York",
+        "price_convention": "regular_session_raw_close",
+        "research_mode": "historical_evidence_brief"
+      },
+      "release_publication_date": "2025-02-04",
+      "elements": [
+        {
+          "end": "2024-12-28",
+          "prior_end": "2023-12-30",
+          "basis": "GAAP consolidated quarter",
+          "operands_oi_revenue_current_prior": [
+            871,
+            7658,
+            342,
+            6168
+          ],
+          "current_pct": 11.373726821624444,
+          "prior_pct": 5.544747081712062,
+          "change_pp": 5.828979739912383,
+          "formula": "100*OI/revenue, current minus prior pp",
+          "locator": "GAAP Quarterly Financial Results: Revenue ($M) / Operating income ($M); Q4 2024 and Q4 2023. Or Condensed Consolidated Statements of Operations, Net revenue / Operating income, three months ended.",
+          "source": [
+            "https://ir.amd.com/news-events/press-releases/detail/1236/amd-reports-fourth-quarter-and-full-year-2024-financial-results"
+          ],
+          "equivalent": "Issuer explicitly reports whole-percent 11%, 6%, +5 pp in GAAP Quarterly Financial Results; accept with source and rounded convention. From exact displayed operands +5.83 pp. Never mix precision conventions."
+        },
+        {
+          "required": "Segment Summary 的两个季度段：Data Center（+69%）主要由 Instinct GPU 出货快速放量与 EPYC CPU 销售增长推动；Client（+58%）主要由 Ryzen 处理器强劲需求推动。每条说法定位到相应段，不泛化为集团因果。",
+          "locator": "Segment Summary 中 Data Center、Client 各自首条 quarterly bullet；不把缩进的全年段落冒充季度。",
+          "source": [
+            "https://ir.amd.com/news-events/press-releases/detail/1236/amd-reports-fourth-quarter-and-full-year-2024-financial-results"
+          ]
+        },
+        {
+          "dates": [
+            "2025-02-04",
+            "2025-02-05"
+          ],
+          "timezone": "America/New_York",
+          "field": "daily regular-session raw close, USD per share",
+          "close": [
+            119.5,
+            112.01
+          ],
+          "return_pct": -6.2677824267782345,
+          "formula": "100*(end/start−1)",
+          "sources": [
+            "https://www.sec.gov/Archives/edgar/data/895421/000183988225007606/ms6054_424b2-03975.htm",
+            "https://www.sec.gov/Archives/edgar/data/1682472/000191870425002195/form424b2.htm"
+          ],
+          "evidence": "N uses frozen chart timestamps and indicators.quote[0].close. M/A are independent retrospective cross-checks of daily closing prices in SEC-hosted pricing supplements, not agent inputs or proof of filing availability by cutoff. Only grade agent support from actual admissible event-time sources."
+        },
+        "公告可证财务值、公司叙述，只能与指定窗口价格并列；仅凭公告和两个收盘不能识别某一因素导致全部变动。任何替代假说应标明未证实。"
+      ],
+      "scope": "single AI evaluator, development only",
+      "formal_test_eligible": false
+    },
+    {
+      "question_id": "A5",
+      "query": "AMD FY2024 Q4 公告中“全年 Client 收入”正文四舍五入数字与表格精确值是什么关系？它与“下一季度公司合并收入指引”能否视作同一指标？分别引用。",
+      "public_context": {
+        "information_cutoff": "2025-02-06T23:59:59-05:00",
+        "market_timezone": "America/New_York",
+        "price_convention": "regular_session_raw_close",
+        "research_mode": "historical_evidence_brief"
+      },
+      "release_publication_date": "2025-02-04",
+      "elements": [
+        {
+          "required": "FY2024 Client segment 历史实际 7,054m = 7.054bn；保留一位小数是 7.1bn。FY2025 Q1 公司合并预期收入约 7.1bn ±0.3bn。三段分别定位、不同期间/范围/实际与预测。",
+          "locator": "Segment Summary — Client 年度子段；Segment and Other Data — Client, Net revenue, Year ended December 28, 2024；Current Outlook 首个量化段。",
+          "sources": [
+            "https://ir.amd.com/news-events/press-releases/detail/1236/amd-reports-fourth-quarter-and-full-year-2024-financial-results"
+          ]
+        }
+      ],
+      "scope": "single AI evaluator, development only",
+      "formal_test_eligible": false
+    },
+    {
+      "question_id": "A6",
+      "query": "只凭 AMD FY2024 Q4 公告与 AMD 从 2025-02-04 收盘到 2025-02-05 收盘的观察价格，核对“公司利润率变化被证实导致该窗口全部股价变化”；仍回答可核查部分。",
+      "public_context": {
+        "information_cutoff": "2025-02-06T23:59:59-05:00",
+        "market_timezone": "America/New_York",
+        "price_convention": "regular_session_raw_close",
+        "research_mode": "historical_evidence_brief"
+      },
+      "release_publication_date": "2025-02-04",
+      "elements": [
+        "公告可证财务值、公司叙述，只能与指定窗口价格并列；仅凭公告和两个收盘不能识别某一因素导致全部变动。任何替代假说应标明未证实。",
+        {
+          "end": "2024-12-28",
+          "prior_end": "2023-12-30",
+          "basis": "GAAP consolidated quarter",
+          "operands_oi_revenue_current_prior": [
+            871,
+            7658,
+            342,
+            6168
+          ],
+          "current_pct": 11.373726821624444,
+          "prior_pct": 5.544747081712062,
+          "change_pp": 5.828979739912383,
+          "formula": "100*OI/revenue, current minus prior pp",
+          "locator": "GAAP Quarterly Financial Results: Revenue ($M) / Operating income ($M); Q4 2024 and Q4 2023. Or Condensed Consolidated Statements of Operations, Net revenue / Operating income, three months ended.",
+          "source": [
+            "https://ir.amd.com/news-events/press-releases/detail/1236/amd-reports-fourth-quarter-and-full-year-2024-financial-results"
+          ],
+          "equivalent": "Issuer explicitly reports whole-percent 11%, 6%, +5 pp in GAAP Quarterly Financial Results; accept with source and rounded convention. From exact displayed operands +5.83 pp. Never mix precision conventions."
+        },
+        {
+          "dates": [
+            "2025-02-04",
+            "2025-02-05"
+          ],
+          "timezone": "America/New_York",
+          "field": "daily regular-session raw close, USD per share",
+          "close": [
+            119.5,
+            112.01
+          ],
+          "return_pct": -6.2677824267782345,
+          "formula": "100*(end/start−1)",
+          "sources": [
+            "https://www.sec.gov/Archives/edgar/data/895421/000183988225007606/ms6054_424b2-03975.htm",
+            "https://www.sec.gov/Archives/edgar/data/1682472/000191870425002195/form424b2.htm"
+          ],
+          "evidence": "N uses frozen chart timestamps and indicators.quote[0].close. M/A are independent retrospective cross-checks of daily closing prices in SEC-hosted pricing supplements, not agent inputs or proof of filing availability by cutoff. Only grade agent support from actual admissible event-time sources."
+        },
+        "允许其他有依据且与题意相关的真实业绩指标。AMD 题特指利润率变化。范围必须同时保留可回答的数字和未知的原因。"
+      ],
+      "scope": "single AI evaluator, development only",
+      "formal_test_eligible": false
+    }
+  ]
+}

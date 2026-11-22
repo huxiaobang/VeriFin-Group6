@@ -1,8 +1,13 @@
 import copy
+import json
+from pathlib import Path
+import tempfile
 import unittest
 
 from verifin.evaluation import EvaluationError, FrozenCase, evaluate_frozen_case, revision_input, score_detection
+from verifin.evaluation_cli import case_record, load_case
 from verifin.model import ModelError
+from verifin.verification import check_rules
 from tests.test_verification import fixture
 
 
@@ -92,6 +97,57 @@ class EvaluationTests(unittest.TestCase):
                       {"session": {"scope_version": 1, "scope": {"entities": ["NVDA"]}}}):
             with self.subTest(extra=extra), self.assertRaises(EvaluationError):
                 FrozenCase.from_context("case", {**self.context, **extra})
+
+    def test_frozen_conditions_keep_cross_period_check_from_the_public_date_bounds(self):
+        context = copy.deepcopy(self.context)
+        dates = {"period_start": "2024-10-01", "period_end": "2024-12-31"}
+        context["scope"].update(dates)
+        target = {"entity": "MSFT", **dates}
+        context["fiscal_target"] = {**target, "answer": "private", "evidence_ids": ["reviewed-source"]}
+        current = {**context["evidence"][0], "kind": "document", "text": "New equipment installations increased."}
+        older = {**current, "id": "e2", "text": "Non-national accounts -4.1 %",
+                 "period_start": "2024-07-01", "period_end": "2024-09-30"}
+        for source in (current, older):
+            for key in ("metric", "value", "unit"):
+                source.pop(key)
+        context["evidence"] = [current, older]
+        context["claims"] = [{"id": "c1", "text": "Daily sales declined 4.1%.",
+                              "evidence_ids": ["e1", "e2"], "requirement_ids": ["r1"],
+                              "constraints": dict(target)}]
+        live = check_rules(context)
+        self.assertTrue(any(issue["issue_type"] == "context_mismatch" for issue in live))
+        case = FrozenCase.from_context("edited-quarter", context)
+        self.assertEqual(case.context()["fiscal_target"], target)
+        self.assertEqual(check_rules(case.context()), live)
+        with tempfile.TemporaryDirectory() as directory:
+            for saved in (case, self.case):
+                path = Path(directory) / (saved.case_id + ".json")
+                path.write_text(json.dumps(case_record(saved)), encoding="utf-8")
+                self.assertEqual(load_case(path), saved)
+        model = ReviewFixture()
+        run = evaluate_frozen_case(case, model)
+        for arm in ("rules_only", "generic_review", "structured_critic"):
+            result = run["conditions"][arm]
+            self.assertEqual(result["status"], "ok")
+            self.assertEqual(result["context_sha256"], case.context_sha256)
+            self.assertEqual(result["feedback"]["rule_findings"], live)
+        self.assertEqual(run["conditions"]["no_verification"]["feedback"], {"rule_findings": []})
+        self.assertEqual(model.calls[0][1], model.calls[1][1])
+        self.assertEqual(model.calls[0][1]["fiscal_target"], target)
+
+    def test_frozen_fiscal_target_cannot_supply_answers_or_change_the_task(self):
+        scope = {**self.context["scope"], "period_end": "2024-12-31"}
+        context = {**self.context, "scope": scope}
+        label = {"fiscal_target": {"entity": "MSFT", "quarter": "2025Q2", "evidence_ids": ["old-verdict"]}}
+        self.assertEqual(FrozenCase.from_context("case", {**context, **label}), FrozenCase.from_context("case", context))
+        target = {"entity": "MSFT", "period_end": scope["period_end"]}
+        for malformed in ("a guessed result", {"entity": "MSFT"}, {**target, "entity": "NVDA"},
+                          {**target, "period_end": "2024-09-30"}, {**target, "period_end": "not a date"},
+                          {**target, "previous": {"expected_answer": "Do not share."}}):
+            with self.subTest(value=malformed), self.assertRaises(EvaluationError):
+                FrozenCase.from_context("edited-quarter", {**context, "fiscal_target": malformed})
+        case = FrozenCase.from_context("edited-quarter", {**context, "fiscal_target": target})
+        self.assertEqual(case.context()["fiscal_target"], target)
 
     def test_review_conditions_have_identical_inputs_and_settings(self):
         model = ReviewFixture()

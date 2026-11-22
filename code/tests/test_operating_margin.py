@@ -74,6 +74,46 @@ class QuarterlyOperatingMargin(unittest.TestCase):
                 self.assertIn("cloud engineering", causes["answer_sentence"])
                 self.assertNotEqual(numbers.get("missing_support"), causes.get("answer_sentence"))
 
+    @unittest.skipUnless(importlib.util.find_spec("lxml"), "native HTML disclosure parser is optional")
+    def test_model_planner_selects_the_expense_bridge(self):
+        from unittest.mock import patch
+        from tests.test_engine import ScriptedModel
+        from tests.test_statement_amount_cells import StatementAmountTests
+
+        fixture = StatementAmountTests()
+        self.addCleanup(fixture.doCleanups)
+        registry, read_args, _, _ = fixture.run_fixture()
+        tool = "reconcile_operating_margin"
+        bridge_args = {"entity": "AAA", "period_end": "2024-12-29"}
+        advisory = {"tool": tool, "arguments": bridge_args}
+        for quantify in (False, True):
+            with self.subTest(quantify=quantify), SessionStore(":memory:") as store:
+                question = ("Quantify the effect of each operating expense on AAA's year-over-year margin change."
+                            if quantify else "Compare AAA's year-over-year margin and summarize the issuer's explanation.")
+                scope = {**bridge_args, "entities": ["AAA"], "cutoff": "2025-02-21",
+                         "requirements": [{"id": "r1", "text": question}]}
+                del scope["entity"]
+                script = [("planner", {"action": "tool", "tool": "read_document", "arguments": read_args,
+                                      "scope": scope})]
+                if quantify:
+                    script.append(("planner", {"action": "tool", "tool": tool, "arguments": bridge_args}))
+                script.extend([("planner", {"action": "research"}),
+                               ("researcher", {"claims": [], "summary": "", "answered_requirement_ids": [],
+                                               "unanswered_requirement_ids": ["r1"]}),
+                               ("planner", {"action": "finish"})])
+                model = ScriptedModel(script)
+                sid = store.create_session()["id"]
+                engine = ResearchEngine(store, model, ToolRegistry(store, registry.data.root))
+                with patch("verifin.planner_evidence.margin_draft_check", return_value=advisory):
+                    engine.ask(sid, question, as_of=scope["cutoff"])
+                self.assertIn("researcher", [role for role, _ in model.calls])
+                calls = [e for e in store.events(sid) if e["type"] == "tool_call"]
+                self.assertEqual([e["tool"] for e in calls], ["read_document"] + ([tool] if quantify else []))
+                if quantify:
+                    receipt = calls[-1]["observation"]
+                    self.assertTrue(receipt["data"]["margin_reconciliation"]["calculation_ids"])
+                    self.assertTrue(receipt["calculations"])
+
     def test_full_year_section_does_not_supply_a_quarter_driver(self):
         text = ("Fourth Quarter Results:\nOperating income increased due to lower rent.\n"
                 "Full Year Highlights:\nOperating income increased due to pricing.")

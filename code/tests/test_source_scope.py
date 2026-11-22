@@ -1,6 +1,6 @@
 import unittest
 
-from verifin.source_scope import bound_context, bound_decision, source_limited
+from verifin.source_scope import bound_context, bound_decision, source_constraint, source_limited
 
 
 class SourceLimitTests(unittest.TestCase):
@@ -19,6 +19,29 @@ class SourceLimitTests(unittest.TestCase):
                      "只看这个季度，给我出处。", "包括但不限于这份公告。"):
             with self.subTest(text=text):
                 self.assertFalse(source_limited(text))
+
+    def test_publisher_constraints_distinguish_exclusivity_and_exclusion(self):
+        for text, publisher in (
+            ("請僅使用 NVIDIA 投資人關係網站的業績公告。","issuer"),
+            ("只用英偉達官網的業績公告，不要查 SEC。","issuer"),
+            ("僅限公司官方網站。","issuer"),
+            ("將公司投資人關係網站作為唯一來源。","issuer"),
+            ("Use only the issuer's investor relations site.","issuer"),
+            ("Use the issuer's investor relations site alone.","issuer"),
+            ("不要查 SEC。","non_sec"),
+            ("請不要查閱 SEC。","non_sec"),
+            ("Don't consult EDGAR for this answer.","non_sec"),
+            ("只用 SEC 官方數據。","sec"),
+            ("Use only SEC filings.","sec"),
+            ("不要只查 SEC，也可以看公司官網。",None),
+            ("請使用 SEC 官方數據。",None),
+            ("找可核實的來源。",None),
+        ):
+            with self.subTest(text=text):
+                policy = source_constraint(text)
+                self.assertEqual(policy.publisher,publisher)
+                self.assertEqual(policy.permits_auto_sec,publisher in (None,"sec"))
+        self.assertTrue(source_constraint("請僅使用這份業績公告。").reference)
 
     @staticmethod
     def context(cited=("a",)):

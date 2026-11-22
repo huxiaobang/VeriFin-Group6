@@ -14,6 +14,10 @@ class IncomeFollowupTests(unittest.TestCase):
         ctx = {"scope":{"entities":["EXAMPLE"]}, "income_explanation":{"gaps":[{"metric":"unexplained"}],
                "source_review":"existing_evidence"}}
         self.assertEqual(reason_action(ctx)["arguments"], {"entity":"EXAMPLE"})
+        ctx["income_bridge"] = {"cutoff":"2025-02-01"}
+        self.assertEqual(reason_action(ctx)["arguments"], {"entity":"EXAMPLE","cutoff":"2025-02-01"})
+        ctx["scope"]["cutoff"] = "2025-02-01"
+        self.assertEqual(reason_action(ctx)["arguments"], {"entity":"EXAMPLE"})
         ctx["income_explanation"]["source_review"] = "targeted_read"
         self.assertIsNone(reason_action(ctx))
 

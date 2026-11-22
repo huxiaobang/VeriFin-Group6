@@ -42,12 +42,13 @@ ADDITIVE_CONCEPTS = frozenset("us-gaap:" + concept for alias, tags in METRICS.it
 
 COMMON_INCOME = "us-gaap:NetIncomeLossAvailableToCommonStockholdersBasic"
 VALUATION_ALLOWANCE_EXPENSE = "us-gaap:IncomeTaxReconciliationChangeInDeferredTaxAssetsValuationAllowance"
+GUIDANCE_VARIANCE = "guidance_variance"
 TAX_SCENARIO = "exclude_tax_expense_item"
 TAX_SCENARIO_BASIS = "single-item scenario, other allocations held fixed"
 
 CALCULATIONS = ["ratio", "margin", "growth", "difference", "percentage_point_change", "derive_quarter", "price_return", TAX_SCENARIO]
 _OPERAND_COUNTS = {**dict.fromkeys(CALCULATIONS, 2), "sum":None, "midpoint":2,
-                   "statement_quarter_residual":2, "sales_calendar_growth_gap":4}
+                   "statement_quarter_residual":2, "sales_calendar_growth_gap":4, GUIDANCE_VARIANCE:2}
 
 
 def check_operand_shape(operation, ids):

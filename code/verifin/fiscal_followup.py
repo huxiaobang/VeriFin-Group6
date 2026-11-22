@@ -3,6 +3,7 @@ from datetime import date, timedelta
 import re
 
 from .data import available_by
+from .display_numbers import rate_only_in_other_period
 from .skill_calculations import is_comparison_period, quarter_mentions, target_labels
 
 _PERIOD_ONLY = re.compile(
@@ -161,7 +162,7 @@ def bound_plan(decision, target, ctx):
         start = patch.get("period_start")
         if start and "period_start" not in known:
             end = known.get("period_end")
-            supported = any(r.get("entity") == target["entity"] and not r.get("stale") and
+            supported = any((not target.get("entity") or r.get("entity") == target["entity"]) and not r.get("stale") and
                 ((r.get("period_start"), r.get("period_end")) == (start, end) or
                  (r.get("document_period_start"), r.get("document_report_date")) == (start, end))
                 for r in ctx["evidence"] + ctx["calculations"])
@@ -171,28 +172,63 @@ def bound_plan(decision, target, ctx):
     result = dict(decision)
     if "scope" in result:
         result["scope"] = patch
-    for part in (result, patch):
-        if "requirements" in part:
-            part["requirements"] = [r for r in part["requirements"] if
-                                    not (target_labels(r["text"]) - {target["quarter"]})]
+    if quarter := target.get("quarter") or target.get("requested_quarter"):
+        for part in (result, patch):
+            if "requirements" in part:
+                part["requirements"] = [r for r in part["requirements"] if
+                                        not (target_labels(r["text"]) - {quarter})]
     return result
 
 
-def check_answer_periods(rows, claims, target, questions):
+def check_answer_periods(rows, claims, target, questions, records=()):
     """A reviewed assertion about another quarter cannot answer a relative-quarter request."""
     by_id = {c["id"]: c for c in claims}
+    quarter = target.get("quarter")
+    requested = quarter or target.get("requested_quarter")
+    disagreement = target.get("conflicting_quarter")
+    indexed = {} if quarter else {r["id"]: r for r in records}
     checked = []
     for row in rows:
         claim = by_id.get(row.get("claim_id"), {})
         dims = claim.get("constraints") or {}
         question = questions.get(row.get("part"), "")
-        if row.get("status") in ("answered", "partial") and not _COMPARISON_SUBJECT.search(question):
+        if row.get("status") in ("answered", "partial") and disagreement:
+            row = {"part": row["part"], "status": "gap", "missing_support":
+                   f"已核实的日期对应 {disagreement}，本问要求 {requested}。请确认季度或调整日期。"}
+        elif row.get("status") in ("answered", "partial") and not _COMPARISON_SUBJECT.search(question):
             labels = target_labels(row.get("answer_sentence", "")) or target_labels(claim.get("text", ""))
-            conflict = labels and target["quarter"] not in labels
+            conflict = requested and labels and requested not in labels
             conflict = conflict or any(target.get(k) and dims.get(k) and target[k] != dims[k]
                                        for k in ("entity", "period_start", "period_end"))
+            if not quarter and not conflict:
+                refs = claim.get("evidence_ids", []) + claim.get("calculation_ids", [])
+                current, outside = period_sources(target, (indexed[ref] for ref in dict.fromkeys(refs) if ref in indexed))
+                conflict = not current or any(
+                    rate_only_in_other_period(text, current, outside)
+                    for text in (claim.get("text", ""), row.get("answer_sentence", "")))
             if conflict:
                 row = {"part": row["part"], "status": "gap", "missing_support":
-                       f"所引主张的对象或财季与本问的 {target['entity']} {target['quarter']} 不符。"}
+                       (f"所引主张的对象或财季与本问的 {target['entity']} {quarter} 不符。" if quarter
+                        else "引文未能核实该主张属于用户指定的期间。")}
         checked.append(row)
     return checked
+
+
+def period_sources(target, records):
+    """Use an observation's explicitly typed dates before its document's reporting dates."""
+    bounds = {k: target[k] for k in ("period_start", "period_end") if target.get(k)}
+    current, outside = [], []
+    if not bounds:
+        return current, outside
+    for record in records:
+        if record.get("stale") or (target.get("entity") and record.get("entity") != target["entity"]):
+            continue
+        dates = record if record.get("period_end") or record.get("period_start") else {
+            "period_start": record.get("document_period_start"),
+            "period_end": record.get("document_report_date"),
+        }
+        if all(dates.get(key) == value for key, value in bounds.items()):
+            current.append(record)
+        elif any(dates.get(key) for key in bounds):
+            outside.append(record)
+    return current, outside

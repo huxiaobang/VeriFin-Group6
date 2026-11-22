@@ -104,13 +104,18 @@ def current_bridge(ctx):
     ep = ctx["episode"]
     parts = parts_for(ep["request"], ctx.get("request_parts"))
     if parts and isinstance(value, dict):
-        return {**value, "episode_id":ep["id"], "scope_version":receipt["scope_version"], "part_ids":parts}
+        cutoff = receipt["data"].get("cutoff") or ctx["scope"].get("cutoff")
+        bridge = {**value, "episode_id":ep["id"], "scope_version":receipt["scope_version"], "part_ids":parts}
+        if cutoff:
+            bridge["cutoff"] = cutoff
+        return bridge
 
 
 def explanation_context(ctx):
     """Reuse audited text first. A successful targeted search, including one with gaps, is terminal."""
     bridge = ctx["income_bridge"]
-    if not wants_explanation(ctx["episode"]["request"], ctx.get("request_parts"), bridge["part_ids"]):
+    cutoff = bridge.get("cutoff") or ctx["scope"].get("cutoff")
+    if not cutoff or not wants_explanation(ctx["episode"]["request"], ctx.get("request_parts"), bridge["part_ids"]):
         return None
     receipt = _current_receipt(ctx, EXPLANATION_TOOL)
     saved = (receipt or {}).get("data", {}).get("income_explanation")
@@ -119,7 +124,7 @@ def explanation_context(ctx):
         return {**saved, "source_review":"targeted_read"}
     from .income_explanation import inspect
     entity, = ctx["scope"]["entities"]
-    outcome = inspect(None, entity, ctx["scope"]["cutoff"], bridge, ctx["calculations"],
+    outcome = inspect(None, entity, cutoff, bridge, ctx["calculations"],
                       existing_evidence=ctx["evidence"], search=False)
     preview = outcome["data"]["income_explanation"]
     if preview.get("targets"):
@@ -130,7 +135,11 @@ def reason_action(ctx):
     explanation = ctx.get("income_explanation") or {}
     if explanation.get("gaps") and explanation.get("source_review") == "existing_evidence":
         entity, = ctx["scope"]["entities"]
-        return {"action":"tool", "tool":EXPLANATION_TOOL, "arguments":{"entity":entity},
+        arguments = {"entity":entity}
+        cutoff = (ctx.get("income_bridge") or {}).get("cutoff")
+        if cutoff and cutoff != ctx["scope"].get("cutoff"):
+            arguments["cutoff"] = cutoff
+        return {"action":"tool", "tool":EXPLANATION_TOOL, "arguments":arguments,
                 "reason":"已核对同比金额；核读同季公告，查清关键变动中尚无管理层解释的部分。"}
 
 

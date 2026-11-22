@@ -51,12 +51,46 @@ def _stage_message(report, stage):
         if stage == "draft_unverified":
             return "草稿已保存。剩余 API 预算不足以预留下一次请求的费用，当前草稿尚未完成核验。"
     if stage == "no_draft":
+        if report.get("stop_reason") == "latest_filing_unavailable":
+            return report.get("skill_gap", "最新 SEC 申报尚未核实。")
+        error = report.get("researcher_output_error")
+        if error == "max_output_tokens":
+            return "供应商报告 Researcher 达到输出上限，尚未形成完整草稿。"
+        if error in {"invalid_researcher_json", "empty_researcher_output"}:
+            return "Researcher 返回空内容。" if error == "empty_researcher_output" else "Researcher 返回的草稿无法解析为 JSON。"
         if report.get("stop_reason") == "researcher_no_valid_references":
             return "Researcher 已返回草稿。每条主张都含有无法对应到本轮记录的引用，系统已保留草稿原值和错误记录，本版没有可送审的主张。"
         if report.get("stop_reason") == "repeated_retrieval_without_new_evidence":
             return "重复检索未取得新证据，研究停在取证阶段，尚未形成草稿。"
-        return "本轮在形成草稿前停止。"
+        fault = report.get("tool_fault") or {}
+        if fault.get("kind") == "market_window":
+            message = fault["reason"]
+            if report.get("evidence"):
+                message += "已取得的来源仍可查阅。"
+        elif (fault.get("tool") == "reconcile_operating_margin"
+              and str(fault.get("reason","")).startswith("A dated analysis cutoff is required")):
+            message = ("本轮尚未形成草稿。同比比较需要明确的信息截止日。请设置研究范围的截止日，"
+                       "或提供原问所用的截止日后继续。财季期末和公告发布日期各有不同含义。")
+        elif report.get("source_coverage_gap"):
+            message = report["source_coverage_gap"]
+        elif fault.get("reason"):
+            message = f"本轮尚未形成草稿。最后一次取证遇到的问题（{fault['tool']}）：{fault['reason']}"
+        else:
+            message = "本轮在形成草稿前停止。"
+        if planner := report.get("planner_error"):
+            code = planner["diagnostic_code"]
+            detail = "无可进一步分类的错误信息" if code == "model_error_unclassified" else code
+            message += f" Planner 调用失败（Activity #{planner['event_sequence']}，{planner['error_type']}，{detail}）。"
+        return message
     if stage == "draft_unverified":
+        if report.get("critic_output_error") == "max_output_tokens":
+            limit = report.get("critic_max_output_tokens")
+            detail = f"（{limit:,} token）" if type(limit) is int else ""
+            return f"供应商报告 Critic 达到输出上限{detail}。草稿已保存，尚未取得完整核验结论。"
+        if report.get("stop_reason") == "time_budget_exhausted":
+            return "本轮已保存草稿。时间预算已用完，尚未完成 Critic 核验。"
+        if report.get("stop_reason") == "model_budget_exhausted":
+            return "本轮已保存草稿。模型调用预算已用完，尚未完成 Critic 核验。"
         if report.get("stop_reason") == "deterministic_check_requires_inspection":
             return "本轮已保存草稿。本地规则检查要求复核，流程在把这份草稿交给 Critic 前停止。"
         return "本轮已形成草稿，尚无可用于本版的 Critic 核验结论。"
@@ -157,6 +191,9 @@ def question_answers(report):
             from .income_reason_delivery import attach_offline_reasons
             attach_offline_reasons(report, by_part)
     from .answer_delivery import expand_answers
+    if (lookup := report.get("archived_source")) and by_part.get("part-1", {}).get("status") == "source_excerpt":
+        by_part["part-1"].update(status_label="已保存的原始出处", archived_source_version=lookup["report_version"],
+                                archived_source_claim_ids=lookup["claim_ids"])
     return expand_answers(report, [dict(by_part.get(key) or _pending_question(report, key, question, stage), question=question)
                                    for key, question in parts.items()])
 
@@ -241,8 +278,13 @@ def _markdown_answers(answers):
         if row.get("draft_claim_ids"):
             source += " 草稿编号 " + ", ".join(map(md_text, row["draft_claim_ids"]))
         body = "\n\n".join(md_text(p) for p in answer.split("\n\n")) if row.get("answer_fragments") else md_text(answer)
+        if "archived_source_version" in row:
+            body = "<" + answer + ">"
         lines.extend([f"**{md_text(row['question'])}**", "",
                       f"{md_text(row.get('status_label', row['status']))} — {body}{source}", ""])
+        if "archived_source_version" in row:
+            lines.extend([f"原报告 v{row['archived_source_version']} 的已核验主张 " +
+                          ", ".join(map(md_text, row["archived_source_claim_ids"])), ""])
         if table := row.get("source_table"):
             if table["summary"] not in answer:
                 lines.extend([md_text(table["summary"]),""])
@@ -369,6 +411,8 @@ def render_markdown(report):
         origin = "（本轮留存）" if record["id"] in episode_evidence else ""
         lines.extend([f"- **{md_text(record['id'])}**{origin} ({md_text(record.get('entity'))}; {md_text(record.get('period_start', ''))} to {md_text(record.get('period_end', ''))}): {source_link(record.get('source_url'))}",
                       f"  Locator: {md_text(record.get('locator'))}; snapshot SHA-256: {md_text(record.get('snapshot_hash'))}"])
+        if record.get("filing_link_provenance"):
+            lines.append("  Associated SEC filing " + source_link(record["filing_url"]))
     lines.extend(["", "## Reproducible calculations", ""])
     for record in report.get("calculations", []):
         origin = "（本轮留存）" if record["id"] in episode_calculations else ""

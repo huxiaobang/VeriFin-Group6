@@ -3,7 +3,8 @@ from decimal import Decimal
 import re
 
 from .data import stable_id
-from .financial import METRICS as GAAP
+from .financial import METRICS as GAAP, duration_class
+from .reporting_period import filed_quarter_label
 from .statement_amount_cells import nearby, text
 from .structured_documents import _hidden
 
@@ -18,15 +19,17 @@ def _locator(tree, node):
                   lambda m: "*[name()='" + m[1] + "']", tree.getpath(node))
 
 
-def tagged_cells(doc):
+def tagged_cells(doc, *, reported_end=None):
     from lxml import html
     root = html.document_fromstring(doc["raw"], parser=html.HTMLParser(encoding="utf-8", no_network=True, remove_comments=True))
     tree = root.getroottree()
     document_id = stable_id("source_doc_", doc["url"])
     tags = {"us-gaap:"+tag: metric for metric in ("revenue","gross_profit","operating_income") for tag in GAAP[metric]}
     cik_values = {text(n).lstrip("0") for n in root.iter() if n.get("name") == "dei:EntityCentralIndexKey"}
-    if len(cik_values) != 1:
+    if len(cik_values) != 1 or (doc.get("cik") and str(doc["cik"]).lstrip("0") not in cik_values):
         return
+    quarter = filed_quarter_label(root, reported_end) if reported_end else None
+    fiscal_label = f"FY{quarter[:4]} {quarter[4:]}" if quarter else None
     contexts = {}
     for ctx in root.iter("xbrli:context"):
         parts = {n.tag: n for n in ctx.iter()}
@@ -70,4 +73,18 @@ def tagged_cells(doc):
                    "basis":"US-GAAP","business_scope":"consolidated","value":int(amount) if amount == int(amount) else float(amount),
                    "printed_value":printed,"printed_scale":float(scale),"printed_decimals":node.get("decimals"),
                    "snapshot_path":doc["source"],"source_url":doc["url"],"snapshot_hash":doc["snapshot_hash"],
-                   "published_at":doc["published_at"],"form":doc["form"],"text":f"{text(title)} | {label} | {dates[0]} to {dates[1]} | {printed} (×{scale} {currency})"}
+                   "published_at":doc["published_at"],"form":doc["form"],
+                   **({"fiscal_quarter": fiscal_label} if fiscal_label and dates[1] == reported_end else {}),
+                   "text":f"{text(title)} | {label} | {dates[0]} to {dates[1]} | {printed} (×{scale} {currency})"}
+
+
+
+def reported_quarter_cells(doc, period_end):
+    """Return both exact quarterly measures from the same filed XBRL context."""
+    candidates = [c for c in tagged_cells(doc, reported_end=period_end)
+                  if c["metric"] in ("revenue", "operating_income") and c["period_end"] == period_end
+                  and duration_class(c["period_start"], c["period_end"]) == "quarter_length"]
+    if (len(candidates) != 2 or {c["metric"] for c in candidates} != {"revenue", "operating_income"}
+            or len({(c["origin_context"], c["unit"]) for c in candidates}) != 1):
+        return []
+    return candidates

@@ -12,10 +12,17 @@ from datetime import datetime, time, timezone
 from decimal import Decimal, InvalidOperation
 from typing import Any
 
+from .answer_periods import latest_answer_issues
 from .model import ModelError, _records, requirements, validated_output
-from .financial import quarter_from_cumulative, chart_comparison, check_operand_shape
+from .financial import GUIDANCE_VARIANCE, quarter_from_cumulative, chart_comparison, check_operand_shape
 from .financial import COMMON_INCOME, VALUATION_ALLOWANCE_EXPENSE, TAX_SCENARIO, tax_scenario_dimensions, check_tax_scenario_comparison
-from .display_numbers import assertion_fields, display_check
+from .display_numbers import assertion_fields, display_check, rate_only_in_other_period
+from .fiscal_followup import period_sources
+from .consolidated_results import defects as consolidated_result_defects
+from .filing_links import mismatched_filing_periods, unbound_sec_links
+from .source_link_followup import requested as source_link_requested
+from .margin_comparison import defects as margin_comparison_defects
+from .margin_formula import defects as margin_formula_defects
 from .request_review import comparison_rule_issues
 from .record_context import DIMENSIONS, compatible_records, shared_dimensions, statement_dimensions, statement_result
 from .skill_calculations import previous_quarter
@@ -100,7 +107,7 @@ def _timestamp(value: Any, *, end_of_day: bool = False) -> datetime | None:
         return None
 
 
-def check_rules(context: dict, *, display_notes=None, context_notes=None) -> list[dict]:
+def check_rules(context: dict, *, display_notes=None, context_notes=None, companies=()) -> list[dict]:
     """Return inspectable defects for the *current* claims and requirements.
 
     Root supplies active claims, not every historical report's claims. We check
@@ -114,10 +121,13 @@ def check_rules(context: dict, *, display_notes=None, context_notes=None) -> lis
     reqs = requirements(context)
     session = context.get("session", {})
     scope = context.get("scope", session.get("scope", {}))
+    request = context.get("episode", {}).get("request") or context.get("request", "")
+    source_link_only = source_link_requested(request)
     scope_version = session.get("scope_version", context.get("scope_version"))
     cutoff_raw = scope.get("cutoff")
     cutoff = _timestamp(cutoff_raw, end_of_day=True)
     records = {**evidence, **calculations}
+    displays = {}
     issues: list[dict] = []
     seen: set[tuple] = set()
 
@@ -258,6 +268,14 @@ def check_rules(context: dict, *, display_notes=None, context_notes=None) -> lis
                        for r in inputs):
                     add(target, "context_mismatch", [record_id] + operands, "Sum or midpoint mixes issuers or units.",
                         "Use operands with matching issuer and units.")
+                if record["operation"] == "midpoint" and any(row.get("guidance_role") for row in inputs):
+                    try:
+                        expected_dims = statement_dimensions("midpoint", inputs, record.get("unit"))
+                        if any(record.get(k) != v for k, v in expected_dims.items()):
+                            raise ValueError("Stored midpoint carries different guidance dimensions than the source range.")
+                    except ValueError as exc:
+                        add(target, "context_mismatch", [record_id, *operands], str(exc),
+                            "Recompute the midpoint from the original issuer guidance range.")
                 total = sum(Decimal(str(row["value"])) for row in inputs)
                 expected = total / 2 if record["operation"] == "midpoint" else total
                 if not _same_calculation(expected, record["value"]):
@@ -270,6 +288,14 @@ def check_rules(context: dict, *, display_notes=None, context_notes=None) -> lis
             first, second = (Decimal(str(records[i]["value"])) for i in operands)
             operation = record.get("operation")
             a, b = (records[i] for i in operands)
+            if operation == "ratio":
+                from .platform_revenue import CELL_TYPE, validate_share
+                if any(row.get("cell_type") == CELL_TYPE for row in (a, b)):
+                    try:
+                        validate_share(a, b)
+                    except ValueError as exc:
+                        add(target, "context_mismatch", [record_id, *operands], str(exc),
+                            "Recalculate the ratio with both entries from the same quarterly platform table.")
             if operation == "difference" and {a.get("concept"), b.get("concept")} == {COMMON_INCOME, VALUATION_ALLOWANCE_EXPENSE}:
                 add(target, "context_mismatch", [record_id, *operands],
                     "A subtraction of reported common earnings and a tax-expense-signed item cannot establish earnings excluding that item.",
@@ -291,6 +317,14 @@ def check_rules(context: dict, *, display_notes=None, context_notes=None) -> lis
                 except ValueError as exc:
                     add(target, "context_mismatch", [record_id, *operands], str(exc),
                         "Rebuild the single-item scenario from the matching original earnings and signed tax facts.")
+            if operation == GUIDANCE_VARIANCE:
+                try:
+                    expected_dims = statement_dimensions(operation, [a, b], record.get("unit"))
+                    if record.get("entity") != a.get("entity") or any(record.get(k) != v for k, v in expected_dims.items()):
+                        raise ValueError("Stored comparison dimensions differ from the actual and guidance.")
+                except ValueError as exc:
+                    add(target, "context_mismatch", [record_id, *operands], str(exc),
+                        "Recompute using the same quarter's actual and earlier issuer guidance midpoint.")
             if operation == "statement_quarter_residual":
                 try:
                     expected_dims = statement_dimensions(operation, [a,b], record.get("unit"))
@@ -342,7 +376,7 @@ def check_rules(context: dict, *, display_notes=None, context_notes=None) -> lis
                     expected = first / second
                 elif operation == "margin":
                     expected = first / second * 100
-                elif operation in ("growth", "price_return"):
+                elif operation in ("growth", "price_return", GUIDANCE_VARIANCE):
                     expected = (first / second - 1) * 100
                 elif operation == TAX_SCENARIO:
                     expected = first + second
@@ -388,6 +422,36 @@ def check_rules(context: dict, *, display_notes=None, context_notes=None) -> lis
         claims[target] = claim
         citations = [records[ref] for ref in references if ref in records]
         display = display_check(claim, citations, record_index=records)
+        displays[target] = display
+        fiscal_target = context.get("fiscal_target")
+        if fiscal_target and not fiscal_target.get("quarter"):
+            current, outside = period_sources(fiscal_target, citations)
+            if current and rate_only_in_other_period(claim["text"], current, outside):
+                add(target, "context_mismatch", references,
+                    "The stated rate appears only in cited records from another period.",
+                    "Use the original result from the user-selected date window or label the other period explicitly.")
+        matched_ids = {ref for item in display.get("matched", []) for ref in item.get("record_ids", [])}
+        link_sources = [records[ref] for ref in sorted(matched_ids) if ref in records] or citations
+        if unbound_sec_links(claim["text"], link_sources, records, link_only=source_link_only):
+            add(target, "missing_reference", [row["id"] for row in link_sources],
+                "The cited evidence does not support the displayed link to the previous answer's source." if source_link_only else
+                "The cited SEC evidence or calculation inputs do not support the displayed filing link.",
+                "Use the original link from the cited evidence, or obtain support for the displayed source.")
+        if mismatched_filing_periods(claim["text"], link_sources, records, request):
+            add(target, "missing_reference", [row["id"] for row in link_sources],
+                "The cited SEC filing does not match the stated quarter or its description as the original filing.",
+                "Attach each period's own original filing or label the later filing as a source of comparative figures.")
+        for cited_refs, detail in consolidated_result_defects(
+                claim, citations, records, scope, request, companies=companies):
+            add(target, "numerical_inconsistency", cited_refs, detail,
+                "Use the earnings release's consolidated GAAP figures and as-reported growth for the named quarter.")
+        for category, checked_refs, gap in margin_formula_defects(context, claim, citations, records):
+            add(target, category, checked_refs or references, gap,
+                "Recheck the requested period and margin definition, then cite the calculation and its original inputs.")
+        for literal, compared in margin_comparison_defects(claim, citations, records, request):
+            add(target, "numerical_inconsistency" if compared else "missing_reference", compared or references,
+                f"Operating-margin change {literal} is unsupported by a cited calculation for the stated periods and direction.",
+                "Calculate both margins from the original amounts, subtract their unrounded rates, then cite the result.")
         if display_notes is not None and display.get("negated_displays"):
             display_notes.append({"claim_id":target, "evidence_refs":references,
                                   "matched":display.get("matched", []), "negated_displays":display["negated_displays"]})
@@ -513,7 +577,7 @@ def check_rules(context: dict, *, display_notes=None, context_notes=None) -> lis
             add(item["id"], "context_mismatch", sorted(cited),
                 "The cited numeric answer does not cover the exact period requested for this fact.",
                 "Locate the requested period or report that it is missing.")
-    return issues + comparison_rule_issues(context)
+    return issues + list(latest_answer_issues(context, reqs, claims, records, displays)) + comparison_rule_issues(context)
 
 
 class Verifier:

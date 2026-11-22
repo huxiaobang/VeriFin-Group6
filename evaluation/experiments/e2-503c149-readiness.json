@@ -1,0 +1,570 @@
+{
+  "version": "503c149808aeaf225f4b35be89c89dd50a827fbc",
+  "flash_planning_files_identical": "c4fe03ff32fdfc8b6b2a098dadeaee21300a697e",
+  "source_sha256": {
+    "evaluation/实验证据/reproduce.py": "146baee941ef53b904b000381948f8c6adac3b92ee8f57d961a73c5fbc4f5e9a",
+    "evaluation/实验证据/score_financial.py": "e7963f69e3548035847e21001e8da6d525d6d59f0c4891b0e763cdda272038e1",
+    "evaluation/实验证据/results/e2-turns.json": "3bca3c177a61cc6d1688c258e0e85c956cdf46f1af4580af8d408c451d155bd7",
+    "evaluation/实验证据/results/e2-source-grades.json": "d5a1f0f6bdce9c2642947987b8c95cd8660b3aa08332f1fe2ddd8aa220622b28",
+    "code/tests/test_planning.py": "e9ce21be8b8d39552c29dbcadc73922fc5797e7860c653dd37ca11eb4a481264",
+    "code/verifin/planning_evaluation.py": "2aac6ff81a8779a28ea2fb5f59dadda8f85f1c6c16a7a3752b3fa080ee6e7f5e",
+    "evaluation/实验证据/e2-cases/01-direct.json": "0b691f1b6df13813529d943cdb7aa05ee1bbe30094db0dfbd07640df74f55fbc",
+    "evaluation/实验证据/e2-cases/02-previous.json": "b038c402547e298893b1b20519a9822298226c3e29f4dc5615d9bf2425c61482",
+    "evaluation/实验证据/e2-cases/03-source-outage.json": "8e0b36b2e3609e1c1b44c79bbaef1a89bc4c58676cb1314829eadfa9d128ddb3",
+    "evaluation/实验证据/e2-cases/04-switch.json": "62e227617bd323fd53868aa038db2e6b119f9f7eb84a246030fcbc58a1d7ce61"
+  },
+  "runs": [
+    {
+      "case": "01-direct",
+      "turn": 1,
+      "question": "截至 2025 年 1 月 31 日，微软截至 2024 年 12 月 31 日的单季收入是多少？",
+      "public_task": {
+        "id": "requested",
+        "text": "截至 2025 年 1 月 31 日，微软截至 2024 年 12 月 31 日的单季收入是多少？",
+        "kind": "fact",
+        "entities": [
+          "MSFT"
+        ],
+        "periods": [
+          {
+            "start": "2024-10-01",
+            "end": "2024-12-31"
+          }
+        ],
+        "metric": "revenue"
+      },
+      "source": "replay",
+      "cutoff": "2025-01-31",
+      "identical_observed_tools": [
+        {
+          "name": "discover_company",
+          "ok": true
+        },
+        {
+          "name": "financial_facts",
+          "ok": true
+        }
+      ],
+      "snapshot_source": "code/data/replay/snapshots/sec_msft_companyfacts.json",
+      "source_accession": "0000950170-25-010491",
+      "source_quarter": [
+        "2024-10-01",
+        "2024-12-31"
+      ],
+      "source_value": 69632000000,
+      "correct_source_acquired_both": true,
+      "reported_values": [
+        69632000000
+      ],
+      "first_candidate_correct": true,
+      "final_correct": true,
+      "controller": "complete"
+    },
+    {
+      "case": "02-previous",
+      "turn": 1,
+      "question": "以 2025 年 1 月 31 日为截止日，微软最近一季收入是多少？",
+      "public_task": {
+        "id": "requested",
+        "text": "以 2025 年 1 月 31 日为截止日，微软最近一季收入是多少？",
+        "kind": "fact",
+        "entities": [
+          "MSFT"
+        ],
+        "periods": [
+          {
+            "relative": "latest",
+            "kind": "quarter",
+            "offset": 0
+          }
+        ],
+        "metric": "revenue"
+      },
+      "source": "replay",
+      "cutoff": "2025-01-31",
+      "identical_observed_tools": [
+        {
+          "name": "discover_company",
+          "ok": true
+        },
+        {
+          "name": "financial_facts",
+          "ok": true
+        },
+        {
+          "name": "financial_facts",
+          "ok": true
+        }
+      ],
+      "snapshot_source": "code/data/replay/snapshots/sec_msft_companyfacts.json",
+      "source_accession": "0000950170-25-010491",
+      "source_quarter": [
+        "2024-10-01",
+        "2024-12-31"
+      ],
+      "source_value": 69632000000,
+      "correct_source_acquired_both": true,
+      "reported_values": [
+        69632000000
+      ],
+      "first_candidate_correct": true,
+      "final_correct": true,
+      "controller": "complete"
+    },
+    {
+      "case": "02-previous",
+      "turn": 2,
+      "question": "那上一季呢？",
+      "public_task": {
+        "id": "requested",
+        "text": "那上一季呢？",
+        "kind": "fact",
+        "entities": [
+          "MSFT"
+        ],
+        "periods": [
+          {
+            "relative": "latest",
+            "kind": "quarter",
+            "offset": 1
+          }
+        ],
+        "metric": "revenue"
+      },
+      "source": "replay",
+      "cutoff": "2025-01-31",
+      "identical_observed_tools": [
+        {
+          "name": "financial_facts",
+          "ok": true
+        },
+        {
+          "name": "financial_facts",
+          "ok": true
+        }
+      ],
+      "snapshot_source": "code/data/replay/snapshots/sec_msft_companyfacts.json",
+      "source_accession": "0000950170-24-118967",
+      "source_quarter": [
+        "2024-07-01",
+        "2024-09-30"
+      ],
+      "source_value": 65585000000,
+      "correct_source_acquired_both": true,
+      "reported_values": [
+        69632000000
+      ],
+      "first_candidate_correct": false,
+      "final_correct": false,
+      "controller": "complete"
+    },
+    {
+      "case": "03-source-outage",
+      "turn": 1,
+      "question": "截至 2025 年 1 月 31 日，微软截至 2024 年 12 月 31 日的单季收入是多少？",
+      "public_task": {
+        "id": "requested",
+        "text": "截至 2025 年 1 月 31 日，微软截至 2024 年 12 月 31 日的单季收入是多少？",
+        "kind": "fact",
+        "entities": [
+          "MSFT"
+        ],
+        "periods": [
+          {
+            "start": "2024-10-01",
+            "end": "2024-12-31"
+          }
+        ],
+        "metric": "revenue"
+      },
+      "source": "replay",
+      "cutoff": "2025-01-31",
+      "identical_observed_tools": [
+        {
+          "name": "discover_company",
+          "ok": true
+        },
+        {
+          "name": "financial_facts",
+          "ok": false
+        },
+        {
+          "name": "search_documents",
+          "ok": true
+        },
+        {
+          "name": "financial_facts",
+          "ok": false
+        },
+        {
+          "name": "search_documents",
+          "ok": true
+        },
+        {
+          "name": "discover_filings",
+          "ok": true
+        }
+      ],
+      "snapshot_source": "code/data/replay/snapshots/sec_msft_companyfacts.json",
+      "source_accession": "0000950170-25-010491",
+      "source_quarter": [
+        "2024-10-01",
+        "2024-12-31"
+      ],
+      "source_value": 69632000000,
+      "correct_source_acquired_both": true,
+      "reported_values": [
+        135217000000
+      ],
+      "first_candidate_correct": false,
+      "final_correct": false,
+      "controller": "partial"
+    },
+    {
+      "case": "04-switch",
+      "turn": 1,
+      "question": "以 2025 年 1 月 31 日为截止日，微软最近一季收入是多少？",
+      "public_task": {
+        "id": "requested",
+        "text": "以 2025 年 1 月 31 日为截止日，微软最近一季收入是多少？",
+        "kind": "fact",
+        "entities": [
+          "MSFT"
+        ],
+        "periods": [
+          {
+            "relative": "latest",
+            "kind": "quarter",
+            "offset": 0
+          }
+        ],
+        "metric": "revenue"
+      },
+      "source": "replay",
+      "cutoff": "2025-01-31",
+      "identical_observed_tools": [
+        {
+          "name": "discover_company",
+          "ok": true
+        },
+        {
+          "name": "financial_facts",
+          "ok": true
+        },
+        {
+          "name": "financial_facts",
+          "ok": true
+        }
+      ],
+      "snapshot_source": "code/data/replay/snapshots/sec_msft_companyfacts.json",
+      "source_accession": "0000950170-25-010491",
+      "source_quarter": [
+        "2024-10-01",
+        "2024-12-31"
+      ],
+      "source_value": 69632000000,
+      "correct_source_acquired_both": true,
+      "reported_values": [
+        69632000000
+      ],
+      "first_candidate_correct": true,
+      "final_correct": true,
+      "controller": "complete"
+    },
+    {
+      "case": "04-switch",
+      "turn": 2,
+      "question": "换成英伟达，它最近一季收入是多少？",
+      "public_task": {
+        "id": "requested",
+        "text": "换成英伟达，它最近一季收入是多少？",
+        "kind": "fact",
+        "entities": [
+          "NVDA"
+        ],
+        "periods": [
+          {
+            "relative": "latest",
+            "kind": "quarter",
+            "offset": 0
+          }
+        ],
+        "metric": "revenue"
+      },
+      "source": "replay",
+      "cutoff": "2025-01-31",
+      "identical_observed_tools": [
+        {
+          "name": "discover_company",
+          "ok": true
+        },
+        {
+          "name": "financial_facts",
+          "ok": true
+        },
+        {
+          "name": "financial_facts",
+          "ok": true
+        }
+      ],
+      "snapshot_source": "code/data/replay/snapshots/sec_nvda_companyfacts.json",
+      "source_accession": "0001045810-24-000316",
+      "source_quarter": [
+        "2024-07-29",
+        "2024-10-27"
+      ],
+      "source_value": 35082000000,
+      "correct_source_acquired_both": true,
+      "reported_values": [
+        35082000000
+      ],
+      "first_candidate_correct": true,
+      "final_correct": true,
+      "controller": "complete"
+    }
+  ],
+  "no_network_real_model_serializer_and_fixture": {
+    "actual_provider_calls": 0,
+    "captured_offline_role_wires": 61,
+    "all12_source_acquisition_and_output_rows_match_archive_excluding_protocol_settings_hash": 10,
+    "current_after_replay": [
+      {
+        "case": "03-source-outage",
+        "arm": "adaptive",
+        "turn": 1,
+        "status": "partial",
+        "tools": [
+          {
+            "name": "discover_company",
+            "ok": true
+          },
+          {
+            "name": "financial_facts",
+            "ok": false
+          },
+          {
+            "name": "search_documents",
+            "ok": true
+          },
+          {
+            "name": "financial_facts",
+            "ok": false
+          },
+          {
+            "name": "search_documents",
+            "ok": true
+          },
+          {
+            "name": "discover_filings",
+            "ok": true
+          },
+          {
+            "name": "read_filing",
+            "ok": false
+          }
+        ],
+        "claims": [
+          {
+            "text": "Protocol fixture observation: 135217000000",
+            "constraints": {
+              "entity": "MSFT",
+              "metric": "revenue",
+              "period_start": "2024-07-01",
+              "period_end": "2024-12-31",
+              "unit": "USD"
+            },
+            "asserted_value": 135217000000,
+            "status": "Supported"
+          }
+        ]
+      },
+      {
+        "case": "03-source-outage",
+        "arm": "fixed",
+        "turn": 1,
+        "status": "partial",
+        "tools": [
+          {
+            "name": "discover_company",
+            "ok": true
+          },
+          {
+            "name": "financial_facts",
+            "ok": false
+          },
+          {
+            "name": "search_documents",
+            "ok": true
+          },
+          {
+            "name": "financial_facts",
+            "ok": false
+          },
+          {
+            "name": "search_documents",
+            "ok": true
+          },
+          {
+            "name": "discover_filings",
+            "ok": true
+          },
+          {
+            "name": "read_filing",
+            "ok": false
+          }
+        ],
+        "claims": [
+          {
+            "text": "Protocol fixture observation: 135217000000",
+            "constraints": {
+              "entity": "MSFT",
+              "metric": "revenue",
+              "period_start": "2024-07-01",
+              "period_end": "2024-12-31",
+              "unit": "USD"
+            },
+            "asserted_value": 135217000000,
+            "status": "Supported"
+          }
+        ]
+      }
+    ],
+    "first_adaptive_planner": {
+      "01-direct": {
+        "case": "01-direct",
+        "role": "planner",
+        "body_sha256": "7070531396de694de2c9d5adfff7dfd4db2460ca6557477573c5b91a6167be96",
+        "session_title_sent": true,
+        "case_name_sent": true,
+        "prior_or_new_evidence_records": 0,
+        "tool_fault_label_in_body": false,
+        "known_answer_amounts_in_body": [],
+        "external_gold_field": false,
+        "task_entity": [
+          "MSFT"
+        ]
+      },
+      "02-previous": {
+        "case": "02-previous",
+        "role": "planner",
+        "body_sha256": "782caf171fc5e3555724e2bb25d7e037fd778adf2c82bd142b7975821cd7c62c",
+        "session_title_sent": true,
+        "case_name_sent": true,
+        "prior_or_new_evidence_records": 0,
+        "tool_fault_label_in_body": false,
+        "known_answer_amounts_in_body": [],
+        "external_gold_field": false,
+        "task_entity": [
+          "MSFT"
+        ]
+      },
+      "03-source-outage": {
+        "case": "03-source-outage",
+        "role": "planner",
+        "body_sha256": "f24637d9341d2566111b110126a5ef2983065e57912c2535c576e13b0e868cb7",
+        "session_title_sent": true,
+        "case_name_sent": true,
+        "prior_or_new_evidence_records": 0,
+        "tool_fault_label_in_body": false,
+        "known_answer_amounts_in_body": [],
+        "external_gold_field": false,
+        "task_entity": [
+          "MSFT"
+        ]
+      },
+      "04-switch": {
+        "case": "04-switch",
+        "role": "planner",
+        "body_sha256": "b46738dd861ec4e1e6825e1f4d9bc5bc3aa4fb7329010c6d46be8a910f3a7240",
+        "session_title_sent": true,
+        "case_name_sent": true,
+        "prior_or_new_evidence_records": 0,
+        "tool_fault_label_in_body": false,
+        "known_answer_amounts_in_body": [],
+        "external_gold_field": false,
+        "task_entity": [
+          "MSFT"
+        ]
+      }
+    },
+    "private_field_rejected_before_client": "Private answers, annotations and action sequences are not task inputs",
+    "empty_model_config_refused": "Set the selected provider's local API key to enable model calls"
+  },
+  "cli_preflight": {
+    "preview_keys": [
+      "protocol",
+      "status",
+      "stop_reason",
+      "question",
+      "model_calls",
+      "tool_calls",
+      "planner_steps",
+      "task_sha256",
+      "source_manifest_sha256",
+      "tool_settings",
+      "steps",
+      "context",
+      "truth_scored",
+      "notice"
+    ],
+    "status": "preview_only",
+    "model_calls": 0,
+    "truth_scored": false,
+    "tool_events": [
+      {
+        "tool": "discover_company",
+        "ok": true,
+        "arguments": {
+          "query": "MSFT",
+          "source": "replay",
+          "view": "identity"
+        }
+      },
+      {
+        "tool": "financial_facts",
+        "ok": true,
+        "arguments": {
+          "entity": "MSFT",
+          "metric": "revenue",
+          "source": "replay",
+          "cutoff": "2025-01-31"
+        }
+      },
+      {
+        "tool": "financial_facts",
+        "ok": true,
+        "arguments": {
+          "entity": "MSFT",
+          "metric": "revenue",
+          "period_end": "2024-09-30",
+          "cutoff": "2025-01-31",
+          "source": "replay",
+          "period_start": "2024-07-01"
+        }
+      }
+    ],
+    "unconfigured_run_exit": 2,
+    "unconfigured_error": "Error: Set the selected provider's local API key to enable model calls",
+    "attempt_output_created": false,
+    "real_provider_calls": 0,
+    "tool_calls": 3,
+    "stop_reason": "synthesis_required"
+  },
+  "experiment_neutral_title_followup": {
+    "case": "03-source-outage",
+    "wire_sha256": [
+      "bd0a0320c202e2cf4a9dc26dfe0e2ea42719604cd6ddd9b18c2f42873e6568e6",
+      "b7606c24e4fe37f4bd49dd9a945393b37907e1c182730f0b12df66edfb3fab13",
+      "4d0c2da33dd509c9271a4c9b275c0043cda35ddb6eab586262a8b1f0079c2286",
+      "ad6d5236e8a33b586c6021d87edd5e990b78155110ad07e96015942a77f3fe5c",
+      "49faeaeaa34042cc827bbbc355f520dc46c7d2ca56d3077f6047532739672681",
+      "872dd84dd814e0b5d297f8968227194ebfce9574b87cd10b47a7ae7ca9c2c90a",
+      "1d0241859452574f33a0e92f7364902c29b93ce38d958b39649e8f2e9da9aa86",
+      "9f4261f647fadd7936a5a17d157da9bfc62b7ff402fa2595b41214dd368e3fd8"
+    ],
+    "case_id_visible_in_role_inputs": false,
+    "case_id_preserved_in_evaluation_artifact": true,
+    "new_provider_calls": 0,
+    "test_only": "Session title isolation, no fault injection or semantic scoring."
+  }
+}

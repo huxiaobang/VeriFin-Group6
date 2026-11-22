@@ -1,8 +1,8 @@
 """Compare known source dimensions and identify the parts requiring source review."""
 import re
 
-from .data import parse_day, stable_id
-from .financial import (COMMON_INCOME, TAX_SCENARIO, TAX_SCENARIO_BASIS,
+from .data import cutoff_time, parse_day, stable_id
+from .financial import (COMMON_INCOME, GUIDANCE_VARIANCE, TAX_SCENARIO, TAX_SCENARIO_BASIS,
                         VALUATION_ALLOWANCE_EXPENSE, check_tax_scenario_comparison, residual_quarter)
 
 
@@ -36,6 +36,27 @@ def shared_dimensions(inputs, unit):
 
 def statement_dimensions(operation, inputs, unit):
     common = shared_dimensions(inputs, unit)
+    if operation == "midpoint" and any(row.get("guidance_role") for row in inputs):
+        lo, hi = inputs
+        fields = ("entity", "metric", "unit", "period_start", "period_end", "fiscal_quarter", "basis",
+                  "business_scope", "currency", "published_at", "source_url", "snapshot_hash")
+        if (lo.get("guidance_role") != "guidance_low" or hi.get("guidance_role") != "guidance_high"
+                or lo["value"] > hi["value"] or any(not lo.get(k) or lo[k] != hi.get(k) for k in fields)):
+            raise ValueError("A guidance midpoint requires ordered endpoints of the same quarter and issuer outlook.")
+        common.update(guidance_role="guidance_midpoint", fiscal_quarter=lo["fiscal_quarter"],
+                      published_at=lo["published_at"])
+    if operation == GUIDANCE_VARIANCE:
+        actual, midpoint = inputs
+        fields = ("entity", "unit", "period_start", "period_end", "fiscal_quarter", "basis",
+                  "business_scope", "currency")
+        published = [cutoff_time(row.get("published_at")) for row in inputs]
+        if (actual.get("metric") != "revenue" or actual.get("guidance_role") != "reported_actual"
+                or midpoint.get("guidance_role") != "guidance_midpoint" or midpoint["value"] <= 0
+                or not all(published) or published[0] <= published[1] or unit != "%"
+                or any(not actual.get(k) or actual[k] != midpoint.get(k) for k in fields)):
+            raise ValueError("Guidance variance requires reported revenue and a positive, earlier issuer midpoint "
+                             "for the same fiscal quarter, basis and currency.")
+        common.update(fiscal_quarter=actual["fiscal_quarter"])
     if operation == "statement_quarter_residual":
         if (len(inputs) != 2 or not inputs[0].get("cash_flow_series") or
                 any(not inputs[0].get(k) or inputs[0][k] != inputs[1].get(k)

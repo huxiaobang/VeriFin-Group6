@@ -858,6 +858,36 @@ class SessionStore:
             ).fetchone()
             return json.loads(row["payload"]) if row is not None else None
 
+    def edited_period_fields(self, session_id: str, *, after_version=0, after_sequence=0, after_episode=None) -> set[str]:
+        """Find explicit changes to the issuer or dates, including older edit receipts."""
+        fields = ("entities", "period_start", "period_end")
+        with self._transaction(write=False):
+            if after_episode:
+                start = self._db.execute(
+                    "SELECT MIN(sequence) FROM events WHERE session_id=? AND event_type='episode_checkpoint' "
+                    "AND json_extract(payload,'$.episode.id')=?",
+                    (session_id, after_episode),
+                ).fetchone()[0]
+                if start is None:
+                    return set()
+                after_sequence = max(after_sequence, start)
+            edits = self._db.execute(
+                "SELECT payload FROM events WHERE session_id=? AND event_type='scope_edited' AND sequence>? "
+                "AND json_extract(payload,'$.scope_version')>?",
+                (session_id, after_sequence, after_version),
+            )
+            result = set()
+            for row in edits:
+                edit = json.loads(row["payload"])
+                previous = self._db.execute(
+                    "SELECT payload FROM events WHERE session_id=? AND event_type='scope_changed' AND sequence<? "
+                    "AND json_extract(payload,'$.scope_version')=? ORDER BY sequence DESC LIMIT 1",
+                    (session_id, edit["event_sequence"], edit["previous_scope_version"]),
+                ).fetchone()
+                prior_scope = json.loads(previous["payload"])["scope"] if previous else {}
+                result.update(field for field in fields if prior_scope.get(field) != edit["scope"].get(field))
+            return result
+
     def save_report(self, session_id: str, report_dict: dict) -> dict:
         if not isinstance(report_dict, dict):
             raise ValueError("report must be an object")
@@ -972,7 +1002,10 @@ class SessionStore:
     def report_with_stage(self, session_id: str, report: dict) -> dict:
         """Enrich one delivery from its own pre-publication receipts, without changing the archive."""
         view = dict(report)
-        if "delivery_stage" in view and "episode_material_ids" in view:
+        check_old_critic_failure = (view.get("delivery_stage") == "draft_unverified"
+                                    and view.get("stop_reason") == "execution_error"
+                                    and "critic_output_error" not in view)
+        if "delivery_stage" in view and "episode_material_ids" in view and not check_old_critic_failure:
             return view
         if report.get("verification_available"):
             view["delivery_stage"] = "reviewed"
@@ -1040,7 +1073,8 @@ class SessionStore:
                     continue
                 error = None
                 code = event.get("contract_error")
-                if (event.get("ok") is not False or not isinstance(code, str) or not code
+                truncated = event.get("provider_output_error") == "max_output_tokens"
+                if (event.get("ok") is not False or (not truncated and not (isinstance(code, str) and code))
                         or any(c.get("stale") for c in claims.values())):
                     continue
                 if "draft_claim_versions" in event:
@@ -1055,10 +1089,17 @@ class SessionStore:
                                and set(checkpoint["claim_ids"] or []) == set(claims)
                                and all(c.get("created_at") and c["created_at"] <= critic_started_at for c in claims.values()))
                 if matches:
-                    error = code if code in _CRITIC_RECEIPT_ERRORS else "invalid_role_output"
+                    if truncated:
+                        error = {"delivery_stage": "draft_unverified", "critic_output_error": "max_output_tokens"}
+                        limit = (event.get("response_metadata") or {}).get("max_output_tokens")
+                        if type(limit) is int and limit > 0:
+                            error["critic_max_output_tokens"] = limit
+                    else:
+                        error = {"delivery_stage": "critic_receipt_invalid",
+                                 "critic_receipt_error": code if code in _CRITIC_RECEIPT_ERRORS else "invalid_role_output"}
         if view.get("delivery_stage") not in {"offline_tools_only", "reviewed"}:
             if error:
-                view.update(delivery_stage="critic_receipt_invalid", critic_receipt_error=error)
+                view.update(error)
             elif claims or (accepted_draft and checkpoint and checkpoint["summary"]
                             and checkpoint["summary"] == report.get("summary")):
                 view["delivery_stage"] = "draft_unverified"

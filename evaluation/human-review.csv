@@ -1,0 +1,3 @@
+case,prior_question,request,reviewer,period_and_entity,calculation_or_source_accuracy,does_the_answer_address_the_requested_item,unsupported_or_contradictory_claims,source_or_locator_checked,overall_grade,reason,review_date
+formula,能给我当季的公式和代入的数字吗？,那上一季呢？,,,,,,,,,
+source,这个数字出自哪份原表？给我链接。,那上一季呢？,,,,,,,,,

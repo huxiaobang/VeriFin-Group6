@@ -64,6 +64,36 @@ class StatementAmountTests(unittest.TestCase):
         store.save(result)
         return registry, args, result, excerpt
 
+    def test_week_based_fiscal_period_needs_one_prior_filing_boundary(self):
+        from datetime import date
+        from verifin.statement_amount_cells import period
+
+        heading = ["Three Months Ended", "February 2, 2025"]
+        closes = {date(2024, 10, 27): [{"form": "10-Q"}]}
+        self.assertEqual(period(heading, closes), ("2024-10-28", "2025-02-02"))
+        self.assertIsNone(period(heading))
+        self.assertIsNone(period(heading, {date(2024, 10, 27): [{"form": "10-QT"}]}))
+        closes[date(2024, 11, 3)] = [{"form": "10-Q"}]
+        self.assertIsNone(period(heading, closes))
+
+    def test_filing_boundary_requires_same_issuer_and_prior_publication(self):
+        from datetime import date
+        from unittest.mock import Mock
+        from verifin.statement_amount_cells import filed_boundaries
+
+        data = Mock()
+        data.manifest = {"companies": [{"ticker": "AAA", "cik": "0001", "submissions": "filings.json"}]}
+        data.info.return_value = {"sha256": "snapshot"}
+        recent = {"reportDate": ["2024-10-27"] * 3,
+                  "form": ["10-Q", "10-Q", "8-K"], "accessionNumber": ["old", "later", "other"],
+                  "filingDate": ["2024-11-01", "2025-02-20", "2024-11-02"]}
+        data.json.return_value = {"cik": 1, "filings": {"recent": recent}}
+        doc = {"entity": "AAA", "published_at": "2025-02-20"}
+        records = filed_boundaries(data, doc)[date(2024, 10, 27)]
+        self.assertEqual([(r["accession"], r["snapshot_hash"]) for r in records], [("old", "snapshot")])
+        data.json.return_value["cik"] = 2
+        self.assertEqual(filed_boundaries(data, doc), {})
+
     def test_native_rows_feed_formal_search_read_margin_and_point_change(self):
         registry, args, read, excerpt = self.run_fixture()
         self.assertEqual(read["data"]["network_requests"], 0)

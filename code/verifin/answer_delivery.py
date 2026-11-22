@@ -3,6 +3,7 @@ from decimal import Decimal
 import re
 
 from .display_numbers import assertion_fields
+from .margin_formula import DIVISION, asks_calculation, claim_receipts, equation, requested_metric
 
 
 def _wording(text):
@@ -161,6 +162,7 @@ def expand_answers(report, answers):
         proven[c["id"]] = c
     requirements = {r["id"]:_wording(r["text"]) for r in report.get("scope",{}).get("requirements",[])}
     questions = {_wording(a["question"]) for a in answers}
+    formula_metric = requested_metric(report)
     for row in answers:
         primary = proven.get(row.get("claim_id"))
         question = _wording(row["question"])
@@ -195,6 +197,16 @@ def expand_answers(report, answers):
         if row["status"] == "answered" and primary:
             for ids,text,start in _bridge_details(row["question"],primary,proven,records,allowed):
                 append(ids,text,start)
+            if formula_metric and asks_calculation(row["question"]) and not any(DIVISION.search(p["text"]) for p in parts):
+                formulas = {}
+                for part in parts:
+                    for cid in part["claim_ids"]:
+                        for calc, operands in claim_receipts(proven[cid], records, formula_metric, report.get("scope"),
+                                                              request=report.get("request", "")):
+                            formulas.setdefault(equation(calc, operands), cid)
+                if len(formulas) == 1:
+                    text, cid = next(iter(formulas.items()))
+                    append([cid], text)
         if row["status"] == "gap" and not parts:
             for c in proven.values():
                 if specific(c) == {question} and c["status"] == "Partially Supported":

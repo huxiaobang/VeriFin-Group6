@@ -1,6 +1,7 @@
 """Decisions supported by the current turn's source records."""
 
 from .cashflow_delivery import answer_parts
+from .retrieval import DOCUMENT_READ_LIMIT
 
 
 def margin_draft_check(context):
@@ -142,6 +143,49 @@ def covered_document_read(context, returned):
     return True
 
 
+def planner_read_context(model, context):
+    """A preview may still need a real read to expose the original text."""
+    if callable(getattr(model, "evidence_view", None)):
+        return model.evidence_view("planner", context)
+    if getattr(model, "planner_view", "full") == "compact":
+        from .context import planner_view
+        return planner_view(context)
+    return context
+
+
+def reusable_document_window(context, receipts, arguments):
+    """Find an already presented, committed text-only read of the same window."""
+    if not isinstance(arguments, dict):
+        return None
+    offset = arguments.get("offset", 0)
+    width = arguments.get("limit_chars", DOCUMENT_READ_LIMIT)
+    if type(offset) is not int or type(width) is not int:
+        return None
+    requested = {**arguments, "offset": offset, "limit_chars": width}
+    version = context["session"]["scope_version"]
+    visible = {r["id"]: r for r in context["evidence"] if not r.get("stale")}
+    for receipt in reversed(receipts):
+        if (receipt.get("tool") != "read_document" or not receipt.get("ok")
+                or receipt.get("scope_version") != version or not receipt.get("observation_sha256")):
+            continue
+        prior = receipt["arguments"]
+        if {**prior, "offset": prior.get("offset", 0), "limit_chars": prior.get("limit_chars", DOCUMENT_READ_LIMIT)} != requested:
+            continue
+        data = receipt["data"]
+        if (data.get("numeric_operand_status") != "text_only" or data.get("network_requests") != 0
+                or data.get("numeric_extraction_unavailable") or data.get("currency_reference_unavailable")
+                or data.get("numeric_operand_ids") or receipt.get("calculation_ids") or len(receipt["evidence_ids"]) != 1):
+            return None
+        ref, = receipt["evidence_ids"]
+        row = visible.get(ref, {})
+        if (_has_span(row) and row.get("mode") == "replay" and row.get("version") == receipt.get("record_versions", {}).get(ref)
+                and row["document_id"] == arguments.get("document_id") and row["start"] == offset == data.get("start")
+                and row["end"] == data.get("end")):
+            return receipt, row
+        return None
+    return None
+
+
 def covered_statement_read_gap(context, returned):
     """A new text window may still be entirely inside passages already retrieved this turn."""
     if returned.get("data", {}).get("numeric_operand_status") != "text_only":
@@ -174,7 +218,8 @@ def repeated_statement_gap(context, arguments, returned):
     for receipt in reversed(context["episode"].get("recent_tool_results", [])):
         if receipt.get("tool") != "analyze_disclosures" or not receipt.get("ok") or receipt.get("scope_version") != version:
             continue
-        if receipt.get("arguments", {}).get("entity") != arguments.get("entity"):
+        prior_args = receipt.get("arguments", {})
+        if any(prior_args.get(key) != arguments.get(key) for key in ("entity", "comparison", "fiscal_quarter")):
             continue
         if not all(receipt.get("data", {}).get(key) == data.get(key) for key in fields):
             return None

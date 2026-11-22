@@ -63,6 +63,10 @@ export VERIFIN_BASE_URL='https://YOUR_WORKSPACE_ID.cn-hongkong.maas.aliyuncs.com
 export VERIFIN_MODEL='YOUR_AVAILABLE_MODEL_SNAPSHOT'
 export VERIFIN_TIMEOUT='60'
 export VERIFIN_MAX_OUTPUT_TOKENS='4096'
+# Qwen3.7 Plus defaults to 8192 for Researcher and Critic when the global limit is unset.
+# Each role override takes precedence over the global value and includes reasoning tokens.
+# export VERIFIN_QWEN_RESEARCHER_MAX_OUTPUT_TOKENS='8192'
+# export VERIFIN_QWEN_CRITIC_MAX_OUTPUT_TOKENS='8192'
 export VERIFIN_MAX_CONTEXT_CHARS='200000'
 # For Qwen models whose JSON mode requires non-thinking operation:
 export VERIFIN_ENABLE_THINKING='false'
@@ -75,6 +79,11 @@ silently selected. The client appends `/chat/completions` to the base URL, requi
 HTTPS, refuses redirects, and uses Python's standard-library HTTP stack. It does
 not require an OpenAI account, package or SDK. Other compatible providers can use
 their own base URL and leave `VERIFIN_ENABLE_THINKING` unset.
+
+On OpenRouter Chat Completions, the Qwen3.7 Plus Critic requests low reasoning
+effort by default. Explicit reasoning effort or thinking settings take precedence.
+The provider controls actual reasoning usage. If it reports an output length stop,
+the report keeps the draft and cited evidence and marks verification incomplete.
 
 The request uses JSON-object mode, non-streaming output, and the configured output
 limit. JSON schema and reference validation run locally. This first implementation

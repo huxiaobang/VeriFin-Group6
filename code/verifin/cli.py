@@ -52,6 +52,8 @@ def parser():
     for command in ("show", "trace", "cancel"):
         child = sub.add_parser(command)
         child.add_argument("session_id")
+    recover = sub.add_parser("recover-interrupted", help="Save the last review of a stopped turn without calling a model or financial tool")
+    recover.add_argument("session_id")
     audit = sub.add_parser("audit", help="Audit saved session logs without model calls or semantic truth scoring")
     audit.add_argument("session_id")
     audit.add_argument("--output")
@@ -99,6 +101,9 @@ def main(argv=None):
             client = ModelClient.from_env()
             print(json.dumps({"configured": True, "model": client.model, "base_url": client.base_url,
                               "api_mode": client.api_mode, "reasoning_effort": client.reasoning_effort,
+                              "critic_max_output_tokens": client.critic_max_output_tokens or client.max_output_tokens,
+                              "critic_reasoning_effort": client.critic_reasoning_effort or client.reasoning_effort,
+                              "enable_thinking": client.enable_thinking,
                               "service_tier": client.service_tier,
                               "network_tested": False, "api_key": "configured (hidden)"}, indent=2))
             return 0
@@ -159,6 +164,10 @@ def main(argv=None):
             if result["episode"].get("stop_reason") == "execution_error":
                 print("Research stopped on an execution error. See the report's delivery status and 'trace' for the failed step.", file=sys.stderr)
                 return 2
+        elif args.command == "recover-interrupted":
+            tools = ToolRegistry(store, Path(args.data_dir))
+            report = ResearchEngine(store, None, tools).recover_interrupted(args.session_id)
+            print(json.dumps({"recovered_episode": report["episode_id"] if report else None}))
         elif args.command == "cancel":
             store.request_cancel(args.session_id)
             print("Cancellation requested. No further work will be scheduled after the active call returns.")

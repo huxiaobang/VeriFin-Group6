@@ -19,6 +19,7 @@ from pathlib import Path
 from .data import DataError, SnapshotData, available_by, parse_day, stable_id
 
 CHUNK_VERSION = "boundary-chars-v1"
+DOCUMENT_READ_LIMIT = 4500
 STOPWORDS = frozenset("a an and are as at be by for from how in is it of on or that the this to was were what when which why with".split())
 
 
@@ -29,20 +30,21 @@ def corpus_from_snapshots(data_dir):
     so another session's live cache cannot silently change a fixed E3 corpus.
     """
     data = data_dir if isinstance(data_dir, SnapshotData) else SnapshotData(data_dir)
-    documents = []
-    for doc in data.manifest["documents"]:
-        data.raw(doc["source"])
-        text = data.raw(doc["text"]).decode("utf-8")
-        info, derived = data.info(doc["source"]), data.info(doc["text"])
-        documents.append({"id": stable_id("source_doc_", info["url"]), "text": text,
-                          "entity": doc["entity"], "document_report_date": doc.get("period_end"),
-                          "document_period_start": doc.get("period_start"), "form": doc.get("form"),
-                          "published_at": doc["published_at"], "publication_precision": doc["publication_precision"],
-                          "source_url": info["url"], "snapshot_hash": info["sha256"],
-                          "snapshot_path": doc["source"], "text_snapshot_path": doc["text"],
-                          "text_snapshot_hash": derived["sha256"], "retrieved_at": info["retrieved_at"],
-                          "extraction_method": doc["extraction_method"], "mode": "replay"})
-    return Corpus(documents)
+    return Corpus([snapshot_document(data, doc) for doc in data.manifest["documents"]])
+
+
+def snapshot_document(data, doc):
+    """Load one original and its text with the same verified provenance as the corpus."""
+    data.raw(doc["source"])
+    text = data.raw(doc["text"]).decode("utf-8")
+    info, derived = data.info(doc["source"]), data.info(doc["text"])
+    return {"id": stable_id("source_doc_", info["url"]), "text": text,
+            "entity": doc["entity"], "document_report_date": doc.get("period_end"),
+            "document_period_start": doc.get("period_start"), "form": doc.get("form"),
+            "published_at": doc["published_at"], "publication_precision": doc["publication_precision"],
+            "source_url": info["url"], "snapshot_hash": info["sha256"], "snapshot_path": doc["source"],
+            "text_snapshot_path": doc["text"], "text_snapshot_hash": derived["sha256"],
+            "retrieved_at": info["retrieved_at"], "extraction_method": doc["extraction_method"], "mode": "replay"}
 
 
 # Stable CLI name; keep the descriptive Python alias for existing callers.
@@ -216,7 +218,36 @@ class FrozenEmbeddings:
                       key=lambda row: (-row[1], row[0]["id"]))
 
 
-def search(corpus, query, filters=None, mode="bm25", limit=5, embeddings=None, max_context_chars=9000, candidate_limit=100):
+def complete_passage_starts(passages, documents, lookback, remaining):
+    """Extend ranked chunks inside the same source without displacing any selected hit."""
+    sources = {doc["id"]: doc for doc in documents}
+    used = 0
+    for row in passages:
+        doc = sources[row["document_id"]]
+        start = row["start"]
+        row["source_window"] = {"ranked_start": start, "ranked_end": row["end"],
+                                "more_text_before": start > 0, "more_text_after": row["end"] < len(doc["text"])}
+        floor = max(0, start - min(remaining - used, lookback))
+        if floor == start:
+            continue
+        # Search the preceding text only. A budget boundary is not evidence
+        # of a new sentence or bullet.
+        boundary = 0 if floor == 0 else None
+        for match in re.finditer(r"\n\s*\n|[.!?]\s+|[。！？•‣]\s*", doc["text"][floor:start]):
+            boundary = floor + match.end()
+        if boundary is None or not doc["text"][boundary:start].strip():
+            continue
+        row["retrieved_chunk_id"] = row["id"]
+        row["id"] = stable_id("chunk_", [doc["id"], doc.get("snapshot_hash"), doc["text_snapshot_hash"],
+                                         CHUNK_VERSION, boundary, row["end"]])
+        row["start"] = boundary
+        row["source_window"]["more_text_before"] = boundary > 0
+        row["text"] = doc["text"][boundary:row["end"]]
+        used += start - boundary
+    return used
+
+
+def search(corpus, query, filters=None, mode="bm25", limit=5, embeddings=None, max_context_chars=9000, candidate_limit=100, *, complete_starts=False):
     if mode not in {"bm25", "dense", "hybrid"}:
         raise DataError("Unsupported retrieval mode.")
     if isinstance(limit, bool) or not isinstance(limit, int) or not 1 <= limit <= 100:
@@ -249,6 +280,8 @@ def search(corpus, query, filters=None, mode="bm25", limit=5, embeddings=None, m
             continue
         chars += len(chunk["text"])
         result.append(dict(chunk, retrieval_score=score, retrieval_method=mode))
+    if complete_starts:
+        chars += complete_passage_starts(result, corpus.documents, corpus.overlap, max_context_chars - chars)
     return {"passages": result, "mode": mode, "query": query, "filters": filters or {},
             "corpus_fingerprint": corpus.fingerprint, "eligible_chunks": len(chunks),
             "eligible_document_ids": sorted({c["document_id"] for c in chunks}),

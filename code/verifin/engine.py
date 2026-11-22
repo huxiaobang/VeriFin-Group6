@@ -9,6 +9,7 @@ from contextlib import contextmanager
 from dataclasses import asdict, dataclass
 from datetime import datetime, timezone
 import hashlib
+from http.client import IncompleteRead
 import json
 import math
 from pathlib import Path
@@ -16,10 +17,12 @@ import threading
 import time
 import uuid
 
-from . import fiscal_followup, planner_evidence, income_followup, issuer_attribution, source_scope
+from . import fiscal_followup, planner_evidence, income_followup, issuer_attribution, source_scope, latest_quarter, source_link_followup
+from .answer_periods import CHECK as ANSWER_PERIOD_CHECK, remember_latest_quarter
 from .verification import Verifier, check_rules
-from .model import ContextLimitReached, OutputContractError, SpendLimitReached, USAGE_FIELDS
+from .model import ContextLimitReached, ModelError, OutputContractError, SpendLimitReached, USAGE_FIELDS
 from .request_review import clarify_request, request_parts, coverage_issues, report_coverage, single_question_mismatch, unresolved_checklist
+from .reporting_period import explicit_quarter_end
 
 
 def utcnow():
@@ -37,7 +40,8 @@ def request_wording(text):
 def retry_instruction(text):
     return request_wording(text) in {
         "再回答一次", "请再回答一次", "再答一次", "重新回答", "请重新回答", "重答上一问",
-        "重新回答上一个问题", "重复上一个问题", "再试一次", "重试", "请重试",
+        "重新回答上一个问题", "重复上一个问题", "再试一次", "重试", "请重试", "重試", "請重試",
+        "再试试", "请再试试", "再試試", "請再試試",
         "repeat the last question", "answer the same question again", "answer again", "try again", "retry"}
 
 
@@ -231,6 +235,30 @@ class ResearchEngine:
                 return payload["episode"]
         return None
 
+    def _seal_interrupted(self, sid, episode):
+        count = self.store.get_context(sid, report_mode="none")["report_count"]
+        saved = self.store.get_report(sid, count) if count else None
+        if saved and saved.get("episode_id") == episode["id"]:
+            # Older writers could commit the report before the final checkpoint.
+            episode.update(status=saved["status"], stop_reason=saved["stop_reason"], finished_at=saved["created_at"])
+            return self._save_delivery(sid, episode, existing=saved)
+        episode.update(status="partial", stop_reason="interrupted", finished_at=utcnow())
+        with self.store.atomic_step():
+            # A committed review may include both a rejected draft item and
+            # verified siblings. Keep an exact current review intact.
+            if not (episode["reviewed"] and self._current_review(sid, episode, self._context(sid, episode))):
+                self._restore_review(sid, episode)
+            return self._save_delivery(sid, episode)
+
+    def recover_interrupted(self, sid):
+        """Seal the current checkpoint without scheduling another research turn."""
+        with session_lock(self.store, sid):
+            self.store.get_session(sid)
+            episode = self.latest_episode(sid)
+            if episode and episode["status"] == "running":
+                return self._seal_interrupted(sid, episode)
+            return None
+
     def ask(self, session_id, message, *, budget=None, reset_cancel=True, as_of=None, max_context_chars=None):
         if not isinstance(message, str) or not message.strip():
             raise ValueError("A nonempty research request or clarification is required.")
@@ -249,20 +277,13 @@ class ResearchEngine:
             if max_context_chars is not None:
                 session = self.store.set_context_limit(session_id, max_context_chars)
             previous = self.latest_episode(session_id)
-            if previous and previous["status"] == "running":
-                # A prior process died after a persisted checkpoint. Its findings
-                # remain a partial historical report, never silently completed.
-                count = self.store.get_context(session_id, report_mode="none")["report_count"]
-                saved = self.store.get_report(session_id, count) if count else None
-                if saved and saved.get("episode_id") == previous["id"]:
-                    # The report committed before the writer died on its final checkpoint.
-                    previous.update(status=saved["status"], stop_reason=saved["stop_reason"], finished_at=saved["created_at"])
-                    self._save_delivery(session_id, previous, existing=saved)
-                else:
-                    previous.update(status="partial", stop_reason="interrupted", finished_at=utcnow())
-                    with self.store.atomic_step():
-                        self._restore_review(session_id, previous)
-                        self._save_delivery(session_id, previous)
+            period_fields = ("period_start", "period_end")
+            period_edits = set()
+            interrupted = previous and previous["status"] == "running"
+            if interrupted:
+                checkpoint = self.store.latest_event(session_id, "episode_checkpoint")
+                period_edits = self.store.edited_period_fields(session_id, after_sequence=checkpoint["event_sequence"])
+                self._seal_interrupted(session_id, previous)
             session_scope_at_start = session["scope"]
             old_cutoff = session["scope"].get("cutoff")
             if day_only_prefix and as_of is None and old_cutoff and old_cutoff[:10] == stated and len(old_cutoff) > 10:
@@ -270,12 +291,22 @@ class ResearchEngine:
             new_followup = False
             use_current_request = False
             retry_report = None
+            archived_source = None
+            source_lookup = False
+            local_source_lookup = self.planner is None and self.auto_skills and not getattr(self.model, "method_pack", None)
+            link_only = local_source_lookup and source_link_followup.requested(message)
             relative_only = fiscal_followup.prior_period_only(message)
             if previous and previous["status"] in {"complete","partial"}:
                 version = self.store.get_context(session_id,report_mode="none")["report_count"]
                 prior_report = self.store.get_report(session_id, version)
+                if not interrupted:
+                    period_edits = self.store.edited_period_fields(session_id, after_version=prior_report["scope_version"])
+                    if prior_report.get("stop_reason") == "interrupted":
+                        # Separate recovery may have saved the old quarter under the scope already edited by the user.
+                        period_edits.update(self.store.edited_period_fields(
+                            session_id, after_episode=prior_report["episode_id"]))
                 same = request_wording(message) == request_wording(prior_report["request"])
-                if retry_instruction(message) or (same and not relative_only):
+                if retry_instruction(message) or (same and not link_only and (not relative_only or period_edits)):
                     # Older releases saved the shortcut as the entire report request.
                     # Follow consecutive shortcuts back to the substantive user turn.
                     retry_report = prior_report
@@ -290,6 +321,15 @@ class ResearchEngine:
                 assigned_task = scope.get("planning_task") and scope["planning_task"] != prior_scope.get("planning_task")
                 use_current_request = (self.planner is None and new_followup and not assigned_task
                     and scope.get("requirements", []) == prior_scope.get("requirements", []))
+                source_lookup = local_source_lookup and (
+                    (link_only and use_current_request) or bool(retry_report and retry_report.get("archived_source")))
+                if (source_lookup and prior_report["scope_version"] == session["scope_version"]
+                        and (not turn_cutoff or cutoff_time(turn_cutoff) == cutoff_time(old_cutoff))):
+                    source_report = retry_report or prior_report
+                    if pointer := source_report.get("archived_source"):
+                        source_report = self.store.get_report(session_id, pointer["report_version"])
+                    archived_source = source_link_followup.saved_source(source_report,
+                        self.store.get_context(session_id, report_mode="none"), scope)
             if turn_cutoff and cutoff_time(turn_cutoff) != cutoff_time(old_cutoff):
                 session = self.store.update_scope(session_id, {**session["scope"], "cutoff":turn_cutoff})
             if previous and previous["status"] == "waiting_for_clarification":
@@ -362,7 +402,7 @@ class ResearchEngine:
             episode["model_mode"] = getattr(self.model, "mode", "configured_model") if self.model is not None else "offline_tools_only"
             self.store.append_message(session_id, "user", message)
             task_message = episode["request"]
-            for field in ("skill_calculations", "skill_gap", "research_skills", "skill_selection_source", "draft_skill_selection", "statement_notes", "skill_assessments", "skill_fiscal_quarter", "requested_fiscal_year", "offline_part_findings"):
+            for field in ("skill_calculations", "skill_gap", "research_skills", "skill_selection_source", "draft_skill_selection", "statement_notes", "skill_assessments", "skill_fiscal_quarter", "requested_fiscal_year", "offline_part_findings", "margin_formula_target"):
                 episode.pop(field, None)
             if turn_cutoff:
                 episode["user_cutoff"] = turn_cutoff
@@ -375,6 +415,16 @@ class ResearchEngine:
             scope_message = message if resumed else task_message
             amendment = skill_routing.amended_issuers(scope_message, scope, companies)
             declared = skill_routing.named_issuers(skill_routing.focus_of_switch(scope_message), companies)
+            # A user may return to a different issuer instead of answering the
+            # outstanding clarification. The Planner decides whether this is a
+            # replacement. Its issuer must be explicitly named in the latest turn.
+            replacement_offer = None
+            if (resumed and same_checklist
+                    and (not requirements or requirements == [{"id":default_id, "text":previous["request"]}])
+                    and self.model is not None and self.planner is None
+                    and len(declared) == 1 and declared[0] not in scope.get("entities", [])
+                    and not amendment and not skill_routing.preserves_prior_participants(message)):
+                replacement_offer = {"latest_message": message, "named_issuer": declared[0]}
             prior_boundary = (previous or {}).get("user_issuer_boundary")
             retain_boundary = bool(prior_boundary and
                 set(prior_boundary["entities"]).issubset(scope.get("entities", [])) and
@@ -387,27 +437,38 @@ class ResearchEngine:
             boundary = None
             period_followup = new_followup and relative_only
             original_parts = (retry_report or {}).get("quarter_followup_parts")
+            replaying_quarter = bool(retry_report and original_parts)
+            edited_retry = bool(retry_report and period_edits)
+            edited_issuer = edited_retry and "entities" in period_edits
             quarter_dates = {}
             time_message = message if resumed else task_message
             annual = skill_calculations.requested_fiscal_year(time_message)
-            prior_target = skill_calculations.targets_prior_quarter(time_message)
+            anchored_predecessor = skill_calculations.latest_reported_target(time_message) == "previous"
+            prior_target = anchored_predecessor or skill_calculations.targets_prior_quarter(time_message)
             quarter_labels = skill_calculations.target_labels(time_message)
             return_reference = (fiscal_followup.quarter_reference(time_message)
                                 if (new_followup or retry_report) and not (prior_target or annual or quarter_labels) else None)
             historical = None
             return_bounds = {}
+            stated_end = None
             inherited_quarter = False
-            if auto or declared or amendment or retain_boundary or period_followup or return_reference:
+            if auto or declared or amendment or retain_boundary or period_followup or return_reference or edited_retry:
                 stored = self.store.get_context(session_id, report_mode="none")
                 history = stored["messages"]
                 earlier = [m["content"] for m in history[:-1] if m["role"] == "user"]
-                entities, issuer = skill_routing.resolve_issuer_scope(scope_message, earlier, scope, companies, amendment=amendment)
-                if retain_boundary and entities == scope.get("entities", []):
-                    boundary = prior_boundary
+                if edited_issuer:
+                    entities = scope.get("entities", [])
+                    issuer = entities[0] if len(entities) == 1 else None
+                    if entities:
+                        boundary = {"entities": entities, "open_peers": False}
                 else:
-                    boundary = skill_routing.user_issuer_boundary(scope_message, declared, entities, scope.get("entities", []))
-                if amendment and amendment[1]:
-                    boundary = {**(boundary or {"entities":[],"open_peers":True}), "excluded":amendment[1]}
+                    entities, issuer = skill_routing.resolve_issuer_scope(scope_message, earlier, scope, companies, amendment=amendment)
+                    if retain_boundary and entities == scope.get("entities", []):
+                        boundary = prior_boundary
+                    else:
+                        boundary = skill_routing.user_issuer_boundary(scope_message, declared, entities, scope.get("entities", []))
+                    if amendment and amendment[1]:
+                        boundary = {**(boundary or {"entities":[],"open_peers":True}), "excluded":amendment[1]}
                 issuer_history = skill_routing.same_issuer_history(earlier, issuer, companies) if issuer else []
                 prior_entities = scope.get("entities", [])
                 switch = bool(prior_entities and entities != prior_entities)
@@ -430,9 +491,22 @@ class ResearchEngine:
                     while issuer_history and (retry_instruction(issuer_history[-1]) or
                             request_wording(issuer_history[-1]) == request_wording(task_message)):
                         issuer_history = issuer_history[:-1]
-                prior_quarter = anchor or skill_calculations.requested_quarter(issuer_history)
+                prior_quarter = anchor
+                if not prior_quarter and not (previous or {}).get("retry_period_bounds"):
+                    prior_quarter = skill_calculations.requested_quarter(issuer_history)
                 target_quarter = (anchor if anchor and episode.get("retry_of_version") else
                                   skill_calculations.requested_quarter([time_message], prior_quarter))
+                if anchored_predecessor:
+                    target_quarter = None  # This request names a fresh disclosure as its anchor.
+                stated_end = explicit_quarter_end(time_message) if issuer and target_quarter else None
+                if stated_end:
+                    quarter_dates["period_end"] = stated_end
+                pending = episode.get("retry_period_bounds", {})
+                if (resumed and pending.get("requested_quarter")
+                        and (switch or annual or prior_target
+                             or quarter_labels and pending["requested_quarter"] not in quarter_labels
+                             or stated_end and stated_end != pending.get("period_end"))):
+                    episode.pop("retry_period_bounds")
                 inherited_quarter = bool(new_followup and not switch and not prior_target and not annual
                                          and target_quarter == prior_quarter and not quarter_labels)
                 if return_reference:
@@ -444,10 +518,36 @@ class ResearchEngine:
                         quarter_dates = {k: historical[k] for k in ("period_start", "period_end")}
                     return_bounds = ({k:scope[k] for k in ("period_start", "period_end") if scope.get(k)}
                                      if edited_dates else quarter_dates)
-                if original_parts:
+                if replaying_quarter:
+                    archived = retry_report.get("skill_fiscal_quarter", {})
+                    archived_scope = retry_report["scope"]
+                    same_window = not edited_retry and issuer and archived.get("entity") == issuer and all(
+                        scope.get(field) == archived_scope.get(field) for field in period_fields)
+                    if same_window:
+                        target_quarter = archived.get("quarter")
+                        quarter_dates = {field: archived[field] for field in period_fields if archived.get(field)}
+                    else:
+                        # An edited window supersedes the relative question's old anchor.
+                        target_quarter = None
+                        quarter_dates = {field: scope[field] for field in period_fields if scope.get(field)}
+                        if quarter_dates:
+                            episode["retry_period_bounds"] = {"entity": issuer, **quarter_dates}
+                        original_parts, parts = fiscal_followup.inherited_questions(
+                            retry_report, retry_report, archived.get("quarter"), "指定期间")
+                        episode["inherited_parts"] = parts
+                        original_questions = retry_report.get("request_parts", {})
+                        replacement = {original_questions[key]: text for key, text in parts.items()
+                                       if key in original_questions}
+                        archived_requirements = {row["id"]: row["text"]
+                                                 for row in archived_scope.get("requirements", [])}
+                        scope = {**scope, "requirements": [
+                            {**row, "text": replacement[row["text"]]}
+                            if archived_requirements.get(row["id"]) == row["text"] and row["text"] in replacement
+                            else row for row in scope.get("requirements", [])]}
+                        session = self.store.update_scope(session_id, scope)
                     episode["quarter_followup_parts"] = original_parts
-                    quarter_dates = {k: saved_quarter[k] for k in ("period_start", "period_end") if saved_quarter.get(k)}
-                shift = not edited_dates if return_reference else prior_target or (prior_quarter and target_quarter != prior_quarter)
+                shift = (not edited_dates if return_reference else
+                         not replaying_quarter and (prior_target or (prior_quarter and target_quarter != prior_quarter)))
                 if (auto and (new_followup or retry_report) and issuer and not (assigned_task or switch or shift)
                         and saved_quarter.get("entity") == issuer and target_quarter == anchor and anchor
                         and fiscal_followup.report_issuer(prior_report) == issuer
@@ -466,6 +566,26 @@ class ResearchEngine:
                     # Earlier questions may omit the fiscal label even when their report has dates.
                     # Resolve the explicitly named quarter before reusing those dates as tool defaults.
                     shift = True
+                edited_window = (new_followup and len(quarter_labels) == 1 and not switch
+                                 and period_edits.intersection(period_fields)
+                                 and (not stated_end or stated_end == scope.get("period_end")))
+                if edited_retry or edited_window:
+                    quarter_dates = {key: scope[key] for key in period_fields if scope.get(key)}
+                    bounds = {"entity": issuer, **quarter_dates}
+                    shift = False
+                    if edited_retry:
+                        target_quarter = stated_end = None
+                    else:
+                        bounds["requested_quarter"] = next(iter(quarter_labels))
+                        matched = self._historical_quarter(session_id, issuer, scope) if issuer and quarter_dates else None
+                        if matched and matched["quarter"] == bounds["requested_quarter"]:
+                            target_quarter = matched["quarter"]
+                        else:
+                            if matched:
+                                bounds["conflicting_quarter"] = matched["quarter"]
+                            target_quarter = None
+                    if quarter_dates or edited_window or replaying_quarter:
+                        episode["retry_period_bounds"] = bounds
                 if (period_followup and issuer and target_quarter and not switch
                         and fiscal_followup.report_issuer(prior_report) == issuer and not assigned_task
                         and all(session_scope_at_start.get(k) == prior_scope.get(k)
@@ -477,12 +597,12 @@ class ResearchEngine:
                         documents = getattr(getattr(self.tools, "data", None), "manifest", {}).get("documents", [])
                         quarter_dates = fiscal_followup.adjacent_dates(saved_quarter, documents, scope.get("cutoff"))
                     boundary = {"entities": [issuer], "open_peers": False}
-                if entities != prior_entities or (shift and issuer):
+                if entities != prior_entities or (shift and issuer) or (stated_end and stated_end != scope.get("period_end")):
                     scope = dict(scope)
-                    if switch or shift:
+                    if switch or shift or (stated_end and stated_end != scope.get("period_end")):
                         scope.pop("period_start", None)
                         scope.pop("period_end", None)
-                        if return_reference:
+                        if return_reference or stated_end:
                             scope.update(quarter_dates)
                     if switch:
                         scope.pop("metrics", None)
@@ -509,6 +629,18 @@ class ResearchEngine:
             if use_current_request and relative_only and not original_parts:
                 scope = {**scope, "requirements": [{"id": "request:" + episode["id"], "text": message}]}
                 session = self.store.update_scope(session_id, scope)
+            if auto and self.model is not None and (use_current_request or retry_report) and not switch:
+                from .margin_formula import formula_followup, reviewed_followup_target
+
+                if formula_followup(task_message):
+                    reference = retry_report or prior_report
+                    if version := reference.get("margin_formula_target", {}).get("report_version"):
+                        reference = self.store.get_report(session_id, version)
+                    current = {r["id"]: r for r in stored["evidence"] + stored["calculations"]}
+                    if target := reviewed_followup_target(task_message, reference, scope, current):
+                        episode["margin_formula_target"] = {**target, "report_version": reference["version"]}
+                        quarter_dates = {k: target[k] for k in ("period_start", "period_end")}
+                        session = self.store.update_scope(session_id, {**scope, **quarter_dates})
             if boundary:
                 episode["user_issuer_boundary"] = boundary
             else:
@@ -531,7 +663,7 @@ class ResearchEngine:
                     source_task = skill_calculations.source_request(task_message, issuer_history)
                     formula_query = skill_calculations.FORMULA_QUERY.fullmatch(task_message.strip())
                     from .sales_comparison import supports_parts
-                    if original_parts and supports_parts(original_parts):
+                    if original_parts and target_quarter and supports_parts(original_parts):
                         work = {"method": "quarter_followup", "entity": issuer, "quarter": target_quarter,
                                 "parts": original_parts, "previous_period_start": saved_quarter.get("period_start"),
                                 "steps": [], "operands": [], "calculations": [], **quarter_dates}
@@ -570,9 +702,32 @@ class ResearchEngine:
                                                       "skills":skills, "selection":"offline_rules"})
             else:
                 work = None
+            if source_lookup:
+                episode["model_mode"] = "offline_tools_only"
+                quarter = episode.get("skill_fiscal_quarter", {}).get("quarter")
+                if archived_source:
+                    episode["archived_source"] = archived_source
+                    finding = {"status": "source_excerpt", "answer_sentence": archived_source["url"],
+                               "evidence_ids": archived_source["evidence_ids"]}
+                else:
+                    finding = {"status": "gap", "missing_support": source_link_followup.ARCHIVE_GAP}
+                episode["offline_part_findings"] = {"part-1": {**finding, "quarter": quarter}}
+            sec_step = None
+            latest_request = (self.planner is None and self.model is not None
+                              and getattr(getattr(self.tools, "data", None), "allow_network", False)
+                              and latest_quarter.requested(task_message) and len(scope.get("entities", [])) <= 1)
+            resolving_latest = latest_request and not scope.get("entities")
+            if latest_request:
+                previous = skill_calculations.latest_reported_target(task_message) == "previous"
+                episode["latest_sec_gap"] = ("尚未核实最新披露财季的上一季及其 SEC 原表。" if previous else
+                                             "尚未取得足以核实最新已公布财季的 SEC 申报。")
+                if not resolving_latest:
+                    acquisition = latest_quarter.acquire(scope["entities"][0], scope.get("cutoff"), task_message)
+                    sec_step = next(acquisition)
             income_plan = None
             income_attempted = False
             pending_income_draft = None
+            pending_recovery_calculation = None
             if auto and hasattr(self.tools,"data") and issuer and income_followup.parts_for(task_message,request_parts(task_message)):
                 parts=episode.get("clarified_parts") or episode.get("inherited_parts") or request_parts(task_message) or {"part-1":task_message}
                 referring=bool((new_followup or retry_report) and not switch)
@@ -615,14 +770,15 @@ class ResearchEngine:
                 if kind == "planner" and episode.get("planner_steps", 0) >= limits.max_planner_steps:
                     raise StopEpisode("planner_budget_exhausted")
 
-            def model_call(role, context, *, commit_result=None):
+            role_seconds = {}
+            def model_call(role, context, *, commit_result=None, reserve_seconds=0):
                 guard("model")
                 episode["model_calls"] += 1
                 self.store.add_event(session_id, {"type": "step_started", "episode_id": episode["id"], "role": role})
                 checkpoint()  # Reserve the attempt before I/O, even if the process dies.
                 original_timeout = getattr(self.model, "timeout", None)
                 if original_timeout is not None:
-                    self.model.timeout = max(0.01, min(original_timeout, limits.max_seconds - elapsed()))
+                    self.model.timeout = max(0.01, min(original_timeout, limits.max_seconds - elapsed() - reserve_seconds))
                 started = self.clock()
                 # A failed call must not reuse a previous call's token counts.
                 if hasattr(self.model, "last_usage"):
@@ -671,14 +827,23 @@ class ResearchEngine:
                         event["contract_error"] = exc.code
                     if isinstance(exc, ProviderOutputError):
                         event["provider_output_error"] = exc.code
+                    if role == "researcher" and isinstance(exc, (ProviderOutputError, OutputContractError)):
+                        episode["researcher_output_error"] = exc.code
+                    if role == "planner" and isinstance(exc, ModelError):
+                        event["diagnostic_code"] = event.get("contract_error") or event.get("provider_output_error") or "model_error_unclassified"
                     raise
                 finally:
                     event.update(seconds=self.clock() - started,
                         response_metadata=getattr(self.model, "last_response_metadata", {}) or {},
                         usage={k: v for k, v in (getattr(self.model, "last_usage", {}) or {}).items()
                                if k in USAGE_FIELDS and type(v) is int and v >= 0})
+                    if event.get("ok") and role in ("critic", "researcher"):
+                        role_seconds[role] = event["seconds"]
                     if not event.get("ok") or commit_result is None:
-                        self.store.add_event(session_id, event)
+                        saved_event = self.store.add_event(session_id, event)
+                        if "diagnostic_code" in event:
+                            episode["planner_error"] = {k: saved_event[k] for k in
+                                                        ("error_type", "diagnostic_code", "event_sequence")}
                     if original_timeout is not None:
                         self.model.timeout = original_timeout
                     for key, value in (getattr(self.model, "last_usage", {}) or {}).items():
@@ -719,6 +884,8 @@ class ResearchEngine:
             try:
                 while True:
                     guard()
+                    if source_lookup:
+                        raise StopEpisode("offline_tools_only")
                     if episode["no_progress"] >= limits.max_no_progress:
                         raise StopEpisode("no_progress")
                     guard("planner")
@@ -726,8 +893,8 @@ class ResearchEngine:
                     checkpoint()
                     ctx = self._context(session_id, episode)
                     recovery = episode.get("tool_recovery")
-                    finalize_recovery = False
-                    step = skill_calculations.next_action(work, ctx) if work is not None else None
+                    finalize_recovery = pending_recovery_calculation is not None
+                    step = sec_step or (skill_calculations.next_action(work, ctx) if work is not None else None)
                     if (self.model is None and self.planner is None and auto and new_followup
                             and work is None and not income_plan and not step):
                         from . import offline_attribution
@@ -751,8 +918,10 @@ class ResearchEngine:
                     if income_action and self.model is None:
                         step=income_action
                     reason_step = income_followup.reason_action(ctx) if income_plan else None
-                    if reason_step and episode["tool_calls"] < limits.max_tool_calls and not episode.get("income_reason_attempted"):
+                    if not sec_step and reason_step and episode["tool_calls"] < limits.max_tool_calls and not episode.get("income_reason_attempted"):
                         step = reason_step
+                    if pending_recovery_calculation is not None:
+                        step = {"action":"tool", "tool":"calculate", "arguments":pending_recovery_calculation[0]}
                     cash_handoff = None
                     income_handoff = False
                     if step is not None:
@@ -788,7 +957,25 @@ class ResearchEngine:
                             self.store.add_event(session_id, {"type": "controller_route", "episode_id": episode["id"],
                                 "from": "analyze_disclosures", "to": "research", "reason": "reconciled_cash_flow"})
                         else:
+                            if replacement_offer:
+                                ctx["episode"]["clarification_reply"] = replacement_offer
                             decision = model_call("planner", ctx)
+                            if "clarification_relation" in decision:
+                                from .model import validate_response
+                                validate_response("planner", decision, ctx)
+                                # Keep the consumed budget and immutable history. Use the
+                                # member's actual words as the new coverage obligation.
+                                task_message = episode["request"] = message
+                                episode["clarified_parts"] = request_parts(message)
+                                episode.pop("inherited_parts", None)
+                                boundary = {"entities": list(declared), "open_peers": False}
+                                episode["user_issuer_boundary"] = boundary
+                                decision = {**decision, "scope": {**decision["scope"],
+                                    "requirements": [{"id":"request:" + episode["id"], "text":message}]}}
+                                decision.pop("requirements", None)
+                                self.store.add_event(session_id, {"type":"clarification_replaced",
+                                    "episode_id":episode["id"], "entities":list(declared)})
+                            replacement_offer = None
                     else:
                         from .model import validate_response
                         started = self.clock()
@@ -803,6 +990,16 @@ class ResearchEngine:
                         guard()
                     if not isinstance(decision, dict):
                         raise ValueError("Planner must return an object")
+                    if resolving_latest and decision.get("action") != "clarify":
+                        args = decision.get("arguments", {})
+                        entities = decision.get("scope", {}).get("entities", [])
+                        query = args.get("query") if decision.get("tool") == "discover_company" else args.get("entity")
+                        query = query or (entities[0] if len(entities) == 1 else None)
+                        if not query:
+                            decision = {"action": "clarify", "question": "请提供要查询的发行人名称或股票代码。"}
+                        else:
+                            decision = {"action": "tool", "tool": "discover_company",
+                                        "arguments": {"query": query, "view": "identity"}}
                     if recovery and decision.get("action") == "tool" and (
                             decision.get("tool") == recovery["tool"]
                             and decision.get("arguments", {}) == recovery["arguments"]
@@ -813,10 +1010,12 @@ class ResearchEngine:
                         decision = {"action":"research", "reason":recovery["instruction"]}
                         self.store.add_event(session_id, {"type":"controller_route", "episode_id":episode["id"],
                             "from":"tool", "to":"research", "reason":"unchanged_recovery_action"})
+                    if latest_request and decision.get("tool") in {"discover_filings", "financial_facts"}:
+                        decision = {**decision, "arguments": {**decision["arguments"], "source": "live"}}
                     if episode.get("user_cutoff") and "cutoff" in decision.get("scope", {}):
                         decision = {**decision, "scope":{**decision["scope"], "cutoff":episode["user_cutoff"]}}
                     self.store.add_event(session_id, {"type": "planner_decision", "episode_id": episode["id"], "decision": decision,
-                        **({"decision_source": "controller"} if cash_handoff or income_handoff or
+                        **({"decision_source": "controller"} if sec_step or cash_handoff or income_handoff or
                            (step is not None and (step is income_action or step is reason_step)) else {}),
                         "summary": str(decision.get("reason", decision.get("action", "")))})
                     conflict = skill_routing.issuer_decision_conflict(boundary, decision, companies)
@@ -863,11 +1062,24 @@ class ResearchEngine:
                         # Preserve the new user's exact request as the minimum
                         # coverage obligation, never a model-generated answer.
                         decision = {**decision,"requirements":[{"id":"request:"+episode["id"],"text":episode["request"]}]}
-                    if episode.get("quarter_followup_parts") and ctx.get("fiscal_target"):
+                    if ctx.get("fiscal_target"):
                         decision = fiscal_followup.bound_plan(decision, ctx["fiscal_target"], ctx)
-                    elif return_bounds and {"period_start", "period_end"}.intersection(decision.get("scope", {})):
-                        decision = {**decision, "scope": {**decision["scope"], **return_bounds}}
+                    elif (return_bounds or stated_end) and {"period_start", "period_end"}.intersection(decision.get("scope", {})):
+                        bounds = return_bounds or {"period_end": stated_end}
+                        decision = {**decision, "scope": {**decision["scope"], **bounds}}
+                    if (target := episode.get("margin_formula_target")) and "scope" in decision:
+                        proposed = decision["scope"]
+                        bounds = {"entities": [target["entity"]], "period_start": target["period_start"],
+                                  "period_end": target["period_end"], "cutoff": ctx["scope"].get("cutoff")}
+                        decision = {**decision, "scope": {**proposed, **{k: v for k, v in bounds.items() if k in proposed}}}
                     previous_cutoff = ctx.get("scope", {}).get("cutoff")
+                    if resumed and previous.get("clarification_checklist_hash") and not same_checklist:
+                        # The user edited the checklist while the question was waiting.
+                        # Preserve that edit while allowing the proposed research to continue.
+                        decision.pop("requirements", None)
+                        if "scope" in decision:
+                            decision = {**decision, "scope": {k:v for k,v in decision["scope"].items()
+                                                               if k != "requirements"}}
                     changed_scope = self._apply_scope(session_id, decision, preserve_requirements=requirements_locked,
                                                       retrying=retry_report is not None or bool(original_parts))
                     if "requirements" in decision or "requirements" in decision.get("scope", {}) or action == "research":
@@ -909,9 +1121,11 @@ class ResearchEngine:
                             episode.pop("recent_tool_results", None)
                             episode["summary"] = ""
                     draft_after_tool = pending_income_draft if step is not None and step is reason_step else None
-                    if action == "research" and not finalize_recovery and auto and self.model is not None and episode["tool_calls"] < limits.max_tool_calls:
+                    if pending_recovery_calculation is not None:
+                        _, draft_after_tool = pending_recovery_calculation
+                        pending_recovery_calculation = None
+                    if action == "research" and not sec_step and not finalize_recovery and auto and self.model is not None and episode["tool_calls"] < limits.max_tool_calls:
                         draft_context = self._context(session_id, episode) if changed_scope else ctx
-                        check = draft_context.get("operating_margin_check")
                         active_scope=draft_context["scope"]
                         if (income_action and active_scope.get("entities")==[income_action["arguments"]["entity"]]
                                 and all(not active_scope.get(k) or not income_action["arguments"].get(k) or
@@ -921,14 +1135,14 @@ class ResearchEngine:
                             action="tool"
                             self.store.add_event(session_id,{"type":"controller_route","episode_id":episode["id"],
                                 "from":"research","to":"reconcile_net_income","reason":"reconcile_comparative_income_statement_before_draft"})
-                        elif check and "receipt_index" not in check:
-                            # Run local arithmetic against the acquired rows, then deliver
-                            # the Planner's original instruction in this same iteration.
-                            draft_after_tool = decision
-                            action = "tool"
-                            decision = {"action":"tool", "tool":check["tool"], "arguments":check["arguments"]}
-                            self.store.add_event(session_id, {"type":"controller_route", "episode_id":episode["id"],
-                                "from":"research", "to":check["tool"], "reason":"check_quarterly_expenses_before_drafting"})
+                        else:
+                            from .margin_formula import draft_calculation
+                            if arguments := draft_calculation(draft_context):
+                                draft_after_tool = decision
+                                action = "tool"
+                                decision = {"action": "tool", "tool": "calculate", "arguments": arguments}
+                                self.store.add_event(session_id, {"type":"controller_route", "episode_id":episode["id"],
+                                    "from":"research", "to":"calculate", "reason":"requested_margin_calculation_before_draft"})
                     # Source restrictions come from the user. A document_ids choice by
                     # the Planner alone need not constrain a later search for an explanation.
                     source_ctx = self._context(session_id, episode) if changed_scope else ctx
@@ -959,6 +1173,20 @@ class ResearchEngine:
                             self.store.append_message(session_id, "assistant", question)
                             checkpoint()
                         return {"status": episode["status"], "question": question, "episode": episode}
+                    if (action == "tool" and decision.get("tool") == "read_document" and auto
+                            and self.model is not None and step is None and not draft_after_tool and not changed_scope
+                            and not episode.get("draft_attempted") and not source_ctx["scope"].get("planning_task")):
+                        instruction = self._reuse_document_window(session_id, episode, source_ctx, decision.get("arguments", {}), elapsed)
+                        if instruction:
+                            if (recovery or episode["tool_calls"] >= limits.max_tool_calls
+                                    or episode["model_calls"] + 3 > limits.max_model_calls
+                                    or episode["planner_steps"] >= limits.max_planner_steps
+                                    or episode["no_progress"] >= limits.max_no_progress):
+                                finalize_recovery = True
+                                action = "research"
+                                decision = {"action": action, "reason": instruction + "按原问交付可核实的部分，并标明缺项。"}
+                            else:
+                                continue
                     if action == "tool":
                         guard("tool")
                         name, arguments = decision.get("tool"), decision.get("arguments", {})
@@ -977,6 +1205,12 @@ class ResearchEngine:
                             income_attempted=True
                         if not isinstance(name, str) or not isinstance(arguments, dict):
                             raise ValueError("Tool action requires name and object arguments")
+                        if sec_step and arguments.get("source") == "live":
+                            # The automatic next read may start sooner than a model-planned one.
+                            delay = self.tools.data.sec_request_delay()
+                            if delay:
+                                time.sleep(min(delay, max(0, limits.max_seconds - elapsed())))
+                                guard("tool")
                         episode["tool_calls"] += 1
                         checkpoint()
                         original_timeout = getattr(self.tools, "timeout", None)
@@ -984,7 +1218,13 @@ class ResearchEngine:
                             self.tools.timeout = max(0.01, min(original_timeout, limits.max_seconds - elapsed()))
                         tool_session = self.store.get_session(session_id)
                         try:
-                            result = self.tools.execute(name, arguments, session_id, tool_session["scope"])
+                            tool_scope = tool_session["scope"]
+                            if lock := source_ctx.get("source_document_scope"):
+                                tool_scope = {**tool_scope,"_source_document_ids":lock["document_ids"],
+                                              "_source_publisher":lock.get("publisher"),
+                                              "_source_record_ids":[r["id"] for r in source_ctx["evidence"] + source_ctx["calculations"]
+                                                                    if not r.get("stale")]}
+                            result = self.tools.execute(name, arguments, session_id, tool_scope)
                         except Exception as exc:
                             result = {"ok": False, "summary": "Tool failed", "error": type(exc).__name__, "evidence": [], "calculations": [], "data": {}}
                         finally:
@@ -998,11 +1238,7 @@ class ResearchEngine:
                         if name == "read_document" and self.model is not None and self.planner is None:
                             # An indexed passage may be in storage while its full text is
                             # still new to a planner that received only a preview.
-                            if callable(getattr(self.model, "evidence_view", None)):
-                                read_context = self.model.evidence_view("planner", ctx)
-                            elif getattr(self.model, "planner_view", "full") == "compact":
-                                from .context import planner_view
-                                read_context = planner_view(ctx)
+                            read_context = planner_evidence.planner_read_context(self.model, ctx)
                             if planner_evidence.covered_document_read(read_context, result):
                                 read_gap = "原文已在当前可见证据中；本次未新增原文、数字记录或计算。"
                                 result["data"]["covered_read_recovery"] = True
@@ -1079,6 +1315,9 @@ class ResearchEngine:
                                        "error": result.get("error"),
                                        "evidence_ids": [r["id"] for r in result.get("evidence", [])],
                                        "calculation_ids": [r["id"] for r in result.get("calculations", [])]})
+                        if (auto and name == "read_document" and result.get("ok")
+                                and result["data"].get("numeric_operand_status") == "text_only"):
+                            recent[-1]["observation_sha256"] = receipt["observation_sha256"]
                         if name == "search_documents":
                             recent[-1]["search_scope"] = {k:v for k,v in tool_session["scope"].items() if k != "requirements"}
                         if name == "analyze_disclosures":
@@ -1088,6 +1327,41 @@ class ResearchEngine:
                         if versions:
                             recent[-1]["record_versions"] = versions
                         episode["recent_tool_results"] = recent[-8:]
+                        if name == "market_prices":
+                            scope_version = tool_session["scope_version"]
+                            price_history = episode.get("market_window_history", {})
+                            if price_history.get("scope_version") != scope_version:
+                                price_history = {"scope_version": scope_version, "receipts": []}
+                                episode["market_window_history"] = price_history
+                            price_history["receipts"].append({
+                                "tool": name, "arguments": arguments, "ok": result["ok"],
+                                "error": result.get("error"), "summary": "" if result["ok"] else result.get("summary", ""),
+                                "data": {"mode": result["data"].get("mode")}})
+                        remember_latest_quarter(episode, recent[-1])
+                        if resolving_latest and name == "discover_company":
+                            matches = result.get("data", {}).get("companies", [])
+                            if result.get("ok") and len(matches) == 1:
+                                acquisition = latest_quarter.acquire(matches[0]["entity"], tool_session["scope"].get("cutoff"), task_message)
+                                sec_step = next(acquisition)
+                                sec_step["scope"] = {"entities": [matches[0]["entity"]]}
+                                resolving_latest = False
+                        elif sec_step:
+                            try:
+                                sec_step = acquisition.send(result)
+                                if target := sec_step.get("relative_quarter"):
+                                    episode["skill_fiscal_quarter"] = {k: v for k, v in target.items() if k != "accession"}
+                                if sec_step.get("arguments", {}).get("quarter_operands"):
+                                    remember_latest_quarter(episode, recent[-1], accepted_filing=True)
+                                if sec_step.get("tool") == "calculate":
+                                    remember_latest_quarter(episode, recent[-1], accepted_filing=True)
+                                    episode.pop("latest_sec_gap", None)
+                            except StopIteration as complete:
+                                sec_step = None
+                                if complete.value:
+                                    episode["latest_sec_gap"] = complete.value
+                                    raise StopEpisode("latest_filing_unavailable")
+                                remember_latest_quarter(episode, recent[-1], accepted_filing=True)
+                                episode.pop("latest_sec_gap", None)
                         guard()
                         fingerprint = digest(progress_content({"tool": name, "arguments": arguments, "result": result}))
                         progress = bool(result.get("ok")) and not read_gap and fingerprint not in episode["seen_results"]
@@ -1126,6 +1400,18 @@ class ResearchEngine:
                                 draft_after_tool = {"action":"research", "reason":
                                     "修正后的工具回执已返回；按原问起草并引用有效记录，标明仍缺的证据。"}
                         if draft_after_tool is not None:
+                            if (finalize_recovery and auto and self.model is not None and result.get("ok")
+                                    and name != "calculate" and result.get("evidence")
+                                    and episode["planner_steps"] < limits.max_planner_steps
+                                    and episode["tool_calls"] < limits.max_tool_calls
+                                    and episode["model_calls"] + 2 <= limits.max_model_calls):
+                                from .margin_formula import draft_calculation
+                                if operands := draft_calculation(self._context(session_id, episode)):
+                                    # Spend the available tool slot while preserving both model slots for the review.
+                                    pending_recovery_calculation = operands, draft_after_tool
+                                    self.store.add_event(session_id, {"type":"controller_route","episode_id":episode["id"],
+                                        "from":name,"to":"calculate","reason":"requested_margin_calculation_before_draft"})
+                                    continue
                             if (name == "reconcile_net_income" and not episode.get("income_reason_attempted")
                                     and episode["tool_calls"] < limits.max_tool_calls
                                     and income_followup.reason_action(self._context(session_id, episode))):
@@ -1135,12 +1421,25 @@ class ResearchEngine:
                             pending_income_draft = None
                             decision, action = draft_after_tool, "research"
                     if action == "research":
+                        if sec_step and sec_step["action"] == "research":
+                            sec_step = None
                         if finalize_recovery and not self.store.get_session(session_id)["scope"].get("requirements"):
                             self._apply_scope(session_id, {"requirements":[
                                 {"id":"request:" + episode["id"], "text":episode["request"]}]})
                         if episode.get("reviewed") and limits.max_model_calls - episode["model_calls"] < 2:
                             # Preserve the last review when the next revision cannot be checked.
                             raise StopEpisode("model_budget_exhausted")
+                        reserve = 0
+                        if "critic" in role_seconds and self._current_review(session_id,episode,self._context(session_id,episode)):
+                            reserve = role_seconds["critic"]
+                            # Leave a full recent review and at least the shorter
+                            # of the last two role calls for the drafting attempt.
+                            remaining = limits.max_seconds - elapsed()
+                            if remaining <= reserve + min(role_seconds.get("researcher",reserve),reserve):
+                                self.store.add_event(session_id, {"type":"revision_skipped", "episode_id":episode["id"],
+                                    "remaining_seconds":remaining, "last_critic_seconds":reserve,
+                                    "last_researcher_seconds":role_seconds.get("researcher")})
+                                raise StopEpisode("insufficient_time_for_reviewed_revision")
                         if repeated_redraft(episode, limits.max_no_progress):
                             raise StopEpisode("repeated_review_without_progress")
                         episode["draft_attempted"] = True
@@ -1168,7 +1467,8 @@ class ResearchEngine:
                             ctx["draft_instruction"] = instruction
                         if ctx.get("repair_feedback"):
                             ctx["repair_feedback"]["current_draft_instruction"] = instruction
-                        result = model_call("researcher", ctx, commit_result=lambda draft: self._save_research(session_id, episode, draft))
+                        result = model_call("researcher", ctx, reserve_seconds=reserve,
+                                            commit_result=lambda draft: self._save_research(session_id, episode, draft, ctx))
                         if episode.get("draft_reference_issues") and not episode["active_claim_ids"]:
                             raise StopEpisode("researcher_no_valid_references")
                         ctx = self._context(session_id, episode)
@@ -1181,7 +1481,7 @@ class ResearchEngine:
                             episode["candidate_captured"] = True
                         display_notes = []
                         context_notes = []
-                        rules = check_rules(ctx, display_notes=display_notes, context_notes=context_notes)
+                        rules = self._check_rules(ctx, display_notes=display_notes, context_notes=context_notes)
                         if display_notes:
                             ctx["display_review_notes"] = display_notes
                         if context_notes:
@@ -1195,26 +1495,30 @@ class ResearchEngine:
 
                         try:
                             model_call("critic", ctx, commit_result=commit_review)
-                        except OutputContractError as exc:
-                            # A malformed envelope has no attributable verdict. Give the
-                            # Critic one correction per episode without reopening research.
-                            if (exc.code not in {"invalid_critic_json", "unknown_issue_target"}
-                                    or episode.get("critic_receipt_retry_used")):
+                        except (IncompleteRead, OutputContractError) as exc:
+                            # Both failures share one retry on the already saved draft.
+                            if episode.get("critic_receipt_retry_used"):
                                 raise
+                            if isinstance(exc, IncompleteRead):
+                                retry_context = ctx
+                                route = {"reason": "retry_interrupted_critic_response"}
+                            else:
+                                if exc.code not in {"invalid_critic_json", "unknown_issue_target"}:
+                                    raise
+                                retry_context = {**ctx, "critic_receipt_repair": {
+                                    "previous_contract_error": exc.code,
+                                    "instruction": ("Return the full review for this unchanged draft as a single JSON object. "
+                                                    "Copy each issue target_id exactly from claims[].id or requirements[].id. "
+                                                    "Retain all substantive objections and review each current claim and requirement.")
+                                }}
+                                route = {"reason": "retry_invalid_critic_receipt", "contract_error": exc.code}
                             guard("model")
                             if not self._role_inputs_current(session_id, "critic", ctx, {"issues": []}):
                                 raise StopEpisode("role_inputs_changed")
                             episode["critic_receipt_retry_used"] = True
-                            retry = {
-                                "previous_contract_error": exc.code,
-                                "instruction": ("Return the full review for this unchanged draft as a single JSON object. "
-                                                "Copy each issue target_id exactly from claims[].id or requirements[].id. "
-                                                "Retain all substantive objections and review each current claim and requirement.")
-                            }
                             self.store.add_event(session_id, {"type": "controller_route", "episode_id": episode["id"],
-                                "from": "critic", "to": "critic", "reason": "retry_invalid_critic_receipt",
-                                "contract_error": exc.code})
-                            model_call("critic", {**ctx, "critic_receipt_repair": retry}, commit_result=commit_review)
+                                "from": "critic", "to": "critic", **route})
+                            model_call("critic", retry_context, commit_result=commit_review)
                         pending_recovery = episode.pop("tool_recovery", None)
                         if finalize_recovery or pending_recovery:
                             # A reviewed partial answer ends this recovery path.
@@ -1260,6 +1564,40 @@ class ResearchEngine:
             saved = self._save_delivery(session_id, episode)
             return {"status": episode["status"], "report": saved, "episode": episode}
 
+    def _check_rules(self, ctx, **notes):
+        companies = getattr(getattr(self.tools, "data", None), "manifest", {}).get("companies", [])
+        return check_rules(ctx, companies=companies, **notes)
+
+    def _reuse_document_window(self, sid, episode, context, arguments, elapsed):
+        check_replay = getattr(self.tools, "replay_document_unchanged", None)
+        if not callable(check_replay):
+            return None
+        reusable = planner_evidence.reusable_document_window(context, episode.get("recent_tool_results", []), arguments)
+        if not reusable:
+            return None
+        prior, passage = reusable
+        visible = planner_evidence.planner_read_context(self.model, context)
+        if (not any(row["id"] == passage["id"] and row.get("text") == passage["text"] for row in visible["evidence"])
+                or not check_replay(passage)):
+            return None
+        offset = prior["data"].get("next_offset")
+        detail = f"本轮已读取同一冻结文档的字符 [{passage['start']}:{passage['end']}]，该窗口未附带可计算金额。"
+        next_page = f"同一文档的下一页从 offset={offset} 开始。" if offset is not None else "此窗口已到文档末尾。"
+        instruction = detail + next_page + "需要更多证据时选择不同窗口或其他适用工具，保留原文出处。"
+        provenance = {"tool": "read_document", "arguments": arguments, "next_offset": offset,
+                      "prior_observation_sha256": prior["observation_sha256"]}
+        updates = {"tool_recovery": {**provenance, "detail": detail, "instruction": instruction},
+                   "no_progress": episode["no_progress"] + 1, "active_seconds": elapsed()}
+        with self.store.atomic_step():
+            if not self.store.matches_role_inputs(sid, prior["scope_version"], [("evidence", passage)]):
+                return None
+            self.store.add_event(sid, {**provenance, "type": "tool_dispatch_skipped", "episode_id": episode["id"],
+                "reason": "unchanged_frozen_document_window", "scope_version": prior["scope_version"],
+                "record_versions": prior["record_versions"]})
+            self._checkpoint(sid, {**episode, **updates})
+        episode.update(updates)
+        return instruction
+
     def _context(self, sid, episode, all_claims=False):
         from .context import as_of_context, select_history
         ctx = self.store.get_context(sid, report_mode="summaries")
@@ -1278,7 +1616,11 @@ class ResearchEngine:
             ctx["request_parts"] = parts
         if episode.get("followup_focus"):
             ctx["followup_focus"] = episode["followup_focus"]
-        if episode.get("quarter_followup_parts") and episode.get("skill_fiscal_quarter"):
+        if episode.get("margin_formula_target"):
+            ctx["margin_formula_target"] = episode["margin_formula_target"]
+        if episode.get("retry_period_bounds"):
+            ctx["fiscal_target"] = episode.get("skill_fiscal_quarter") or episode["retry_period_bounds"]
+        elif episode.get("quarter_followup_parts") and episode.get("skill_fiscal_quarter"):
             ctx["fiscal_target"] = episode["skill_fiscal_quarter"]
         if not all_claims:
             active = set(episode["active_claim_ids"])
@@ -1305,10 +1647,15 @@ class ResearchEngine:
         ctx = as_of_context(ctx)
         from .context import current_tool_receipts, history_report_views, issuer_scoped_context, reopen_comparison_receipt
         ctx["reports"] = history_report_views(ctx)
-        ctx["episode"] = {k: v for k, v in episode.items() if k not in {"seen_results", "revision_memory", "draft_reference_issues", "planner_added_requirements", "followup_limits"}}
+        ctx["episode"] = {k: v for k, v in episode.items() if k not in {"seen_results", "revision_memory", "draft_reference_issues", "planner_added_requirements", "followup_limits", "market_window_history"}}
         companies = getattr(getattr(self.tools, "data", None), "manifest", {}).get("companies", [])
         ctx = issuer_scoped_context(ctx, companies)
-        ctx = source_scope.bound_context(ctx)
+        policy = source_scope.source_constraint(episode["request"])
+        catalog = self.tools.source_catalog(ctx["scope"]) if policy.publisher and hasattr(self.tools,"source_catalog") else ()
+        ctx = source_scope.bound_context(ctx, policy=policy, catalog=catalog, companies=companies)
+        if policy.excludes_sec and latest_quarter.mentions_latest_quarter(episode["request"]):
+            ctx["source_document_scope"]["instruction"] += " " + source_scope.LATEST_COVERAGE_GAP
+            ctx["source_document_scope"]["latest_coverage_gap"] = True
         reopen_comparison_receipt(ctx, self.store)
         ctx = current_tool_receipts(ctx)
         if found := issuer_attribution.evidence_context(ctx):
@@ -1400,7 +1747,9 @@ class ResearchEngine:
         self.store.update_scope(sid, scope)
         return True
 
-    def _save_research(self, sid, episode, result):
+    def _save_research(self, sid, episode, result, context):
+        from .margin_formula import reusable_reference
+
         if not isinstance(result, dict) or not isinstance(result.get("claims"), list):
             raise ValueError("Researcher must return claims")
         if "research_skills" in episode:
@@ -1437,6 +1786,12 @@ class ResearchEngine:
                 claim.setdefault(key, [])
             if not set(claim["requirement_ids"]).issubset(requirements):
                 raise ValueError("Claim refers to unknown requirement")
+            if calc := reusable_reference(claim, context):
+                if self.store.matches_role_inputs(sid, episode["draft_scope_version"], [("calculation", calc)]):
+                    claim["calculation_ids"] = [calc["id"]]
+                    self.store.add_event(sid, {"type": "calculation_reference_bound", "episode_id": episode["id"],
+                                              "claim_id": claim["id"], "calculation_id": calc["id"],
+                                              "operand_ids": calc["operand_ids"]})
             claim.update(status="Pending Verification", scope_version=self.store.get_session(sid)["scope_version"])
             self.store.put_claim(sid, claim)
             ids.append(claim["id"])
@@ -1488,23 +1843,43 @@ class ResearchEngine:
 
     def _commit_review(self, sid, episode, ctx, instruction, review):
         parts = ctx.get("request_parts", {})
-        rows = review.get("request_coverage", [])
+        from .request_review import check_period_coverage, grounded_review_rows
+        from .answer_periods import restricted_latest_coverage
+        verdicts = {v["claim_id"]:v for v in review.get("claim_verdicts", [])}
+        rows = grounded_review_rows(parts,review.get("request_coverage", []),ctx["claims"],verdicts,episode.get("summary"))
+        rows = check_period_coverage(parts, rows, ctx["claims"], ctx["rule_findings"], ctx["requirements"])
         if ctx.get("fiscal_target"):
-            rows = fiscal_followup.check_answer_periods(rows, ctx["claims"], ctx["fiscal_target"], parts)
+            rows = fiscal_followup.check_answer_periods(rows, ctx["claims"], ctx["fiscal_target"], parts,
+                                                       ctx["evidence"] + ctx["calculations"])
         from .request_review import check_comparison_coverage, reviewed_followup_limits
+        from .margin_formula import check_coverage as check_formula_coverage
         rows, comparison_gap = check_comparison_coverage(ctx, rows)
+        rows = check_formula_coverage(ctx, rows, verdicts)
+        from .platform_coverage import check_coverage as check_platform_coverage
+        companies = getattr(getattr(self.tools, "data", None), "manifest", {}).get("companies", [])
+        rows = check_platform_coverage(ctx, rows, verdicts, companies)
         unanswered_ids = set(episode["unanswered_requirement_ids"])
         gap = None
-        if not parts and ctx["requirements"] and all(r["id"] in unanswered_ids for r in ctx["requirements"]):
+        lacks_latest = ctx.get("source_document_scope",{}).get("latest_coverage_gap")
+        if not parts and lacks_latest:
+            gap = source_scope.LATEST_COVERAGE_GAP
+        elif not parts and ctx["requirements"] and all(r["id"] in unanswered_ids for r in ctx["requirements"]):
             gap = "本稿仍缺少以下要求的答案：" + "；".join(r["text"] for r in ctx["requirements"])
         elif not parts:
-            gap = comparison_gap or single_question_mismatch(episode["request"],ctx["claims"])
+            period_defects = {i["target_id"]: i["missing_support"] for i in ctx["rule_findings"]
+                              if i.get("scope") == ANSWER_PERIOD_CHECK}
+            if ctx["claims"] and all(c["id"] in period_defects for c in ctx["claims"]):
+                gap = next(iter(period_defects.values()))
+            else:
+                gap = comparison_gap or single_question_mismatch(episode["request"],ctx["claims"])
         if gap:
             # Retain the unresolved single question for redrafting and show any
             # separately supported background under the same rules as a compound turn.
             parts = {"part-1":episode["request"]}
             episode["clarified_parts" if "clarified_parts" in episode else "inherited_parts"] = parts
             rows = [{"part":"part-1","status":"gap","missing_support":gap}]
+        if lacks_latest:
+            rows = restricted_latest_coverage(parts,rows)
         coverage = coverage_issues(parts, {"request_coverage":rows}, ctx["claims"],
                                    requirements=ctx["requirements"],unanswered_ids=unanswered_ids)
         episode["request_coverage"] = rows
@@ -1519,7 +1894,6 @@ class ResearchEngine:
             if limits:
                 episode["followup_limits"] = limits
         record_review(episode, ctx, instruction)
-        verdicts = {v["claim_id"]:v for v in review.get("claim_verdicts", [])}
         rule_targets = {issue["target_id"] for issue in ctx["rule_findings"]
                         if issue.get("scope") != "question_coverage"}
         versions = self._set_claim_statuses(sid, episode, rule_targets, verdicts)
@@ -1565,7 +1939,7 @@ class ResearchEngine:
     def _resolve_stop(self, sid, episode, reason):
         # A final Critic can consume the last model call. Decide from the
         # persisted review and coverage before reserving another Planner call.
-        if reason == "model_budget_exhausted" and self._complete(sid, episode):
+        if reason in ("model_budget_exhausted","insufficient_time_for_reviewed_revision") and self._complete(sid, episode):
             return "completed"
         return reason
 
@@ -1589,17 +1963,22 @@ class ResearchEngine:
         return (bool(requirements and ctx["claims"]) and requirements <= covered
                 and requirements <= set(episode["answered_requirement_ids"]) | deferred
                 and requirements <= set(episode.get("reviewed_requirement_ids", []))
-                and set(episode["unanswered_requirement_ids"]) <= deferred and not check_rules(ctx))
+                and set(episode["unanswered_requirement_ids"]) <= deferred and not self._check_rules(ctx))
+
+    def _current_review(self, sid, episode, ctx):
+        if not episode.get("reviewed") or episode.get("reviewed_scope_version") != ctx["session"]["scope_version"]:
+            return False
+        last = self.store.latest_event(sid, "verification")
+        snapshot = last.get("review_snapshot") if last and last.get("episode_id") == episode["id"] else None
+        return bool(snapshot and snapshot.get("request") == episode["request"]
+                    and snapshot["scope_version"] == ctx["session"]["scope_version"]
+                    and snapshot["fields"].get("summary") == episode.get("summary")
+                    and snapshot["claim_versions"] == {c["id"]:c["version"] for c in ctx["claims"]}
+                    and snapshot["sources"] == review_sources(ctx))
 
     def _report(self, sid, episode):
         ctx = self._context(sid, episode)
-        reviewed = bool(episode["reviewed"] and episode.get("reviewed_scope_version") == ctx["session"]["scope_version"])
-        if reviewed:
-            last = self.store.latest_event(sid, "verification")
-            snapshot = last.get("review_snapshot") if last and last.get("episode_id") == episode["id"] else None
-            if snapshot:
-                versions = {c["id"]:c["version"] for c in ctx["claims"]}
-                reviewed = versions == snapshot["claim_versions"] and review_sources(ctx) == snapshot["sources"]
+        reviewed = self._current_review(sid, episode, ctx)
         if episode["reviewed"] and not reviewed:
             episode.update(reviewed=False, request_coverage=[])
             if episode["status"] == "complete":
@@ -1616,12 +1995,29 @@ class ResearchEngine:
                     label = "肯定陈述中的数值已与所引记录核对。否定表述的含义由独立审读判断。"
                 ctx["claims"][index] = {**claim, "display_check":{**display, "label":label}}
         # Fresh rule findings must be visible even if budget/cancellation stopped a review.
-        issues = self._dedupe_issues(episode["issues"] + check_rules(ctx) + episode.get("draft_reference_issues", []))
+        issues = self._dedupe_issues(episode["issues"] + self._check_rules(ctx) + episode.get("draft_reference_issues", []))
+        period_targets = {i["target_id"] for i in issues if i.get("scope") == ANSWER_PERIOD_CHECK}
+        if reviewed and period_targets:
+            ctx["claims"] = [{**c, "status": "Insufficient Evidence"}
+                             if c["id"] in period_targets and c.get("status") in ("Supported", "Partially Supported")
+                             else c for c in ctx["claims"]]
+            if episode["status"] == "complete":
+                episode.update(status="partial", stop_reason="unresolved_items")
         supported = {r for c in ctx["claims"] if c.get("status") == "Supported" and not c.get("stale") and reviewed for r in c.get("requirement_ids", [])}
         unanswered = [r for r in ctx["requirements"]
                       if r["id"] not in supported or r["id"] in episode["unanswered_requirement_ids"]]
         summary_kind = "unverified_researcher_draft" if episode["summary"] else "see_report_findings"
         report = {"episode_id": episode["id"], "request": episode["request"], "status": episode["status"], "stop_reason": episode["stop_reason"], "scope": ctx["scope"], "scope_version": ctx["session"]["scope_version"], "summary": episode["summary"] or "No verified answer is available yet.", "summary_kind": summary_kind, "model_mode": getattr(self.model, "mode", "configured_model"), "claims": ctx["claims"], "evidence": ctx["evidence"], "calculations": ctx["calculations"], "issues": issues, "unanswered": unanswered, "verification_available": reviewed, "usage": {"model_calls": episode["model_calls"], "tool_calls": episode["tool_calls"], "planner_steps": episode.get("planner_steps", 0), "active_seconds": episode["active_seconds"], **episode["usage"]}, "created_at": utcnow()}
+        if episode["stop_reason"] == "execution_error" and episode.get("researcher_output_error"):
+            report["researcher_output_error"] = episode["researcher_output_error"]
+        if episode["stop_reason"] == "execution_error" and episode.get("planner_error"):
+            report["planner_error"] = episode["planner_error"]
+        if episode.get("latest_sec_gap"):
+            report["skill_gap"] = episode["latest_sec_gap"]
+            if not episode["draft_saved"]:
+                report["summary"] = episode["latest_sec_gap"]
+        if ctx.get("source_document_scope",{}).get("latest_coverage_gap"):
+            report["source_coverage_gap"] = source_scope.LATEST_COVERAGE_GAP
         if "research_skills" in episode:
             draft_methods = episode.get("draft_skill_selection", {})
             report["research_skills"] = draft_methods.get("skills", episode["research_skills"])
@@ -1638,10 +2034,23 @@ class ResearchEngine:
             last = episode["recent_tool_results"][-1]
             reason = last.get("error") or "The repeated tool call returned no new evidence."
             report["tool_fault"] = {"tool": last["tool"], "reason": reason}
-        if episode["stop_reason"] in {"repeated_retrieval_without_new_evidence", "no_progress"}:
+        if episode["stop_reason"] in {"repeated_retrieval_without_new_evidence", "no_progress",
+                                      "tool_budget_exhausted", "model_budget_exhausted", "execution_error"}:
             recent = ctx["episode"].get("recent_tool_results", [])
-            if recent and (gap := recent[-1].get("data", {}).get("acquisition_gap")):
-                report["tool_fault"] = {"tool": recent[-1]["tool"], "reason": gap}
+            if recent:
+                last = recent[-1]
+                gap = last.get("data", {}).get("acquisition_gap")
+                if not gap and last.get("ok") is False:
+                    gap = last.get("error") or last.get("summary")
+                if gap:
+                    report["tool_fault"] = {"tool": last["tool"], "reason": gap}
+        if report["status"] == "partial":
+            from .market import market_window_gap
+            price_history = episode.get("market_window_history", {})
+            receipts = (price_history["receipts"] if price_history.get("scope_version") == ctx["session"]["scope_version"]
+                        else ctx["episode"].get("recent_tool_results", []))
+            if gap := market_window_gap(receipts, ctx["scope"]):
+                report["tool_fault"] = gap
         if ctx.get("request_parts"):
             report["request_parts"] = ctx["request_parts"]
             report["request_coverage"] = report_coverage(ctx["request_parts"], episode.get("request_coverage", []),
@@ -1666,7 +2075,8 @@ class ResearchEngine:
         # Save reviewed fiscal context alongside the verdict; editing scope here
         # would invalidate the very review that established this quarter.
         entity = fiscal_followup.report_issuer(report) if reviewed else None
-        if entity:
+        bounds = episode.get("retry_period_bounds", {})
+        if entity and not (bounds and (episode.get("quarter_followup_parts") or bounds.get("conflicting_quarter"))):
             confirmed = fiscal_followup.reviewed_quarter(report, entity, records, ctx["scope"].get("cutoff"))
             if confirmed:
                 episode["skill_fiscal_quarter"] = confirmed
@@ -1674,15 +2084,31 @@ class ResearchEngine:
             report["skill_fiscal_quarter"] = episode["skill_fiscal_quarter"]
         if episode.get("followup_focus"):
             report["followup_focus"] = episode["followup_focus"]
+        if episode.get("margin_formula_target"):
+            report["margin_formula_target"] = episode["margin_formula_target"]
         if episode.get("quarter_followup_parts"):
             report["quarter_followup_parts"] = episode["quarter_followup_parts"]
+        if bounds:
+            report["retry_period_bounds"] = bounds
         if "offline_part_findings" in episode:
             report["offline_part_findings"] = episode["offline_part_findings"]
+        if lookup := episode.get("archived_source"):
+            latest = {c["id"]: c for c in self.store.get_context(sid, report_mode="none")["claims"]}
+            claim_versions = lookup.get("claim_versions", {})
+            if (claim_versions and all(source_link_followup.current_claim_version(latest.get(ref), version)
+                                       for ref, version in claim_versions.items())
+                    and all(ref in records and not records[ref].get("stale") and records[ref]["version"] == version
+                            for ref, version in lookup["proof_versions"].items())):
+                report["archived_source"] = lookup
+            else:
+                original = report["offline_part_findings"]["part-1"]
+                report["offline_part_findings"] = {"part-1": {"status": "gap",
+                    "missing_support": source_link_followup.ARCHIVE_GAP, "quarter": original["quarter"]}}
         if "income_bridge" in ctx:
             report["income_bridge"]=ctx["income_bridge"]
             if "income_explanation" in ctx:
                 report["income_explanation"] = ctx["income_explanation"]
-            if self.model is None:
+            if episode.get("model_mode", "offline_tools_only" if self.model is None else "configured_model") == "offline_tools_only":
                 report.setdefault("offline_part_findings",{}).update(income_followup.offline_answers(report))
         report["model_mode"] = episode.get("model_mode", report["model_mode"])
         if report["model_mode"] == "offline_tools_only" or (self.model is None and "model_mode" not in episode):

@@ -5,14 +5,17 @@ from datetime import date
 from .financial import METRICS
 
 
+MARGIN_NUMERATORS = {metric + "_margin": metric for metric in ("operating_income", "gross_profit", "net_income")}
+
+
 ALIASES = {
-    "revenue": ("revenues", "net sales", "total revenue", "total revenues", "营业收入", "净销售额", "销售收入", "营收"),
-    "operating_income": ("operating profit", "营业利润", "经营利润"),
-    "net_income": ("net profit", "net earnings", "净利润", "净收益"),
-    "gross_profit": ("毛利润", "毛利额"),
-    "operating_income_margin": ("operating margin", "operating profit margin", "营业利润率", "经营利润率"),
-    "gross_profit_margin": ("gross margin", "毛利率"),
-    "net_income_margin": ("net margin", "net profit margin", "净利率", "净利润率"),
+    "revenue": ("revenues", "net sales", "total revenue", "total revenues", "营业收入", "營業收入", "净销售额", "淨銷售額", "销售收入", "銷售收入", "营收", "營收"),
+    "operating_income": ("operating profit", "营业利润", "经营利润", "營業利潤", "營業利益", "經營利潤"),
+    "net_income": ("net profit", "net earnings", "净利润", "净收益", "淨利潤", "淨收益"),
+    "gross_profit": ("毛利润", "毛利额", "毛利潤", "毛利額"),
+    "operating_income_margin": ("operating margin", "operating profit margin", "营业利润率", "经营利润率", "營業利潤率", "營業利益率", "經營利潤率"),
+    "gross_profit_margin": ("gross margin", "gross profit margin", "毛利率", "毛利润率", "毛利潤率"),
+    "net_income_margin": ("net margin", "net profit margin", "净利率", "净利润率", "淨利率", "淨利潤率"),
     "revenue_growth": ("sales growth", "revenue growth", "营收增速", "营收增长率", "收入增速", "销售额增速"),
     "operating_cash_flow": ("cash flow from operations", "cash flow from operating activities", "cash flows from operating activities",
                             "net cash provided by operating activities", "经营现金流", "经营活动现金流量净额",
@@ -38,9 +41,16 @@ NAME = re.compile("|".join(
     for name in sorted(NAMES, key=len, reverse=True)), re.I)
 
 
+def metric_spans(text):
+    """Read canonical measures with their positions, consuming longer names first."""
+    for match in NAME.finditer(text):
+        if metric := NAMES[match.group().casefold()]:
+            yield match, metric
+
+
 def metric_mentions(text: str) -> set[str]:
     """Return named measures; a shared noun inside a longer measure is not a second measure."""
-    return {metric for match in NAME.finditer(text) if (metric := NAMES[match.group().casefold()])}
+    return {metric for _, metric in metric_spans(text)}
 
 
 LINK = re.compile(r"(?:为|约为|是|达|was|were|of|amounted to|stood at|totalled|totaled|approximately|about|\s)*",re.I)

@@ -53,6 +53,8 @@ python3 -m verifin serve
 
 也接受 `DASHSCOPE_API_KEY`。base URL 不要带 `/chat/completions`；endpoint 与密钥所在区域需要匹配。`config` 只验证本地配置，不代表已连接成功。不会在错误日志中打印密钥或供应商原始响应，也不会在接口失败后偷偷切换成 mock。
 
+使用 OpenRouter 的 Chat Completions 时，将 `VERIFIN_BASE_URL` 设为 `https://openrouter.ai/api/v1` 或其美欧区域端点。默认将已注册的工具定义和可复用的上下文字段提前，并使用派生的会话标识启用粘性路由。设 `VERIFIN_OPENROUTER_PROMPT_CACHE=0` 可恢复原有请求布局以便对照。实际缓存读写量和费用以 OpenRouter 回执为准。[OpenRouter 提示缓存文档](https://openrouter.ai/docs/guides/best-practices/prompt-caching)
+
 可选配置：`VERIFIN_TIMEOUT`、`VERIFIN_MAX_OUTPUT_TOKENS`、`VERIFIN_MAX_CONTEXT_CHARS`；Qwen 的 `VERIFIN_ENABLE_THINKING` 与 OpenAI 的 `VERIFIN_REASONING_EFFORT` 不混用。详细说明及官方依据见 [MODEL.md](docs/MODEL.md)。输出使用 JSON-object mode 和本地校验，尚非 provider strict JSON Schema。
 
 ### 联网取 SEC 数据

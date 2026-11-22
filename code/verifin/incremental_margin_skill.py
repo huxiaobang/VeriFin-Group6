@@ -62,7 +62,8 @@ def _groups(docs, metric, end):
         source_text = doc["source_text"]
         info = {"url": doc["url"], "sha256": doc["snapshot_hash"]}
         source_id = stable_id("source_doc_", doc["url"])
-        rows = statement_cells(doc["raw"], doc, info, source_id, source_text, doc.get("prior_units", {}))
+        rows = statement_cells(doc["raw"], doc, info, source_id, source_text, doc.get("prior_units", {}),
+                               doc.get("filed_boundaries"))
         if re.fullmatch(r"10-[QK]", doc.get("form", ""), re.I):
             rows.extend(tagged_cells(doc))
         text_hash = sha256(source_text.encode("utf-8")).hexdigest()

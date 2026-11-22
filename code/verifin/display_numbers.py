@@ -21,6 +21,7 @@ PREFIX = re.compile(r"(?<![a-z])(?P<currency>" + CURRENCY + r")\s*[-+−负]?\s*
 SUFFIX = re.compile(r"\s*(?P<unit>percentage[ -]points?|percent(?:age)?\b|basis[ -]points?|bps?\b|"
                     r"pp\b|个?百分点|个?基点|[%％]|shares?\b|股(?!价)|" + CURRENCY + r")", re.I)
 PER_SHARE = re.compile(r"\s*(?:/\s*(?:shares?|股)|per\s+(?:diluted\s+|basic\s+)?share|每股)", re.I)
+DATED_CLOSE = re.compile(r"\bclos(?:e|ing price)\s+(?:on\s+)?(\d{4}-\d{2}-\d{2})\s*\(?\s*$", re.I)
 PER_SHARE_BEFORE = re.compile(r"(?:每股(?:摊薄|稀释|基本)?(?:亏损|收益|盈利|净利)?(?:为|约)?|"
                               r"\b(?:EPS|per (?:diluted |basic )?share)(?:(?:\s+(?:was|of|were|is))|为)?)\s*[-+−负]?\s*$", re.I)
 DISPLAY_UNITS = {"%", "percentage_points", "shares", "USD/shares", *CURRENCIES.values(),
@@ -48,6 +49,14 @@ REJECTED_RATE = re.compile(
     r"(?:\brather than|\binstead of|(?:^|(?<=[,;:(]))\s*not)\s+"
     r"(?:(?:an?\s+)?(?:increase|decrease|gain|decline)\s+of\s+)?(?:about\s+)?$",
     re.I)
+PERCENT_FACTOR = re.compile(r"(?:[/÷]|\bdivided by\b|除[以于於])[^。；;!?！？\n]{1,100}"
+                            r"(?:[×*]|(?<![A-Za-z])x|\btimes\b|乘以)\s*$", re.I)
+
+
+def percent_multiplier(text, start, end, quantity):
+    """Distinguish the conversion factor in a division formula from an asserted rate."""
+    return (quantity[1] == "%" and quantity[2] == 100 and bool(PERCENT_FACTOR.search(text[:start]))
+            and bool(re.match(r"\s*(?:$|[=≈≃。.)）]|equals?\b|yields?\b)", text[end:], re.I)))
 
 
 def _quantity_spans(text):
@@ -129,12 +138,73 @@ def _matches(unit, value, tolerance, record):
     if type(raw) not in {int, float} or record.get("stale") or record.get("scale", 1) != 1:
         return False
     ref_unit, multiplier = _display_unit(record.get("unit"))
+    if unit == "%" and ref_unit == "ratio" and record.get("operation") == "ratio":
+        ref_unit, multiplier = "%", 100
     if ref_unit == "USD/shares":
         ref_unit = "USD/share"
     if unit in {"$", "$/share"}:
         unit = unit.replace("$", "USD") if ref_unit in {"USD", "USD/share"} else unit
     number = Decimal(str(raw)) * multiplier
     return number.is_finite() and ref_unit == unit and abs(value-number) <= tolerance
+
+
+def exact_displayed_rate(claim, calculations):
+    """Restore precision only for an unambiguous, explicitly printed calculation result."""
+    unit = claim.get("asserted_unit")
+    dims = claim["constraints"]
+    if unit not in {"%", "percentage_points"} or not dims.get("entity") or "asserted_value" in dims:
+        return claim
+    cited = [calculations[ref] for ref in claim["calculation_ids"]]
+    candidates = [r for r in cited if r.get("unit") == unit]
+    if len(candidates) != 1 or candidates[0].get("stale"):
+        return claim
+    record = candidates[0]
+    # The change record may identify both periods through its operands. Only
+    # its current operand can supply an unstored current period or metric.
+    aligned = compatible_records([record], dims, calculations)
+    if not aligned or not record.get("operation"):
+        return claim
+    unknown = aligned[0][1]
+    if unknown:
+        operands = record.get("operand_ids", [])
+        current = calculations.get(operands[0], {}) if operands else {}
+        if (record["operation"] != "percentage_point_change"
+                or current.get("stale") or not set(unknown) <= {"metric", "period_start", "period_end"}
+                or any(current.get(field) != dims[field] for field in unknown)):
+            return claim
+    value = Decimal(str(claim["asserted_value"]))
+    for start, end, quantity in _quantity_spans(claim["text"]):
+        _, printed_unit, printed, tolerance = quantity
+        if (printed_unit == unit and printed == value
+                and not REJECTED_RATE.search(claim["text"][:start])
+                and not percent_multiplier(claim["text"], start, end, quantity)
+                and _matches(unit, printed, tolerance, record)):
+            return {**claim, "asserted_value": record["value"]}
+    return claim
+
+
+def rate_only_in_other_period(text, current, other_periods):
+    """Find a sole asserted rate that appears only in citations for other periods."""
+    if SHARED_RANGE.search(text):
+        return False
+    rates = [quantity for start, end, quantity in _quantity_spans(text)
+             if quantity[1] in {"%", "percentage_points"}
+             and not percent_multiplier(text, start, end, quantity)
+             and not REJECTED_RATE.search(text[:start])]
+    if len(rates) != 1:
+        return False  # Multi-rate comparisons are reviewed with their stated period assignments.
+    _, unit, value, tolerance = rates[0]
+
+    def covers(record):
+        if _matches(unit, value, tolerance, record):
+            return True
+        if record.get("kind") != "document":
+            return False
+        passage = record.get("text") or record.get("quote") or ""
+        return any(unit == source_unit and abs(value - source_rate) <= tolerance
+                   for _, source_unit, source_rate, _ in _quantities(passage))
+
+    return any(covers(r) for r in other_periods) and not any(covers(r) for r in current)
 
 
 def assertion_fields(claim):
@@ -151,6 +221,8 @@ def display_check(claim, records, *, record_index=None):
     asserted_text, amounts, rejected = [], [], []
     cursor = 0
     for start, end, quantity in _quantity_spans(text):
+        if percent_multiplier(text, start, end, quantity):
+            continue
         contribution = CONTRIBUTION_SIGN.match(text[end:])
         if contribution and quantity[2] and (quantity[2] < 0) != (contribution["sign"] == "负"):
             return {"method":"mismatch", "unmatched":[quantity[0] + contribution[0]], "matched":[]}
@@ -247,7 +319,18 @@ def _check_amounts(claim, records, text, amounts, record_index):
             # A forecast/segment heading can govern several following amounts.
             # It must not undo a contradiction already found in an earlier clause.
             qualified_context = qualified_context or bool(QUALIFIED_BASIS.search(prefix))
-            if not qualified_context:
+            dated_close = DATED_CLOSE.search(prefix)
+            if dated_close and unit in CURRENCIES.values() and any(r.get("kind") == "market_price" for r in records):
+                entity = claim.get("constraints", {}).get("entity")
+                anchors = [r for r in records if r.get("kind") == "market_price"
+                           and r.get("metric") == "provider_close" and r.get("period_end") == dated_close[1]
+                           and (not entity or r.get("entity") == entity)]
+                if len(anchors) != 1:
+                    return {"method":"mismatch", "unmatched":[literal], "matched":matched}
+                unit += "/share"
+                if prefix.rstrip().endswith("(") and not any(sign in literal for sign in "-−负"):
+                    value = abs(value)
+            elif not qualified_context:
                 anchors = direct_amount_anchors(prefix, claim.get("constraints",{}), typed)
                 if (not anchors and prefix.rstrip().endswith("(")
                         and text[position+len(literal):].lstrip().startswith(")")):

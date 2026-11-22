@@ -1,8 +1,9 @@
-"""Replay rejected Critic envelopes at the model/engine boundary, without a provider."""
+"""Exercise Critic response recovery at the model/engine boundary, without a provider."""
+from http.client import IncompleteRead
 import json
 import unittest
 
-from tests.test_engine import FixtureTools, ScriptedModel, full_script
+from tests.test_engine import CLAIM, FACT, FixtureTools, ScriptedModel, full_script
 from verifin.engine import Budget, ResearchEngine
 from verifin.model import _completed_role_output
 from verifin.storage import SessionStore
@@ -71,3 +72,39 @@ class CriticReceiptRetryTests(unittest.TestCase):
         self.assertEqual(len(events), 4)
         self.assertEqual(run["report"]["critic_receipt_error"], "invalid_critic_json")
         self.assertFalse(run["report"]["verification_available"])
+
+    def test_interruption_preserves_draft_and_evidence_if_verification_cannot_finish(self):
+        cases = [
+            ("model_budget_exhausted", 4, 1),
+            ("time_budget_exhausted", 16, 1),
+            ("execution_error", 16, 2),  # The retry also loses its response.
+        ]
+        for reason, limit, attempts in cases:
+            with self.subTest(reason=reason), SessionStore(":memory:") as store:
+                sid = store.create_session()["id"]
+                now = 0
+
+                def advance_clock(role, context):
+                    nonlocal now
+                    if role == "critic" and reason == "time_budget_exhausted":
+                        now = 60
+
+                script = full_script()[:3] + [("critic", IncompleteRead(b"", 1)) for _ in range(attempts)]
+                model = ScriptedModel(script, callback=advance_clock)
+                tools = FixtureTools()
+                engine = ResearchEngine(store, model, tools, clock=lambda: now)
+                result = engine.ask(sid, "Revenue?", budget=Budget(max_model_calls=limit, max_seconds=60))
+                report = store.get_report(sid, 1)
+                self.assertEqual(result["episode"]["stop_reason"], reason)
+                self.assertEqual(report["delivery_stage"], "draft_unverified")
+                self.assertFalse(report["verification_available"])
+                claim, = report["claims"]
+                fact, = report["evidence"]
+                self.assertEqual((claim["text"], claim["status"]), (CLAIM["text"], "Pending Verification"))
+                self.assertEqual(claim["evidence_ids"], [fact["id"]])
+                self.assertEqual(fact["value"], FACT["value"])
+                self.assertEqual(len(tools.calls), 1)
+                self.assertEqual([r for r, _ in model.calls], ["planner", "planner", "researcher"] + ["critic"] * attempts)
+                self.assertEqual(result["episode"]["model_calls"], len(model.calls))
+                failed = [e for e in store.events(sid) if e["type"] == "model_call" and not e["ok"]]
+                self.assertEqual([e["error_type"] for e in failed], ["IncompleteRead"] * attempts)

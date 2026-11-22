@@ -179,3 +179,22 @@ Quarterly sales forecast
         self.assertEqual(list(clarified["data"]["part_findings"]), ["part-2"])
         self.assertFalse(ask(request="这个季度的现金余额是多少？")["ok"])
         self.assertFalse(ask(request=QUESTIONS["part-1"], status="complete")["ok"])
+
+    def test_tool_accepts_only_the_stated_quarter_and_edited_dates(self):
+        store = Mock()
+        tools = ToolRegistry(store, Path(__file__).resolve().parents[1] / "data")
+        tools.document_corpus = lambda: Corpus([disclosure(SUMMARY, entity="MSFT")])
+        scope = {"cutoff": "2025-07-31", "entities": ["MSFT"]}
+        dates = {"period_start": "2025-04-01", "period_end": "2025-06-30"}
+        for label, bounds, expected in (("2025Q1", dates, True), ("2025Q2", dates, False),
+                                         ("2025Q1", {**dates, "period_end": "2025-06-29"}, False)):
+            with self.subTest(label=label, bounds=bounds):
+                store.latest_event.return_value = {"episode": {
+                    "status": "running", "request": " ".join(QUESTIONS.values()),
+                    "retry_period_bounds": {"entity": "MSFT", "requested_quarter": label, **bounds},
+                }}
+                result = tools.execute("inspect_sales_comparison", {"entity": "MSFT", "fiscal_quarter": "2025Q1"},
+                                       "session", scope)
+                self.assertEqual(result["ok"], expected)
+                if expected:
+                    self.assertEqual(result["data"]["fiscal_period"], {"entity": "MSFT", "quarter": label, **dates})

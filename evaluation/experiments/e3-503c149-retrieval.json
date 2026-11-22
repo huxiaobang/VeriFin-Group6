@@ -1,0 +1,226 @@
+{
+  "release": "503c149",
+  "method": "Called search_documents on released ToolRegistry for four archived development questions. Default uses released chunking; the isolated diagnostic uses archive chunk size 600 and overlap 80. allow_network=False. No model API. evidence_count counts evidence records, not recall or verified claims.",
+  "results": {
+    "release_defaults": [
+      {
+        "query": "msft-cloud-margin",
+        "mode": "bm25",
+        "ok": true,
+        "text": "Found 2 bm25 passage(s) in 2 eligible document(s). A retrieved passage is not a verified conclusion.",
+        "error": null,
+        "evidence_count": 2,
+        "network_requests": null
+      },
+      {
+        "query": "msft-cloud-margin",
+        "mode": "dense",
+        "ok": false,
+        "text": "Embedding artifact belongs to a different corpus or schema.",
+        "error": "Embedding artifact belongs to a different corpus or schema.",
+        "evidence_count": 0,
+        "network_requests": null
+      },
+      {
+        "query": "msft-cloud-margin",
+        "mode": "hybrid",
+        "ok": false,
+        "text": "Embedding artifact belongs to a different corpus or schema.",
+        "error": "Embedding artifact belongs to a different corpus or schema.",
+        "evidence_count": 0,
+        "network_requests": null
+      },
+      {
+        "query": "msft-before-release",
+        "mode": "bm25",
+        "ok": false,
+        "text": "Found 0 bm25 passage(s) in 0 eligible document(s). A retrieved passage is not a verified conclusion.",
+        "error": null,
+        "evidence_count": 0,
+        "network_requests": null
+      },
+      {
+        "query": "msft-before-release",
+        "mode": "dense",
+        "ok": false,
+        "text": "Embedding artifact belongs to a different corpus or schema.",
+        "error": "Embedding artifact belongs to a different corpus or schema.",
+        "evidence_count": 0,
+        "network_requests": null
+      },
+      {
+        "query": "msft-before-release",
+        "mode": "hybrid",
+        "ok": false,
+        "text": "Embedding artifact belongs to a different corpus or schema.",
+        "error": "Embedding artifact belongs to a different corpus or schema.",
+        "evidence_count": 0,
+        "network_requests": null
+      },
+      {
+        "query": "wrong-report-date",
+        "mode": "bm25",
+        "ok": false,
+        "text": "Found 0 bm25 passage(s) in 0 eligible document(s). A retrieved passage is not a verified conclusion.",
+        "error": null,
+        "evidence_count": 0,
+        "network_requests": null
+      },
+      {
+        "query": "wrong-report-date",
+        "mode": "dense",
+        "ok": false,
+        "text": "Embedding artifact belongs to a different corpus or schema.",
+        "error": "Embedding artifact belongs to a different corpus or schema.",
+        "evidence_count": 0,
+        "network_requests": null
+      },
+      {
+        "query": "wrong-report-date",
+        "mode": "hybrid",
+        "ok": false,
+        "text": "Embedding artifact belongs to a different corpus or schema.",
+        "error": "Embedding artifact belongs to a different corpus or schema.",
+        "evidence_count": 0,
+        "network_requests": null
+      },
+      {
+        "query": "unrelated-lexical",
+        "mode": "bm25",
+        "ok": false,
+        "text": "Found 0 bm25 passage(s) in 2 eligible document(s). A retrieved passage is not a verified conclusion.",
+        "error": null,
+        "evidence_count": 0,
+        "network_requests": null
+      },
+      {
+        "query": "unrelated-lexical",
+        "mode": "dense",
+        "ok": false,
+        "text": "Embedding artifact belongs to a different corpus or schema.",
+        "error": "Embedding artifact belongs to a different corpus or schema.",
+        "evidence_count": 0,
+        "network_requests": null
+      },
+      {
+        "query": "unrelated-lexical",
+        "mode": "hybrid",
+        "ok": false,
+        "text": "Embedding artifact belongs to a different corpus or schema.",
+        "error": "Embedding artifact belongs to a different corpus or schema.",
+        "evidence_count": 0,
+        "network_requests": null
+      }
+    ],
+    "isolated_600_80_diagnostic": [
+      {
+        "query": "msft-cloud-margin",
+        "mode": "bm25",
+        "ok": true,
+        "text": "Found 5 bm25 passage(s) in 2 eligible document(s). A retrieved passage is not a verified conclusion. Attached 24 numeric cell IDs. Select by measure and period for calculate.",
+        "error": null,
+        "evidence_count": 29,
+        "network_requests": null
+      },
+      {
+        "query": "msft-cloud-margin",
+        "mode": "dense",
+        "ok": true,
+        "text": "Found 5 dense passage(s) in 2 eligible document(s). A retrieved passage is not a verified conclusion.",
+        "error": null,
+        "evidence_count": 5,
+        "network_requests": null
+      },
+      {
+        "query": "msft-cloud-margin",
+        "mode": "hybrid",
+        "ok": true,
+        "text": "Found 5 hybrid passage(s) in 2 eligible document(s). A retrieved passage is not a verified conclusion.",
+        "error": null,
+        "evidence_count": 5,
+        "network_requests": null
+      },
+      {
+        "query": "msft-before-release",
+        "mode": "bm25",
+        "ok": false,
+        "text": "Found 0 bm25 passage(s) in 0 eligible document(s). A retrieved passage is not a verified conclusion.",
+        "error": null,
+        "evidence_count": 0,
+        "network_requests": null
+      },
+      {
+        "query": "msft-before-release",
+        "mode": "dense",
+        "ok": false,
+        "text": "Found 0 dense passage(s) in 0 eligible document(s). A retrieved passage is not a verified conclusion.",
+        "error": null,
+        "evidence_count": 0,
+        "network_requests": null
+      },
+      {
+        "query": "msft-before-release",
+        "mode": "hybrid",
+        "ok": false,
+        "text": "Found 0 hybrid passage(s) in 0 eligible document(s). A retrieved passage is not a verified conclusion.",
+        "error": null,
+        "evidence_count": 0,
+        "network_requests": null
+      },
+      {
+        "query": "wrong-report-date",
+        "mode": "bm25",
+        "ok": false,
+        "text": "Found 0 bm25 passage(s) in 0 eligible document(s). A retrieved passage is not a verified conclusion.",
+        "error": null,
+        "evidence_count": 0,
+        "network_requests": null
+      },
+      {
+        "query": "wrong-report-date",
+        "mode": "dense",
+        "ok": false,
+        "text": "Found 0 dense passage(s) in 0 eligible document(s). A retrieved passage is not a verified conclusion.",
+        "error": null,
+        "evidence_count": 0,
+        "network_requests": null
+      },
+      {
+        "query": "wrong-report-date",
+        "mode": "hybrid",
+        "ok": false,
+        "text": "Found 0 hybrid passage(s) in 0 eligible document(s). A retrieved passage is not a verified conclusion.",
+        "error": null,
+        "evidence_count": 0,
+        "network_requests": null
+      },
+      {
+        "query": "unrelated-lexical",
+        "mode": "bm25",
+        "ok": false,
+        "text": "Found 0 bm25 passage(s) in 2 eligible document(s). A retrieved passage is not a verified conclusion.",
+        "error": null,
+        "evidence_count": 0,
+        "network_requests": null
+      },
+      {
+        "query": "unrelated-lexical",
+        "mode": "dense",
+        "ok": true,
+        "text": "Found 5 dense passage(s) in 2 eligible document(s). A retrieved passage is not a verified conclusion.",
+        "error": null,
+        "evidence_count": 5,
+        "network_requests": null
+      },
+      {
+        "query": "unrelated-lexical",
+        "mode": "hybrid",
+        "ok": true,
+        "text": "Found 5 hybrid passage(s) in 2 eligible document(s). A retrieved passage is not a verified conclusion.",
+        "error": null,
+        "evidence_count": 5,
+        "network_requests": null
+      }
+    ]
+  }
+}

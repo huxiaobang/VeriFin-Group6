@@ -77,6 +77,9 @@ def _safe_settings(model):
     # Never serialize arbitrary client state, credentials, headers or transport.
     names = ("model", "base_url", "api_mode", "reasoning_effort", "service_tier", "max_output_tokens",
              "max_context_chars", "enable_thinking", "timeout")
+    for name in ("researcher_max_output_tokens", "critic_max_output_tokens", "critic_reasoning_effort"):
+        if getattr(model, name, None) is not None:
+            names += (name,)
     return {name: getattr(model, name, None) for name in names}
 
 

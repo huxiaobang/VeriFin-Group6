@@ -7,7 +7,7 @@ judge. Candidate revision is executable; outcome truth scoring and E2/E3 are not
 from __future__ import annotations
 
 from dataclasses import dataclass
-from datetime import datetime, timezone
+from datetime import date, datetime, timezone
 import hashlib
 import json
 import time
@@ -20,7 +20,7 @@ from .verification import check_rules
 PROTOCOL_VERSION = "e1-frozen-detection-v1"
 CONDITIONS = ("no_verification", "rules_only", "generic_review", "structured_critic")
 CONTEXT_FIELDS = frozenset({"request", "messages", "session", "scope", "requirements",
-                            "claims", "evidence", "calculations", "tools"})
+                            "claims", "evidence", "calculations", "tools", "margin_formula_target"})
 GOLD_FIELDS = frozenset({"gold", "gold_issues", "annotations", "human_judgments", "expected_answer"})
 CLAIM_FIELDS = frozenset({"id", "text", "evidence_ids", "calculation_ids", "requirement_ids",
                           "constraints", "asserted_value", "asserted_unit", "scope_version", "stale",
@@ -71,6 +71,28 @@ def _no_annotation_fields(value):
             _no_annotation_fields(child)
 
 
+def _fiscal_scope_target(target, scope):
+    if target is None:
+        return None
+    if not isinstance(target, dict):
+        raise EvaluationError("fiscal_target must be an object")
+    if not target or target.get("quarter"):
+        # E1 needs the user's date bounds for the edited-window rule.
+        # Derived quarter labels and earlier evidence links are not inputs.
+        return None
+    entity = _text(target.get("entity"), "fiscal_target.entity")
+    bounds = {key: target[key] for key in ("period_start", "period_end") if target.get(key) is not None}
+    try:
+        valid_dates = all(date.fromisoformat(value).isoformat() == value for value in bounds.values())
+    except (TypeError, ValueError):
+        valid_dates = False
+    if (not bounds or not valid_dates or scope.get("entities") != [entity]
+            or any(scope.get(key) != value for key, value in bounds.items())
+            or ("period_start" in bounds and "period_end" in bounds and bounds["period_start"] > bounds["period_end"])):
+        raise EvaluationError("fiscal_target must agree with the frozen issuer and date bounds")
+    return {"entity": entity, **bounds}
+
+
 @dataclass(frozen=True)
 class FrozenCase:
     case_id: str
@@ -109,6 +131,8 @@ class FrozenCase:
         if not isinstance(scope, dict):
             raise EvaluationError("scope must be an object")
         frozen["scope"] = scope
+        if target := _fiscal_scope_target(context.get("fiscal_target"), scope):
+            frozen["fiscal_target"] = target
         frozen["requirements"] = frozen.get("requirements", scope.get("requirements", []))
         if "requirements" in scope and scope["requirements"] != frozen["requirements"]:
             raise EvaluationError("Frozen scope and top-level requirements disagree")
@@ -135,6 +159,9 @@ def _settings(model) -> dict:
     names = ("model", "base_url", "max_output_tokens", "max_context_chars", "enable_thinking", "timeout",
              "api_mode", "reasoning_effort", "service_tier")
     result = {name: getattr(model, name, None) for name in names}
+    for name in ("researcher_max_output_tokens", "critic_max_output_tokens", "critic_reasoning_effort"):
+        if getattr(model, name, None) is not None:
+            result[name] = getattr(model, name)
     if not isinstance(result["model"], str) or not result["model"]:
         raise EvaluationError("Evaluation model must expose its configured model ID")
     if type(result["max_output_tokens"]) is not int or result["max_output_tokens"] < 1:

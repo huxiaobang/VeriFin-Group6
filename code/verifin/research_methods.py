@@ -9,7 +9,10 @@ ROLE_GUIDANCE = {
         "reopen the ones the user changed and keep previous answers as historical. For a peer, get each "
         "issuer's own same-method evidence before comparing; seek both sides and comparative periods. "
         "For an earnings surprise retrieve the previous guidance before the release, then the observed "
-        "actual; street consensus is a different, timestamped source. For profit-versus-cash or sales "
+        "actual; street consensus is a different, timestamped source. For reported quarterly revenue versus "
+        "the prior issuer guidance midpoint, select implied-period-guidance and pass "
+        "comparison=direct_quarter_revenue_guidance and the requested fiscal_quarter to analyze_disclosures. "
+        "For profit-versus-cash or sales "
         "drivers, collect the reconciliation and notes, not just the top-line change. Stop requesting "
         "new sources once the facts and remaining disclosure gaps are clear."
     ),
