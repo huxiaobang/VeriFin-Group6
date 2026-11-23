@@ -1885,6 +1885,15 @@ class ResearchEngine:
         ctx["reports"] = history_report_views(ctx)
         ctx["episode"] = {k: v for k, v in episode.items() if k not in {"seen_results", "revision_memory", "draft_reference_issues", "planner_added_requirements", "followup_limits", "market_window_history"}}
         companies = getattr(getattr(self.tools, "data", None), "manifest", {}).get("companies", [])
+        if hasattr(self.tools, "searched_issuer_aliases"):
+            labels = list(ctx["scope"].get("entities") or ())
+            labels.extend(row.get("arguments", {}).get("entity")
+                          for row in episode.get("recent_tool_results", ()) if isinstance(row, dict))
+            aliases = self.tools.searched_issuer_aliases(sid, labels)
+            if aliases:
+                companies = [{**c, "aliases": [*c.get("aliases", ()),
+                              *(name for name, ticker in aliases.items() if ticker == c["ticker"])]}
+                             for c in companies]
         ctx = issuer_scoped_context(ctx, companies)
         policy = source_scope.source_constraint(episode["request"])
         catalog = self.tools.source_catalog(ctx["scope"]) if policy.publisher and hasattr(self.tools,"source_catalog") else ()

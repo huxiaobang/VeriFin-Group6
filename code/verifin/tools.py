@@ -287,6 +287,22 @@ class ToolRegistry:
                          "latest_document_id": stable_id("source_doc_", self.data.info(doc["source"])["url"])})
         return {"cutoff": scope.get("cutoff"), "form_groups_total": len(groups), "forms": rows}
 
+    def searched_issuer_aliases(self, session_id, labels):
+        """Bind shorthand only after this session's search resolved it to a catalog ticker."""
+        companies = self.data.manifest["companies"]
+        known = {name.casefold() for c in companies
+                 for name in (c.get("ticker"), c.get("name"), c.get("cik"), *c.get("aliases", ())) if name}
+        needed = {label.casefold() for label in labels if isinstance(label, str)} - known
+        if not needed or not hasattr(self.store, "searched_issuer_names"):
+            return {}
+        targets = {}
+        for label, ticker in self.store.searched_issuer_names(session_id):
+            if isinstance(label, str) and label.casefold() in needed and isinstance(ticker, str):
+                targets.setdefault(label.casefold(), set()).add(ticker)
+        tickers = {c["ticker"] for c in companies}
+        return {label: next(iter(matches)) for label, matches in targets.items()
+                if len(matches) == 1 and matches <= tickers}
+
     def execute(self, name, arguments, session_id, scope):
         self.data.network_requests = 0
         try:
@@ -301,6 +317,10 @@ class ToolRegistry:
                 raise
             if not isinstance(scope, dict):
                 raise DataError("Scope must be an object.")
+            entities = scope.get("entities")
+            if isinstance(entities, list) and (aliases := self.searched_issuer_aliases(session_id, entities)):
+                scope = {**scope, "entities": [aliases.get(e.casefold(), e) if isinstance(e, str) else e
+                                               for e in entities]}
             if "_source_document_ids" in scope:
                 from .source_scope import tool_allowed
                 publisher = scope.get("_source_publisher")

@@ -850,6 +850,17 @@ class SessionStore:
             self._touch(session_id)
             return result
 
+    def searched_issuer_names(self, session_id):
+        """Issuer arguments and the canonical filters actually used by successful local searches."""
+        with self._transaction(write=False):
+            return list(self._db.execute(
+                "SELECT DISTINCT json_extract(payload,'$.arguments.entity'), "
+                "json_extract(payload,'$.observation.data.filters.entity') FROM events "
+                "WHERE session_id=? AND event_type='tool_call' "
+                "AND json_extract(payload,'$.tool')='search_documents' "
+                "AND json_extract(payload,'$.ok')=1 AND json_extract(payload,'$.ingestion_status')='committed'",
+                (session_id,)))
+
     def events(self, session_id: str, *, limit: int | None = None,
                exclude_types: list[str] | tuple[str, ...] | set[str] | None = None) -> list[dict]:
         """Return chronological events, optionally the last N matching events.
