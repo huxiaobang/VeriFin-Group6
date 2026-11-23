@@ -168,13 +168,19 @@ def main(argv=None):
             return run(args)
         if args.command == "config":
             client = ModelClient.from_env()
-            print(json.dumps({"configured": True, "model": client.model, "base_url": client.base_url,
-                              "api_mode": client.api_mode, "reasoning_effort": client.reasoning_effort,
-                              "critic_max_output_tokens": client.critic_max_output_tokens or client.max_output_tokens,
-                              "critic_reasoning_effort": client.critic_reasoning_effort or client.reasoning_effort,
-                              "enable_thinking": client.enable_thinking,
-                              "service_tier": client.service_tier,
-                              "network_tested": False, "api_key": "configured (hidden)"}, indent=2))
+            settings = {"configured": True, "model": client.model, "api_mode": client.api_mode,
+                        "reasoning_effort": client.reasoning_effort, "network_tested": False}
+            if getattr(client, "provider", None) == "codex":
+                settings.update({"provider": "codex", "authentication": "local ChatGPT login",
+                                 "login_checked": False, "timeout_seconds": client.timeout,
+                                 "billing": "Your Codex account limits apply. API dollar cost is unavailable."})
+            else:
+                settings.update({"base_url": client.base_url,
+                                 "critic_max_output_tokens": client.critic_max_output_tokens or client.max_output_tokens,
+                                 "critic_reasoning_effort": client.critic_reasoning_effort or client.reasoning_effort,
+                                 "enable_thinking": client.enable_thinking, "service_tier": client.service_tier,
+                                 "api_key": "configured (hidden)"})
+            print(json.dumps(settings, indent=2))
             return 0
         if args.command == "serve":
             from .webapp import serve

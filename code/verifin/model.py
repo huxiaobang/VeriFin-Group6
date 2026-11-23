@@ -1123,8 +1123,11 @@ class ModelClient:
         if max_context_chars is not None and (type(max_context_chars) is not int or not 1 <= max_context_chars <= 2**63 - 1):
             raise ValueError("max_context_chars must be a positive integer")
         provider = env.get("VERIFIN_PROVIDER", "compatible")
+        if provider == "codex":
+            from .codex_provider import CodexModelClient
+            return CodexModelClient.from_env(env, max_context_chars=max_context_chars)
         if provider not in {"openai", "compatible"}:
-            raise ModelError("VERIFIN_PROVIDER must be openai or compatible")
+            raise ModelError("VERIFIN_PROVIDER must be openai, compatible or codex")
         base = env.get("VERIFIN_BASE_URL") or ("https://api.openai.com/v1" if provider == "openai" else None)
         # Never route an OpenAI key to an inherited third-party endpoint.
         if provider == "openai" and base != "https://api.openai.com/v1":

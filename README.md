@@ -2,7 +2,7 @@
 
 **COMP7608B Final Project**  
 **Members** HU Xiaobang, Liang Da Wen, Yang Yisheng, Liao Sijia  
-**Submitted source** VeriFin 0.5.0, Git revision `503c149808aeaf225f4b35be89c89dd50a827fbc`
+**Original course snapshot** VeriFin 0.5.0, Git revision `503c149808aeaf225f4b35be89c89dd50a827fbc`
 
 VeriFin is a local research assistant for analysts who need to answer and revisit company-finance questions with dated sources, calculation operands and review status. Its Planner selects tools and decides when to ask for clarification, draft, repair or stop. A Researcher builds claims and a Structured Critic checks them. The Python controller enforces budgets and records evidence and report versions in SQLite.
 
@@ -15,6 +15,37 @@ On the team-runtime branch, newly generated research checklists and review notes
 The web client saves the request ID before submitting a turn. Reconnect and retry the pending turn to recover its saved work or original report. A new question gets a new ID, even if its text is identical. A call dispatched before a crash with no committed receipt ends with a partial report and an unknown outcome.
 
 From `code/`, the CLI equivalents are `python3 -m verifin --db sessions.db ask SESSION --request-id ID -- "Question"`, `python3 -m verifin --db sessions.db request-status SESSION ID`, and `python3 -m verifin --db sessions.db resume SESSION ID`. Reuse the database and the original model/source settings for a pending run. Old reports remain readable.
+
+## Use your own Codex login (macOS / Linux)
+
+From the repository root, prepare the Python environment, install [Codex CLI](https://developers.openai.com/codex/cli), then sign in with your own account. On Windows, run both VeriFin and Codex in the same WSL Linux environment and sign in there. VeriFin uses POSIX file locking. These instructions have been exercised on macOS.
+
+```sh
+cd code
+python3 -m venv .venv
+source .venv/bin/activate
+python -m pip install -e '.[disclosures]'
+codex --version
+codex login
+codex login status
+unset VERIFIN_BASE_URL VERIFIN_API_MODE VERIFIN_ENABLE_THINKING VERIFIN_SPEND_LEDGER VERIFIN_SPEND_LIMIT_USD VERIFIN_PRICE_CATALOG
+export VERIFIN_PROVIDER=codex
+export VERIFIN_MODEL=gpt-6.1-sol
+export VERIFIN_REASONING_EFFORT=low
+python -m verifin config
+python -m verifin new --title 'My research'
+```
+
+Replace SESSION_ID below with the ID returned by `new`; reuse it for follow-ups:
+
+```sh
+python -m verifin ask SESSION_ID 'Show Microsoft revenue for FY2025 Q2.' --as-of 2025-01-31 --seconds 900
+python -m verifin ask SESSION_ID 'Explain that comparison using the saved sources.'
+```
+
+For the browser, run `python -m verifin serve` from the same configured terminal and open http://127.0.0.1:8765. The localhost server uses your local Codex login; no credentials belong in the webpage. Set exports again in a new terminal and restart the server after configuration changes. `.env.codex.example` is documentation and is not auto-loaded.
+
+The web form lets you raise the active-seconds budget for slow research. A role timeout and a subscription limit are separate. This route needs no API key and uses your account's available Codex access and limits; it is not unlimited free usage or an API-dollar-cost promise. `config` sends no model request; `ask` and webpage submissions do. Clear incompatible API-only environment settings before switching providers. Keep your own login files local. macOS and Linux use the same shell commands and a `codex` executable in PATH; live verification here was on macOS. For headless login, see [official authentication guidance](https://developers.openai.com/codex/auth). Details, optional binary/timeout settings and source-network configuration are in [MODEL.md](code/docs/MODEL.md).
 
 ## Run locally
 

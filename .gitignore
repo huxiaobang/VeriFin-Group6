@@ -1,0 +1,4 @@
+.verifin/
+.venv/
+__pycache__/
+._*

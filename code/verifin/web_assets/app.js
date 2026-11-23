@@ -341,7 +341,19 @@ el("scopeForm").onsubmit = async event => {
   const config = await api("/api/config"); configured = config.configured;
   el("contextSetting").hidden = Boolean(config.offline);
   if (config.max_context_chars) defaultContextChars = config.max_context_chars;
-  el("config").textContent = config.offline ? "离线试用 · 可以查看已保存的真实模型回答。新问题只使用本地资料，不产生 API 费用。" : configured ? "Model configured: " + config.model + ". Inspect evidence and unresolved items." : "Model is not configured. Set VERIFIN_API_KEY, VERIFIN_BASE_URL and VERIFIN_MODEL in the server environment, then restart. Saved reports, scope editing and charts remain available.";
+  let configMessage;
+  if (config.offline) {
+    configMessage = "离线试用 · 可以查看已保存的真实模型回答。新问题只使用本地资料，不产生 API 费用。";
+  } else if (config.provider === "codex") {
+    configMessage = configured
+      ? "Local Codex · " + config.model + ". Research uses the server user's Codex account. Login is checked when research starts."
+      : "Local Codex setup is incomplete. Run python -m verifin config in the server terminal, correct the reported settings, then restart.";
+  } else if (configured) {
+    configMessage = "Model configured: " + config.model + ". Inspect evidence and unresolved items.";
+  } else {
+    configMessage = "Configure a model in the server terminal, then restart. For a local Codex login, set VERIFIN_PROVIDER=codex. For an API provider, see the model settings in the README. Saved reports remain available.";
+  }
+  el("config").textContent = configMessage;
   const list = await sessions();
   let sid;
   try { sid = sessionStorage.getItem("verifin/session"); } catch { /* Browser storage may be disabled. */ }

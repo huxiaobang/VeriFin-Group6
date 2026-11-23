@@ -185,9 +185,12 @@ def handler_for(app):
                         return
                     try:
                         model = ModelClient.from_env()
-                        self.send(200, {"configured": True, "model": model.model, "max_context_chars":model.max_context_chars})
+                        self.send(200, {"configured": True, "model": model.model,
+                                        "provider": getattr(model, "provider", None),
+                                        "max_context_chars": model.max_context_chars})
                     except Exception:
-                        self.send(200, {"configured": False})
+                        self.send(200, {"configured": False,
+                                        "provider": "codex" if os.environ.get("VERIFIN_PROVIDER", "").strip().lower() == "codex" else None})
                 elif path == "/api/sessions":
                     self.send(200, store.list_sessions())
                 elif path.startswith("/api/session/"):

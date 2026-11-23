@@ -1,12 +1,41 @@
 # Model transport and evidence verification
 
-This implementation supports OpenAI Responses and compatible HTTPS Chat Completions.
+This implementation supports local Codex CLI login, OpenAI Responses and compatible HTTPS Chat Completions.
 It has no automatic mock fallback. The test suite injects fake transports and fake
 model replies explicitly; those tests do **not** establish live model quality or
-provider access. No live model call was made during this implementation because
-credentials were not configured.
+provider access.
 
 ## Configuration
+
+### Codex CLI with your own login (macOS / Linux)
+
+Install Codex CLI using the [official installation guide](https://developers.openai.com/codex/cli), then use your own account in the same OS user that runs VeriFin:
+
+```sh
+codex --version
+codex login
+codex login status
+export VERIFIN_PROVIDER=codex
+export VERIFIN_MODEL=gpt-6.1-sol
+export VERIFIN_REASONING_EFFORT=low
+python -m verifin config
+python -m verifin new --title 'Local research'
+python -m verifin ask SESSION_ID 'Show Microsoft revenue for FY2025 Q2.'
+```
+
+Replace SESSION_ID with the ID returned by `new`; reuse it for follow-ups. Run from `code/` with the project's Python environment active. `config` checks local settings without a model call; an `ask` consumes real model access. For the browser interface, run `python -m verifin serve` from that same configured terminal and open http://127.0.0.1:8765. This is a localhost application: the browser uses the server process's Codex login, rather than requesting credentials in a web form.
+
+Both macOS and Linux use a `codex` executable available in PATH; no Homebrew-specific absolute path is required. On headless Linux, follow the [official authentication instructions](https://developers.openai.com/codex/auth) for the supported login flow. This project has been exercised on macOS; these portable shell instructions are not a claim of completed live Linux testing.
+
+No API key is needed for this route. API key environment values are ignored and not forwarded to the child process. Clear API-only configuration such as `VERIFIN_BASE_URL`, `VERIFIN_API_MODE`, thinking/cache/spend settings before switching: nonempty incompatible settings are rejected. Check `codex login status` before research. Never copy another person's login files or commit credentials. A ChatGPT/Codex login uses the account's available access and limits; this is not unlimited free use or an API-dollar estimate. Availability of the exact requested model depends on that account. The adapter does not silently switch to API billing, another model or mocked research after an error.
+
+`VERIFIN_MODEL` defaults to `gpt-6.1-sol`, reasoning effort to `low`, and `VERIFIN_TIMEOUT` to 600 seconds. `VERIFIN_CODEX_BINARY` defaults to `codex` resolved through PATH; optionally set it to your own installed CLI path. Do not copy another machine's absolute path. The transport ignores user configuration for execution while using your own Codex login; it does not import another member's configuration or authentication.
+
+The example `.env.codex.example` documents exports and is not auto-loaded. Restart the local server after changing shell configuration. Without explicit live-source options, financial tools still use the bundled historical corpus; `serve --live` additionally requires a real `SEC_USER_AGENT` contact identity for SEC access. Codex model access itself requires connectivity even when financial sources stay local. An authentication, CLI compatibility, timeout or quota failure must be resolved before retrying; no successful answer is implied by passing `config`.
+
+The local Codex test used CLI 0.167.0. The executable reads its own login. VeriFin checks the login type before submitting a role, starts an ephemeral read-only CLI process in a temporary directory, requests disabled tools and rejects active tool events. Financial tool requests are interpreted by VeriFin. A role may include CLI reconnect diagnostics before the final reply. VeriFin does not launch a second process to retry a failed role. Each local receipt under `.verifin/codex-receipts/` contains that role’s input, output when available and usage status. Treat these files as private. The CLI reports token usage when available. It does not expose a per-role hard generation-token cap or an API-dollar invoice in this mode.
+
+On 23 November the released adapter’s development smoke test used the official local CLI on frozen Microsoft data. Two Planner roles and the Researcher returned valid outputs. The account reached a usage limit at the Critic. The report was partial and the draft was unverified. The complete offline integration check uses scripted Codex replies and real financial tools. Availability on a member’s own account depends on its model access and remaining allowance.
 
 ### OpenAI Responses
 

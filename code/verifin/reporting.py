@@ -237,6 +237,10 @@ def report_view(report):
                      if c.get("status") == "Supported" and not c.get("stale")}
         view["limit_statements"] = [supported[item["claim_id"]]["text"] for item in report["followup_limits"]
                                     if item.get("claim_id") in supported]
+    if failure := report.get("codex_failure"):
+        view.setdefault("stage_label", "Codex")
+        hint = f"{failure['role'].title()}: {failure['hint']}"
+        view["stage_message"] = (view.get("stage_message", "") + " " + hint).strip()
     if report.get("issues"):
         issue_labels = {"unknown_issue_category": "本条核验意见的类别无法识别",
                         "unknown_verdict_status": "本条主张的核验标签无法识别",

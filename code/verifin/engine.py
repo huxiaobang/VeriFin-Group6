@@ -918,6 +918,9 @@ class ResearchEngine:
             original_timeout = getattr(self.model, "timeout", None)
             if original_timeout is not None:
                 self.model.timeout = max(0.01, min(original_timeout, limits.max_seconds - elapsed() - reserve_seconds))
+            original_cancel_check = getattr(self.model, "cancel_check", None)
+            if hasattr(self.model, "cancel_check"):
+                self.model.cancel_check = lambda: self.store.is_cancelled(session_id)
             started = self.clock()
             # A failed call must not reuse a previous call's token counts.
             if hasattr(self.model, "last_usage"):
@@ -961,6 +964,13 @@ class ResearchEngine:
             except Exception as exc:
                 # Never echo raw provider responses or credentials to the report.
                 event.update(ok=False, error_type=type(exc).__name__)
+                if getattr(self.model, "provider", None) == "codex" and isinstance(getattr(exc, "code", None), str):
+                    event["diagnostic_code"] = "codex_" + exc.code
+                    from .codex_provider import CodexTransportError
+                    if isinstance(exc, CodexTransportError):
+                        episode["codex_failure"] = {"role": role, "hint": exc.user_hint}
+                if getattr(exc, "codex_stop_reason", None) == "cancelled":
+                    raise StopEpisode("cancelled") from None
                 from .model import ProviderOutputError
                 if isinstance(exc, OutputContractError):
                     event["contract_error"] = exc.code
@@ -969,7 +979,7 @@ class ResearchEngine:
                 if role == "researcher" and isinstance(exc, (ProviderOutputError, OutputContractError)):
                     episode["researcher_output_error"] = exc.code
                 if role == "planner" and isinstance(exc, ModelError):
-                    event["diagnostic_code"] = event.get("contract_error") or event.get("provider_output_error") or "model_error_unclassified"
+                    event["diagnostic_code"] = event.get("contract_error") or event.get("provider_output_error") or event.get("diagnostic_code") or "model_error_unclassified"
                 raise
             finally:
                 event.update(seconds=self.clock() - started,
@@ -980,11 +990,13 @@ class ResearchEngine:
                     role_seconds[role] = event["seconds"]
                 if not event.get("ok") or commit_result is None and on_return is None:
                     saved_event = self.store.add_event(session_id, event)
-                    if "diagnostic_code" in event:
+                    if role == "planner" and "diagnostic_code" in event:
                         episode["planner_error"] = {k: saved_event[k] for k in
                                                     ("error_type", "diagnostic_code", "event_sequence")}
                 if original_timeout is not None:
                     self.model.timeout = original_timeout
+                if hasattr(self.model, "cancel_check"):
+                    self.model.cancel_check = original_cancel_check
                 for key, value in (getattr(self.model, "last_usage", {}) or {}).items():
                     if isinstance(value, (int, float)) and not isinstance(value, bool) and math.isfinite(value) and value >= 0:
                         episode["usage"][key] = episode["usage"].get(key, 0) + value
@@ -2257,6 +2269,8 @@ class ResearchEngine:
         report = {"episode_id": episode["id"], "request": episode["request"], "status": episode["status"], "stop_reason": episode["stop_reason"], "scope": ctx["scope"], "scope_version": ctx["session"]["scope_version"], "summary": episode["summary"] or "No verified answer is available yet.", "summary_kind": summary_kind, "model_mode": getattr(self.model, "mode", "configured_model"), "claims": ctx["claims"], "evidence": ctx["evidence"], "calculations": ctx["calculations"], "issues": issues, "unanswered": unanswered, "verification_available": reviewed, "usage": {"model_calls": episode["model_calls"], "tool_calls": episode["tool_calls"], "planner_steps": episode.get("planner_steps", 0), "active_seconds": episode["active_seconds"], **episode["usage"]}, "created_at": utcnow()}
         if episode.get("request_id"):
             report["request_id"] = episode["request_id"]
+        if episode["stop_reason"] == "execution_error" and episode.get("codex_failure"):
+            report["codex_failure"] = episode["codex_failure"]
         if episode["stop_reason"] == "execution_error" and episode.get("researcher_output_error"):
             report["researcher_output_error"] = episode["researcher_output_error"]
         if episode["stop_reason"] == "execution_error" and episode.get("planner_error"):
