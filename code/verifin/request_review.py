@@ -492,9 +492,13 @@ _DATE_TEXT = re.compile(
     r"Aug(?:ust)?|Sep(?:tember)?|Oct(?:ober)?|Nov(?:ember)?|Dec(?:ember)?)\.? \d{1,2},? \d{4}\b",re.I)
 
 
+# A quoted caption can carry the sentence's period inside the closing quote.
+_REVIEW_SENTENCE_BREAK = re.compile(r"""(?<=[。！？!?])|(?<=\.)\s+|(?<=\.[”’"'])\s+(?=[A-Z]|\[)""")
+
+
 def _grounded_clause(clause, source, question):
     clause = clause.strip().rstrip(".。")
-    for sentence in re.split(r"(?<=[。！？!?])|(?<=\.)\s+",source):
+    for sentence in _REVIEW_SENTENCE_BREAK.split(source):
         sentence = sentence.strip().rstrip(".。")
         if clause == sentence:
             return True
@@ -579,7 +583,7 @@ def _complete_quarter_links(parts, rows, supported, summary):
             continue
         if not isinstance(claim.get("text"), str):
             continue
-        sentences = [s.strip() for s in re.split(r"(?<=[。！？!?])|(?<=\.)\s+", claim["text"])]
+        sentences = [s.strip() for s in _REVIEW_SENTENCE_BREAK.split(claim["text"])]
         if row.get("answer_sentence") not in sentences:
             continue
         for sentence in sentences:
@@ -729,7 +733,7 @@ def coverage_issues(parts, response, claims, *, requirements=(), unanswered_ids=
         quote = row.get("answer_sentence")
         claim = by_claim.get(row.get("claim_id"),{}) if isinstance(row.get("claim_id"), str) else {}
         source = claim.get("text")
-        sentences = [s.strip() for s in re.split(r"(?<=[。！？!?])|(?<=\.)\s+", source or "")]
+        sentences = [s.strip() for s in _REVIEW_SENTENCE_BREAK.split(source or "")]
         stripped = quote.strip() if isinstance(quote, str) else ""
         prior = used.get(stripped, [])
         # One sentence can report two distinct levels. Reuse it only for the

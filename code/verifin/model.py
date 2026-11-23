@@ -363,6 +363,10 @@ state a relevant reported performance figure with its period, units and source
 location. Prefer the original table's precision when available. Provide the
 applicable management commentary as attributed, the observed market move with
 its saved calculation where needed, and the specific limits of causal inference.
+Name the price field and adjustment basis supported by the endpoint records. If
+the user asks for unadjusted closes and that basis is unknown, give the observed
+provider closes and return, with a separate sentence identifying the open basis
+or historical availability question.
 Each requirement ID must exist in the current checklist. Partition the entire
 checklist into answered and unanswered IDs. Empty claims and an entirely
 unanswered checklist are valid when evidence is missing; explain gaps plainly.
@@ -519,6 +523,17 @@ check whether the answer includes concrete relevant performance evidence and the
 observed market move alongside any pertinent attribution and causal limits. Map
 each relevant reviewed claim to that question's coverage. Judge missing content
 within the user's requested scope and source restrictions.
+For a part asking about market prices or returns, set its requested_price_basis to
+"unadjusted" when the user requires prices as traded before split or dividend
+adjustment, "provider" when an observed provider series suffices, or "unspecified"
+when no basis is requested. Classify the user's intent, including any negation,
+independently of which data are available. Other parts may omit the field.
+For an explicitly raw or unadjusted price window, check both endpoint records'
+price_type, split/dividend adjustments, and availability at the requested cutoff.
+If the observed return is supported but the requested basis remains unknown,
+deliver the observed result with partial coverage and the precise missing support.
+An ordinary descriptive provider-close question may be fully answered with a
+qualified provider series. Review unsupported assertions of adjustment separately.
 For a multi-claim explanation or reconciliation, include supporting_claim_ids
 in that part's coverage row, in reading order. Keep claim_id singular and quote one
 exact sentence from it. Never join IDs or splice sentences into a synthetic quote.
@@ -817,6 +832,19 @@ def validate_response(role: str, result: Any, context: dict) -> dict:
     issues = result.get("issues")
     if not isinstance(issues, list):
         raise ModelError("critic.issues must be an array")
+    coverage = result.get("request_coverage")
+    if isinstance(coverage, list):
+        normalized = []
+        for row in coverage:
+            if (isinstance(row, dict) and "requested_price_basis" in row
+                    and row["requested_price_basis"] not in ("provider", "unadjusted", "unspecified")):
+                # A malformed optional qualifier concerns this subquestion only.
+                row = dict(row)
+                row.pop("requested_price_basis")
+                if row.get("status") == "answered":
+                    row.update(status="partial", missing_support="The review did not identify a valid requested price basis.")
+            normalized.append(row)
+        result = {**result, "request_coverage": normalized}
     claim_text = {c["id"]:c["text"] for c in context.get("claims", [])}
     try:
         return _critic_rows(result, claim_text, reqs, evidence | calculations)

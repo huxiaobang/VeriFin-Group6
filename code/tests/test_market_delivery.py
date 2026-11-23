@@ -43,6 +43,7 @@ class MarketDeliveryTests(unittest.TestCase):
         self.assertEqual(error["diagnostic_code"], "model_error_unclassified")
         self.assertEqual(error["usage"]["total_tokens"], 10)
         markdown = render_markdown(report)
+        self.assertIn("收盘价未能取得", report["tool_fault"]["reason"])
         for text in (view["stage_message"], markdown):
             for visible in ("2026-10-01 至 2026-11-19", "随包行情缺少精确区间端点", "未配置实时行情来源",
                             "无法核验该区间的股价走势或按单日跌幅排序", f"Activity #{error['event_sequence']}"):
@@ -67,6 +68,44 @@ class MarketDeliveryTests(unittest.TestCase):
         self.assertEqual(report["planner_error"]["diagnostic_code"], "invalid_provider_json")
         self.assertNotIn("tool_fault", report)
         self.assertIn("invalid_provider_json", report_view(report)["stage_message"])
+
+    def test_live_source_failure_does_not_erase_saved_replay_closes(self):
+        args = {"entity": "NVDA", "start_date": "2025-02-24", "end_date": "2025-03-03"}
+        question = "What were NVDA's closing prices on 2025-02-24 and 2025-03-03?"
+        script = [
+            ("planner", {"action": "tool", "tool": "market_prices", "arguments": {**args, "source": "replay"},
+                         "scope": {"entities": ["NVDA"]}, "requirements": [{"id": "prices", "text": question}]}),
+            ("planner", {"action": "tool", "tool": "market_prices", "arguments": {**args, "source": "live"}}),
+            ("planner", ModelError("simulated planner failure")),
+        ]
+        report, events = self.run_question(question, script)
+        tool_calls = [e for e in events if e["type"] == "tool_call"]
+        self.assertEqual([e["ok"] for e in tool_calls], [True, False])
+        self.assertEqual("No live market adapter is configured.", tool_calls[1]["summary"])
+        dates = {record["trading_date"] for record in report["evidence"]}
+        self.assertTrue({args["start_date"], args["end_date"]} <= dates)
+        self.assertTrue(all(record["adjustment"]["splits"] == "unknown" for record in report["evidence"]))
+        for text in (report_view(report)["stage_message"], render_markdown(report)):
+            self.assertNotIn("收盘价未能取得", text)
+            self.assertNotIn("无法核验该区间的股价走势", text)
+
+    def test_partial_quotes_keep_the_exact_window_gap(self):
+        args = {"entity": "NVDA", "start_date": "2025-02-24"}
+        question = "What were NVDA's closing prices on 2025-02-24 and 2025-03-15?"
+        script = [
+            ("planner", {"action": "tool", "tool": "market_prices", "arguments": {**args, "end_date": "2025-02-24"},
+                         "scope": {"entities": ["NVDA"]}, "requirements": [{"id": "prices", "text": question}]}),
+            ("planner", {"action": "tool", "tool": "market_prices", "arguments": {**args, "end_date": "2025-03-15"}}),
+            ("planner", ModelError("simulated planner failure")),
+        ]
+        report, events = self.run_question(question, script)
+        self.assertEqual([e["ok"] for e in events if e["type"] == "tool_call"], [True, False])
+        self.assertEqual(["2025-02-24"], [record["trading_date"] for record in report["evidence"]])
+        self.assertEqual("market_window", report["tool_fault"]["kind"])
+        for text in (report_view(report)["stage_message"], render_markdown(report)):
+            self.assertIn("已取得部分收盘价", text)
+            self.assertIn("尚无法配对同口径的两个区间端点", text)
+            self.assertNotIn("收盘价未能取得", text)
 
     def test_review_of_other_documents_does_not_erase_price_coverage(self):
         import json

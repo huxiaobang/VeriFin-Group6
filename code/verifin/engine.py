@@ -2094,6 +2094,8 @@ class ResearchEngine:
         from .platform_coverage import check_coverage as check_platform_coverage
         companies = getattr(getattr(self.tools, "data", None), "manifest", {}).get("companies", [])
         rows = check_platform_coverage(ctx, rows, verdicts, companies)
+        from .market_coverage import check_coverage as check_market_coverage
+        rows = check_market_coverage(ctx, rows)
         unanswered_ids = set(episode["unanswered_requirement_ids"])
         gap = None
         lacks_latest = ctx.get("source_document_scope",{}).get("latest_coverage_gap")
@@ -2287,7 +2289,7 @@ class ResearchEngine:
             price_history = episode.get("market_window_history", {})
             receipts = (price_history["receipts"] if price_history.get("scope_version") == ctx["session"]["scope_version"]
                         else ctx["episode"].get("recent_tool_results", []))
-            if gap := market_window_gap(receipts, ctx["scope"]):
+            if gap := market_window_gap(receipts, ctx["scope"], ctx["evidence"]):
                 report["tool_fault"] = gap
         if ctx.get("request_parts"):
             report["request_parts"] = ctx["request_parts"]

@@ -294,37 +294,68 @@ class AlphaVantageDailyAdapter:
 
 
 
-def market_window_gap(receipts, scope):
-    """Describe an attempted price window that no later receipt filled."""
-    windows = {}
+def market_window_gap(receipts, scope, evidence=()):
+    """Describe missing price coverage after considering every eligible source."""
+    failures, covered = {}, set()
+    entities = scope.get("entities", [])
     for receipt in receipts:
         if receipt["tool"] != "market_prices":
             continue
         args = receipt.get("arguments", {})
         if not ("start_date" in args and "end_date" in args):
             continue
-        entities = scope.get("entities", [])
+        detail = None
+        if not receipt["ok"]:
+            reason = receipt.get("error") or receipt.get("summary", "")
+            if reason.startswith("Exact endpoint trading prices are unavailable"):
+                detail = ("随包行情缺少精确区间端点" if receipt.get("data", {}).get("mode") == "replay"
+                          else "所用行情缺少精确区间端点")
+            elif reason == "No live market adapter is configured.":
+                detail = "未配置实时行情来源"
+            else:
+                continue
         entity = args.get("entity") or (entities[0] if len(entities) == 1 else None)
-        key = (entity, args["start_date"], args["end_date"],
-               args.get("price_type", "close"), args.get("cutoff", scope.get("cutoff")))
-        if receipt["ok"]:
-            windows.pop(key, None)
+        start, end = args["start_date"], args["end_date"]
+        price_type = args.get("price_type", "close")
+        cutoff = args.get("cutoff") or scope.get("cutoff")
+        key = (entity.casefold() if entity else None, start, end, price_type, cutoff_time(cutoff))
+        if detail is None:
+            # Both exact endpoints were returned. A subsequent attempt to use
+            # another source cannot make these observations disappear.
+            covered.add(key)
             continue
-        reason = receipt.get("error") or receipt.get("summary", "")
-        if reason.startswith("Exact endpoint trading prices are unavailable"):
-            detail = ("随包行情缺少精确区间端点" if receipt["data"].get("mode") == "replay"
-                      else "所用行情缺少精确区间端点")
-        elif reason == "No live market adapter is configured.":
-            detail = "未配置实时行情来源"
-        else:
+        _, _, details = failures.pop(key, (None, None, []))
+        failures[key] = (entity, cutoff, [*details, detail])
+    for key, (entity, cutoff, details) in reversed(failures.items()):
+        if key in covered:
             continue
-        details = windows.pop(key, [])
-        windows[key] = [*details, detail]
-    if not windows:
-        return None
-    (entity, start, end, price_type, _), details = next(reversed(windows.items()))
-    basis = "调整后收盘价" if price_type == "adjusted_close" else "收盘价"
-    window = " ".join(part for part in (entity, f"{start} 至 {end}" if start != end else start) if part)
-    gap = "现有资料无法核验该区间的股价走势或按单日跌幅排序。" if start != end else ""
-    return {"tool": "market_prices", "kind": "market_window",
-            "reason": f"{window} 的{basis}未能取得（{'，'.join(dict.fromkeys(details))}）。{gap}"}
+        _, start, end, price_type, _ = key
+        dates_by_series = _market_window_dates(evidence, entity, start, end, price_type, cutoff)
+        if any({start, end} <= dates for dates in dates_by_series.values()):
+            continue
+        basis = "调整后收盘价" if price_type == "adjusted_close" else "收盘价"
+        window = " ".join(part for part in (entity, f"{start} 至 {end}" if start != end else start) if part)
+        coverage = (f"{window} 已取得部分{basis}，尚无法配对同口径的两个区间端点"
+                    if dates_by_series else f"{window} 的{basis}未能取得")
+        gap = "现有资料无法核验该区间的股价走势或按单日跌幅排序。" if start != end else ""
+        reason = f"{coverage}（{'，'.join(dict.fromkeys(details))}）。{gap}"
+        return {"tool": "market_prices", "kind": "market_window", "reason": reason}
+    return None
+
+
+def _market_window_dates(evidence, entity, start, end, price_type, cutoff):
+    dates_by_series = {}
+    if entity is None:
+        return dates_by_series
+    for row in evidence:
+        day = row.get("trading_date") or row.get("period_end")
+        if (row.get("kind") != "market_price" or row.get("stale")
+                or (row.get("entity") or "").casefold() != entity.casefold()
+                or row.get("price_type", "close") != price_type
+                or not day or not start <= day <= end
+                or not available_by(row.get("published_at"), cutoff)):
+            continue
+        # Use the same quote compatibility fields as the price-return tool.
+        series = tuple(row.get(field) for field in ("business_scope", "basis", "metric", "currency", "unit"))
+        dates_by_series.setdefault(series, set()).add(day)
+    return dates_by_series
