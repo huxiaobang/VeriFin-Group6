@@ -24,3 +24,7 @@ Run `python3 evaluation/check_evidence.py` from the ZIP root to check the answer
 ## Historical 18-question comparison
 
 The two historical reference arms ran on release `0d7d9f3`. Each of the 18 public development questions began a separate session. The same question is recorded once per model. The compressed file contains 36 original answers with their question IDs and answer hashes. The results file preserves the per-case AI judgment, rationale, grading reference used after generation, calls and cost summaries. Separately rerun cases are excluded from this comparison. Human regrading and the new-event holdout remain unfinished. [Original answers](pilot18-answers.jsonl.gz) · [Post-run results and references](pilot18-results.json)
+
+## Team runtime dialogue results
+
+[Three new financial dialogues on GPT-6.1 Sol](new-dialogues-2026-11-23/README.md) includes 12 user-facing answers, per-turn usage and the remaining gaps. [Three six-turn follow-up dialogues](development18/dialogue-2026-11-23/README.md) includes the earlier answers and the review replay after the release fixes.

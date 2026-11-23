@@ -1,0 +1,326 @@
+[
+  {
+    "case": "M1",
+    "session": "3829cf57edbc4748a1d4eecc80517bbe",
+    "version": 1,
+    "request_id": "dialogue-M-1",
+    "question": "Microsoft FY2025 Q4 的合并收入是多少？按财务表的 USD million 给数值，附期间和原表位置。",
+    "entities": [
+      "MSFT"
+    ],
+    "cutoff": "2025-08-01T23:59:59-04:00",
+    "engine_status": "complete",
+    "stop": "completed",
+    "model_replies": 8,
+    "tool_calls": 1,
+    "planner_steps": 4,
+    "wall_seconds": 347.17,
+    "answer_sha256": "56d96abba2e93a428fa050dee71ec051446309ea5a7ea8763b22da5fd64ec87b"
+  },
+  {
+    "case": "M2",
+    "session": "3829cf57edbc4748a1d4eecc80517bbe",
+    "version": 2,
+    "request_id": "dialogue-M-2",
+    "question": "那这一季的 GAAP 营业利润率和去年同期比呢？给两期比率和有符号的百分点变化。",
+    "entities": [
+      "MSFT"
+    ],
+    "cutoff": "2025-08-01T23:59:59-04:00",
+    "engine_status": "complete",
+    "stop": "completed",
+    "model_replies": 7,
+    "tool_calls": 3,
+    "planner_steps": 5,
+    "wall_seconds": 293.21,
+    "answer_sha256": "d2aed3443bd7e37998abcfc0b2db1206064b3e28b51f9f1e837cca848c4c27a2"
+  },
+  {
+    "case": "M3",
+    "session": "3829cf57edbc4748a1d4eecc80517bbe",
+    "version": 3,
+    "request_id": "dialogue-M-3",
+    "question": "这次披露里，管理层怎么解释 Cloud/AI 的增长？请区分原文归因和你自己的解释。",
+    "entities": [
+      "MSFT"
+    ],
+    "cutoff": "2025-08-01T23:59:59-04:00",
+    "engine_status": "complete",
+    "stop": "completed",
+    "model_replies": 5,
+    "tool_calls": 1,
+    "planner_steps": 3,
+    "wall_seconds": 248.12,
+    "answer_sha256": "0701c1d49395e285b7a635fdc3a7a76e671d37b327e11f620e60573b5d6858b2"
+  },
+  {
+    "case": "M4",
+    "session": "3829cf57edbc4748a1d4eecc80517bbe",
+    "version": 4,
+    "request_id": "dialogue-M-4",
+    "question": "把刚才的利润率比较、官方解释放一起，再算 7 月 30 日收盘到 31 日收盘的原始收益。列出来源和还没证实的解释。",
+    "entities": [
+      "MSFT"
+    ],
+    "cutoff": "2025-08-01T23:59:59-04:00",
+    "engine_status": "partial",
+    "stop": "unresolved_items",
+    "model_replies": 9,
+    "tool_calls": 5,
+    "planner_steps": 7,
+    "wall_seconds": 488.5,
+    "answer_sha256": "6d31f8a297237ba85aa65e7f778d4e7ed26935ff58da1e0cda24390f3af06a2c"
+  },
+  {
+    "case": "M5",
+    "session": "3829cf57edbc4748a1d4eecc80517bbe",
+    "version": 5,
+    "request_id": "dialogue-M-5",
+    "question": "那这季收入的 as-reported 和 constant-currency 同比各是多少？说说区别，后者能叫 GAAP 增速吗？",
+    "entities": [
+      "MSFT"
+    ],
+    "cutoff": "2025-08-01T23:59:59-04:00",
+    "engine_status": "complete",
+    "stop": "completed",
+    "model_replies": 4,
+    "tool_calls": 0,
+    "planner_steps": 2,
+    "wall_seconds": 184.42,
+    "answer_sha256": "a34b64e4c835111c7ef92c96f96096d8c46254428a910e7073a7dafe37fab6fc"
+  },
+  {
+    "case": "M6",
+    "session": "3829cf57edbc4748a1d4eecc80517bbe",
+    "version": 6,
+    "request_id": "dialogue-M-6",
+    "question": "所以 Cloud/AI 增长就是刚才股价变动的唯一原因吗？用同一次公告和那个价格窗口，给出能核实的业绩与价格变化。",
+    "entities": [
+      "MSFT"
+    ],
+    "cutoff": "2025-08-01T23:59:59-04:00",
+    "engine_status": "complete",
+    "stop": "completed",
+    "model_replies": 6,
+    "tool_calls": 2,
+    "planner_steps": 4,
+    "wall_seconds": 329.06,
+    "answer_sha256": "89ea04dd6356048ab14bfb6c0a4ad07f897a312262b701343539d0400c403369"
+  },
+  {
+    "case": "N1",
+    "session": "40e2f1fc117b4c6c8b1df89ff6b4e8ec",
+    "version": 1,
+    "request_id": "dialogue-N-1",
+    "question": "NVIDIA FY2025 Q4 的合并收入是多少？给 USD million、季度截止日和表格定位。",
+    "entities": [
+      "NVDA"
+    ],
+    "cutoff": "2025-02-28T23:59:59-05:00",
+    "engine_status": "partial",
+    "stop": "unresolved_items",
+    "model_replies": 8,
+    "tool_calls": 1,
+    "planner_steps": 4,
+    "wall_seconds": 333.05,
+    "answer_sha256": "1de9b76aca52f76ab115eae9b50d703b88a3ae688c3b95226b5c93c89bd3423d"
+  },
+  {
+    "case": "N2",
+    "session": "40e2f1fc117b4c6c8b1df89ff6b4e8ec",
+    "version": 2,
+    "request_id": "dialogue-N-2",
+    "question": "那这一季的 GAAP 营业利润率和去年同期比呢？给两期比率和有符号的百分点变化。",
+    "entities": [
+      "NVDA"
+    ],
+    "cutoff": "2025-02-28T23:59:59-05:00",
+    "engine_status": "complete",
+    "stop": "completed",
+    "model_replies": 7,
+    "tool_calls": 3,
+    "planner_steps": 5,
+    "wall_seconds": 312.42,
+    "answer_sha256": "f2cbb815b88c3d7b46e98820528d042e93744d76881b508c6da03b54b656f899"
+  },
+  {
+    "case": "N3",
+    "session": "40e2f1fc117b4c6c8b1df89ff6b4e8ec",
+    "version": 3,
+    "request_id": "dialogue-N-3",
+    "question": "管理层怎么解释这次的 Data Center 增长？每项指到原句或原段，说明它跟全公司利润率有什么关系。",
+    "entities": [
+      "NVDA"
+    ],
+    "cutoff": "2025-02-28T23:59:59-05:00",
+    "engine_status": "complete",
+    "stop": "completed",
+    "model_replies": 8,
+    "tool_calls": 4,
+    "planner_steps": 6,
+    "wall_seconds": 428.88,
+    "answer_sha256": "46ad63ba1b9a9025053fcb2e6ecb766e3630c854fd1cecd6b3c046313880bddc"
+  },
+  {
+    "case": "N4",
+    "session": "40e2f1fc117b4c6c8b1df89ff6b4e8ec",
+    "version": 4,
+    "request_id": "dialogue-N-4",
+    "question": "把刚才的两期利润率和公司解释放一起，再算 2 月 26 日收盘到 27 日收盘的原始收益。哪些是解释，哪些只是市场观察？",
+    "entities": [
+      "NVDA"
+    ],
+    "cutoff": "2025-02-28T23:59:59-05:00",
+    "engine_status": "complete",
+    "stop": "completed",
+    "model_replies": 9,
+    "tool_calls": 5,
+    "planner_steps": 7,
+    "wall_seconds": 460.47,
+    "answer_sha256": "d5fb1559c286e66d7c06df32dbadd52e8585b51a78729e0134b0c7cdd02d6bcf"
+  },
+  {
+    "case": "N5",
+    "session": "40e2f1fc117b4c6c8b1df89ff6b4e8ec",
+    "version": 5,
+    "request_id": "dialogue-N-5",
+    "question": "那这一季的收入比上一季公告给出的本季收入指引中点高或低百分之几？分别引用历史指引和实际值。",
+    "entities": [
+      "NVDA"
+    ],
+    "cutoff": "2025-02-28T23:59:59-05:00",
+    "engine_status": "complete",
+    "stop": "completed",
+    "model_replies": 8,
+    "tool_calls": 1,
+    "planner_steps": 4,
+    "wall_seconds": 375.73,
+    "answer_sha256": "7a8416608ca7be85866d04cad592908f8271b93b326d6437c3be2702dc51b8be"
+  },
+  {
+    "case": "N6",
+    "session": "40e2f1fc117b4c6c8b1df89ff6b4e8ec",
+    "version": 6,
+    "request_id": "dialogue-N-6",
+    "question": "光凭这次公告和刚才那个收盘窗口，能确认其中一项管理层解释导致了全部股价变化吗？给可支持和不可支持的结论。",
+    "entities": [
+      "NVDA"
+    ],
+    "cutoff": "2025-02-28T23:59:59-05:00",
+    "engine_status": "complete",
+    "stop": "completed",
+    "model_replies": 5,
+    "tool_calls": 1,
+    "planner_steps": 3,
+    "wall_seconds": 239.54,
+    "answer_sha256": "35537ab5f2c9bb6aa6e37ea3098e8515b2aadcb43f8c492f2f28f1a990f34c82"
+  },
+  {
+    "case": "A1",
+    "session": "2e70e467ff9644c59448bf28d8452d42",
+    "version": 1,
+    "request_id": "dialogue-A-1",
+    "question": "AMD FY2024 Q4 的合并收入是多少？给 USD million、季度截止日和原表位置。",
+    "entities": [
+      "AMD"
+    ],
+    "cutoff": "2025-02-06T23:59:59-05:00",
+    "engine_status": "complete",
+    "stop": "completed",
+    "model_replies": 9,
+    "tool_calls": 2,
+    "planner_steps": 5,
+    "wall_seconds": 424.37,
+    "answer_sha256": "3bb5caa230080480718349f8a37da19f5f4a99963a52e1bd72cc94dc317475ca"
+  },
+  {
+    "case": "A2",
+    "session": "2e70e467ff9644c59448bf28d8452d42",
+    "version": 2,
+    "request_id": "dialogue-A-2",
+    "question": "那这一季的 GAAP 营业利润率和去年同期比呢？给两期比率和有符号的百分点变化。",
+    "entities": [
+      "AMD"
+    ],
+    "cutoff": "2025-02-06T23:59:59-05:00",
+    "engine_status": "complete",
+    "stop": "completed",
+    "model_replies": 7,
+    "tool_calls": 3,
+    "planner_steps": 5,
+    "wall_seconds": 350.48,
+    "answer_sha256": "260232002d6deb15fd4bc098dd1c5745bb9f97a98b37160c2445f001fda95aa5"
+  },
+  {
+    "case": "A3",
+    "session": "2e70e467ff9644c59448bf28d8452d42",
+    "version": 3,
+    "request_id": "dialogue-A-3",
+    "question": "这次披露对 Data Center 和 Client 两个分部的表现分别怎么解释？标出位置，说清这些解释适用于哪一层。",
+    "entities": [
+      "AMD"
+    ],
+    "cutoff": "2025-02-06T23:59:59-05:00",
+    "engine_status": "complete",
+    "stop": "completed",
+    "model_replies": 5,
+    "tool_calls": 1,
+    "planner_steps": 3,
+    "wall_seconds": 270.4,
+    "answer_sha256": "55ad59b66a56f336f5a4f26218084dc3e935c2cdcb696b784f8554f3c85b36ed"
+  },
+  {
+    "case": "A4",
+    "session": "2e70e467ff9644c59448bf28d8452d42",
+    "version": 4,
+    "request_id": "dialogue-A-4",
+    "question": "把刚才的两期利润率和官方解释放一起，再算 2 月 4 日收盘到 5 日收盘的原始收益。列出处和缺口。",
+    "entities": [
+      "AMD"
+    ],
+    "cutoff": "2025-02-06T23:59:59-05:00",
+    "engine_status": "partial",
+    "stop": "unresolved_items",
+    "model_replies": 10,
+    "tool_calls": 6,
+    "planner_steps": 8,
+    "wall_seconds": 497.76,
+    "answer_sha256": "a1ed18af70cd506d05acff550ae30fc183ff81f72637b71d547db747ec8e554e"
+  },
+  {
+    "case": "A5",
+    "session": "2e70e467ff9644c59448bf28d8452d42",
+    "version": 5,
+    "request_id": "dialogue-A-5",
+    "question": "那份公告里，全年 Client 收入正文的舍入数和表格精确值有什么关系？它和下季度公司合并收入指引是同一指标吗？请分别引用。",
+    "entities": [
+      "AMD"
+    ],
+    "cutoff": "2025-02-06T23:59:59-05:00",
+    "engine_status": "complete",
+    "stop": "completed",
+    "model_replies": 4,
+    "tool_calls": 0,
+    "planner_steps": 2,
+    "wall_seconds": 169.65,
+    "answer_sha256": "22129d8cb549d21cc853eb8f6e6fd438e57f9fdcac85a65a874f50940a58871d"
+  },
+  {
+    "case": "A6",
+    "session": "2e70e467ff9644c59448bf28d8452d42",
+    "version": 6,
+    "request_id": "dialogue-A-6",
+    "question": "所以能说利润率变化导致刚才窗口里的全部股价变化吗？用同一份公告和窗口价格，仍然回答可核查的部分。",
+    "entities": [
+      "AMD"
+    ],
+    "cutoff": "2025-02-06T23:59:59-05:00",
+    "engine_status": "complete",
+    "stop": "completed",
+    "model_replies": 11,
+    "tool_calls": 4,
+    "planner_steps": 7,
+    "wall_seconds": 636.42,
+    "answer_sha256": "aa764f02bca11e605e717f9e82c5f4cf6ff3742983d4657b46987715b766cff1"
+  }
+]

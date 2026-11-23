@@ -1,0 +1,173 @@
+{
+  "baseline": "c9cbcd25037db279c90cc6817495e1985c88c2b9",
+  "fixed": "618cf9253862867fc3c7878b89f16a6dc640012a",
+  "mode": "Final historical Critic receipt and turn-specific SQLite state replayed offline, including original post-review tool receipts at delivery. No new Planner or model decisions.",
+  "turns": [
+    {
+      "turn": "M1",
+      "previous": "complete",
+      "fixed": "complete",
+      "coverage_changed": false,
+      "previous_tool_fault": null,
+      "fixed_tool_fault": null,
+      "claim_verdicts_preserved": true
+    },
+    {
+      "turn": "M2",
+      "previous": "complete",
+      "fixed": "complete",
+      "coverage_changed": false,
+      "previous_tool_fault": null,
+      "fixed_tool_fault": null,
+      "claim_verdicts_preserved": true
+    },
+    {
+      "turn": "M3",
+      "previous": "complete",
+      "fixed": "complete",
+      "coverage_changed": false,
+      "previous_tool_fault": null,
+      "fixed_tool_fault": null,
+      "claim_verdicts_preserved": true
+    },
+    {
+      "turn": "M4",
+      "previous": "partial",
+      "fixed": "partial",
+      "coverage_changed": false,
+      "previous_tool_fault": null,
+      "fixed_tool_fault": null,
+      "claim_verdicts_preserved": true
+    },
+    {
+      "turn": "M5",
+      "previous": "complete",
+      "fixed": "complete",
+      "coverage_changed": false,
+      "previous_tool_fault": null,
+      "fixed_tool_fault": null,
+      "claim_verdicts_preserved": true
+    },
+    {
+      "turn": "M6",
+      "previous": "complete",
+      "fixed": "complete",
+      "coverage_changed": false,
+      "previous_tool_fault": null,
+      "fixed_tool_fault": null,
+      "claim_verdicts_preserved": true
+    },
+    {
+      "turn": "N1",
+      "previous": "partial",
+      "fixed": "complete",
+      "coverage_changed": true,
+      "previous_tool_fault": null,
+      "fixed_tool_fault": null,
+      "claim_verdicts_preserved": true
+    },
+    {
+      "turn": "N2",
+      "previous": "complete",
+      "fixed": "complete",
+      "coverage_changed": false,
+      "previous_tool_fault": null,
+      "fixed_tool_fault": null,
+      "claim_verdicts_preserved": true
+    },
+    {
+      "turn": "N3",
+      "previous": "complete",
+      "fixed": "complete",
+      "coverage_changed": false,
+      "previous_tool_fault": null,
+      "fixed_tool_fault": null,
+      "claim_verdicts_preserved": true
+    },
+    {
+      "turn": "N4",
+      "previous": "complete",
+      "fixed": "partial",
+      "coverage_changed": true,
+      "previous_tool_fault": null,
+      "fixed_tool_fault": null,
+      "claim_verdicts_preserved": true
+    },
+    {
+      "turn": "N5",
+      "previous": "complete",
+      "fixed": "complete",
+      "coverage_changed": false,
+      "previous_tool_fault": null,
+      "fixed_tool_fault": null,
+      "claim_verdicts_preserved": true
+    },
+    {
+      "turn": "N6",
+      "previous": "complete",
+      "fixed": "complete",
+      "coverage_changed": false,
+      "previous_tool_fault": null,
+      "fixed_tool_fault": null,
+      "claim_verdicts_preserved": true
+    },
+    {
+      "turn": "A1",
+      "previous": "complete",
+      "fixed": "complete",
+      "coverage_changed": false,
+      "previous_tool_fault": null,
+      "fixed_tool_fault": null,
+      "claim_verdicts_preserved": true
+    },
+    {
+      "turn": "A2",
+      "previous": "complete",
+      "fixed": "complete",
+      "coverage_changed": false,
+      "previous_tool_fault": null,
+      "fixed_tool_fault": null,
+      "claim_verdicts_preserved": true
+    },
+    {
+      "turn": "A3",
+      "previous": "complete",
+      "fixed": "complete",
+      "coverage_changed": false,
+      "previous_tool_fault": null,
+      "fixed_tool_fault": null,
+      "claim_verdicts_preserved": true
+    },
+    {
+      "turn": "A4",
+      "previous": "partial",
+      "fixed": "partial",
+      "coverage_changed": false,
+      "previous_tool_fault": {
+        "tool": "market_prices",
+        "kind": "market_window",
+        "reason": "AMD 2025-02-04 至 2025-02-05 的收盘价未能取得（未配置实时行情来源）。现有资料无法核验该区间的股价走势或按单日跌幅排序。"
+      },
+      "fixed_tool_fault": null,
+      "claim_verdicts_preserved": true
+    },
+    {
+      "turn": "A5",
+      "previous": "complete",
+      "fixed": "complete",
+      "coverage_changed": false,
+      "previous_tool_fault": null,
+      "fixed_tool_fault": null,
+      "claim_verdicts_preserved": true
+    },
+    {
+      "turn": "A6",
+      "previous": "complete",
+      "fixed": "complete",
+      "coverage_changed": false,
+      "previous_tool_fault": null,
+      "fixed_tool_fault": null,
+      "claim_verdicts_preserved": true
+    }
+  ]
+}

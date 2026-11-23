@@ -137,3 +137,7 @@ The archive contains the runnable source, tests, prompts, configuration and sele
 ## Attribution
 
 [Member contributions](attribution/MEMBER-CONTRIBUTIONS.md) · [AI-use declaration](attribution/AI-USE.md) · [Prompt record](attribution/PROMPTS.md) · [Third-party attribution](attribution/THIRD-PARTY.md)
+
+## Team runtime verification
+
+The [six-turn follow-up tests](evaluation/development18/dialogue-2026-11-23/README.md) include the quotation and price-provenance fixes. The [new GPT-6.1 Sol API results](evaluation/new-dialogues-2026-11-23/README.md) include the actual answers and costs from three additional financial conversations.

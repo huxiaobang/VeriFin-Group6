@@ -1,0 +1,29 @@
+{
+  "retail": {
+    "as_of": "2025-08-20T23:59:59-04:00",
+    "turns": [
+      "How much did Home Depot’s sales grow in its second quarter of fiscal 2025? Give me the figure and its source.",
+      "Actually, I meant comparable sales. What was the growth rate for the company as a whole and in the U.S.?",
+      "How does that stack up against Lowe’s for its corresponding quarter? Compare the company-wide figures and tell me the gap in percentage points.",
+      "Hold on. If I had asked this at the end of August 19, 2025, which of those two quarterly results could I actually have seen by then?",
+      "Move back to the end of August 20. For the company that reported later, how much did it actually sell? I’d like the precise number from its statement, in millions of dollars."
+    ]
+  },
+  "disney": {
+    "as_of": "2025-05-07",
+    "turns": [
+      "Did Disney’s streaming business actually make money in fiscal Q2 2025? Show me the figure and where you got it.",
+      "Wait, was that the whole Entertainment segment? How much did each earn, and how did each compare with a year earlier?",
+      "How many Disney+ and Hulu subscriptions did they have then, and how much had that total changed since the previous quarter?",
+      "So can I say that many different households were paying? What exactly does the company count?"
+    ]
+  },
+  "airline": {
+    "as_of": "2025-04-09T23:59:59-04:00",
+    "turns": [
+      "Did Delta's revenue actually grow in the March 2025 quarter? How much did it bring in compared with a year earlier?",
+      "What if we take out sales from the refinery to outside customers? Show me how that changes the comparison.",
+      "Then did each available seat mile earn more on that same basis, or was there just more capacity? Point me to the figures."
+    ]
+  }
+}

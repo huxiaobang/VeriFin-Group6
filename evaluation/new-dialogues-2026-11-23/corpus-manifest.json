@@ -1,0 +1,110 @@
+{
+  "format_version": 1,
+  "companies": [
+    {
+      "ticker": "HD",
+      "cik": "0000354950",
+      "name": "The Home Depot"
+    },
+    {
+      "ticker": "LOW",
+      "cik": "0000060667",
+      "name": "Lowe\u2019s Companies"
+    },
+    {
+      "ticker": "DIS",
+      "cik": "0001744489",
+      "name": "The Walt Disney Company"
+    },
+    {
+      "ticker": "DAL",
+      "name": "Delta Air Lines",
+      "cik": "0000027904"
+    }
+  ],
+  "documents": [
+    {
+      "entity": "HD",
+      "source": "snapshots/HD.pdf",
+      "text": "snapshots/HD.pdf.text.txt",
+      "period_end": "2025-08-03",
+      "published_at": "2025-08-19",
+      "publication_precision": "date_only",
+      "publication_basis": "Issuer press release publication date",
+      "extraction_method": "pdfplumber text extraction"
+    },
+    {
+      "entity": "LOW",
+      "source": "snapshots/LOW.pdf",
+      "text": "snapshots/LOW.pdf.text.txt",
+      "period_end": "2025-08-01",
+      "published_at": "2025-08-20",
+      "publication_precision": "date_only",
+      "publication_basis": "Issuer press release publication date",
+      "extraction_method": "pdfplumber text extraction"
+    },
+    {
+      "entity": "DIS",
+      "source": "snapshots/DIS.pdf",
+      "text": "snapshots/DIS.pdf.text.txt",
+      "period_end": "2025-03-29",
+      "published_at": "2025-05-07",
+      "publication_precision": "date_only",
+      "publication_basis": "Issuer press release publication date",
+      "extraction_method": "pdfplumber text extraction"
+    },
+    {
+      "entity": "DAL",
+      "source": "snapshots/dal-q1-2025.pdf",
+      "text": "snapshots/dal-q1-2025.pdf.text.txt",
+      "period_start": "2025-01-01",
+      "period_end": "2025-03-31",
+      "published_at": "2025-04-09",
+      "publication_precision": "date_only",
+      "publication_basis": "Date on issuer release page 1",
+      "extraction_method": "pdfplumber"
+    }
+  ],
+  "files": {
+    "snapshots/HD.pdf": {
+      "url": "https://ir.homedepot.com/~/media/Files/H/HomeDepot-IR/press-release/q2-2025-earnings-release.pdf",
+      "sha256": "1ae542b3e5bf2318ddddad3fc688e0ab0257c795d00da5bcfc8465eb1ad9b2d9",
+      "retrieved_at": "2026-11-23T06:16:03.625578+00:00"
+    },
+    "snapshots/HD.pdf.text.txt": {
+      "url": "https://ir.homedepot.com/~/media/Files/H/HomeDepot-IR/press-release/q2-2025-earnings-release.pdf",
+      "sha256": "e55a93888ae9d30be13b1c15412e52e98dbe39a09a24bad49bedb25c346ec9e7",
+      "retrieved_at": "2026-11-23T06:16:03.625951+00:00"
+    },
+    "snapshots/LOW.pdf": {
+      "url": "https://corporate.lowes.com/sites/lowes-corp/files/lowes-q2-2025-press-release.pdf",
+      "sha256": "119b00aa2c7d3863f262ca13283b924e55752121572f515519703051ba7ea5cb",
+      "retrieved_at": "2026-11-23T06:16:04.311277+00:00"
+    },
+    "snapshots/LOW.pdf.text.txt": {
+      "url": "https://corporate.lowes.com/sites/lowes-corp/files/lowes-q2-2025-press-release.pdf",
+      "sha256": "fd23eb029e6cb154786d19d12e21393ba4a7f2636169b2a7a7dfc7beb15866eb",
+      "retrieved_at": "2026-11-23T06:16:04.311658+00:00"
+    },
+    "snapshots/DIS.pdf": {
+      "url": "https://thewaltdisneycompany.com/app/uploads/2025/05/q2-fy25-earnings.pdf",
+      "sha256": "f18c015efe01030609d1b4b44700aa2392845236ed47e9b85d4ae6c3dd11fcdf",
+      "retrieved_at": "2026-11-23T06:16:05.257820+00:00"
+    },
+    "snapshots/DIS.pdf.text.txt": {
+      "url": "https://thewaltdisneycompany.com/app/uploads/2025/05/q2-fy25-earnings.pdf",
+      "sha256": "67af2f4b7b571fc1aa8faa2d9608db46820f834b0e7b41a5fc94161c747b56cb",
+      "retrieved_at": "2026-11-23T06:16:05.258237+00:00"
+    },
+    "snapshots/dal-q1-2025.pdf.text.txt": {
+      "url": "https://s2.q4cdn.com/181345880/files/doc_earnings/2025/q1/earnings-result/Delta-Air-Lines-Announces-First-Quarter-2024.pdf",
+      "sha256": "f96af0ae3e828e125b16810a589a86404128357d2e6db337f48b5b869ffaffba",
+      "retrieved_at": "2026-11-23T06:20:20.360120+00:00"
+    },
+    "snapshots/dal-q1-2025.pdf": {
+      "url": "https://s2.q4cdn.com/181345880/files/doc_earnings/2025/q1/earnings-result/Delta-Air-Lines-Announces-First-Quarter-2024.pdf",
+      "sha256": "0b4fc888cf051b8951e23500f1295c280328c70346b5b46405fbe33c0aa21e0e",
+      "retrieved_at": "2026-11-23T06:20:20.360120+00:00"
+    }
+  }
+}

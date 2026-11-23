@@ -1,0 +1,114 @@
+{
+  "retail": {
+    "grading": "Independent financial content and context per turn; unsupported or unavailable must be qualified. No runtime decisions prescribed.",
+    "source_files": {
+      "HD": {
+        "url": "https://ir.homedepot.com/~/media/Files/H/HomeDepot-IR/press-release/q2-2025-earnings-release.pdf",
+        "sha256": "1ae542b3e5bf2318ddddad3fc688e0ab0257c795d00da5bcfc8465eb1ad9b2d9"
+      },
+      "LOW": {
+        "url": "https://corporate.lowes.com/sites/lowes-corp/files/lowes-q2-2025-press-release.pdf",
+        "sha256": "119b00aa2c7d3863f262ca13283b924e55752121572f515519703051ba7ea5cb"
+      }
+    },
+    "reference": [
+      {
+        "turn": 1,
+        "ticker": "HD",
+        "period_end": "2025-08-03",
+        "published": "2025-08-19",
+        "net_sales_million": 45277,
+        "prior_net_sales_million": 43175,
+        "sales_growth_pct_reported": 4.9,
+        "location": "opening paragraph and Consolidated Statements of Earnings"
+      },
+      {
+        "turn": 2,
+        "ticker": "HD",
+        "metric": "comparable sales YoY growth",
+        "worldwide_pct": 1.0,
+        "us_pct": 1.4,
+        "location": "first paragraph of the August 19 release"
+      },
+      {
+        "turn": 3,
+        "HD": 1.0,
+        "LOW": 1.1,
+        "metric": "company-wide reported comparable sales YoY growth",
+        "gap_pp_LOW_minus_HD": 0.1,
+        "LOW_period_end": "2025-08-01",
+        "HD_period_end": "2025-08-03",
+        "location": "each release opening disclosure"
+      },
+      {
+        "turn": 4,
+        "as_of": "end 2025-08-19 New York",
+        "HD": "released on August 19",
+        "LOW": "not yet released until August 20; exclude its Q2 actual even though seen in the preceding conversation",
+        "scope": "these two Q2 release results, not all company filings"
+      },
+      {
+        "turn": 5,
+        "as_of": "end 2025-08-20 New York",
+        "ticker": "LOW",
+        "net_sales_million": 23959,
+        "prior_year_million": 23586,
+        "location": "Consolidated Statements of Earnings, Net sales, Three Months Ended August 1 2025; 44,888 is the six-month figure and 24.0 billion is rounded."
+      }
+    ]
+  },
+  "disney": {
+    "source_url": "https://thewaltdisneycompany.com/app/uploads/2025/05/q2-fy25-earnings.pdf",
+    "pdf_sha256": "f18c015efe01030609d1b4b44700aa2392845236ed47e9b85d4ae6c3dd11fcdf",
+    "basis": "issuer FY2025 Q2 release published 2025-05-07; quarter ended 2025-03-29",
+    "turns": [
+      {
+        "id": 1,
+        "expected": "Entertainment DTC operating income +USD 336m. Identify segment scope; accepts clarifying that broader streaming/ESPN+ profitability is not isolated while answering the Entertainment figure. Operating income is distinct from GAAP consolidated net income.",
+        "locator": "pp. 1, 4–5; segment table, DTC operating income, three months ended March 29 2025"
+      },
+      {
+        "id": 2,
+        "expected": "Entertainment segment USD 1,258m vs 781m (+477m, about 61%); DTC component USD 336m vs 47m (+289m). Both positive a year earlier. Do not add the component to the total. Money changes or correctly stated equivalent percentages acceptable.",
+        "locator": "p. 4 Entertainment segment table, operating income, quarter columns March 29 2025 / March 30 2024."
+      },
+      {
+        "id": 3,
+        "expected": "180.7m total subscriptions vs 178.2m, +2.5m sequentially; 126.0m Disney+ and 54.7m Hulu vs 124.6m and 53.6m. Prior date December 28 2024. Require current total, correct change, correct duration; components useful corroboration.",
+        "locator": "p. 1 highlights and p. 6 Key Metrics, Paid subscribers at, quarter-end date columns."
+      },
+      {
+        "id": 4,
+        "expected": "The release counts paid subscriptions across services. A U.S. multi-product customer counts for each included service, including Disney+/Hulu bundles. Counts can overlap; an exact distinct-household count cannot be inferred. A narrow, supported refusal earns full credit.",
+        "locator": "p. 16, DTC Product Descriptions and Key Definitions, Paid subscribers."
+      }
+    ],
+    "grading": "Grade all four actual answers when available. Distinguish correct scope from an answer missing sourcing. For turn 4 do not require an invented household count."
+  },
+  "airline": {
+    "case_id": "DAL-mar25",
+    "audience": "evaluator only; unpublished development diagnostic",
+    "source": "https://ir.delta.com/news/news-details/2025/Delta-Air-Lines-Announces-March-Quarter-2025-Financial-Results/default.aspx",
+    "publication_date": "2025-04-09",
+    "period_end": "2025-03-31",
+    "frozen_manifest": "corpus-manifest.json",
+    "references": [
+      {
+        "turn": 1,
+        "required": "GAAP operating revenue USD million 14,040 against 13,748, +292 million, about +2% (unrounded +2.124%). Consolidated revenue and quarterly periods with a locator.",
+        "locator": "March Quarter 2025 Results, GAAP Operating revenue row, release PDF p.5"
+      },
+      {
+        "turn": 2,
+        "required": "Carry Delta and the quarterly comparison. Reconcile both years: 14,040 minus 1,062 = 12,978 and 13,748 minus 1,185 = 12,563, USD million. Adjusted operating revenue rises 415 million or 3.3%. This is non-GAAP and excludes third-party refinery sales, different from passenger revenue.",
+        "locator": "Note A, Operating Revenue, adjusted and Total Revenue Per Available Seat Mile, PDF p.12"
+      },
+      {
+        "turn": 3,
+        "required": "Use adjusted TRASM on the same basis: 18.97 vs 19.17 cents per available seat mile, down 0.20 cents (about 1%). Capacity increased from 65,542 to 68,401 million ASM (about +4%). Reconcile rising adjusted total revenue with unit revenue decline. State the arithmetic effect, avoid a sole business-cause claim.",
+        "locator": "Statistical Summary PDF p.9 and Note A p.12"
+      }
+    ],
+    "caveat": "Old evaluation reports and cases reviewed under demo and evaluation. AXP source mentions Delta, which prevents claiming wholly unseen issuer exposure. No independent human gold or E2E model score yet."
+  }
+}
