@@ -5,45 +5,98 @@ const esc = value => String(value ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;",
 let selected = null, selectedReport = "", configured = false, timer = null, reportRequest = 0, refreshRequest = 0;
 let currentSession = null, chartData = null, chartVersion = null, editingSession = null, editingScope = null;
 let currentData = null, defaultContextChars = 200000;
+const pendingRequests = new Map();
+const postingRequests = new Set();
 
 async function api(path, body) {
   const options = body === undefined ? {} : {method:"POST", headers:{"Content-Type":"application/json","X-VeriFin-Token":token}, body:JSON.stringify(body)};
   const response = await fetch(path, options);
   const data = await response.json();
-  if (!response.ok) throw Error(data.error || "Request failed");
+  if (!response.ok) throw Object.assign(Error(data.error || "Request failed"), {status:response.status});
   return data;
 }
 function fail(error) { el("error").textContent = error.message || error; }
 function sessionPath(sid = selected) { return "/api/session/" + encodeURIComponent(sid); }
 function number(value) { return typeof value === "number" ? value.toLocaleString(undefined, {maximumFractionDigits:6}) : "Unavailable"; }
 
+function pendingRequest(sid) {
+  if (pendingRequests.has(sid)) return pendingRequests.get(sid);
+  try { return JSON.parse(localStorage.getItem("verifin/request/" + sid)); }
+  catch { return null; }
+}
+
+function rememberRequest(sid, body) {
+  try {
+    const key = "verifin/request/" + sid;
+    if (body) localStorage.setItem(key, JSON.stringify(body));
+    else localStorage.removeItem(key);
+    pendingRequests.delete(sid);
+  } catch { pendingRequests.set(sid, body); }
+}
+
+function clearRequest(sid, id) {
+  if (pendingRequest(sid)?.request_id === id) rememberRequest(sid, null);
+}
+
+function unfinished(receipt) {
+  return receipt?.status === "pending" || receipt?.status === "running";
+}
+
+function renderRequest(sid, data) {
+  const pending = pendingRequest(sid);
+  const latest = data?.latest_submission;
+  const request = pending || latest;
+  const needsRecovery = Boolean(pending || unfinished(latest));
+  const busy = data?.running || postingRequests.has(sid);
+  el("ask").disabled = !data || !configured || busy || needsRecovery;
+  el("recover").disabled = !data || busy;
+  el("recoverId").placeholder = request?.request_id || "Request ID";
+  el("requestInfo").textContent = [request?.request_id, pending?.message].filter(Boolean).join(" · ");
+  if (needsRecovery && !busy) el("recoverySettings").open = true;
+}
+
 async function sessions() {
   const list = await api("/api/sessions");
   el("sessionList").innerHTML = list.map(s => `<button class="session ${s.id === selected ? "selected" : ""}" data-id="${esc(s.id)}">${esc(s.title)}</button>`).join("");
   el("sessionList").querySelectorAll("button").forEach(button => button.onclick = () => selectSession(button.dataset.id).catch(fail));
+  return list;
 }
 async function selectSession(sid) {
   if (timer) clearTimeout(timer);
   selected = sid; selectedReport = ""; currentSession = null; currentData = null; chartData = null; reportRequest++;
+  try { sessionStorage.setItem("verifin/session", sid); } catch { /* Session can still be selected from the list. */ }
   el("contextChars").value = "";
+  el("asOf").value = ""; el("recoverId").value = ""; el("requestResult").textContent = "";
+  el("recoverySettings").open = false;
+  renderRequest(sid, null);
   el("error").textContent = ""; el("report").textContent = "Loading saved report…";
   el("sources").textContent = ""; el("reportVersion").disabled = true;
   el("charts").hidden = true; el("editScope").disabled = true;
-  el("ask").disabled = true; el("cancel").disabled = true;
+  el("cancel").disabled = true;
   el("scopeDialog").close();
   await Promise.all([sessions(), refresh()]);
 }
 async function refresh() {
   if (!selected) return;
-  const request = ++refreshRequest, sid = selected, data = await api(sessionPath(sid));
+  const request = ++refreshRequest, sid = selected, pending = pendingRequest(sid);
+  const query = pending?.request_id ? "?request_id=" + encodeURIComponent(pending.request_id) : "";
+  const data = await api(sessionPath(sid) + query);
   if (sid !== selected || request !== refreshRequest) return;
+  const receipt = data.requested_submission || data.latest_submission;
+  if (receipt?.request_id === pending?.request_id && receipt?.status && !unfinished(receipt)) {
+    clearRequest(sid, receipt.request_id);
+    el("requestResult").textContent = receipt.question || "";
+    if (!selectedReport && receipt.report_version && receipt.report_version !== data.current_report_version) {
+      selectedReport = String(receipt.report_version);
+    }
+  }
   currentData = data;
   currentSession = data.session;
   el("contextChars").placeholder = String(currentSession.max_context_chars ?? defaultContextChars);
   el("heading").textContent = data.session.title;
   renderScope(data.session.scope);
   el("conversation").innerHTML = data.messages.map(m => `<div class="message ${m.role === "user" ? "user" : ""}"><span class="role">${esc(m.role)}</span>${esc(m.content)}</div>`).join("");
-  el("ask").disabled = data.running || !configured;
+  renderRequest(sid, data);
   el("cancel").disabled = !data.running;
   el("editScope").disabled = data.running;
   const reviewedScope = data.episode?.reviewed_scope_version;
@@ -58,8 +111,17 @@ async function refresh() {
   el("reportVersion").value = selectedReport;
   el("reportVersion").disabled = !data.reports.length;
   if (timer) clearTimeout(timer);
-  if (data.running) timer = setTimeout(() => refresh().catch(fail), 1200);
+  if (data.running) scheduleRefresh(sid);
   await loadReport();
+}
+
+function scheduleRefresh(sid) {
+  timer = setTimeout(async () => {
+    try { await refresh(); }
+    catch (error) {
+      if (sid === selected) { fail(error); scheduleRefresh(sid); }
+    }
+  }, 1200);
 }
 function renderUsage(usage) {
   if (!usage) { el("sessionUsage").textContent = "Usage unavailable."; return; }
@@ -187,21 +249,62 @@ el("create").onclick = async () => {
   try { const s = await api("/api/sessions", {title:el("title").value || "Untitled"}); el("title").value = ""; await selectSession(s.id); }
   catch (error) { fail(error); }
 };
+async function submitRequest(sid, body) {
+  postingRequests.add(sid);
+  renderRequest(sid, currentData);
+  el("error").textContent = "";
+  try {
+    let response;
+    try { response = await api(sessionPath(sid) + "/ask", body); }
+    catch (error) {
+      if (error.status === 400 || error.status === 404) clearRequest(sid, body.request_id);
+      throw error;
+    }
+    if (!response.running || response.request_id !== body.request_id) clearRequest(sid, body.request_id);
+    if (selected !== sid) return;
+    el("recoverId").value = "";
+    el("requestResult").textContent = response.question || "";
+    selectedReport = response.report_version ? String(response.report_version) : "";
+    if (el("message").value === body.message) {
+      el("message").value = ""; el("contextChars").value = ""; el("asOf").value = "";
+    }
+    await refresh();
+  } catch (error) {
+    if (selected === sid) fail(error);
+  } finally {
+    postingRequests.delete(sid);
+    if (selected === sid) renderRequest(sid, currentData);
+  }
+}
+
 el("askForm").onsubmit = async event => {
   event.preventDefault(); if (!selected) return;
   const sid = selected;
-  el("error").textContent = ""; el("ask").disabled = true;
+  if (el("ask").disabled || pendingRequest(sid)) return;
   try {
     const override = el("contextChars").value;
-    const options = {};
+    const body = {message:el("message").value, request_id:crypto.randomUUID(),
+      budget:{max_model_calls:Number(el("modelCalls").value), max_tool_calls:Number(el("toolCalls").value),
+        max_planner_steps:Number(el("plannerSteps").value), max_seconds:Number(el("seconds").value)}};
+    if (el("asOf").value.trim()) body.as_of = el("asOf").value.trim();
     if (override) {
       const limit = Number(override);
       if (!Number.isSafeInteger(limit) || limit < 1) throw Error("请输入正整数作为字符上限。");
-      options.max_context_chars = limit;
+      body.max_context_chars = limit;
     }
-    await api(sessionPath(sid) + "/ask", {message:el("message").value, ...options, budget:{max_model_calls:Number(el("modelCalls").value), max_tool_calls:Number(el("toolCalls").value), max_planner_steps:Number(el("plannerSteps").value), max_seconds:Number(el("seconds").value)}});
-    if (selected === sid) { el("message").value = ""; el("contextChars").value = ""; selectedReport = ""; await refresh(); }
-  } catch (error) { if (selected === sid) { fail(error); el("ask").disabled = !configured; } }
+    rememberRequest(sid, body);
+    await submitRequest(sid, body);
+  } catch (error) { fail(error); }
+};
+el("recover").onclick = async () => {
+  if (!selected || el("recover").disabled) return;
+  const sid = selected, pending = pendingRequest(sid);
+  const id = el("recoverId").value.trim() || pending?.request_id || currentData?.latest_submission?.request_id;
+  if (!id) { fail("Enter a request ID."); return; }
+  if (!/^[A-Za-z0-9._:-]{1,128}$/.test(id)) { fail("Enter a valid request ID."); return; }
+  const body = pending?.request_id === id ? pending : {request_id:id};
+  if (!pending) rememberRequest(sid, body);
+  await submitRequest(sid, body);
 };
 el("cancel").onclick = async () => { try { await api(sessionPath() + "/cancel", {}); el("status").textContent = "Stopping…"; } catch (error) { fail(error); } };
 el("editScope").onclick = () => {
@@ -239,5 +342,8 @@ el("scopeForm").onsubmit = async event => {
   el("contextSetting").hidden = Boolean(config.offline);
   if (config.max_context_chars) defaultContextChars = config.max_context_chars;
   el("config").textContent = config.offline ? "离线试用 · 可以查看已保存的真实模型回答。新问题只使用本地资料，不产生 API 费用。" : configured ? "Model configured: " + config.model + ". Inspect evidence and unresolved items." : "Model is not configured. Set VERIFIN_API_KEY, VERIFIN_BASE_URL and VERIFIN_MODEL in the server environment, then restart. Saved reports, scope editing and charts remain available.";
-  await sessions();
+  const list = await sessions();
+  let sid;
+  try { sid = sessionStorage.getItem("verifin/session"); } catch { /* Browser storage may be disabled. */ }
+  if (sid && list.some(session => session.id === sid)) await selectSession(sid);
 })().catch(fail);

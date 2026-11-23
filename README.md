@@ -10,6 +10,12 @@ VeriFin is a local research assistant for analysts who need to answer and revisi
 
 On the team-runtime branch, newly generated research checklists and review notes default to English. Questions and follow-ups may be written in Chinese. Answers default to English unless the user explicitly requests another language, for example “请用简体中文回答”. Original quotes, user request text and evidence IDs retain their source form. The submitted revision and its archived prompt record above describe the original course snapshot.
 
+## Experimental request recovery
+
+The web client saves the request ID before submitting a turn. Reconnect and retry the pending turn to recover its saved work or original report. A new question gets a new ID, even if its text is identical. A call dispatched before a crash with no committed receipt ends with a partial report and an unknown outcome.
+
+From `code/`, the CLI equivalents are `python3 -m verifin --db sessions.db ask SESSION --request-id ID -- "Question"`, `python3 -m verifin --db sessions.db request-status SESSION ID`, and `python3 -m verifin --db sessions.db resume SESSION ID`. Reuse the database and the original model/source settings for a pending run. Old reports remain readable.
+
 ## Run locally
 
 Use Python **3.11+** on macOS or Linux with a writable working directory. The core uses the standard library, including SQLite, and POSIX file locking. The application and checks can run directly from this source tree without a notebook, Python package installation, GPU or provider key. For a repeatable run, create fresh output directories or choose new names on each run. Start from the extracted ZIP root.

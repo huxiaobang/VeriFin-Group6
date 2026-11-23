@@ -2,12 +2,14 @@
 from __future__ import annotations
 
 import argparse
+from dataclasses import asdict
 import json
 import os
 from pathlib import Path
 import sys
+import uuid
 
-from .engine import Budget, ResearchEngine
+from .engine import Budget, ResearchEngine, session_lock
 from .model import ModelClient, ModelError
 from .research_methods import PACK_NAMES
 from .reporting import export_report, render_markdown
@@ -33,6 +35,7 @@ def parser():
     ask = sub.add_parser("ask", help="Run real model research in a saved session")
     ask.add_argument("session_id")
     ask.add_argument("message")
+    ask.add_argument("--request-id", help="Use a stable ID for this question so the same request can be resumed")
     ask.add_argument("--as-of", help="Set the publication cutoff before the first model call (ISO date or timezone-aware timestamp)")
     ask.add_argument("--finish-after-review", action="store_true",
                      help="Deliver a fully checked report immediately after its successful review")
@@ -49,6 +52,12 @@ def parser():
     ask.add_argument("--offline", action="store_true", help="Run automatic research skills on local disclosures; stop before any model call")
     ask.add_argument("--stop-on-tool-fault", action="store_true", help="Stop for inspection on a calculation failure or identical repeated document result")
     add_source_arguments(ask)
+    resume = sub.add_parser("resume", help="Resume an existing request using its saved inputs and remaining allowance")
+    resume.add_argument("session_id")
+    resume.add_argument("request_id")
+    request = sub.add_parser("request-status", help="Inspect a durable request receipt (the latest request by default)")
+    request.add_argument("session_id")
+    request.add_argument("request_id", nargs="?")
     for command in ("show", "trace", "cancel"):
         child = sub.add_parser(command)
         child.add_argument("session_id")
@@ -90,6 +99,66 @@ def parser():
     return p
 
 
+_ENGINE_FLAGS = ("finish_after_review", "reference_duplicate_records", "stop_on_tool_fault")
+
+
+def run_request(store, args):
+    from .configuration import source_flags, tool_options
+    from .evaluation_cli import capture_callback
+    from .research_methods import configure_methods
+    from .submissions import lookup_submission, model_binding, research_cutoff, reserve_submission, saved_response
+
+    asking = args.command == "ask"
+    message, as_of = (args.message, args.as_of) if asking else (None, None)
+    submission = lookup_submission(store, args.session_id, args.request_id, message, as_of)
+    if response := saved_response(store, args.session_id, submission):
+        return response
+    if not asking and not submission:
+        raise ValueError("No saved research request has this ID.")
+    if submission:
+        offline, max_context_chars = submission["offline"], submission["max_context_chars"]
+        options = submission.get("execution_options", {})
+    else:
+        if args.offline and (args.live or args.method_pack):
+            raise ValueError("--offline uses automatic skills and local sources only")
+        research_cutoff(message, as_of)
+        budget = Budget(args.model_calls, args.tool_calls, args.seconds, max_planner_steps=args.planner_steps)
+        offline, max_context_chars = args.offline, args.max_context_chars
+        options = {"data_dir": str(Path(args.data_dir).resolve()), "live": args.live,
+                   "source_flags": source_flags(args), "method_pack": args.method_pack,
+                   "capture_case": str(Path(args.capture_case).resolve()) if args.capture_case else None,
+                   "engine_flags": {key: True for key in _ENGINE_FLAGS if getattr(args, key)}}
+    live = options.get("live", False)
+    source_options = tool_options(argparse.Namespace(live=live, **options.get("source_flags", {})))
+    model = None if offline else ModelClient.from_env(max_context_chars=max_context_chars)
+    configure_methods(model, options.get("method_pack"))
+    capture_path = options.get("capture_case")
+    capture = None
+    if capture_path:
+        if submission:
+            def capture(context):
+                capture_callback(capture_path)(context)
+        else:
+            capture = capture_callback(capture_path)
+    tools = ToolRegistry(store, Path(options.get("data_dir", args.data_dir)), allow_network=live,
+                         user_agent=os.environ.get("SEC_USER_AGENT"), cache_dir=Path(args.db).parent / "snapshots",
+                         **source_options)
+    request_id = args.request_id or "request_" + uuid.uuid4().hex
+    if not submission:
+        with session_lock(store, args.session_id):
+            prior = lookup_submission(store, args.session_id, request_id, message, as_of)
+            if prior is None:
+                reserve_submission(store, args.session_id, request_id, message=message, as_of=as_of,
+                                   budget=asdict(budget), max_context_chars=max_context_chars,
+                                   execution_backend="python-staged", offline=offline,
+                                   reset_cancel=True, execution_options=options, model_identity=model_binding(model))
+            elif prior.get("execution_options", {}) != options or prior["offline"] != offline:
+                raise ValueError("This request ID already has a different execution configuration. Use resume.")
+    print(f"Request ID: {request_id}", file=sys.stderr, flush=True)
+    return ResearchEngine(store, model, tools, candidate_callback=capture, **options.get("engine_flags", {})).ask(
+        args.session_id, message, as_of=as_of, request_id=request_id)
+
+
 def main(argv=None):
     args = parser().parse_args(argv)
     store = None
@@ -109,10 +178,11 @@ def main(argv=None):
             return 0
         if args.command == "serve":
             from .webapp import serve
-            from .configuration import tool_options
+            from .configuration import source_flags, tool_options
             if args.offline and args.live:
                 raise ValueError("--offline and --live are mutually exclusive")
-            serve(args.db, args.data_dir, port=args.port, allow_network=args.live, tool_options=tool_options(args), offline=args.offline)
+            serve(args.db, args.data_dir, port=args.port, allow_network=args.live, tool_options=tool_options(args),
+                  offline=args.offline, source_flags=source_flags(args))
             return 0
         if args.command == "evaluate":
             from .evaluation_cli import run_evaluation
@@ -134,15 +204,6 @@ def main(argv=None):
                       or any(status == "unavailable" for status in result.get("revision_status", {}).values())
                       or any(reason == "execution_error" for reason in result.get("revision_stop_reasons", {}).values()))
             return 2 if failed else 0
-        # Configuration errors fail before writing a new user turn.
-        if args.command == "ask" and args.offline and (args.live or args.method_pack):
-            raise ValueError("--offline uses automatic skills and local sources only")
-        model = ModelClient.from_env(max_context_chars=args.max_context_chars) if args.command == "ask" and not args.offline else None
-        if args.command == "ask":
-            from .configuration import tool_options
-            from .research_methods import configure_methods
-            configure_methods(model, args.method_pack)
-            source_options = tool_options(args)
         path = Path(args.db)
         path.parent.mkdir(parents=True, exist_ok=True)
         store = SessionStore(str(path))
@@ -150,20 +211,20 @@ def main(argv=None):
             print(json.dumps(store.create_session(args.title), ensure_ascii=False, indent=2))
         elif args.command == "sessions":
             print(json.dumps(store.list_sessions(), ensure_ascii=False, indent=2))
-        elif args.command == "ask":
-            from .evaluation_cli import capture_callback
-            capture = capture_callback(args.capture_case) if args.capture_case else None
-            tools = ToolRegistry(store, Path(args.data_dir), allow_network=args.live, user_agent=os.environ.get("SEC_USER_AGENT"), cache_dir=path.parent / "snapshots", **source_options)
-            engine = ResearchEngine(store, model, tools, candidate_callback=capture,
-                                    finish_after_review=args.finish_after_review,
-                                    reference_duplicate_records=args.reference_duplicate_records,
-                                    stop_on_tool_fault=args.stop_on_tool_fault)
-            result = engine.ask(args.session_id, args.message, as_of=args.as_of, max_context_chars=args.max_context_chars,
-                                budget=Budget(args.model_calls, args.tool_calls, args.seconds, max_planner_steps=args.planner_steps))
+        elif args.command in {"ask", "resume"}:
+            result = run_request(store, args)
             print(result["question"] if "question" in result else render_markdown(result["report"]))
             if result["episode"].get("stop_reason") == "execution_error":
                 print("Research stopped on an execution error. See the report's delivery status and 'trace' for the failed step.", file=sys.stderr)
                 return 2
+        elif args.command == "request-status":
+            from .submissions import lookup_submission, submission_status
+            store.get_session(args.session_id)
+            receipt = (lookup_submission(store, args.session_id, args.request_id) if args.request_id
+                       else store.get_submission(args.session_id))
+            if args.request_id and receipt is None:
+                raise ValueError("No saved research request has this ID.")
+            print(json.dumps(submission_status(receipt) if receipt else None, ensure_ascii=False, indent=2))
         elif args.command == "recover-interrupted":
             tools = ToolRegistry(store, Path(args.data_dir))
             report = ResearchEngine(store, None, tools).recover_interrupted(args.session_id)

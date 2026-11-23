@@ -133,6 +133,86 @@ class WebTests(unittest.TestCase):
         self.assertEqual(400, status)
         self.assertEqual(404, self.request("/api/session/missing")[0])
 
+    def test_request_receipt_survives_server_restart_before_worker_start(self):
+        sid = self.new()
+        path = "/api/session/" + sid
+        headers = {"X-VeriFin-Token": self.app.token}
+        original = Application(self.app.db_path, self.app.data_dir, offline=True)
+        self.app.offline = True
+        message = "What was NVIDIA FY2025 Q4 revenue?"
+        cutoff = "2025-03-01"
+
+        def ask(body):
+            return self.request(path + "/ask", body, headers)
+
+        def wait_for_report(request_id):
+            for _ in range(100):
+                _, data = self.request(path + "?request_id=" + request_id)
+                receipt = data["requested_submission"]
+                if not data["running"] and receipt["status"] != "pending":
+                    return receipt
+                time.sleep(0.01)
+            self.fail("worker did not finish")
+
+        with patch("verifin.webapp.threading.Thread") as worker:
+            queued = original.start(sid, message, Budget(), as_of=cutoff, request_id="original")
+            worker.return_value.start.assert_called_once()
+        self.assertTrue(queued["running"])
+        self.assertEqual("pending", queued["status"])
+        self.assertEqual("original", self.request(path)[1]["latest_submission"]["request_id"])
+        self.assertEqual(400, ask({"request_id":"original", "message":"A different request"})[0])
+        self.assertEqual(400, ask({"request_id":"original", "as_of":"2025-03-02"})[0])
+        self.assertEqual(202, ask({"request_id":"original"})[0])
+        original_receipt = wait_for_report("original")
+        self.assertEqual(cutoff, original_receipt["as_of"])
+        self.assertEqual(1, original_receipt["report_version"])
+
+        self.assertEqual(202, ask({"request_id":"new", "message":message})[0])
+        new_receipt = wait_for_report("new")
+        self.assertEqual(2, new_receipt["report_version"])
+        self.assertNotEqual(original_receipt["episode_id"], new_receipt["episode_id"])
+        with patch("verifin.webapp.ModelClient.from_env", side_effect=ModelError("No key")) as configure:
+            self.app.offline = False
+            self.assertEqual((200, {"running":False, **original_receipt}), ask({"request_id":"original"}))
+            configure.assert_not_called()
+        _, data = self.request(path + "?request_id=original")
+        self.assertEqual(new_receipt, data["latest_submission"])
+        self.assertEqual(original_receipt, data["requested_submission"])
+        self.assertEqual(2, data["report_count"])
+
+    def test_a_pending_request_keeps_its_cancellation_and_source_settings(self):
+        sid = self.new()
+        path = "/api/session/" + sid
+        headers = {"X-VeriFin-Token": self.app.token}
+        original = Application(self.app.db_path, self.app.data_dir, offline=True)
+        self.app.offline = True
+        with patch("verifin.webapp.threading.Thread"):
+            original.start(sid, "NVIDIA revenue?", Budget(), request_id="pending-cancel")
+        self.assertEqual(200, self.request(path + "/cancel", {}, headers)[0])
+        changed = Application(self.app.db_path, self.app.data_dir / "different", offline=True)
+        with self.assertRaisesRegex(ValueError, "original source settings"):
+            changed.start(sid, None, {}, request_id="pending-cancel")
+        with SessionStore(self.app.db_path) as store:
+            self.assertTrue(store.is_cancelled(sid))
+            self.assertEqual([], store.get_context(sid)["messages"])
+
+        body = {"request_id":"pending-cancel"}
+        self.assertEqual(202, self.request(path + "/ask", body, headers)[0])
+        for _ in range(100):
+            status, receipt = self.request(path + "/ask", body, headers)
+            if status == 200:
+                break
+            self.assertEqual(202, status)
+            time.sleep(0.01)
+        else:
+            self.fail("worker did not finish")
+        self.assertFalse(receipt["running"])
+        self.assertEqual("cancelled", receipt["stop_reason"])
+        self.assertEqual(1, receipt["report_version"])
+        report = self.request(path + "/report?version=1")[1]
+        self.assertEqual(0, report["usage"]["model_calls"])
+        self.assertEqual(0, report["usage"]["tool_calls"])
+
     def test_context_limit_persists_for_followup_but_isolated_from_other_sessions(self):
         path = "/api/session/" + self.new()
         headers = {"X-VeriFin-Token": self.app.token}

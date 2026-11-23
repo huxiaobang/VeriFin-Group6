@@ -111,7 +111,7 @@ _SUMMARY_REVISION = 1  # Version of the compact view's answer-to-question checks
 
 def _report_summary(report: dict) -> dict:
     """Small persisted metadata view; never embed claims or source snapshots."""
-    fields = ("id", "version", "created_at", "episode_id", "request", "status", "stop_reason",
+    fields = ("id", "version", "created_at", "episode_id", "request_id", "request", "status", "stop_reason",
               "scope", "scope_version", "verification_available", "usage", "model_mode")
     result = {key: report[key] for key in fields if key in report}
     # The full report separately labels its Researcher draft. Its opening text
@@ -465,6 +465,69 @@ class SessionStore:
     def get_session(self, session_id: str) -> dict:
         with self._transaction(write=False):
             return self._session(session_id)
+
+    def get_submission(self, session_id: str, request_id: str | None = None) -> dict | None:
+        with self._transaction(write=False):
+            query = ("SELECT request_id,inputs,r.episode_id,r.report_version,e.payload "
+                     "FROM research_submissions r LEFT JOIN events e ON "
+                     "e.session_id=r.session_id AND e.sequence=r.result_event WHERE r.session_id=?")
+            if request_id is None:
+                row = self._db.execute(query + " ORDER BY r.rowid DESC LIMIT 1", (session_id,)).fetchone()
+            else:
+                row = self._db.execute(query + " AND r.request_id=?", (session_id, request_id)).fetchone()
+            if row is None:
+                return None
+            return {"request_id": row["request_id"], **json.loads(row["inputs"]),
+                    "episode_id": row["episode_id"], "report_version": row["report_version"],
+                    "episode": json.loads(row["payload"])["episode"] if row["payload"] else None}
+
+    def reserve_submission(self, session_id: str, request_id: str, inputs: dict) -> None:
+        with self._transaction():
+            self._db.execute("INSERT INTO research_submissions(session_id,request_id,inputs) VALUES (?,?,?)",
+                             (session_id, request_id, json.dumps(inputs, ensure_ascii=False)))
+
+    def admit_submission(self, session_id: str, request_id: str, episode_id: str) -> None:
+        with self._transaction():
+            self._db.execute("UPDATE research_submissions SET episode_id=? WHERE session_id=? AND request_id=?",
+                             (episode_id, session_id, request_id))
+
+    def finish_submission(self, session_id: str, request_id: str, sequence: int, report_version: int | None) -> None:
+        with self._transaction():
+            self._db.execute("UPDATE research_submissions SET result_event=?,report_version=? "
+                             "WHERE session_id=? AND request_id=? AND result_event IS NULL",
+                             (sequence, report_version, session_id, request_id))
+
+    def research_revision(self, session_id: str) -> list:
+        """Bind a handoff to the append-only local inputs visible at its commit."""
+        with self._transaction(write=False):
+            session = self._session(session_id)
+            counts = [self._db.execute(f"SELECT count(*) FROM {table} WHERE session_id=?", (session_id,)).fetchone()[0]
+                      for table in ("records", "invalidations", "messages")]
+            return [session["scope_version"], session.get("max_context_chars"), *counts]
+
+    def save_research_handoff(self, session_id: str, request_id: str, payload: dict) -> None:
+        with self._transaction():
+            self._db.execute(
+                "INSERT INTO research_handoffs(session_id,request_id,payload) VALUES (?,?,?) "
+                "ON CONFLICT(session_id) DO UPDATE SET request_id=excluded.request_id,payload=excluded.payload",
+                (session_id, request_id, json.dumps(payload, ensure_ascii=False, allow_nan=False)),
+            )
+
+    def get_research_handoff(self, session_id: str, request_id: str) -> dict | None:
+        with self._transaction(write=False):
+            row = self._db.execute("SELECT payload FROM research_handoffs WHERE session_id=? AND request_id=?",
+                                   (session_id, request_id)).fetchone()
+            return json.loads(row["payload"]) if row else None
+
+    def clear_research_handoff(self, session_id: str, request_id: str) -> None:
+        with self._transaction():
+            self._db.execute("DELETE FROM research_handoffs WHERE session_id=? AND request_id=?", (session_id, request_id))
+
+    def event_at(self, session_id: str, sequence: int) -> dict | None:
+        with self._transaction(write=False):
+            row = self._db.execute("SELECT payload FROM events WHERE session_id=? AND sequence=?",
+                                   (session_id, sequence)).fetchone()
+            return json.loads(row["payload"]) if row else None
 
     def set_context_limit(self, session_id: str, characters: int) -> dict:
         if type(characters) is not int or not 1 <= characters <= 2**63 - 1:
@@ -1185,4 +1248,6 @@ _SCHEMA = (
     "CREATE TABLE IF NOT EXISTS invalidations (session_id TEXT NOT NULL,kind TEXT NOT NULL,record_id TEXT NOT NULL,version INTEGER NOT NULL,reason TEXT NOT NULL,created_at TEXT NOT NULL,PRIMARY KEY(session_id,kind,record_id,version,reason),FOREIGN KEY(session_id,kind,record_id,version) REFERENCES records(session_id,kind,record_id,version))",
     "CREATE TABLE IF NOT EXISTS events (session_id TEXT NOT NULL REFERENCES sessions(id),sequence INTEGER NOT NULL,payload TEXT NOT NULL,event_type TEXT,PRIMARY KEY(session_id,sequence))",
     "CREATE TABLE IF NOT EXISTS reports (session_id TEXT NOT NULL REFERENCES sessions(id),version INTEGER NOT NULL,payload TEXT NOT NULL,report_id TEXT NOT NULL,summary TEXT NOT NULL,PRIMARY KEY(session_id,version))",
+    "CREATE TABLE IF NOT EXISTS research_submissions (session_id TEXT NOT NULL REFERENCES sessions(id),request_id TEXT NOT NULL,inputs TEXT NOT NULL,episode_id TEXT,result_event INTEGER,report_version INTEGER,PRIMARY KEY(session_id,request_id),FOREIGN KEY(session_id,result_event) REFERENCES events(session_id,sequence),FOREIGN KEY(session_id,report_version) REFERENCES reports(session_id,version))",
+    "CREATE TABLE IF NOT EXISTS research_handoffs (session_id TEXT PRIMARY KEY,request_id TEXT NOT NULL,payload TEXT NOT NULL,FOREIGN KEY(session_id,request_id) REFERENCES research_submissions(session_id,request_id))",
 )

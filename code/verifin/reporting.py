@@ -40,6 +40,9 @@ def _delivery_stage(report):
 
 
 def _stage_message(report, stage):
+    if report.get("stop_reason") == "unknown_external_outcome":
+        return ("An external call was started before the interruption. Its outcome is unknown. "
+                "The request stopped without repeating the call. Any completed work is available below.")
     if report.get("stop_reason") == "local_context_limit" and report.get("context_limit"):
         detail = report["context_limit"]
         return (f"{detail['role']} 的待发送材料去重后仍有 {detail['characters']:,} 个字符，"
@@ -334,6 +337,8 @@ def render_markdown(report):
              f"**Model mode:** {md_text(report.get('model_mode', 'unknown'))}",
              f"**Scope version:** {report.get('scope_version', '?')}", "",
              "Model verification is an assessment against the available evidence, not an independent guarantee.", ""]
+    if report.get("request_id"):
+        lines.insert(5, f"**Request ID:** {md_text(report['request_id'])}")
     if report.get("stage_message"):
         lines.extend([f"**{md_text(report['stage_label'])}** — {md_text(report['stage_message'])}", ""])
         material = report.get("episode_material_ids") or {}

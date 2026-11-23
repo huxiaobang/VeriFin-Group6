@@ -13,6 +13,13 @@ def add_source_arguments(parser, *, live_adapter=True):
         parser.add_argument("--market-config", help="Alpha Vantage listing/configuration JSON; key comes only from ALPHAVANTAGE_API_KEY")
 
 
+def source_flags(args):
+    """Keep original source paths for restart. Provider keys stay in the environment."""
+    return {key: str(Path(value).resolve())
+            for key in ("market_data", "market_config", "retrieval_vectors", "retrieval_encoder")
+            if (value := getattr(args, key, None))}
+
+
 def tool_options(args):
     """Validate configuration before starting a user turn; performs no I/O to providers."""
     from .offline_cli import read_json

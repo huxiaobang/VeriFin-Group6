@@ -1,6 +1,7 @@
 """Small localhost UI, with background work and a separate cancellation path."""
 from __future__ import annotations
 
+from dataclasses import asdict
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 import json
 import os
@@ -9,10 +10,11 @@ import secrets
 import threading
 from urllib.parse import parse_qs, urlparse
 
-from .engine import Budget, ResearchEngine, session_lock
+from .engine import Budget, ResearchEngine, SessionBusy, session_lock
 from .model import ModelClient
 from .reporting import report_view, render_csv, render_markdown
 from .storage import SessionStore
+from .submissions import check_model_binding, lookup_submission, model_binding, research_cutoff, reserve_submission, submission_status
 from .tools import ToolRegistry
 from .charts import chart_data, render_chart_svg
 from .scope import edit_scope
@@ -23,48 +25,107 @@ ASSETS = Path(__file__).resolve().parent / "web_assets"
 PAGE = (ASSETS / "page.html").read_text(encoding="utf-8")
 
 
+class SubmissionConfigurationConflict(ValueError):
+    pass
+
+
+def web_submission_status(submission):
+    if submission is None:
+        return None
+    return {**submission_status(submission), "as_of": submission["as_of"]}
+
+
 class Application:
-    def __init__(self, db_path, data_dir, allow_network=False, *, tool_options=None, offline=False):
+    def __init__(self, db_path, data_dir, allow_network=False, *, tool_options=None, offline=False, source_flags=None):
         self.db_path, self.data_dir = str(Path(db_path).resolve()), Path(data_dir)
         Path(self.db_path).parent.mkdir(parents=True, exist_ok=True)
         SessionStore(self.db_path).close()
         self.allow_network = allow_network
         self.offline = offline
         self.tool_options = dict(tool_options or {})
+        self.execution_options = {"data_dir": str(self.data_dir.resolve()), "live": bool(allow_network and not offline),
+                                  "source_flags": dict(source_flags or {})}
         self.token = secrets.token_urlsafe(32)
         self.jobs = {}
         self.errors = {}
         self.lock = threading.Lock()
 
-    def start(self, sid, message, budget, *, max_context_chars=None):
-        if not isinstance(message, str) or not message.strip() or len(message) > 20000:
-            raise ValueError("A research question of 1–20000 characters is required.")
-        if budget.max_model_calls > 100 or budget.max_tool_calls > 100 or budget.max_seconds > 1800 or budget.max_planner_steps > 500:
-            raise ValueError("UI allowance exceeds its limits (100 model/tool calls, 500 planner steps, 1800 seconds).")
-        model = None if self.offline else ModelClient.from_env(max_context_chars=max_context_chars)
-        with self.lock:
+    def start(self, sid, message, budget, *, max_context_chars=None, as_of=None, request_id=None):
+        with self.lock, SessionStore(self.db_path) as store:
+            submission = lookup_submission(store, sid, request_id, message, as_of)
+            if submission and submission["episode"]:
+                return {"running": False, **web_submission_status(submission)}
             if self.jobs.get(sid):
-                raise ValueError("This session is already running.")
-            reset_store = SessionStore(self.db_path)
+                if submission and self.jobs[sid] == request_id:
+                    return {"running": True, **web_submission_status(submission)}
+                raise SessionBusy("This session is already running.")
             try:
-                # Another CLI/UI process can own this session even when this
-                # Application has no job. Never clear its cancellation flag.
-                with session_lock(reset_store, sid):
-                    reset_store.clear_cancel(sid)
-            finally:
-                reset_store.close()
-            self.jobs[sid] = True
+                # Reserve before HTTP acknowledges the request. A restart may
+                # occur before the background worker enters the engine.
+                with session_lock(store, sid):
+                    submission = lookup_submission(store, sid, request_id, message, as_of)
+                    if submission and submission["episode"]:
+                        return {"running": False, **web_submission_status(submission)}
+                    if submission:
+                        max_context_chars = submission["max_context_chars"]
+                        if self.offline and not submission["offline"]:
+                            raise SubmissionConfigurationConflict("Open VeriFin with model access to resume this request.")
+                        options = submission.get("execution_options", {})
+                        if options.get("method_pack") or options.get("capture_case") or any(options.get("engine_flags", {}).values()):
+                            raise SubmissionConfigurationConflict("Resume this request in the CLI to use its original research settings.")
+                        if any(key in options and options[key] != value for key, value in self.execution_options.items()):
+                            raise SubmissionConfigurationConflict("Resume this request with its original source settings.")
+                    else:
+                        if request_id is not None and message is None:
+                            raise ValueError("No submission with that request ID was found in this session.")
+                        if not isinstance(message, str) or not message.strip() or len(message) > 20000:
+                            raise ValueError("A research question of 1–20000 characters is required.")
+                        if not isinstance(budget, Budget):
+                            budget = Budget(**budget)
+                        if (budget.max_model_calls > 100 or budget.max_tool_calls > 100
+                                or budget.max_seconds > 1800 or budget.max_planner_steps > 500):
+                            raise ValueError("UI allowance exceeds its limits (100 model/tool calls, 500 planner steps, 1800 seconds).")
+                        research_cutoff(message, as_of)
+                    offline = self.offline or bool(submission and submission["offline"])
+                    model = None if offline else ModelClient.from_env(max_context_chars=max_context_chars)
+                    if submission:
+                        try:
+                            check_model_binding(submission, model)
+                        except ValueError as exc:
+                            raise SubmissionConfigurationConflict(str(exc)) from exc
+                    else:
+                        reserve_submission(store, sid, request_id, message=message, as_of=as_of,
+                                           budget=asdict(budget), max_context_chars=max_context_chars,
+                                           execution_backend="python-staged", offline=offline, reset_cancel=True,
+                                           execution_options=self.execution_options, model_identity=model_binding(model))
+                        if request_id is not None:
+                            submission = store.get_submission(sid, request_id)
+            except SessionBusy:
+                submission = lookup_submission(store, sid, request_id, message, as_of)
+                if submission:
+                    return {"running": submission["episode"] is None, **web_submission_status(submission)}
+                raise
+            self.jobs[sid] = request_id or True
             self.errors.pop(sid, None)
 
         def work():
             store = None
             try:
                 store = SessionStore(self.db_path)
-                tools = ToolRegistry(store, self.data_dir, allow_network=self.allow_network, user_agent=os.environ.get("SEC_USER_AGENT"), cache_dir=Path(self.db_path).parent / "snapshots", **self.tool_options)
-                result = ResearchEngine(store, model, tools).ask(sid, message, budget=budget, reset_cancel=False,
-                                                               max_context_chars=max_context_chars)
+                tools = ToolRegistry(store, self.data_dir, allow_network=self.allow_network and not offline,
+                                     user_agent=os.environ.get("SEC_USER_AGENT"),
+                                     cache_dir=Path(self.db_path).parent / "snapshots", **self.tool_options)
+                engine = ResearchEngine(store, model, tools)
+                if request_id is not None:
+                    result = engine.ask(sid, request_id=request_id, reset_cancel=False)
+                else:
+                    result = engine.ask(sid, message, budget=budget, reset_cancel=False, as_of=as_of,
+                                        max_context_chars=max_context_chars)
                 if result["episode"].get("stop_reason") == "execution_error":
                     self.errors[sid] = "Research stopped on " + result["episode"].get("error_type", "an execution error") + ". See the saved report and activity log."
+            except SessionBusy:
+                if request_id is None:
+                    self.errors[sid] = "This session is already running."
             except Exception as exc:
                 self.errors[sid] = "Research could not run: " + type(exc).__name__
             finally:
@@ -73,7 +134,13 @@ class Application:
                 with self.lock:
                     self.jobs[sid] = False
 
-        threading.Thread(target=work, daemon=True, name="verifin-research").start()
+        try:
+            threading.Thread(target=work, daemon=True, name="verifin-research").start()
+        except Exception:
+            with self.lock:
+                self.jobs[sid] = False
+            raise
+        return {"running": True, **(web_submission_status(submission) or {})}
 
 
 def handler_for(app):
@@ -141,6 +208,11 @@ def handler_for(app):
                             events = store.events(sid, limit=30, exclude_types=["episode_checkpoint"])
                             checkpoint = store.latest_event(sid, "episode_checkpoint")
                             usage = session_usage(store.list_episode_summaries(sid))
+                            latest_submission = web_submission_status(store.get_submission(sid))
+                            requested_id = parse_qs(parsed.query, keep_blank_values=True).get("request_id", [])
+                            if len(requested_id) > 1:
+                                raise ValueError("Select one request ID.")
+                            requested_submission = web_submission_status(lookup_submission(store, sid, requested_id[0])) if requested_id else None
                         episode = checkpoint["episode"] if checkpoint else None
                         if episode and episode.get("summary"):
                             episode = {**episode, "summary_kind":"unverified_researcher_draft"}
@@ -153,7 +225,8 @@ def handler_for(app):
                                 and latest.get("episode_id") == episode["id"])):
                             current_version = latest["version"]
                         context.update(events=[e for e in events if e.get("type") != "episode_checkpoint"][-30:], episode=episode, running=running, error=app.errors.get(sid),
-                                       session_usage=usage, current_report_version=current_version)
+                                       session_usage=usage, current_report_version=current_version,
+                                       latest_submission=latest_submission, requested_submission=requested_submission)
                         self.send(200, context)
                     elif len(parts) == 5 and parts[4] in {"report", "report.json", "report.md", "evidence.csv", "calculations.csv", "charts.json", "chart.svg"}:
                         query = parse_qs(parsed.query, keep_blank_values=True)
@@ -233,9 +306,15 @@ def handler_for(app):
                             updated = edit_scope(store, sid, body.get("scope"), expected_version=body.get("expected_version"))
                         self.send(200, updated)
                     elif action == "ask":
-                        app.start(sid, body.get("message"), Budget(**body.get("budget", {})),
-                                  max_context_chars=body.get("max_context_chars"))
-                        self.send(202, {"running": True})
+                        request_id = body.get("request_id")
+                        try:
+                            result = app.start(sid, body.get("message"), body.get("budget", {}),
+                                               max_context_chars=body.get("max_context_chars"), as_of=body.get("as_of"),
+                                               request_id=request_id)
+                        except (SessionBusy, SubmissionConfigurationConflict) as exc:
+                            self.send(409 if request_id is not None else 400, {"error": str(exc)})
+                        else:
+                            self.send(202 if result["running"] else 200, result)
                     else:
                         self.send(404, {"error": "Unknown route"})
                 else:
@@ -253,8 +332,8 @@ def handler_for(app):
     return Handler
 
 
-def serve(db_path, data_dir, *, port=8765, allow_network=False, tool_options=None, offline=False):
-    app = Application(db_path, data_dir, allow_network, tool_options=tool_options, offline=offline)
+def serve(db_path, data_dir, *, port=8765, allow_network=False, tool_options=None, offline=False, source_flags=None):
+    app = Application(db_path, data_dir, allow_network, tool_options=tool_options, offline=offline, source_flags=source_flags)
     server = ThreadingHTTPServer(("127.0.0.1", port), handler_for(app))
     print(f"VeriFin is available at http://127.0.0.1:{server.server_port}", flush=True)
     print(("离线模式。可查看已保存的真实回答，新问题只读本地材料。" if offline else
