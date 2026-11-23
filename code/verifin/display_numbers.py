@@ -39,7 +39,7 @@ EXPENSE_SIGN = re.compile(r"所得税费用(?:方向|口径)(?:列示|呈列)?(?
 CONTRIBUTION_SIGN = re.compile(r"^\s*的(?P<sign>[正负])(?:向)?贡献(?=$|[，,。；;、！!？?\s])")
 SHARED_RANGE = re.compile(r"\d\s*(?:[-–—~至到]|to\b)\s*[$€£]?\d[\d,.]*\s*(?="
                           r"%|％|个?百分点|基点|basis points?|bps?\b|shares?\b|million|billion|"
-                          r"trillion|thousand|万|亿|千|" + CURRENCY + ")", re.I)
+                          r"trillion|thousand|[万萬]|[亿億]|千|" + CURRENCY + ")", re.I)
 
 # Only a direct, bounded denial of a rate. Comparatives such as “not less
 # than” and additive constructions such as “not only” assert different things.
@@ -59,7 +59,13 @@ def percent_multiplier(text, start, end, quantity):
             and bool(re.match(r"\s*(?:$|[=≈≃。.)）]|equals?\b|yields?\b)", text[end:], re.I)))
 
 
+# Character-for-character aliases keep the original claim offsets usable in citations.
+_UNIT_CHARACTERS = str.maketrans("萬億幣歐鎊個點負", "万亿币欧镑个点负")
+
+
 def _quantity_spans(text):
+    original = text
+    text = text.translate(_UNIT_CHARACTERS)
     for match in NUMBER.finditer(text):
         before, after = text[:match.start()], text[match.end():]
         prefix = PREFIX.search(before)
@@ -107,7 +113,7 @@ def _quantity_spans(text):
         value = amount * factor * (-1 if negative else 1)
         # Accepted display error is half a unit of the last printed decimal place.
         tolerance = Decimal(1).scaleb(amount.as_tuple().exponent) * factor / 2
-        yield start, end, (raw, unit, value, tolerance)
+        yield start, end, (original[start:end].strip(), unit, value, tolerance)
 
 
 def _quantities(text):

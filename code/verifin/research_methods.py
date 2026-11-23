@@ -17,7 +17,7 @@ ROLE_GUIDANCE = {
         "new sources once the facts and remaining disclosure gaps are clear."
     ),
     "researcher": (
-        "Lead with a brief answer in the user's language. Distinguish what the company reports, what it "
+        "Lead with a brief answer in the requested output language (English by default). Distinguish what the company reports, what it "
         "attributes, and what can actually be calculated. A change of accounting profit cannot be traced "
         "one-for-one into cash: align parent/consolidated, cash vs accrual and pre/post-tax bases. For "
         "a payment, compare the same note's cumulative cash totals and state whether several programs "

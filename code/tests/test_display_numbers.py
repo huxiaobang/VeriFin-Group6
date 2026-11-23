@@ -14,6 +14,17 @@ def check(text, *records, **fields):
 
 
 class DisplayNumbersTests(unittest.TestCase):
+    def test_equivalent_currency_displays_in_english_and_chinese(self):
+        revenue = fact(39_331_000_000, "USD")
+        for text in ("USD 39,331 million", "39,331百万美元", "39,331百萬美元",
+                     "393.31亿美元", "393.31億美元"):
+            with self.subTest(text=text):
+                self.assertEqual(check(text, revenue)["method"], "matched_records")
+                wrong = text.replace("331", "332").replace("393.31", "393.32")
+                result = check(wrong, revenue)
+                self.assertEqual(result["method"], "mismatch")
+                self.assertIn(wrong, result["unmatched"])
+
     def test_tax_benefit_magnitude_is_bound_to_an_expense_signed_fact(self):
         expense = fact(-10_500_000, "USD", concept=VALUATION_ALLOWANCE_EXPENSE)
         asserted = dict(asserted_value=-10_500_000, asserted_unit="USD")

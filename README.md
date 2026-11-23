@@ -6,6 +6,10 @@
 
 VeriFin is a local research assistant for analysts who need to answer and revisit company-finance questions with dated sources, calculation operands and review status. Its Planner selects tools and decides when to ask for clarification, draft, repair or stop. A Researcher builds claims and a Structured Critic checks them. The Python controller enforces budgets and records evidence and report versions in SQLite.
 
+## Demo language
+
+On the team-runtime branch, newly generated research checklists and review notes default to English. Questions and follow-ups may be written in Chinese. Answers default to English unless the user explicitly requests another language, for example “请用简体中文回答”. Original quotes, user request text and evidence IDs retain their source form. The submitted revision and its archived prompt record above describe the original course snapshot.
+
 ## Run locally
 
 Use Python **3.11+** on macOS or Linux with a writable working directory. The core uses the standard library, including SQLite, and POSIX file locking. The application and checks can run directly from this source tree without a notebook, Python package installation, GPU or provider key. For a repeatable run, create fresh output directories or choose new names on each run. Start from the extracted ZIP root.
