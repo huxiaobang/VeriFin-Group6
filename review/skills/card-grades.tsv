@@ -1,0 +1,23 @@
+skill	with_first	without_first	delta_first	with_repeat	without_repeat	blind_crosscheck_with	blind_crosscheck_without
+attribute-portfolio-growth	4	4	0			4	3
+cash-flow-bridge	4	4	0			4	4
+channel-volume-vs-sales	4	4	0			4	4
+cohort-vs-product-revenue	4	4	0			4	4
+compare-restated-series	4	4	0			4	4
+dealer-inventory	4	4	0			4	4
+estimate-supplier-content	4	4	0			4	4
+implied-period-guidance	4	4	0			4	4
+incremental-profit-margin	4	4	0			4	4
+isolate-discrete-tax-item	4	4	0			4	4
+reconcile-fee-bases	4	4	0			4	4
+reconcile-per-unit-financials	4	3	1	4	3	4	3
+reconcile-segment-totals	4	4	0			4	4
+reconcile-shipment-units-and-prices	4	4	0			4	4
+store-cohorts	4	4	0			4	4
+test-pre-earnings-thesis	4	4	0			4	4
+trace-lease-commencement	4	4	0			4	4
+trace-production-bottlenecks	4	4	0			4	4
+trace-project-cash-rights	4	4	0			4	4
+unit-profit-reconciliation	4	4	0			4	4
+cash-capex-and-leases	4	4	0			4	4
+reconcile-comparable-growth	4	4	0			4	4
